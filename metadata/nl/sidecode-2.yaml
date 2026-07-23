@@ -1,0 +1,47 @@
+schemaVersion: 1
+id: NL_SIDECODE_2
+country: NL
+name: Serie 99-99-XX (sidecode 2, desde 1965)
+registrationType: ORDINARY
+legacySeries: true
+# Introduced October 1965 (first plate 00-01-AD); the RDW narrative gives the
+# month only, so the first of the month is used. No validTo — see sidecode 1.
+validFrom: "1965-10-01"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: digits1
+    type: DIGITS
+    length: 2
+  - name: digits2
+    type: DIGITS
+    length: 2
+  # Pre-vowel-ban alphabet; see the sidecode-1 note.
+  - name: letters
+    type: LETTERS
+    length: 2
+    excluded: [C, I, Q]
+# No `visual`: see sidecode 1.
+formats:
+  national: "{digits1}-{digits2}-{letters}"
+  compact: "{digits1}{digits2}{letters}"
+sources:
+  - id: NL-RDW-LETTERS
+  - id: NL-REGELING
+    section: "Art. 1"
+  - id: NL-RDW-HIST
+  - id: NL-RDW-SERIES
+examples:
+  valid:
+    - "00-01-AD"
+    - "12-34-XZ"
+  invalid:
+    - "00-01-AC"
+    - "0-01-AD"
+    - "00-01-A"
+    - "00-01-ADD"

@@ -1,0 +1,56 @@
+schemaVersion: 1
+id: IT_EE
+country: IT
+name: Targa Escursionisti Esteri (EE)
+registrationType: TOURIST
+# Regime of CdS art. 134 (foreign residents temporarily keeping a vehicle in
+# Italy). The current plate structure follows Appendice XII lett. p) (cars
+# and, since DPR 198/2012, their trailers: EE + 3 digits + 2 letters) and
+# lett. s) (motorcycles: EE + 3 digits + 1 letter).
+validFrom: "1994-01-01"
+vehicleInference:
+  # The letter-group width separates motorcycles (one letter) from
+  # cars/trailers (two letters), but not cars from trailers.
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: EE
+  - name: digits
+    type: DIGITS
+    length: 3
+  # Appendice XII alphabet: I, O, Q, U excluded.
+  - name: letters
+    type: LETTERS
+    minLength: 1
+    maxLength: 2
+    excluded: [I, O, Q, U]
+formats:
+  national: "{prefix} {digits} {letters}"
+  compact: "{prefix}{digits}{letters}"
+visual:
+  # Art. 260: white background, black characters; the "EE" itself is azzurro
+  # and the expiry talloncino red.
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: IT-CDS
+    section: "Art. 134"
+  - id: IT-REG
+    section: "Appendice XII, lett. p) e s); art. 260"
+  - id: IT-DPR198-2012
+    section: "Art. 6"
+examples:
+  valid:
+    - "EE 123 AB"
+    - "EE 456 C"
+    - "EE 000 ZZ"
+  invalid:
+    - "EE 123 AI"
+    - "EE 12 AB"
+    - "EE 1234 AB"

@@ -17,11 +17,13 @@ or is genuine. Never write code, docs, or messages that conflate format
 validity with existence.
 
 Supported today: Spain (ordinary + `R`/`E`/`C`/`H`/`T`/`P`/`S`/`V` + diplomatic
-`CD`/`CC`/`OI`/`TA`), Portugal
-(current + three historical series), France (SIV + `WW` provisional), Italy
-(current), Germany (standard + `H` Oldtimer + `E` electric), Belgium
-(standard), Netherlands (current + recent sidecodes). See `README.md` for the
-full matrix.
+`CD`/`CC`/`OI`/`TA` + the 1900-1971 and 1971-2000 provincial series), Portugal
+(current + three historical series + trailers, export and industrial
+machines), France (SIV + `WW` provisional), Italy (ordinary — also trailer
+rears since 2013 — + motorcycles, mopeds, agricultural/operating machines,
+`EE`, targa prova), Germany (standard + `H` Oldtimer + `E` electric), Belgium
+(standard), Netherlands (sidecodes 1-12). See `README.md` for the full
+matrix.
 
 ## The golden rule: metadata is the source of truth
 
@@ -149,11 +151,36 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
 - **PT current series** accepts the full A-Z alphabet; the positional
   vowel-exclusion rule (with double-vowel exceptions) is not yet modelled.
 - **IT `validFrom`** (1994) is an approximation.
-- **Deferred ES series** — state/military bodies and the historical provincial
-  series still need dedicated code tables. The grammar now supports
-  variable-length groups and `TABLE` lookups (added for Germany), so these are
-  unblocked — but don't fake them with over-permissive patterns in the
-  meantime.
+- **Deferred ES series** — state/military bodies still need a dedicated code
+  table; don't fake them with over-permissive patterns in the meantime.
+- **ES provincial serial letters are barely restricted officially.** The 1971
+  text only excludes "letras que puedan dar lugar a confusión" and the
+  homologated font has no `Q`/`Ñ`, so only `Q` is excluded. The
+  practice-level restrictions (no vowels as second letter, etc.) are
+  documented only unofficially and are NOT modelled. Per-province-code
+  validity windows (`GE`→`GI` 1992, `PM`→`IB` 1997, `OR`→`OU` 1999, `SH`
+  1971-76) are documented in the table but not enforced.
+- **PT trailer/export digit widths come from official model drawings**, not
+  article text (the law says only "número de ordem"): up to 6 digits
+  (trailers) and 5 (export). A two-letter trailer service code + 4 digits is
+  compact-ambiguous with the pre-1992 general series.
+- **IT motorcycle format follows fig. III 4/e, not the lett. c) prose.** The
+  Appendice XII letter c) text (as replaced by DPR 355/1998) still describes
+  a car-like 2+3+2 layout, but the official figure in the same decree shows
+  2 characters over 5, matching the issued `LL 00000` series. The moped
+  base-28 character set comes from the annexed tabella III 2 (verified only
+  secondarily). Trailers since 2013 share the ordinary-series structure; the
+  X-lot allocation is an administrative circular, not a format rule, so it
+  is not enforced. Compact 6-character inputs whose characters all fall in
+  the moped set (e.g. `BB234C`) are ambiguous with machine plates.
+- **NL sidecode alphabets are register-informed.** No official text
+  enumerates the SC1-3 alphabet (vowels were genuine); the modern vowel ban
+  (except `O` for semi-trailers) and `C`/`Q` exclusion are RDW statements.
+  Reserved combinations (`SS`, `NSB`, …) and per-category first letters are
+  still not modelled. `validFrom` means first issuance in ANY vehicle
+  category (RDW series tables), not first car issuance. Sidecodes 4/6/7 are
+  legacy-flagged for detection despite remaining current for
+  trailers/motorcycles/heavy trucks.
 - **ES diplomatic prefixes are width-checked only.** The RGV defines the
   mission/organization prefix assignment procedurally and no official public
   table exists, so `CD`/`CC`/`OI`/`TA` validate the DGT-documented digit

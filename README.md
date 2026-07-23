@@ -30,6 +30,8 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 | Consular offices (`CC`)        | `CC 12 345`  | Green plate                      |
 | International orgs (`OI`)      | `OI 123 45`  | Blue plate                       |
 | Technical-admin staff (`TA`)   | `TA 123 45`  | Yellow plate                     |
+| Provincial series (1971-2000)  | `M-1234-AB`  | Legacy; official province table  |
+| Provincial numeric (1900-1971) | `M-123456`   | Legacy; official province table  |
 
 Spanish diplomatic-regime plates validate the documented group widths only:
 no official public table of mission/organization prefixes exists. For `OI` and
@@ -39,12 +41,21 @@ no official public table of mission/organization prefixes exists. For `OI` and
 
 **🇵🇹 Portugal**
 
-| Type                    | Example    | Notes               |
-| ----------------------- | ---------- | ------------------- |
-| Current general series  | `AA 00 AA` | Since 2020-03-03    |
-| Historical — until 1992 | `AA-00-00` | Opt-in in detection |
-| Historical — 1992–2005  | `00-00-AA` | Opt-in in detection |
-| Historical — 2005–2020  | `00-AA-00` | Opt-in in detection |
+| Type                          | Example      | Notes                                |
+| ----------------------------- | ------------ | ------------------------------------ |
+| Current general series        | `AA 00 AA`   | Since 2020-03-03                     |
+| Historical — until 1992       | `AA-00-00`   | Opt-in in detection                  |
+| Historical — 1992–2005        | `00-00-AA`   | Opt-in in detection                  |
+| Historical — 2005–2020        | `00-AA-00`   | Opt-in in detection                  |
+| Trailers / semi-trailers      | `L 808970`   | Official regional-service code table |
+| Export                        | `24783 L`    | Yellow plate; customs letter L/P/A/M |
+| Industrial machines (2006-20) | `08-AM-08 A` | Red plate; circulation class A-H     |
+| Industrial machines (current) | `AA 08 AM B` | Red plate; circulation class A-H     |
+
+A Portuguese trailer plate with a two-letter service code and exactly four
+digits (`SE 1234`) shares its compact form with the pre-1992 general series
+(`SE-12-34`); libplate resolves it with the separators you wrote or reports
+`AMBIGUOUS`.
 
 **🇫🇷 France**
 
@@ -55,9 +66,20 @@ no official public table of mission/organization prefixes exists. For `OI` and
 
 **🇮🇹 Italy**
 
-| Type                    | Example     | Notes                            |
-| ----------------------- | ----------- | -------------------------------- |
-| Current ordinary series | `AA 000 AA` | Letters `I`,`O`,`Q`,`U` not used |
+| Type                      | Example      | Notes                                                           |
+| ------------------------- | ------------ | --------------------------------------------------------------- |
+| Current ordinary series   | `AA 000 AA`  | Letters `I`,`O`,`Q`,`U` not used; also trailer rears since 2013 |
+| Motorcycles               | `AA 12345`   | Shape shared with pre-2013 "Rimorchio" trailer plates           |
+| Mopeds (since 2006)       | `X5FJPD`     | Six characters from a base-28 set; personal plate               |
+| Agricultural machines     | `AE 123 B`   | Yellow plate                                                    |
+| Operating machines        | `AE B 123`   | Yellow plate, red characters                                    |
+| Escursionisti Esteri      | `EE 123 AB`  | `EE` + 3 digits + 1-2 letters                                   |
+| Test plates (targa prova) | `A1 P 23B45` | Since 2002                                                      |
+
+Since 2013 Italian trailers carry a rear plate with the ordinary-series
+structure; the X-initial lots are administratively reserved for them, but that
+allocation is not a format rule, so text alone cannot separate a trailer from
+a car (`vehicle.inferenceLevel` stays honest about this).
 
 **🇩🇪 Germany**
 
@@ -82,19 +104,28 @@ to resolve the split when present.
 
 **🇳🇱 Netherlands**
 
-| Type                     | Example    | Notes                                 |
-| ------------------------ | ---------- | ------------------------------------- |
-| Current series (2024)    | `XXX-99-X` | Yellow; no vowels, `C`, `Q`, `M`, `W` |
-| Sidecode 10 (since 2015) | `X-999-XX` |                                       |
-| Sidecode 9 (since 2011)  | `XX-999-X` |                                       |
-| Sidecode 8 (since 2006)  | `9-XXX-99` |                                       |
+| Type                      | Example    | Notes                                          |
+| ------------------------- | ---------- | ---------------------------------------------- |
+| Sidecode 12 (since 2021)  | `X-99-XXX` | Current for tractors, light commercial, mopeds |
+| Sidecode 11 (since 2015)  | `XXX-99-X` | Cars since 2024-06-04                          |
+| Sidecode 10 (since 2008)  | `X-999-XX` |                                                |
+| Sidecode 9 (since 2006)   | `XX-999-X` |                                                |
+| Sidecode 8 (since 2009)   | `9-XXX-99` |                                                |
+| Sidecodes 4-7 (1978-)     | `XX-99-XX` | Opt-in in detection; some still issued¹        |
+| Sidecodes 1-3 (1951-1978) | `XX-99-99` | Opt-in in detection; vowels were genuine       |
 
-**Not yet modelled** (references already staged in `docs/SOURCES.md`): Spanish
-state/military bodies and historical
-provincial series; French `W garage` and diplomatic series; Portuguese
-trailer/export/industrial-machine and diplomatic/military series; older Dutch
-sidecodes (1-7); German seasonal (`Saisonkennzeichen`), alternating
-(`Wechselkennzeichen`), green, Bundeswehr and diplomatic plates.
+¹ Sidecode 4 is still current for trailers, 6 for motorcycles, 7 for heavy
+trucks; they stay opt-in in country-less detection because their shapes
+collide with current series abroad (e.g. `XX-99-XX` ≡ the current Portuguese
+`AA-00-AA`). First-issuance dates follow the official RDW series tables
+(earliest category, not cars).
+
+**Not yet modelled**: Spanish state/military bodies; French `W garage` and
+diplomatic series; Portuguese diplomatic/military series and the pre-2013
+moped/motorcycle series; Italian diplomatic (`CD`/`CC`), Polizia Locale `Y`
+series, SMOM and pre-2002 test plates; German seasonal (`Saisonkennzeichen`),
+alternating (`Wechselkennzeichen`), green, Bundeswehr and diplomatic plates;
+Dutch special series (royal `AA`, `CD`, dealer/export plates).
 
 ## Install
 

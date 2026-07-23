@@ -3,7 +3,7 @@
 import type { MetadataBundle } from "../metadata/types.js";
 
 export const METADATA: MetadataBundle = {
-  "metadataVersion": "2026.07.2",
+  "metadataVersion": "2026.07.3",
   "tables": {
     "de-unterscheidungszeichen": [
       "A",
@@ -775,6 +775,89 @@ export const METADATA: MetadataBundle = {
       "ZS",
       "ZW",
       "ZZ"
+    ],
+    "es-provincias": [
+      "A",
+      "AB",
+      "AL",
+      "AV",
+      "B",
+      "BA",
+      "BI",
+      "BU",
+      "C",
+      "CA",
+      "CC",
+      "CE",
+      "CO",
+      "CR",
+      "CS",
+      "CU",
+      "GC",
+      "GE",
+      "GI",
+      "GR",
+      "GU",
+      "H",
+      "HU",
+      "IB",
+      "J",
+      "L",
+      "LE",
+      "LO",
+      "LU",
+      "M",
+      "MA",
+      "ML",
+      "MU",
+      "NA",
+      "O",
+      "OR",
+      "OU",
+      "P",
+      "PM",
+      "PO",
+      "S",
+      "SA",
+      "SE",
+      "SG",
+      "SH",
+      "SO",
+      "SS",
+      "T",
+      "TE",
+      "TF",
+      "TO",
+      "V",
+      "VA",
+      "VI",
+      "Z",
+      "ZA"
+    ],
+    "pt-reboque-servicos": [
+      "A",
+      "AN",
+      "AV",
+      "BE",
+      "BN",
+      "BR",
+      "C",
+      "CB",
+      "E",
+      "FA",
+      "GD",
+      "H",
+      "L",
+      "LE",
+      "M",
+      "P",
+      "PT",
+      "SA",
+      "SE",
+      "VC",
+      "VI",
+      "VR",
+      "VS"
     ]
   },
   "schemes": [
@@ -1162,7 +1245,7 @@ export const METADATA: MetadataBundle = {
         "valid": [
           "CC 12 345",
           "CC-07-89",
-          "CC1245"
+          "CC 12 45"
         ],
         "invalid": [
           "CC 123 4567",
@@ -1497,6 +1580,146 @@ export const METADATA: MetadataBundle = {
         ]
       },
       "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "ES_PROVINCIAL_1900_1971",
+      "country": "ES",
+      "name": "Serie provincial numérica (contraseña + número, 1900-1971)",
+      "registrationType": "ORDINARY",
+      "legacySeries": true,
+      "validFrom": "1900-09-17",
+      "validTo": "1971-10-06",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "province",
+          "type": "TABLE",
+          "table": "es-provincias"
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 6,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{province}-{serial}",
+        "compact": "{province}{serial}"
+      },
+      "sources": [
+        {
+          "id": "ES-CDC-1934",
+          "section": "Arts. 230-233"
+        },
+        {
+          "id": "ES-DGT-TYPES"
+        },
+        {
+          "id": "ES-D2046-1971",
+          "section": "Disposición transitoria 1.ª"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "M-123456",
+          "B-9",
+          "PM-45",
+          "SE-12345",
+          "O-654321"
+        ],
+        "invalid": [
+          "M-1234567",
+          "M-0123",
+          "XX-123",
+          "M-123456-A"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "ES_PROVINCIAL_1971_2000",
+      "country": "ES",
+      "name": "Serie provincial (contraseña + 4 cifras + 1-2 letras, 1971-2000)",
+      "registrationType": "ORDINARY",
+      "legacySeries": true,
+      "validFrom": "1971-10-07",
+      "validTo": "2000-09-16",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "province",
+          "type": "TABLE",
+          "table": "es-provincias"
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "length": 4
+        },
+        {
+          "name": "series",
+          "type": "LETTERS",
+          "minLength": 1,
+          "maxLength": 2,
+          "excluded": [
+            "Q"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{province}-{serial}-{series}",
+        "compact": "{province}{serial}{series}"
+      },
+      "sources": [
+        {
+          "id": "ES-D2046-1971",
+          "section": "Arts. 231-233 y Anexo 1"
+        },
+        {
+          "id": "ES-RGV",
+          "section": "Anexo XVIII, I.A.a (versión original) y II.A"
+        },
+        {
+          "id": "ES-ORD-2000"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "M-1234-AB",
+          "SE-0001-X",
+          "B-0000-A",
+          "GI-9999-BL",
+          "TF-6789-ZZ"
+        ],
+        "invalid": [
+          "M-123-AB",
+          "M-1234-ABC",
+          "M-1234-Q",
+          "XX-1234-AB",
+          "ET-1234-A"
+        ]
+      }
     },
     {
       "schemaVersion": 1,
@@ -2104,6 +2327,90 @@ export const METADATA: MetadataBundle = {
     },
     {
       "schemaVersion": 1,
+      "id": "IT_AGRICULTURAL",
+      "country": "IT",
+      "name": "Targa macchine agricole (AA 123 A)",
+      "registrationType": "ORDINARY",
+      "validFrom": "1994-01-01",
+      "vehicleInference": {
+        "category": "AGRICULTURAL_VEHICLE",
+        "level": "DETERMINISTIC",
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "two letters, three digits and one letter on a yellow plate"
+          }
+        ]
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "letters1",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "I",
+            "O",
+            "Q",
+            "U"
+          ],
+          "excludedValues": [
+            "EE"
+          ]
+        },
+        {
+          "name": "digits",
+          "type": "DIGITS",
+          "length": 3
+        },
+        {
+          "name": "letters2",
+          "type": "LETTERS",
+          "length": 1,
+          "excluded": [
+            "I",
+            "O",
+            "Q",
+            "U"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{letters1} {digits} {letters2}",
+        "compact": "{letters1}{digits}{letters2}"
+      },
+      "visual": {
+        "background": "YELLOW",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "IT-REG",
+          "section": "Appendice XII, lett. d) e f); art. 260"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "AE 123 B",
+          "BA 456 D",
+          "ZW 999 Z"
+        ],
+        "invalid": [
+          "AB 123 I",
+          "AB 12 CD",
+          "EE 123 A"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
       "id": "IT_CURRENT",
       "country": "IT",
       "name": "Targa automobilistica ordinaria (AA 000 AA)",
@@ -2129,6 +2436,9 @@ export const METADATA: MetadataBundle = {
             "O",
             "Q",
             "U"
+          ],
+          "excludedValues": [
+            "EE"
           ]
         },
         {
@@ -2159,11 +2469,15 @@ export const METADATA: MetadataBundle = {
       "sources": [
         {
           "id": "IT-CDS",
-          "section": "Art. 93"
+          "section": "Artt. 93 e 100"
         },
         {
           "id": "IT-REG",
-          "section": "Artt. 254-258"
+          "section": "Artt. 254-258 e Appendice XII, lett. a)"
+        },
+        {
+          "id": "IT-DPR198-2012",
+          "section": "Artt. 6-8"
         }
       ],
       "examples": {
@@ -2183,11 +2497,374 @@ export const METADATA: MetadataBundle = {
     },
     {
       "schemaVersion": 1,
+      "id": "IT_EE",
+      "country": "IT",
+      "name": "Targa Escursionisti Esteri (EE)",
+      "registrationType": "TOURIST",
+      "validFrom": "1994-01-01",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "EE"
+        },
+        {
+          "name": "digits",
+          "type": "DIGITS",
+          "length": 3
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "minLength": 1,
+          "maxLength": 2,
+          "excluded": [
+            "I",
+            "O",
+            "Q",
+            "U"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {digits} {letters}",
+        "compact": "{prefix}{digits}{letters}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "IT-CDS",
+          "section": "Art. 134"
+        },
+        {
+          "id": "IT-REG",
+          "section": "Appendice XII, lett. p) e s); art. 260"
+        },
+        {
+          "id": "IT-DPR198-2012",
+          "section": "Art. 6"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "EE 123 AB",
+          "EE 456 C",
+          "EE 000 ZZ"
+        ],
+        "invalid": [
+          "EE 123 AI",
+          "EE 12 AB",
+          "EE 1234 AB"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "IT_MOPED",
+      "country": "IT",
+      "name": "Targa ciclomotori (6 caratteri, dal 2006)",
+      "registrationType": "ORDINARY",
+      "validFrom": "2006-07-14",
+      "vehicleInference": {
+        "category": "MOPED_OR_MOTOR_CYCLE",
+        "level": "DETERMINISTIC",
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "six-character personal code"
+          }
+        ]
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "code",
+          "type": "CHARSET",
+          "length": 6,
+          "characters": "23456789BCDFGHJKLMNPRSTVWXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{code}",
+        "compact": "{code}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "IT-REG",
+          "section": "Art. 250 (testo del DPR 153/2006)"
+        },
+        {
+          "id": "IT-DPR153-2006"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "X22222",
+          "X5FJPD",
+          "9WBC47"
+        ],
+        "invalid": [
+          "X2222",
+          "A12345",
+          "X01BCD",
+          "XQ2345"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "IT_MOTORCYCLE",
+      "country": "IT",
+      "name": "Targa motoveicoli (AA 12345)",
+      "registrationType": "ORDINARY",
+      "validFrom": "1994-01-01",
+      "vehicleInference": {
+        "level": "VISUAL_EVIDENCE_REQUIRED",
+        "possibleCategories": [
+          "MOTORCYCLE",
+          "TRAILER_OR_SEMITRAILER"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "two letters followed by five digits"
+          }
+        ]
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "I",
+            "O",
+            "Q",
+            "U"
+          ]
+        },
+        {
+          "name": "digits",
+          "type": "DIGITS",
+          "length": 5
+        }
+      ],
+      "formats": {
+        "national": "{letters} {digits}",
+        "compact": "{letters}{digits}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "IT-REG",
+          "section": "Art. 257 e Appendice XII, lett. c)"
+        },
+        {
+          "id": "IT-DPR355-1998",
+          "section": "Art. 6 e fig. III 4/e"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "AB 12345",
+          "ZX 00042",
+          "FM 98765"
+        ],
+        "invalid": [
+          "AI 12345",
+          "AB 1234",
+          "AO 12345",
+          "AB 123456"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "IT_OPERATING_MACHINE",
+      "country": "IT",
+      "name": "Targa macchine operatrici (AA A 123)",
+      "registrationType": "ORDINARY",
+      "validFrom": "1994-01-01",
+      "vehicleInference": {
+        "category": "INDUSTRIAL_MACHINE",
+        "level": "DETERMINISTIC",
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "two letters, one letter and three digits on a yellow plate"
+          }
+        ]
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "letters1",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "I",
+            "O",
+            "Q",
+            "U"
+          ]
+        },
+        {
+          "name": "letter2",
+          "type": "LETTERS",
+          "length": 1,
+          "excluded": [
+            "I",
+            "O",
+            "Q",
+            "U"
+          ]
+        },
+        {
+          "name": "digits",
+          "type": "DIGITS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{letters1} {letter2} {digits}",
+        "compact": "{letters1}{letter2}{digits}"
+      },
+      "visual": {
+        "background": "YELLOW",
+        "foreground": "RED"
+      },
+      "sources": [
+        {
+          "id": "IT-REG",
+          "section": "Appendice XII, lett. e) e g); art. 260"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "AE B 123",
+          "BA C 456",
+          "ZW X 789"
+        ],
+        "invalid": [
+          "AB I 123",
+          "AB 123 C",
+          "AB CD 123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "IT_PROVA",
+      "country": "IT",
+      "name": "Targa prova (XX P XXXXX)",
+      "registrationType": "PROFESSIONAL_TEMPORARY",
+      "validFrom": "2002-02-14",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "code1",
+          "type": "CHARSET",
+          "length": 2,
+          "characters": "0123456789ABCDEFGHJKLMNPRSTVWXYZ"
+        },
+        {
+          "name": "p",
+          "type": "LITERAL",
+          "value": "P"
+        },
+        {
+          "name": "code2",
+          "type": "CHARSET",
+          "length": 5,
+          "characters": "0123456789ABCDEFGHJKLMNPRSTVWXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{code1} {p} {code2}",
+        "compact": "{code1}{p}{code2}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "IT-DPR474-2001",
+          "section": "Art. 2, comma 3"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "A1 P 23B45",
+          "00 P 00000"
+        ],
+        "invalid": [
+          "A1 X 23B45",
+          "A1 P 23B4",
+          "AI P 23B45"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
       "id": "NL_CURRENT",
       "country": "NL",
-      "name": "Serie actual (XXX-99-X, desde 2024)",
+      "name": "Serie XXX-99-X (sidecode 11, desde 2015)",
       "registrationType": "ORDINARY",
-      "validFrom": "2024-06-04",
+      "validFrom": "2015-01-16",
       "vehicleInference": {
         "level": "NOT_INFERABLE"
       },
@@ -2248,6 +2925,16 @@ export const METADATA: MetadataBundle = {
       "sources": [
         {
           "id": "NL-KENTEKEN"
+        },
+        {
+          "id": "NL-REGELING",
+          "section": "Art. 1"
+        },
+        {
+          "id": "NL-RDW-SERIES"
+        },
+        {
+          "id": "NL-RDW-LETTERS"
         }
       ],
       "examples": {
@@ -2267,11 +2954,84 @@ export const METADATA: MetadataBundle = {
     },
     {
       "schemaVersion": 1,
+      "id": "NL_SIDECODE_1",
+      "country": "NL",
+      "name": "Serie XX-99-99 (sidecode 1, desde 1951)",
+      "registrationType": "ORDINARY",
+      "legacySeries": true,
+      "validFrom": "1951-01-01",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "C",
+            "I",
+            "Q"
+          ]
+        },
+        {
+          "name": "digits1",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "digits2",
+          "type": "DIGITS",
+          "length": 2
+        }
+      ],
+      "formats": {
+        "national": "{letters}-{digits1}-{digits2}",
+        "compact": "{letters}{digits1}{digits2}"
+      },
+      "sources": [
+        {
+          "id": "NL-RDW-LETTERS"
+        },
+        {
+          "id": "NL-REGELING",
+          "section": "Art. 1"
+        },
+        {
+          "id": "NL-RDW-HIST"
+        },
+        {
+          "id": "NL-RDW-SERIES"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "ND-00-01",
+          "AB-00-84",
+          "ND 00 01"
+        ],
+        "invalid": [
+          "CA-12-34",
+          "ND-00-1",
+          "N1-00-01",
+          "ND-00-001"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
       "id": "NL_SIDECODE_10",
       "country": "NL",
-      "name": "Serie X-999-XX (sidecode 10, desde 2015)",
+      "name": "Serie X-999-XX (sidecode 10, desde 2008)",
       "registrationType": "ORDINARY",
-      "validFrom": "2015-01-01",
+      "validFrom": "2008-12-11",
       "vehicleInference": {
         "level": "NOT_INFERABLE"
       },
@@ -2332,6 +3092,16 @@ export const METADATA: MetadataBundle = {
       "sources": [
         {
           "id": "NL-KENTEKEN"
+        },
+        {
+          "id": "NL-REGELING",
+          "section": "Art. 1"
+        },
+        {
+          "id": "NL-RDW-SERIES"
+        },
+        {
+          "id": "NL-RDW-LETTERS"
         }
       ],
       "examples": {
@@ -2349,11 +3119,585 @@ export const METADATA: MetadataBundle = {
     },
     {
       "schemaVersion": 1,
+      "id": "NL_SIDECODE_12",
+      "country": "NL",
+      "name": "Serie X-99-XXX (sidecode 12, desde 2021)",
+      "registrationType": "ORDINARY",
+      "validFrom": "2021-12-01",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "letters1",
+          "type": "LETTERS",
+          "length": 1,
+          "excluded": [
+            "A",
+            "C",
+            "I",
+            "M",
+            "O",
+            "Q",
+            "U",
+            "W"
+          ]
+        },
+        {
+          "name": "digits",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "letters2",
+          "type": "LETTERS",
+          "length": 3,
+          "excluded": [
+            "A",
+            "C",
+            "I",
+            "M",
+            "O",
+            "Q",
+            "U",
+            "W"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{letters1}-{digits}-{letters2}",
+        "compact": "{letters1}{digits}{letters2}"
+      },
+      "visual": {
+        "background": "YELLOW",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "NL-RDW-LETTERS"
+        },
+        {
+          "id": "NL-REGELING",
+          "section": "Art. 1"
+        },
+        {
+          "id": "NL-RDW-SERIES"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "V-01-BBB",
+          "T-12-KLN",
+          "E-01-BBB"
+        ],
+        "invalid": [
+          "V-01-BB",
+          "VV-01-BBB",
+          "A-01-BBB",
+          "V-001-BBB"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "NL_SIDECODE_2",
+      "country": "NL",
+      "name": "Serie 99-99-XX (sidecode 2, desde 1965)",
+      "registrationType": "ORDINARY",
+      "legacySeries": true,
+      "validFrom": "1965-10-01",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "digits1",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "digits2",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "C",
+            "I",
+            "Q"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{digits1}-{digits2}-{letters}",
+        "compact": "{digits1}{digits2}{letters}"
+      },
+      "sources": [
+        {
+          "id": "NL-RDW-LETTERS"
+        },
+        {
+          "id": "NL-REGELING",
+          "section": "Art. 1"
+        },
+        {
+          "id": "NL-RDW-HIST"
+        },
+        {
+          "id": "NL-RDW-SERIES"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "00-01-AD",
+          "12-34-XZ"
+        ],
+        "invalid": [
+          "00-01-AC",
+          "0-01-AD",
+          "00-01-A",
+          "00-01-ADD"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "NL_SIDECODE_3",
+      "country": "NL",
+      "name": "Serie 99-XX-99 (sidecode 3, desde 1973)",
+      "registrationType": "ORDINARY",
+      "legacySeries": true,
+      "validFrom": "1973-09-03",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "digits1",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "C",
+            "I",
+            "Q"
+          ]
+        },
+        {
+          "name": "digits2",
+          "type": "DIGITS",
+          "length": 2
+        }
+      ],
+      "formats": {
+        "national": "{digits1}-{letters}-{digits2}",
+        "compact": "{digits1}{letters}{digits2}"
+      },
+      "sources": [
+        {
+          "id": "NL-RDW-LETTERS"
+        },
+        {
+          "id": "NL-REGELING",
+          "section": "Art. 1"
+        },
+        {
+          "id": "NL-RDW-HIST"
+        },
+        {
+          "id": "NL-RDW-SERIES"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "00-AD-01",
+          "12-XZ-34"
+        ],
+        "invalid": [
+          "12-QO-34",
+          "00-AD-1",
+          "00-A-01"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "NL_SIDECODE_4",
+      "country": "NL",
+      "name": "Serie XX-99-XX (sidecode 4, desde 1978)",
+      "registrationType": "ORDINARY",
+      "legacySeries": true,
+      "validFrom": "1978-10-01",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "letters1",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "A",
+            "C",
+            "E",
+            "I",
+            "Q",
+            "U"
+          ]
+        },
+        {
+          "name": "digits",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "letters2",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "A",
+            "C",
+            "E",
+            "I",
+            "Q",
+            "U"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{letters1}-{digits}-{letters2}",
+        "compact": "{letters1}{digits}{letters2}"
+      },
+      "visual": {
+        "background": "YELLOW",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "NL-RDW-LETTERS"
+        },
+        {
+          "id": "NL-REGELING",
+          "section": "Art. 1"
+        },
+        {
+          "id": "NL-RDW-HIST"
+        },
+        {
+          "id": "NL-RDW-SERIES"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "DB-01-BB",
+          "OB-12-BB",
+          "DB 01 BB"
+        ],
+        "invalid": [
+          "AB-12-CD",
+          "DB-1-BB",
+          "DB-01-B"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "NL_SIDECODE_5",
+      "country": "NL",
+      "name": "Serie XX-XX-99 (sidecode 5, desde 1991)",
+      "registrationType": "ORDINARY",
+      "legacySeries": true,
+      "validFrom": "1991-09-23",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "letters1",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "A",
+            "C",
+            "E",
+            "I",
+            "O",
+            "Q",
+            "U"
+          ]
+        },
+        {
+          "name": "letters2",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "A",
+            "C",
+            "E",
+            "I",
+            "O",
+            "Q",
+            "U"
+          ]
+        },
+        {
+          "name": "digits",
+          "type": "DIGITS",
+          "length": 2
+        }
+      ],
+      "formats": {
+        "national": "{letters1}-{letters2}-{digits}",
+        "compact": "{letters1}{letters2}{digits}"
+      },
+      "visual": {
+        "background": "YELLOW",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "NL-RDW-LETTERS"
+        },
+        {
+          "id": "NL-REGELING",
+          "section": "Art. 1"
+        },
+        {
+          "id": "NL-RDW-HIST"
+        },
+        {
+          "id": "NL-RDW-SERIES"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "DB-BB-01",
+          "XR-FG-99"
+        ],
+        "invalid": [
+          "EU-XX-99",
+          "DB-BB-1",
+          "DB-B1-01"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "NL_SIDECODE_6",
+      "country": "NL",
+      "name": "Serie 99-XX-XX (sidecode 6, desde 2000)",
+      "registrationType": "ORDINARY",
+      "legacySeries": true,
+      "validFrom": "2000-01-20",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "digits",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "letters1",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "A",
+            "C",
+            "E",
+            "I",
+            "O",
+            "Q",
+            "U"
+          ]
+        },
+        {
+          "name": "letters2",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "A",
+            "C",
+            "E",
+            "I",
+            "O",
+            "Q",
+            "U"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{digits}-{letters1}-{letters2}",
+        "compact": "{digits}{letters1}{letters2}"
+      },
+      "visual": {
+        "background": "YELLOW",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "NL-RDW-LETTERS"
+        },
+        {
+          "id": "NL-REGELING",
+          "section": "Art. 1"
+        },
+        {
+          "id": "NL-RDW-SERIES"
+        },
+        {
+          "id": "NL-RDW-HIST"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "01-DB-BB",
+          "12-MB-KL"
+        ],
+        "invalid": [
+          "01-AB-CD",
+          "1-DB-BB",
+          "01-DB-B"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "NL_SIDECODE_7",
+      "country": "NL",
+      "name": "Serie 99-XXX-9 (sidecode 7, desde 2005)",
+      "registrationType": "ORDINARY",
+      "legacySeries": true,
+      "validFrom": "2005-09-01",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "digits",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 3,
+          "excluded": [
+            "A",
+            "C",
+            "E",
+            "I",
+            "O",
+            "Q",
+            "U"
+          ]
+        },
+        {
+          "name": "digit",
+          "type": "DIGITS",
+          "length": 1
+        }
+      ],
+      "formats": {
+        "national": "{digits}-{letters}-{digit}",
+        "compact": "{digits}{letters}{digit}"
+      },
+      "visual": {
+        "background": "YELLOW",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "NL-RDW-LETTERS"
+        },
+        {
+          "id": "NL-REGELING",
+          "section": "Art. 1"
+        },
+        {
+          "id": "NL-RDW-SERIES"
+        },
+        {
+          "id": "NL-RDW-HIST"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "01-GBB-1",
+          "12-BDF-9"
+        ],
+        "invalid": [
+          "01-AEI-1",
+          "01-GB-1",
+          "01-GBB-12"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
       "id": "NL_SIDECODE_8",
       "country": "NL",
-      "name": "Serie 9-XXX-99 (sidecode 8, desde 2006)",
+      "name": "Serie 9-XXX-99 (sidecode 8, desde 2009)",
       "registrationType": "ORDINARY",
-      "validFrom": "2006-01-01",
+      "validFrom": "2009-02-26",
       "vehicleInference": {
         "level": "NOT_INFERABLE"
       },
@@ -2403,6 +3747,16 @@ export const METADATA: MetadataBundle = {
       "sources": [
         {
           "id": "NL-KENTEKEN"
+        },
+        {
+          "id": "NL-REGELING",
+          "section": "Art. 1"
+        },
+        {
+          "id": "NL-RDW-SERIES"
+        },
+        {
+          "id": "NL-RDW-LETTERS"
         }
       ],
       "examples": {
@@ -2422,9 +3776,9 @@ export const METADATA: MetadataBundle = {
       "schemaVersion": 1,
       "id": "NL_SIDECODE_9",
       "country": "NL",
-      "name": "Serie XX-999-X (sidecode 9, desde 2011)",
+      "name": "Serie XX-999-X (sidecode 9, desde 2006)",
       "registrationType": "ORDINARY",
-      "validFrom": "2011-01-01",
+      "validFrom": "2006-08-11",
       "vehicleInference": {
         "level": "NOT_INFERABLE"
       },
@@ -2485,6 +3839,16 @@ export const METADATA: MetadataBundle = {
       "sources": [
         {
           "id": "NL-KENTEKEN"
+        },
+        {
+          "id": "NL-REGELING",
+          "section": "Art. 1"
+        },
+        {
+          "id": "NL-RDW-SERIES"
+        },
+        {
+          "id": "NL-RDW-LETTERS"
         }
       ],
       "examples": {
@@ -2496,6 +3860,70 @@ export const METADATA: MetadataBundle = {
           "GB-01-B",
           "GA-001-B",
           "GBB-001-B"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "PT_EXPORT",
+      "country": "PT",
+      "name": "Veículos destinados à exportação (número + L/P/A/M)",
+      "registrationType": "EXPORT",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 5,
+          "noLeadingZero": true
+        },
+        {
+          "name": "office",
+          "type": "CHARSET",
+          "length": 1,
+          "characters": "ALMP"
+        }
+      ],
+      "formats": {
+        "national": "{serial} {office}",
+        "compact": "{serial}{office}"
+      },
+      "visual": {
+        "background": "YELLOW",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "PT-RULES",
+          "section": "Artigo 4.º, n.º 3; Artigo 6.º, n.º 1"
+        },
+        {
+          "id": "PT-2020",
+          "section": "Artigo 7.º (Anexo V renumerado como Anexo VI)"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "24783 L",
+          "98890 P",
+          "1234 M",
+          "507 A"
+        ],
+        "invalid": [
+          "24783 X",
+          "123456 L",
+          "01234 L"
         ]
       },
       "legacySeries": false
@@ -2752,6 +4180,238 @@ export const METADATA: MetadataBundle = {
           "1A-00-00"
         ]
       }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "PT_INDUSTRIAL_2006_2020",
+      "country": "PT",
+      "name": "Máquinas industriais (00-AA-00 + letra de classe, 2006-2020)",
+      "registrationType": "ORDINARY",
+      "legacySeries": true,
+      "validFrom": "2006-09-06",
+      "validTo": "2020-03-02",
+      "vehicleInference": {
+        "category": "INDUSTRIAL_MACHINE",
+        "level": "DETERMINISTIC",
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "general-series number followed by a circulation-class letter"
+          }
+        ]
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "digits1",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2
+        },
+        {
+          "name": "digits2",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "class",
+          "type": "CHARSET",
+          "length": 1,
+          "characters": "ABCDEFGH"
+        }
+      ],
+      "formats": {
+        "national": "{digits1}-{letters}-{digits2} {class}",
+        "compact": "{digits1}{letters}{digits2}{class}"
+      },
+      "visual": {
+        "background": "RED",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "PT-DL106-2006",
+          "section": "Artigo 3.º, n.º 3; Artigo 5.º, n.º 11"
+        },
+        {
+          "id": "PT-DL107-2006",
+          "section": "Anexo II"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "08-AM-08 A",
+          "74-VQ-11 C",
+          "99-ZZ-99 H"
+        ],
+        "invalid": [
+          "08-AM-08 K",
+          "08-AM-08",
+          "08-AM-08 AB"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "PT_INDUSTRIAL_CURRENT",
+      "country": "PT",
+      "name": "Máquinas industriais (AA 00 AA + letra de classe, desde 2020)",
+      "registrationType": "ORDINARY",
+      "validFrom": "2020-03-03",
+      "vehicleInference": {
+        "category": "INDUSTRIAL_MACHINE",
+        "level": "DETERMINISTIC",
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "general-series number followed by a circulation-class letter"
+          }
+        ]
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "letters1",
+          "type": "LETTERS",
+          "length": 2
+        },
+        {
+          "name": "digits",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "letters2",
+          "type": "LETTERS",
+          "length": 2
+        },
+        {
+          "name": "class",
+          "type": "CHARSET",
+          "length": 1,
+          "characters": "ABCDEFGH"
+        }
+      ],
+      "formats": {
+        "national": "{letters1} {digits} {letters2} {class}",
+        "compact": "{letters1}{digits}{letters2}{class}"
+      },
+      "visual": {
+        "background": "RED",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "PT-DL106-2006",
+          "section": "Artigo 3.º, n.º 3; Artigo 5.º, n.º 11"
+        },
+        {
+          "id": "PT-DL107-2006",
+          "section": "Anexo II"
+        },
+        {
+          "id": "PT-2020",
+          "section": "Anexo V, Modelos VII e VIII"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "AA 08 AM B",
+          "BB 12 CD A"
+        ],
+        "invalid": [
+          "AA 08 AM K",
+          "AA 08 AM",
+          "AA 08 A B"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "PT_TRAILER",
+      "country": "PT",
+      "name": "Reboques e semirreboques (serviço regional + número de ordem)",
+      "registrationType": "ORDINARY",
+      "vehicleInference": {
+        "category": "TRAILER_OR_SEMITRAILER",
+        "level": "DETERMINISTIC",
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "regional-service letters followed by an order number"
+          }
+        ]
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "service",
+          "type": "TABLE",
+          "table": "pt-reboque-servicos"
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 6,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{service} {serial}",
+        "compact": "{service}{serial}"
+      },
+      "sources": [
+        {
+          "id": "PT-RULES",
+          "section": "Artigo 4.º, n.º 1; Anexo I"
+        },
+        {
+          "id": "PT-DL106-2006",
+          "section": "Anexo I"
+        },
+        {
+          "id": "PT-2020",
+          "section": "Anexo V, Modelo III"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "L 808970",
+          "AV 12345",
+          "C 4501",
+          "VI 221"
+        ],
+        "invalid": [
+          "XY 12345",
+          "L 8089701",
+          "L 034501"
+        ]
+      },
+      "legacySeries": false
     }
   ]
 };

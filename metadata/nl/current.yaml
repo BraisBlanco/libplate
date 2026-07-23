@@ -1,9 +1,11 @@
 schemaVersion: 1
 id: NL_CURRENT
 country: NL
-name: Serie actual (XXX-99-X, desde 2024)
+name: Serie XXX-99-X (sidecode 11, desde 2015)
 registrationType: ORDINARY
-validFrom: "2024-06-04"
+# First issued for mopeds 2015-01-16; light commercial 2019-06-13; cars
+# 2024-06-04.
+validFrom: "2015-01-16"
 vehicleInference:
   level: NOT_INFERABLE
 normalization:
@@ -34,6 +36,10 @@ visual:
   foreground: BLACK
 sources:
   - id: NL-KENTEKEN
+  - id: NL-REGELING
+    section: "Art. 1"
+  - id: NL-RDW-SERIES
+  - id: NL-RDW-LETTERS
 examples:
   valid:
     - "GBB-01-B"

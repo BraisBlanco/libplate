@@ -1,0 +1,59 @@
+schemaVersion: 1
+id: PT_TRAILER
+country: PT
+name: Reboques e semirreboques (serviço regional + número de ordem)
+registrationType: ORDINARY
+# No validFrom: the lettered trailer series predates its current legal basis
+# (it existed under the 1954 Regulamento do Código da Estrada); the citable
+# text is DL 54/2005, art. 4.º n.º 1, unchanged since and still in force — the
+# IMT confirms trailers remain outside the three-group general series.
+vehicleInference:
+  # "Reboques" covers trailers and semi-trailers; the text cannot separate
+  # them.
+  category: TRAILER_OR_SEMITRAILER
+  level: DETERMINISTIC
+  evidence:
+    - type: PATTERN
+      value: regional-service letters followed by an order number
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: service
+    type: TABLE
+    table: pt-reboque-servicos
+  # Art. 4.º n.º 1 fixes no digit count; the official model drawing (Anexo V,
+  # Modelo III of DL 2/2020) shows a six-digit example ("L 808970"), so up to
+  # six digits are accepted.
+  - name: serial
+    type: DIGITS
+    minLength: 1
+    maxLength: 6
+    noLeadingZero: true
+# No `visual`: plates in circulation span the black pre-1992 models and the
+# white retroreflective models issued since, so no single colour scheme holds.
+formats:
+  national: "{service} {serial}"
+  compact: "{service}{serial}"
+sources:
+  - id: PT-RULES
+    section: "Artigo 4.º, n.º 1; Anexo I"
+  - id: PT-DL106-2006
+    section: "Anexo I"
+  - id: PT-2020
+    section: "Anexo V, Modelo III"
+examples:
+  # CAUTION: a two-letter service code plus exactly four digits (e.g. SE 1234)
+  # shares its compact form with the pre-1992 general series (SE-12-34); such
+  # inputs resolve via separator evidence or report AMBIGUOUS_SEGMENTATION.
+  valid:
+    - "L 808970"
+    - "AV 12345"
+    - "C 4501"
+    - "VI 221"
+  invalid:
+    - "XY 12345"
+    - "L 8089701"
+    - "L 034501"

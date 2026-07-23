@@ -1,0 +1,83 @@
+{
+  "id": "es-provincias",
+  "description": "Spanish provincial plate codes (contraseñas de provincia), union of the official lists: Código de la Circulación 1934 art. 233 (52 codes), Decreto 2046/1971 art. 233 (adds SH, Sahara), and RGV 1999 Anexo XVIII II.A (renames GE→GI in 1992 per RD 567/1992, PM→IB in 1997 per RD 1209/1997, OR→OU in 1999). Per-code validity windows (GE until 1992-06-09, GI from 1992-06-10, PM until 1997-08-05, IB from 1997-08-06, OR until 1999-07-25, OU from 1999-07-26, SH only 1971-c.1976) cannot be expressed here and are not enforced.",
+  "sources": [
+    {
+      "id": "ES-CDC-1934",
+      "section": "Art. 233"
+    },
+    {
+      "id": "ES-D2046-1971",
+      "section": "Art. 233"
+    },
+    {
+      "id": "ES-RGV",
+      "section": "Anexo XVIII, II.A (versión original)"
+    },
+    {
+      "id": "ES-RD567-1992"
+    },
+    {
+      "id": "ES-RD1209-1997"
+    }
+  ],
+  "sourceCheckedAt": "2026-07-23",
+  "values": [
+    "A",
+    "AB",
+    "AL",
+    "AV",
+    "B",
+    "BA",
+    "BI",
+    "BU",
+    "C",
+    "CA",
+    "CC",
+    "CE",
+    "CO",
+    "CR",
+    "CS",
+    "CU",
+    "GC",
+    "GE",
+    "GI",
+    "GR",
+    "GU",
+    "H",
+    "HU",
+    "IB",
+    "J",
+    "L",
+    "LE",
+    "LO",
+    "LU",
+    "M",
+    "MA",
+    "ML",
+    "MU",
+    "NA",
+    "O",
+    "OR",
+    "OU",
+    "P",
+    "PM",
+    "PO",
+    "S",
+    "SA",
+    "SE",
+    "SG",
+    "SH",
+    "SO",
+    "SS",
+    "T",
+    "TE",
+    "TF",
+    "TO",
+    "V",
+    "VA",
+    "VI",
+    "Z",
+    "ZA"
+  ]
+}

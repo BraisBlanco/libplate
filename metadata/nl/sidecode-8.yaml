@@ -1,9 +1,10 @@
 schemaVersion: 1
 id: NL_SIDECODE_8
 country: NL
-name: Serie 9-XXX-99 (sidecode 8, desde 2006)
+name: Serie 9-XXX-99 (sidecode 8, desde 2009)
 registrationType: ORDINARY
-validFrom: "2006-01-01"
+# First issued for light commercial vehicles 2009-02-26; cars 2013-03-05.
+validFrom: "2009-02-26"
 vehicleInference:
   level: NOT_INFERABLE
 normalization:
@@ -30,6 +31,10 @@ visual:
   foreground: BLACK
 sources:
   - id: NL-KENTEKEN
+  - id: NL-REGELING
+    section: "Art. 1"
+  - id: NL-RDW-SERIES
+  - id: NL-RDW-LETTERS
 examples:
   valid:
     - "1-KBB-00"

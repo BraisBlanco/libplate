@@ -1,0 +1,56 @@
+schemaVersion: 1
+id: NL_SIDECODE_4
+country: NL
+name: Serie XX-99-XX (sidecode 4, desde 1978)
+registrationType: ORDINARY
+# Legacy for detection purposes only: cars left this shape in 1991, but it is
+# STILL the current series for trailers (aanhangwagens, first letter W) and
+# semi-trailers (opleggers, first letter O) since 1988-10-01. It also shares
+# its compact shape with the current Portuguese AA-00-AA series, so keeping it
+# opt-in in country-less detection avoids blanket NL/PT ambiguity.
+legacySeries: true
+validFrom: "1978-10-01"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # Vowels are banned from sidecode 4 onward (RDW), with one official
+  # exception: the letter O is used for oplegger plates in this shape, so O
+  # stays allowed. C and Q are never used. Per-position first-letter category
+  # allocations and reserved combinations are not modelled.
+  - name: letters1
+    type: LETTERS
+    length: 2
+    excluded: [A, C, E, I, Q, U]
+  - name: digits
+    type: DIGITS
+    length: 2
+  - name: letters2
+    type: LETTERS
+    length: 2
+    excluded: [A, C, E, I, Q, U]
+formats:
+  national: "{letters1}-{digits}-{letters2}"
+  compact: "{letters1}{digits}{letters2}"
+visual:
+  background: YELLOW
+  foreground: BLACK
+sources:
+  - id: NL-RDW-LETTERS
+  - id: NL-REGELING
+    section: "Art. 1"
+  - id: NL-RDW-HIST
+  - id: NL-RDW-SERIES
+examples:
+  valid:
+    - "DB-01-BB"
+    - "OB-12-BB"
+    - "DB 01 BB"
+  invalid:
+    - "AB-12-CD"
+    - "DB-1-BB"
+    - "DB-01-B"

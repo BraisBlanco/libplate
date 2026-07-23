@@ -1,9 +1,11 @@
 schemaVersion: 1
 id: NL_SIDECODE_9
 country: NL
-name: Serie XX-999-X (sidecode 9, desde 2011)
+name: Serie XX-999-X (sidecode 9, desde 2006)
 registrationType: ORDINARY
-validFrom: "2011-01-01"
+# First issued for mopeds 2006-08-11; light commercial 2012-12-12; cars
+# 2015-03-30.
+validFrom: "2006-08-11"
 vehicleInference:
   level: NOT_INFERABLE
 normalization:
@@ -31,6 +33,10 @@ visual:
   foreground: BLACK
 sources:
   - id: NL-KENTEKEN
+  - id: NL-REGELING
+    section: "Art. 1"
+  - id: NL-RDW-SERIES
+  - id: NL-RDW-LETTERS
 examples:
   valid:
     - "GB-001-B"

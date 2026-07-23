@@ -1,0 +1,57 @@
+schemaVersion: 1
+id: IT_OPERATING_MACHINE
+country: IT
+name: Targa macchine operatrici (AA A 123)
+registrationType: ORDINARY
+# Approximate: the format belongs to the 1992 regulation's plate system,
+# rolled out during the 1990s.
+validFrom: "1994-01-01"
+vehicleInference:
+  # Self-propelled operating machines carry this plate; towed operating
+  # machines carry the same structure preceded by the red script "Macc. Op.".
+  category: INDUSTRIAL_MACHINE
+  level: DETERMINISTIC
+  evidence:
+    - type: PATTERN
+      value: two letters, one letter and three digits on a yellow plate
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # Appendice XII alphabet: I, O, Q, U excluded.
+  - name: letters1
+    type: LETTERS
+    length: 2
+    excluded: [I, O, Q, U]
+  - name: letter2
+    type: LETTERS
+    length: 1
+    excluded: [I, O, Q, U]
+  - name: digits
+    type: DIGITS
+    length: 3
+formats:
+  national: "{letters1} {letter2} {digits}"
+  compact: "{letters1}{letter2}{digits}"
+visual:
+  # Art. 260: yellow background; the mark and all characters are red.
+  background: YELLOW
+  foreground: RED
+sources:
+  - id: IT-REG
+    section: "Appendice XII, lett. e) e g); art. 260"
+examples:
+  # Examples are written with separators: a compact form whose characters all
+  # fall in the moped base-28 set is otherwise ambiguous with IT_MOPED, and
+  # the compact LLL+DDD shape also reads as a German plate in country-less
+  # detection.
+  valid:
+    - "AE B 123"
+    - "BA C 456"
+    - "ZW X 789"
+  invalid:
+    - "AB I 123"
+    - "AB 123 C"
+    - "AB CD 123"

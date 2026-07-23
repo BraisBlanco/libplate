@@ -1,0 +1,56 @@
+schemaVersion: 1
+id: NL_SIDECODE_1
+country: NL
+name: Serie XX-99-99 (sidecode 1, desde 1951)
+registrationType: ORDINARY
+legacySeries: true
+# First national series; first plates issued 1951-01-01 (ND-00-01 et al.).
+# No validTo: the RDW publishes no end dates (each category leaves a series
+# only when its range is full), and vehicles first admitted before 1978 can
+# still receive plates from these ranges today.
+validFrom: "1951-01-01"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # Sidecodes 1-3 predate the vowel ban (RDW: vowels disappear "sinds
+  # kentekencombinatie 4"), so vowels are genuine here (e.g. AB-00-84).
+  # C and Q are never used (they resemble 0); I is absent from the register.
+  # The full alphabet is not stated officially — this is register-informed
+  # and deliberately permissive. Reserved combinations (SS, SA, …) are not
+  # modelled, matching the other NL schemes.
+  - name: letters
+    type: LETTERS
+    length: 2
+    excluded: [C, I, Q]
+  - name: digits1
+    type: DIGITS
+    length: 2
+  - name: digits2
+    type: DIGITS
+    length: 2
+# No `visual`: originally white on dark blue, but yellow retroreflective
+# replacements/reissues are lawful, so no single colour scheme holds.
+formats:
+  national: "{letters}-{digits1}-{digits2}"
+  compact: "{letters}{digits1}{digits2}"
+sources:
+  - id: NL-RDW-LETTERS
+  - id: NL-REGELING
+    section: "Art. 1"
+  - id: NL-RDW-HIST
+  - id: NL-RDW-SERIES
+examples:
+  valid:
+    - "ND-00-01"
+    - "AB-00-84"
+    - "ND 00 01"
+  invalid:
+    - "CA-12-34"
+    - "ND-00-1"
+    - "N1-00-01"
+    - "ND-00-001"

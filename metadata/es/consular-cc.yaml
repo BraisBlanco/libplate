@@ -37,10 +37,14 @@ sources:
     section: "Anexo XVIII, I.B.a) 3.º"
   - id: ES-DGT-TYPES
 examples:
+  # CAUTION: a compact CC + 4 digits form (e.g. CC1245) is genuinely ambiguous
+  # with the pre-1971 Cáceres provincial series (CC-1245); it resolves via
+  # separator evidence or reports AMBIGUOUS. Compact CC + digits also reads as
+  # a German C-… plate in country-less detection.
   valid:
     - "CC 12 345"
     - "CC-07-89"
-    - "CC1245"
+    - "CC 12 45"
   invalid:
     - "CC 123 4567"
     - "CC 123"

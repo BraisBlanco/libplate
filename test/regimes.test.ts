@@ -148,6 +148,46 @@ describe("Spain — diplomatic regime (CD/CC/OI/TA)", () => {
   });
 });
 
+describe("Spain — provincial series", () => {
+  it("validates the 1971-2000 series with one or two serial letters", () => {
+    const two = parse("M-1234-AB", { country: "ES" });
+    expect(two.status).toBe("VALID");
+    expect(two.scheme?.id).toBe("ES_PROVINCIAL_1971_2000");
+    expect(parse("B-0000-A", { country: "ES" }).scheme?.id).toBe(
+      "ES_PROVINCIAL_1971_2000",
+    );
+  });
+
+  it("validates the pre-1971 numeric series", () => {
+    expect(parse("M-123456", { country: "ES" }).scheme?.id).toBe(
+      "ES_PROVINCIAL_1900_1971",
+    );
+    expect(parse("B-9", { country: "ES" }).scheme?.id).toBe("ES_PROVINCIAL_1900_1971");
+  });
+
+  it("rejects codes outside the official province table", () => {
+    expect(parse("XX-1234-AB", { country: "ES" }).status).toBe("INVALID");
+    expect(parse("ET-1234-A", { country: "ES" }).status).toBe("INVALID");
+  });
+
+  it("keeps provincial series opt-in in country-less detection", () => {
+    expect(detect("M-1234-AB").status).toBe("INVALID");
+    expect(detect("M-1234-AB", { includeHistorical: true }).scheme?.id).toBe(
+      "ES_PROVINCIAL_1971_2000",
+    );
+  });
+
+  it("reports the compact CC overlap with the consular series", () => {
+    // CC + four digits is a Cáceres pre-1971 plate and a compact consular
+    // form at once; the separators decide.
+    expect(parse("CC1245", { country: "ES" }).status).toBe("AMBIGUOUS");
+    expect(parse("CC 12 45", { country: "ES" }).scheme?.id).toBe("ES_CONSULAR_CC");
+    // "CC-1245" stays ambiguous: its single separator is a boundary of both
+    // readings, and separators never reject an otherwise-consistent match.
+    expect(parse("CC-1245", { country: "ES" }).status).toBe("AMBIGUOUS");
+  });
+});
+
 describe("Portugal — historical series", () => {
   it("validates a historical series when the country is given", () => {
     const result = parse("00-00-AA", { country: "PT" });
@@ -161,9 +201,14 @@ describe("Portugal — historical series", () => {
   });
 
   it("includes historical series when explicitly requested", () => {
+    // With legacy series opted in, XX-99-99 is shared with Dutch sidecode 1,
+    // so country-less detection reports both candidates.
     const result = detect("AA-00-00", { includeHistorical: true });
-    expect(result.status).toBe("VALID");
-    expect(result.scheme?.id).toBe("PT_GENERAL_UNTIL_1992");
+    expect(result.status).toBe("AMBIGUOUS");
+    const countries = result.candidates?.map((c) => c.country).sort();
+    expect(countries).toEqual(["NL", "PT"]);
+    // A country hint resolves it.
+    expect(parse("AA-00-00", { country: "PT" }).scheme?.id).toBe("PT_GENERAL_UNTIL_1992");
   });
 
   it("honours the reference date within a historical period", () => {

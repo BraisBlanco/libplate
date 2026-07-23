@@ -1,0 +1,56 @@
+schemaVersion: 1
+id: PT_INDUSTRIAL_CURRENT
+country: PT
+name: Máquinas industriais (AA 00 AA + letra de classe, desde 2020)
+registrationType: ORDINARY
+# The machine number follows the general series (art. 3.º n.º 3), which moved
+# to AA 00 AA on 2020-03-03; the DL 2/2020 model drawing shows "AA08AM" plus
+# the class letter.
+validFrom: "2020-03-03"
+vehicleInference:
+  category: INDUSTRIAL_MACHINE
+  level: DETERMINISTIC
+  evidence:
+    - type: PATTERN
+      value: general-series number followed by a circulation-class letter
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: letters1
+    type: LETTERS
+    length: 2
+  - name: digits
+    type: DIGITS
+    length: 2
+  - name: letters2
+    type: LETTERS
+    length: 2
+  # Classes de circulação (DL 107/2006, Anexo II); see the 2006-2020 scheme.
+  - name: class
+    type: CHARSET
+    length: 1
+    characters: ABCDEFGH
+formats:
+  national: "{letters1} {digits} {letters2} {class}"
+  compact: "{letters1}{digits}{letters2}{class}"
+visual:
+  background: RED
+  foreground: BLACK
+sources:
+  - id: PT-DL106-2006
+    section: "Artigo 3.º, n.º 3; Artigo 5.º, n.º 11"
+  - id: PT-DL107-2006
+    section: "Anexo II"
+  - id: PT-2020
+    section: "Anexo V, Modelos VII e VIII"
+examples:
+  valid:
+    - "AA 08 AM B"
+    - "BB 12 CD A"
+  invalid:
+    - "AA 08 AM K"
+    - "AA 08 AM"
+    - "AA 08 A B"

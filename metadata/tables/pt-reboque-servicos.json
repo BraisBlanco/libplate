@@ -1,0 +1,40 @@
+{
+  "id": "pt-reboque-servicos",
+  "description": "Letter codes of the regional services that register Portuguese trailers (Anexo I of the Regulamento approved by DL 54/2005: 'Tabela de dígitos identificadores dos serviços emissores de matrículas de reboques'). The original 2005 annex assigns Viseu 'VS'; the replacement annex enacted by DL 106/2006 assigns Viseu 'VI'. Both are kept, since plates issued before June 2006 legitimately carry VS.",
+  "sources": [
+    {
+      "id": "PT-RULES",
+      "section": "Anexo I"
+    },
+    {
+      "id": "PT-DL106-2006",
+      "section": "Anexo I"
+    }
+  ],
+  "sourceCheckedAt": "2026-07-23",
+  "values": [
+    "A",
+    "AN",
+    "AV",
+    "BE",
+    "BN",
+    "BR",
+    "C",
+    "CB",
+    "E",
+    "FA",
+    "GD",
+    "H",
+    "L",
+    "LE",
+    "M",
+    "P",
+    "PT",
+    "SA",
+    "SE",
+    "VC",
+    "VI",
+    "VR",
+    "VS"
+  ]
+}

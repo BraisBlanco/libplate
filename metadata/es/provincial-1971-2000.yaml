@@ -1,0 +1,63 @@
+schemaVersion: 1
+id: ES_PROVINCIAL_1971_2000
+country: ES
+name: Serie provincial (contraseña + 4 cifras + 1-2 letras, 1971-2000)
+registrationType: ORDINARY
+legacySeries: true
+# Art. 231.I of the Código de la Circulación as rewritten by Decreto
+# 2046/1971, in force 1971-10-07; superseded by the national series when the
+# Orden de 15-9-2000 entered into force on 2000-09-17. Plates already issued
+# were kept indefinitely.
+validFrom: "1971-10-07"
+validTo: "2000-09-16"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # Per-code validity windows (GE/GI, PM/IB, OR/OU, SH) are not enforced; see
+  # the table description.
+  - name: province
+    type: TABLE
+    table: es-provincias
+  # Explicitly zero-padded: "un número de cuatro cifras, que irá desde el
+  # 0000 al 9999".
+  - name: serial
+    type: DIGITS
+    length: 4
+  # "Una o dos letras de una serie, que comienza por la letra A y termina por
+  # las letras ZZ". The law excludes only "letras que puedan dar lugar a
+  # confusión" without enumerating them; the homologated character font
+  # (Anexo 1 of the Decreto) has no Q or Ñ, so Q is the only enforceable
+  # exclusion. Practice-level restrictions (no vowels or R as second letter,
+  # etc.) are documented only unofficially and are not modelled.
+  - name: series
+    type: LETTERS
+    minLength: 1
+    maxLength: 2
+    excluded: [Q]
+formats:
+  national: "{province}-{serial}-{series}"
+  compact: "{province}{serial}{series}"
+sources:
+  - id: ES-D2046-1971
+    section: "Arts. 231-233 y Anexo 1"
+  - id: ES-RGV
+    section: "Anexo XVIII, I.A.a (versión original) y II.A"
+  - id: ES-ORD-2000
+examples:
+  valid:
+    - "M-1234-AB"
+    - "SE-0001-X"
+    - "B-0000-A"
+    - "GI-9999-BL"
+    - "TF-6789-ZZ"
+  invalid:
+    - "M-123-AB"
+    - "M-1234-ABC"
+    - "M-1234-Q"
+    - "XX-1234-AB"
+    - "ET-1234-A"

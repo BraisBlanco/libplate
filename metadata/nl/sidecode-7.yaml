@@ -1,0 +1,49 @@
+schemaVersion: 1
+id: NL_SIDECODE_7
+country: NL
+name: Serie 99-XXX-9 (sidecode 7, desde 2005)
+registrationType: ORDINARY
+# Legacy for detection purposes only: first issued 2005-09-01 (mopeds), cars
+# 2008-2013, and STILL the current series for heavy commercial vehicles
+# (first letter B) since 2012-07-20.
+legacySeries: true
+validFrom: "2005-09-01"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: digits
+    type: DIGITS
+    length: 2
+  # Modern alphabet; see the sidecode-5 note.
+  - name: letters
+    type: LETTERS
+    length: 3
+    excluded: [A, C, E, I, O, Q, U]
+  - name: digit
+    type: DIGITS
+    length: 1
+formats:
+  national: "{digits}-{letters}-{digit}"
+  compact: "{digits}{letters}{digit}"
+visual:
+  background: YELLOW
+  foreground: BLACK
+sources:
+  - id: NL-RDW-LETTERS
+  - id: NL-REGELING
+    section: "Art. 1"
+  - id: NL-RDW-SERIES
+  - id: NL-RDW-HIST
+examples:
+  valid:
+    - "01-GBB-1"
+    - "12-BDF-9"
+  invalid:
+    - "01-AEI-1"
+    - "01-GB-1"
+    - "01-GBB-12"

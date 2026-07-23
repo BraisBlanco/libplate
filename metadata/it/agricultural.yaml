@@ -1,0 +1,60 @@
+schemaVersion: 1
+id: IT_AGRICULTURAL
+country: IT
+name: Targa macchine agricole (AA 123 A)
+registrationType: ORDINARY
+# Approximate: the format belongs to the 1992 regulation's plate system,
+# rolled out during the 1990s.
+validFrom: "1994-01-01"
+vehicleInference:
+  # Self-propelled agricultural machines carry this plate; agricultural
+  # trailers carry the same alphanumeric structure preceded by the red script
+  # "Rim. Agr." — both are agricultural vehicles.
+  category: AGRICULTURAL_VEHICLE
+  level: DETERMINISTIC
+  evidence:
+    - type: PATTERN
+      value: two letters, three digits and one letter on a yellow plate
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # Appendice XII alphabet: I, O, Q, U excluded. EE is excluded as a first
+  # group because EE + 3 digits + 1 letter is the Escursionisti Esteri
+  # motorcycle series (Appendice XII, lett. s).
+  - name: letters1
+    type: LETTERS
+    length: 2
+    excluded: [I, O, Q, U]
+    excludedValues: [EE]
+  - name: digits
+    type: DIGITS
+    length: 3
+  - name: letters2
+    type: LETTERS
+    length: 1
+    excluded: [I, O, Q, U]
+formats:
+  national: "{letters1} {digits} {letters2}"
+  compact: "{letters1}{digits}{letters2}"
+visual:
+  # Art. 260: yellow background; black characters.
+  background: YELLOW
+  foreground: BLACK
+sources:
+  - id: IT-REG
+    section: "Appendice XII, lett. d) e f); art. 260"
+examples:
+  # Examples are written with separators: a compact form whose characters all
+  # fall in the moped base-28 set (e.g. BB234C) is otherwise ambiguous with
+  # IT_MOPED and resolves via separator evidence.
+  valid:
+    - "AE 123 B"
+    - "BA 456 D"
+    - "ZW 999 Z"
+  invalid:
+    - "AB 123 I"
+    - "AB 12 CD"
+    - "EE 123 A"

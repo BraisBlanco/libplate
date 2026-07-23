@@ -1,0 +1,52 @@
+schemaVersion: 1
+id: IT_MOPED
+country: IT
+name: Targa ciclomotori (6 caratteri, dal 2006)
+registrationType: ORDINARY
+# Art. 250 of DPR 495/1992 as replaced by DPR 153/2006, in force 2006-07-14.
+# The plate is personal (tied to the holder, not the vehicle). The 5-character
+# hexagonal "targhino" (1993-2006) is invalid for circulation since
+# 2012-02-13 (DM 2 febbraio 2011) and is not modelled.
+validFrom: "2006-07-14"
+vehicleInference:
+  # A 6-character personal code exists only for ciclomotori.
+  category: MOPED_OR_MOTOR_CYCLE
+  level: DETERMINISTIC
+  evidence:
+    - type: PATTERN
+      value: six-character personal code
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # Art. 250 fixes "sei caratteri alfanumerici" and delegates the progression
+  # to the transport department; the character base — digits 2-9 plus the
+  # consonants (no vowels, Q, 0 or 1) — comes from the annexed tabella III 2
+  # and the issued series (first plate X22222). Positions are not typed:
+  # letters and digits may appear anywhere.
+  - name: code
+    type: CHARSET
+    length: 6
+    characters: 23456789BCDFGHJKLMNPRSTVWXYZ
+formats:
+  national: "{code}"
+  compact: "{code}"
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: IT-REG
+    section: "Art. 250 (testo del DPR 153/2006)"
+  - id: IT-DPR153-2006
+examples:
+  valid:
+    - "X22222"
+    - "X5FJPD"
+    - "9WBC47"
+  invalid:
+    - "X2222"
+    - "A12345"
+    - "X01BCD"
+    - "XQ2345"

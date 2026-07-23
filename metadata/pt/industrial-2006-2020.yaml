@@ -1,0 +1,64 @@
+schemaVersion: 1
+id: PT_INDUSTRIAL_2006_2020
+country: PT
+name: Máquinas industriais (00-AA-00 + letra de classe, 2006-2020)
+registrationType: ORDINARY
+legacySeries: true
+# Machine plates were introduced by DL 106/2006, effective with its
+# regulation (DL 107/2006, in force 2006-09-06). The number follows the
+# general series of the day (00-AA-00 until 2020-03-02), plus a circulation
+# class letter.
+validFrom: "2006-09-06"
+validTo: "2020-03-02"
+vehicleInference:
+  # The class-letter suffix exists only on industrial-machine plates
+  # (including towable machines).
+  category: INDUSTRIAL_MACHINE
+  level: DETERMINISTIC
+  evidence:
+    - type: PATTERN
+      value: general-series number followed by a circulation-class letter
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: digits1
+    type: DIGITS
+    length: 2
+  - name: letters
+    type: LETTERS
+    length: 2
+  - name: digits2
+    type: DIGITS
+    length: 2
+  # Classes de circulação (DL 107/2006, Anexo II): A-D for machines up to
+  # 40 km/h, E-H above. Displayed in a separate compartment at the right end
+  # of the plate.
+  - name: class
+    type: CHARSET
+    length: 1
+    characters: ABCDEFGH
+formats:
+  national: "{digits1}-{letters}-{digits2} {class}"
+  compact: "{digits1}{letters}{digits2}{class}"
+visual:
+  # Art. 5.º n.º 11: red plate, black characters. The class-letter compartment
+  # is yellow in the official drawings.
+  background: RED
+  foreground: BLACK
+sources:
+  - id: PT-DL106-2006
+    section: "Artigo 3.º, n.º 3; Artigo 5.º, n.º 11"
+  - id: PT-DL107-2006
+    section: "Anexo II"
+examples:
+  valid:
+    - "08-AM-08 A"
+    - "74-VQ-11 C"
+    - "99-ZZ-99 H"
+  invalid:
+    - "08-AM-08 K"
+    - "08-AM-08"
+    - "08-AM-08 AB"

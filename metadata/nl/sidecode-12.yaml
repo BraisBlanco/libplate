@@ -1,0 +1,52 @@
+schemaVersion: 1
+id: NL_SIDECODE_12
+country: NL
+name: Serie X-99-XXX (sidecode 12, desde 2021)
+registrationType: ORDINARY
+# Current series for agricultural/forestry tractors (2021-12-01), light
+# commercial vehicles (2024-01-08) and special mopeds (2025-07-01).
+validFrom: "2021-12-01"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # Modern alphabet, except E stays allowed: the RDW assigns first letter E to
+  # special mopeds (bijzondere bromfietsen) in this shape. Per-sidecode
+  # first-letter allocations are not modelled, so E is permissively allowed in
+  # every position.
+  - name: letters1
+    type: LETTERS
+    length: 1
+    excluded: [A, C, I, M, O, Q, U, W]
+  - name: digits
+    type: DIGITS
+    length: 2
+  - name: letters2
+    type: LETTERS
+    length: 3
+    excluded: [A, C, I, M, O, Q, U, W]
+formats:
+  national: "{letters1}-{digits}-{letters2}"
+  compact: "{letters1}{digits}{letters2}"
+visual:
+  background: YELLOW
+  foreground: BLACK
+sources:
+  - id: NL-RDW-LETTERS
+  - id: NL-REGELING
+    section: "Art. 1"
+  - id: NL-RDW-SERIES
+examples:
+  valid:
+    - "V-01-BBB"
+    - "T-12-KLN"
+    - "E-01-BBB"
+  invalid:
+    - "V-01-BB"
+    - "VV-01-BBB"
+    - "A-01-BBB"
+    - "V-001-BBB"

@@ -1,0 +1,52 @@
+schemaVersion: 1
+id: NL_SIDECODE_6
+country: NL
+name: Serie 99-XX-XX (sidecode 6, desde 2000)
+registrationType: ORDINARY
+# Legacy for detection purposes only: cars used it 2000-2008, but it is STILL
+# the current series for motorcycles (first letter M) since 2011-08-19.
+legacySeries: true
+# The RDW series table dates the first issuance (cars) 2000-01-20; the RDW
+# history narrative implies 1999. The operational table is used here.
+validFrom: "2000-01-20"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: digits
+    type: DIGITS
+    length: 2
+  # Modern alphabet; see the sidecode-5 note. M is genuinely used here
+  # (motorcycles), so it is not excluded.
+  - name: letters1
+    type: LETTERS
+    length: 2
+    excluded: [A, C, E, I, O, Q, U]
+  - name: letters2
+    type: LETTERS
+    length: 2
+    excluded: [A, C, E, I, O, Q, U]
+formats:
+  national: "{digits}-{letters1}-{letters2}"
+  compact: "{digits}{letters1}{letters2}"
+visual:
+  background: YELLOW
+  foreground: BLACK
+sources:
+  - id: NL-RDW-LETTERS
+  - id: NL-REGELING
+    section: "Art. 1"
+  - id: NL-RDW-SERIES
+  - id: NL-RDW-HIST
+examples:
+  valid:
+    - "01-DB-BB"
+    - "12-MB-KL"
+  invalid:
+    - "01-AB-CD"
+    - "1-DB-BB"
+    - "01-DB-B"

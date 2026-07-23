@@ -1,0 +1,53 @@
+schemaVersion: 1
+id: PT_EXPORT
+country: PT
+name: Veículos destinados à exportação (número + L/P/A/M)
+registrationType: EXPORT
+# No validFrom: the series predates its current legal basis; the citable text
+# is DL 54/2005, art. 4.º n.º 3, unchanged since and still in force.
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # Art. 4.º n.º 3 fixes no digit count; the official model drawings (Anexo VI
+  # after DL 2/2020) show five-digit examples ("24783 L"), so up to five
+  # digits are accepted. The plate models also carry an "EXP" compartment with
+  # two stacked figures whose meaning the law does not define; it is not part
+  # of the registration number and is not modelled.
+  - name: serial
+    type: DIGITS
+    minLength: 1
+    maxLength: 5
+    noLeadingZero: true
+  # The final letter identifies the customs office: Lisboa, Porto, Açores or
+  # Madeira.
+  - name: office
+    type: CHARSET
+    length: 1
+    characters: ALMP
+formats:
+  national: "{serial} {office}"
+  compact: "{serial}{office}"
+visual:
+  # Art. 6.º n.º 1: yellow plate, black characters.
+  background: YELLOW
+  foreground: BLACK
+sources:
+  - id: PT-RULES
+    section: "Artigo 4.º, n.º 3; Artigo 6.º, n.º 1"
+  - id: PT-2020
+    section: "Artigo 7.º (Anexo V renumerado como Anexo VI)"
+examples:
+  valid:
+    - "24783 L"
+    - "98890 P"
+    - "1234 M"
+    - "507 A"
+  invalid:
+    - "24783 X"
+    - "123456 L"
+    - "01234 L"

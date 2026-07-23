@@ -1,0 +1,45 @@
+schemaVersion: 1
+id: NL_SIDECODE_3
+country: NL
+name: Serie 99-XX-99 (sidecode 3, desde 1973)
+registrationType: ORDINARY
+legacySeries: true
+# First plate 00-AD-01 struck 1973-09-03. No validTo — see sidecode 1.
+validFrom: "1973-09-03"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: digits1
+    type: DIGITS
+    length: 2
+  # Pre-vowel-ban alphabet; see the sidecode-1 note.
+  - name: letters
+    type: LETTERS
+    length: 2
+    excluded: [C, I, Q]
+  - name: digits2
+    type: DIGITS
+    length: 2
+# No `visual`: see sidecode 1.
+formats:
+  national: "{digits1}-{letters}-{digits2}"
+  compact: "{digits1}{letters}{digits2}"
+sources:
+  - id: NL-RDW-LETTERS
+  - id: NL-REGELING
+    section: "Art. 1"
+  - id: NL-RDW-HIST
+  - id: NL-RDW-SERIES
+examples:
+  valid:
+    - "00-AD-01"
+    - "12-XZ-34"
+  invalid:
+    - "12-QO-34"
+    - "00-AD-1"
+    - "00-A-01"

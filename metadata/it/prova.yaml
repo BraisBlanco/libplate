@@ -1,0 +1,50 @@
+schemaVersion: 1
+id: IT_PROVA
+country: IT
+name: Targa prova (XX P XXXXX)
+registrationType: PROFESSIONAL_TEMPORARY
+# DPR 474/2001, art. 2(3): "due caratteri alfanumerici, dalla lettera P e da
+# cinque caratteri alfanumerici", matching the annual authorization number.
+# Published GU 2002-01-30; the date below assumes the ordinary 15-day
+# vacatio legis. The four pre-2002 test formats (green P) were abrogated by
+# the same decree and are not modelled.
+validFrom: "2002-02-14"
+vehicleInference:
+  # A test plate moves between vehicles of any category.
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # "Alfanumerici" is not further restricted by the decree; the letter set is
+  # assumed to follow the Appendice XII plate alphabet (no I, O, Q, U).
+  - name: code1
+    type: CHARSET
+    length: 2
+    characters: 0123456789ABCDEFGHJKLMNPRSTVWXYZ
+  - name: p
+    type: LITERAL
+    value: P
+  - name: code2
+    type: CHARSET
+    length: 5
+    characters: 0123456789ABCDEFGHJKLMNPRSTVWXYZ
+formats:
+  national: "{code1} {p} {code2}"
+  compact: "{code1}{p}{code2}"
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: IT-DPR474-2001
+    section: "Art. 2, comma 3"
+examples:
+  valid:
+    - "A1 P 23B45"
+    - "00 P 00000"
+  invalid:
+    - "A1 X 23B45"
+    - "A1 P 23B4"
+    - "AI P 23B45"

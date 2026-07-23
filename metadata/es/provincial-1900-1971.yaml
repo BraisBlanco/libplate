@@ -1,0 +1,51 @@
+schemaVersion: 1
+id: ES_PROVINCIAL_1900_1971
+country: ES
+name: Serie provincial numérica (contraseña + número, 1900-1971)
+registrationType: ORDINARY
+legacySeries: true
+# Province-coded numeric plates existed from 1900-09-17 (DGT); the citable
+# legal form is arts. 230-233 of the Código de la Circulación de 1934.
+# Replaced by the four-digit-plus-letters provincial series on 1971-10-07.
+validFrom: "1900-09-17"
+validTo: "1971-10-06"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: province
+    type: TABLE
+    table: es-provincias
+  # "El número de orden del Permiso de Circulación" — the 1934 text fixes no
+  # digit count and mandates no padding. The six-digit cap follows from the
+  # DGT's official summary ("1 millón de vehículos por provincia").
+  - name: serial
+    type: DIGITS
+    minLength: 1
+    maxLength: 6
+    noLeadingZero: true
+formats:
+  national: "{province}-{serial}"
+  compact: "{province}{serial}"
+sources:
+  - id: ES-CDC-1934
+    section: "Arts. 230-233"
+  - id: ES-DGT-TYPES
+  - id: ES-D2046-1971
+    section: "Disposición transitoria 1.ª"
+examples:
+  valid:
+    - "M-123456"
+    - "B-9"
+    - "PM-45"
+    - "SE-12345"
+    - "O-654321"
+  invalid:
+    - "M-1234567"
+    - "M-0123"
+    - "XX-123"
+    - "M-123456-A"

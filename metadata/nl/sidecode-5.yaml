@@ -1,0 +1,50 @@
+schemaVersion: 1
+id: NL_SIDECODE_5
+country: NL
+name: Serie XX-XX-99 (sidecode 5, desde 1991)
+registrationType: ORDINARY
+legacySeries: true
+# Unveiled 1991-09-23 (first plate DB-BB-01). Heavy commercial vehicles used
+# this shape from 1994-01-03 until 2012. No validTo — see sidecode 1.
+validFrom: "1991-09-23"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # Modern alphabet: no vowels, no C/Q (RDW). O returns only on sidecode-4
+  # oplegger plates, so it is excluded here.
+  - name: letters1
+    type: LETTERS
+    length: 2
+    excluded: [A, C, E, I, O, Q, U]
+  - name: letters2
+    type: LETTERS
+    length: 2
+    excluded: [A, C, E, I, O, Q, U]
+  - name: digits
+    type: DIGITS
+    length: 2
+formats:
+  national: "{letters1}-{letters2}-{digits}"
+  compact: "{letters1}{letters2}{digits}"
+visual:
+  background: YELLOW
+  foreground: BLACK
+sources:
+  - id: NL-RDW-LETTERS
+  - id: NL-REGELING
+    section: "Art. 1"
+  - id: NL-RDW-HIST
+  - id: NL-RDW-SERIES
+examples:
+  valid:
+    - "DB-BB-01"
+    - "XR-FG-99"
+  invalid:
+    - "EU-XX-99"
+    - "DB-BB-1"
+    - "DB-B1-01"

@@ -1,0 +1,60 @@
+schemaVersion: 1
+id: IT_MOTORCYCLE
+country: IT
+name: Targa motoveicoli (AA 12345)
+registrationType: ORDINARY
+# Approximate: the national motorcycle numbering started during 1994; the
+# current 177x177 mm plate model dates from DPR 355/1998.
+validFrom: "1994-01-01"
+vehicleInference:
+  # The 2-letters + 5-digits shape is shared with pre-2013 trailer plates
+  # (script "Rimorchio" + the same alphanumeric structure, still valid on
+  # trailers registered before 2013-02-20). Only the red script on the plate
+  # itself tells them apart.
+  level: VISUAL_EVIDENCE_REQUIRED
+  possibleCategories:
+    - MOTORCYCLE
+    - TRAILER_OR_SEMITRAILER
+  evidence:
+    - type: PATTERN
+      value: two letters followed by five digits
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # Usable letters per Appendice XII al Titolo III (art. 257): I, O, Q, U
+  # excluded for every plate type. NOTE: the prose of Appendice XII lett. c)
+  # (as replaced by DPR 355/1998) still describes a car-like 2+3+2 layout,
+  # but the official plate model it refers to — fig. III 4/e, art. 258, in
+  # the same decree — shows two characters on the upper row and five on the
+  # lower, matching the issued LL 00000 series.
+  - name: letters
+    type: LETTERS
+    length: 2
+    excluded: [I, O, Q, U]
+  - name: digits
+    type: DIGITS
+    length: 5
+formats:
+  national: "{letters} {digits}"
+  compact: "{letters}{digits}"
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: IT-REG
+    section: "Art. 257 e Appendice XII, lett. c)"
+  - id: IT-DPR355-1998
+    section: "Art. 6 e fig. III 4/e"
+examples:
+  valid:
+    - "AB 12345"
+    - "ZX 00042"
+    - "FM 98765"
+  invalid:
+    - "AI 12345"
+    - "AB 1234"
+    - "AO 12345"
+    - "AB 123456"

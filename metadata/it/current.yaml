@@ -6,7 +6,11 @@ registrationType: ORDINARY
 # Approximate: the alphanumeric AA 000 AA system was introduced during 1994.
 validFrom: "1994-01-01"
 vehicleInference:
-  # The alphanumeric national series is shared across vehicle categories.
+  # The alphanumeric national series is shared across vehicle categories,
+  # and since 2013-02-20 trailers carry a rear plate with this same structure
+  # (DPR 198/2012 folded them into Appendice XII lett. a). The X-initial lots
+  # are administratively allocated to trailers (MIT circular 4833/2013), but
+  # that allocation is not a format rule and is not enforced here.
   level: NOT_INFERABLE
 normalization:
   uppercase: true
@@ -15,11 +19,13 @@ normalization:
     - "-"
 segments:
   # The letters I, O, Q and U are not used, to avoid confusion with digits and
-  # with one another.
+  # with one another. EE is excluded as a first group because EE + 3 digits +
+  # 2 letters is the Escursionisti Esteri series (Appendice XII, lett. p).
   - name: letters1
     type: LETTERS
     length: 2
     excluded: [I, O, Q, U]
+    excludedValues: [EE]
   - name: digits
     type: DIGITS
     length: 3
@@ -35,9 +41,11 @@ visual:
   foreground: BLACK
 sources:
   - id: IT-CDS
-    section: "Art. 93"
+    section: "Artt. 93 e 100"
   - id: IT-REG
-    section: "Artt. 254-258"
+    section: "Artt. 254-258 e Appendice XII, lett. a)"
+  - id: IT-DPR198-2012
+    section: "Artt. 6-8"
 examples:
   valid:
     - "AA 000 AA"
