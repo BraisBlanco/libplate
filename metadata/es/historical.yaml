@@ -1,0 +1,44 @@
+schemaVersion: 1
+id: ES_HISTORICAL
+country: ES
+name: Vehículos históricos (prefijo H)
+registrationType: HISTORICAL
+validFrom: "1999-07-26"
+vehicleInference:
+  # H denotes the historical-vehicle regime, not a vehicle category.
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: H
+  - name: serial
+    type: DIGITS
+    length: 4
+  - name: series
+    type: CHARSET
+    length: 3
+    characters: BCDFGHJKLMNPRSTVWXYZ
+formats:
+  national: "{prefix} {serial} {series}"
+  compact: "{prefix}{serial}{series}"
+sources:
+  - id: ES-RGV
+    section: "Anexo XVIII, I.B.c"
+  - id: ES-HIST-RULES
+examples:
+  # CAUTION: an H-prefixed plate is deterministically a historical vehicle, but
+  # the converse does not hold — Group A historical vehicles keep their ordinary
+  # plate plus a circular "H" badge, so an ordinary plate cannot be ruled out as
+  # historical from text alone. See ES-HIST-DGT.
+  valid:
+    - "H 1234 BCD"
+    - "H-1234-BCD"
+  invalid:
+    - "H 123 BCD"
+    - "H 1234 AEI"
+    - "1234 BCD"

@@ -14,13 +14,13 @@ normalization:
     - " "
     - "-"
 segments:
-  # The letters I, O and U are not used. NOTE: the reserved pairs SS and WW
-  # (WW is the provisional series) are not yet excluded — those regimes are not
-  # modelled. See FR-MODALITIES.
+  # The letters I, O and U are not used. The first group also never equals SS
+  # (offensive) or WW (reserved for the provisional series, see FR_WW_PROVISIONAL).
   - name: letters1
     type: LETTERS
     length: 2
     excluded: [I, O, U]
+    excludedValues: [SS, WW]
   - name: digits
     type: DIGITS
     length: 3
@@ -47,3 +47,5 @@ examples:
     - "IA-123-AA"
     - "AA-123-IO"
     - "AA-123-AAA"
+    - "WW-123-AA"
+    - "SS-123-AA"

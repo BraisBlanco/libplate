@@ -25,24 +25,26 @@ metadataVersion:  2026.07.0
 
 ### Spain
 
-| ID       | Reference                                                                                  | Used for                                                                               | URL                                                    |
-| -------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| `ES-RGV` | Real Decreto 2822/1998, _Reglamento General de Vehículos_ (consolidated), esp. Anexo XVIII | Ordinary series (I.A.a), special `E` (I.A.b), trailers `R` (I.A.c), mopeds `C` (I.A.d) | <https://www.boe.es/buscar/act.php?id=BOE-A-1999-1826> |
+| ID              | Reference                                                                                  | Used for                                                                                                                                                                                       | URL                                                     |
+| --------------- | ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| `ES-RGV`        | Real Decreto 2822/1998, _Reglamento General de Vehículos_ (consolidated), esp. Anexo XVIII | Ordinary series (I.A.a); special `E` (I.A.b), trailers `R` (I.A.c), mopeds `C` (I.A.d); historical `H` (I.B.c), tourist `T` (I.B.b), temporary private `P` (I.C.a) and company `S`/`V` (I.C.b) | <https://www.boe.es/buscar/act.php?id=BOE-A-1999-1826>  |
+| `ES-HIST-RULES` | Real Decreto 892/2024, _Reglamento de Vehículos Históricos_                                | Historical-vehicle regime (`H` prefix; Group A / Group B)                                                                                                                                      | <https://www.boe.es/buscar/act.php?id=BOE-A-2024-18614> |
 
 ### Portugal
 
-| ID          | Reference                                        | Used for                                       | URL                                                                                 |
-| ----------- | ------------------------------------------------ | ---------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `PT-RULES`  | Decreto-Lei n.º 54/2005 (consolidated), art. 3.º | General series composition                     | <https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/2005-128021130> |
-| `PT-2020`   | Decreto-Lei n.º 2/2020                           | Current `AA 00 AA` series and 2020 plate model | <https://diariodarepublica.pt/dr/detalhe/decreto-lei/2-2020-128071719>              |
-| `PT-IMT-ID` | IMT, vehicle identification                      | Official table of periods and formats          | <https://www.imt-ip.pt/veiculos/identificacao-veiculos/>                            |
+| ID          | Reference                                        | Used for                                                                            | URL                                                                                 |
+| ----------- | ------------------------------------------------ | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `PT-RULES`  | Decreto-Lei n.º 54/2005 (consolidated), art. 3.º | General series composition (current and historical)                                 | <https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/2005-128021130> |
+| `PT-2020`   | Decreto-Lei n.º 2/2020                           | Current `AA 00 AA` series and 2020 plate model                                      | <https://diariodarepublica.pt/dr/detalhe/decreto-lei/2-2020-128071719>              |
+| `PT-IMT-ID` | IMT, vehicle identification                      | Official table of series periods and formats (incl. the pre-2020 historical series) | <https://www.imt-ip.pt/veiculos/identificacao-veiculos/>                            |
 
 ### France
 
-| ID          | Reference                             | Used for                                               | URL                                                           |
-| ----------- | ------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------- |
-| `FR-SIV`    | Service Public, SIV                   | Current SIV series `AA-123-AA`                         | <https://www.service-public.fr/particuliers/vosdroits/F17638> |
-| `FR-PLATES` | Service Public, plate characteristics | Visual characteristics; letters `I`, `O`, `U` not used | <https://www.service-public.fr/particuliers/vosdroits/F20319> |
+| ID              | Reference                                                                             | Used for                                                                                  | URL                                                           |
+| --------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| `FR-SIV`        | Service Public, SIV                                                                   | Current SIV series `AA-123-AA`; letters `I`, `O`, `U` unused; first group never `SS`/`WW` | <https://www.service-public.fr/particuliers/vosdroits/F17638> |
+| `FR-PLATES`     | Service Public, plate characteristics                                                 | Visual characteristics; `WW` pink background from 2026                                    | <https://www.service-public.fr/particuliers/vosdroits/F20319> |
+| `FR-MODALITIES` | Arrêté du 9 février 2009 (registration procedures, consolidated), art. 8 & Annexe VII | `WW` provisional series                                                                   | <https://www.legifrance.gouv.fr/loda/id/JORFTEXT000020237165> |
 
 ### Italy
 
@@ -61,11 +63,10 @@ land.
 
 ### Spain
 
-| ID              | Reference                                                   | Covers                                                     | URL                                                                                                                  |
-| --------------- | ----------------------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `ES-DGT-TYPES`  | DGT, "Matrículas de todos los colores"                      | Overview of current and historical plate types and systems | <https://www.dgt.es/comunicacion/noticias/tipos-matricula/>                                                          |
-| `ES-HIST-RULES` | Real Decreto 892/2024, _Reglamento de Vehículos Históricos_ | Historical-vehicle regime (Group A / Group B, `H` prefix)  | <https://www.boe.es/buscar/act.php?id=BOE-A-2024-18614>                                                              |
-| `ES-HIST-DGT`   | DGT, historical-vehicle registration, Group A               | Group A keeps its ordinary plate + circular `H` badge      | <https://www.dgt.es/nuestros-servicios/tu-vehiculo/vehiculos-historicos/matriculacion-vehiculos-historicos/grupo-a/> |
+| ID             | Reference                                     | Covers                                                                                                                 | URL                                                                                                                  |
+| -------------- | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `ES-DGT-TYPES` | DGT, "Matrículas de todos los colores"        | Overview of current and historical plate types and systems (incl. provincial series, diplomatic and state-body plates) | <https://www.dgt.es/comunicacion/noticias/tipos-matricula/>                                                          |
+| `ES-HIST-DGT`  | DGT, historical-vehicle registration, Group A | Group A keeps its ordinary plate + circular `H` badge                                                                  | <https://www.dgt.es/nuestros-servicios/tu-vehiculo/vehiculos-historicos/matriculacion-vehiculos-historicos/grupo-a/> |
 
 ### Portugal
 
@@ -76,11 +77,10 @@ land.
 
 ### France
 
-| ID               | Reference                                                        | Covers                                                      | URL                                                           |
-| ---------------- | ---------------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------- |
-| `FR-TRAILERS`    | Service Public, trailer/caravan registration                     | Registration by PTAC                                        | <https://www.service-public.fr/particuliers/vosdroits/F21112> |
-| `FR-MODALITIES`  | Arrêté du 9 février 2009 (registration procedures, consolidated) | Articles 8, 9 and Annexe VII (`W`, `WW`, diplomatic series) | <https://www.legifrance.gouv.fr/loda/id/JORFTEXT000020237165> |
-| `FR-PLATE-SPECS` | Arrêté du 9 février 2009 (plate characteristics and mounting)    | Physical plate specifications                               | <https://www.legifrance.gouv.fr/loda/id/JORFTEXT000020237128> |
+| ID               | Reference                                                     | Covers                        | URL                                                           |
+| ---------------- | ------------------------------------------------------------- | ----------------------------- | ------------------------------------------------------------- |
+| `FR-TRAILERS`    | Service Public, trailer/caravan registration                  | Registration by PTAC          | <https://www.service-public.fr/particuliers/vosdroits/F21112> |
+| `FR-PLATE-SPECS` | Arrêté du 9 février 2009 (plate characteristics and mounting) | Physical plate specifications | <https://www.legifrance.gouv.fr/loda/id/JORFTEXT000020237128> |
 
 ---
 

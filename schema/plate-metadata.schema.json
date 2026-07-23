@@ -143,6 +143,10 @@
               "excluded": {
                 "type": "array",
                 "items": { "type": "string", "pattern": "^[A-Z]$" }
+              },
+              "excludedValues": {
+                "type": "array",
+                "items": { "type": "string", "pattern": "^[A-Z]+$" }
               }
             }
           }

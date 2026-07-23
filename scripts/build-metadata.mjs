@@ -58,6 +58,23 @@ for (const file of files) {
   }
   seenIds.add(scheme.id);
 
+  // Semantic check: every excludedValues entry must be exactly the segment's
+  // length, or the compiled negative lookahead would not line up.
+  let semanticError = false;
+  for (const segment of scheme.segments) {
+    for (const value of segment.excludedValues ?? []) {
+      if (value.length !== segment.length) {
+        hadError = true;
+        semanticError = true;
+        console.error(
+          `✗ ${rel}: segment "${segment.name}" excludedValues entry "${value}" ` +
+            `is ${value.length} chars but the segment length is ${segment.length}`,
+        );
+      }
+    }
+  }
+  if (semanticError) continue;
+
   // Default optional fields so the runtime never has to.
   scheme.historical ??= false;
   schemes.push(scheme);

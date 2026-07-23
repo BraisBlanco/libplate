@@ -1,0 +1,40 @@
+schemaVersion: 1
+id: PT_GENERAL_2005_2020
+country: PT
+name: Série geral histórica (00-AA-00, 2005-2020)
+registrationType: ORDINARY
+historical: true
+validFrom: "2005-05-25"
+validTo: "2020-03-02"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: digits1
+    type: DIGITS
+    length: 2
+  - name: letters
+    type: LETTERS
+    length: 2
+  - name: digits2
+    type: DIGITS
+    length: 2
+formats:
+  national: "{digits1}-{letters}-{digits2}"
+  compact: "{digits1}{letters}{digits2}"
+sources:
+  - id: PT-IMT-ID
+  - id: PT-RULES
+examples:
+  valid:
+    - "00-AA-00"
+    - "12-AB-34"
+    - "99-ZZ-99"
+  invalid:
+    - "00-AA-0"
+    - "00-A0-00"
+    - "0A-AA-00"

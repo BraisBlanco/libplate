@@ -1,0 +1,45 @@
+schemaVersion: 1
+id: FR_WW_PROVISIONAL
+country: FR
+name: Immatriculation provisoire (WW)
+registrationType: TEMPORARY_WW
+validFrom: "2009-04-15"
+vehicleInference:
+  # Provisional regime; says nothing about the vehicle category.
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: WW
+  - name: digits
+    type: DIGITS
+    length: 3
+  - name: letters
+    type: LETTERS
+    length: 2
+    excluded: [I, O, U]
+formats:
+  national: "{prefix}-{digits}-{letters}"
+  compact: "{prefix}{digits}{letters}"
+visual:
+  # Since 2026-01-01, WW plates use black characters on a pink background and
+  # carry an end-of-validity date. See FR-PLATES.
+  background: PINK
+  foreground: BLACK
+sources:
+  - id: FR-MODALITIES
+    section: "Article 8, Annexe VII"
+  - id: FR-PLATES
+examples:
+  valid:
+    - "WW-123-AA"
+    - "WW 456 BC"
+  invalid:
+    - "WW-12-AA"
+    - "WW-123-IO"
+    - "AA-123-AA"

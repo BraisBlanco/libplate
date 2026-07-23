@@ -1,0 +1,41 @@
+schemaVersion: 1
+id: ES_TEMPORARY_COMPANY_S
+country: ES
+name: Permiso temporal de empresa, vehículos no matriculados (prefijo S)
+registrationType: TEMPORARY_COMPANY
+validFrom: "1999-07-26"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: S
+  - name: serial
+    type: DIGITS
+    length: 4
+  - name: series
+    type: CHARSET
+    length: 3
+    characters: BCDFGHJKLMNPRSTVWXYZ
+formats:
+  national: "{prefix} {serial} {series}"
+  compact: "{prefix}{serial}{series}"
+visual:
+  background: RED
+  foreground: WHITE
+sources:
+  - id: ES-RGV
+    section: "Anexo XVIII, I.C.b"
+examples:
+  valid:
+    - "S 1234 BCD"
+    - "S-1234-BCD"
+  invalid:
+    - "S 123 BCD"
+    - "S 1234 AEI"
+    - "1234 BCD"

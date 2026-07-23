@@ -1,0 +1,41 @@
+schemaVersion: 1
+id: ES_TEMPORARY_PRIVATE
+country: ES
+name: Permiso temporal para particulares (prefijo P)
+registrationType: TEMPORARY_PRIVATE
+validFrom: "1999-07-26"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: P
+  - name: serial
+    type: DIGITS
+    length: 4
+  - name: series
+    type: CHARSET
+    length: 3
+    characters: BCDFGHJKLMNPRSTVWXYZ
+formats:
+  national: "{prefix} {serial} {series}"
+  compact: "{prefix}{serial}{series}"
+visual:
+  background: GREEN
+  foreground: WHITE
+sources:
+  - id: ES-RGV
+    section: "Anexo XVIII, I.C.a"
+examples:
+  valid:
+    - "P 1234 BCD"
+    - "P-1234-BCD"
+  invalid:
+    - "P 123 BCD"
+    - "P 1234 AEI"
+    - "1234 BCD"

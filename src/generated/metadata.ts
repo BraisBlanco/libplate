@@ -7,6 +7,67 @@ export const METADATA: MetadataBundle = {
   "schemes": [
     {
       "schemaVersion": 1,
+      "id": "ES_HISTORICAL",
+      "country": "ES",
+      "name": "Vehículos históricos (prefijo H)",
+      "registrationType": "HISTORICAL",
+      "validFrom": "1999-07-26",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "H"
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "length": 4
+        },
+        {
+          "name": "series",
+          "type": "CHARSET",
+          "length": 3,
+          "characters": "BCDFGHJKLMNPRSTVWXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {serial} {series}",
+        "compact": "{prefix}{serial}{series}"
+      },
+      "sources": [
+        {
+          "id": "ES-RGV",
+          "section": "Anexo XVIII, I.B.c"
+        },
+        {
+          "id": "ES-HIST-RULES"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "H 1234 BCD",
+          "H-1234-BCD"
+        ],
+        "invalid": [
+          "H 123 BCD",
+          "H 1234 AEI",
+          "1234 BCD"
+        ]
+      },
+      "historical": false
+    },
+    {
+      "schemaVersion": 1,
       "id": "ES_MOPED_CURRENT",
       "country": "ES",
       "name": "Ciclomotores y ciclos de motor",
@@ -206,6 +267,254 @@ export const METADATA: MetadataBundle = {
     },
     {
       "schemaVersion": 1,
+      "id": "ES_TEMPORARY_COMPANY_S",
+      "country": "ES",
+      "name": "Permiso temporal de empresa, vehículos no matriculados (prefijo S)",
+      "registrationType": "TEMPORARY_COMPANY",
+      "validFrom": "1999-07-26",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "S"
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "length": 4
+        },
+        {
+          "name": "series",
+          "type": "CHARSET",
+          "length": 3,
+          "characters": "BCDFGHJKLMNPRSTVWXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {serial} {series}",
+        "compact": "{prefix}{serial}{series}"
+      },
+      "visual": {
+        "background": "RED",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "ES-RGV",
+          "section": "Anexo XVIII, I.C.b"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "S 1234 BCD",
+          "S-1234-BCD"
+        ],
+        "invalid": [
+          "S 123 BCD",
+          "S 1234 AEI",
+          "1234 BCD"
+        ]
+      },
+      "historical": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "ES_TEMPORARY_COMPANY_V",
+      "country": "ES",
+      "name": "Permiso temporal de empresa, vehículos ya matriculados (prefijo V)",
+      "registrationType": "TEMPORARY_COMPANY",
+      "validFrom": "1999-07-26",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "V"
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "length": 4
+        },
+        {
+          "name": "series",
+          "type": "CHARSET",
+          "length": 3,
+          "characters": "BCDFGHJKLMNPRSTVWXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {serial} {series}",
+        "compact": "{prefix}{serial}{series}"
+      },
+      "visual": {
+        "background": "RED",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "ES-RGV",
+          "section": "Anexo XVIII, I.C.b"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "V 1234 BCD",
+          "V-1234-BCD"
+        ],
+        "invalid": [
+          "V 123 BCD",
+          "V 1234 AEI",
+          "1234 BCD"
+        ]
+      },
+      "historical": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "ES_TEMPORARY_PRIVATE",
+      "country": "ES",
+      "name": "Permiso temporal para particulares (prefijo P)",
+      "registrationType": "TEMPORARY_PRIVATE",
+      "validFrom": "1999-07-26",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "P"
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "length": 4
+        },
+        {
+          "name": "series",
+          "type": "CHARSET",
+          "length": 3,
+          "characters": "BCDFGHJKLMNPRSTVWXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {serial} {series}",
+        "compact": "{prefix}{serial}{series}"
+      },
+      "visual": {
+        "background": "GREEN",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "ES-RGV",
+          "section": "Anexo XVIII, I.C.a"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "P 1234 BCD",
+          "P-1234-BCD"
+        ],
+        "invalid": [
+          "P 123 BCD",
+          "P 1234 AEI",
+          "1234 BCD"
+        ]
+      },
+      "historical": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "ES_TOURIST",
+      "country": "ES",
+      "name": "Matrícula turística (prefijo T)",
+      "registrationType": "TOURIST",
+      "validFrom": "1999-07-26",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "T"
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "length": 4
+        },
+        {
+          "name": "series",
+          "type": "CHARSET",
+          "length": 3,
+          "characters": "BCDFGHJKLMNPRSTVWXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {serial} {series}",
+        "compact": "{prefix}{serial}{series}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "ES-RGV",
+          "section": "Anexo XVIII, I.B.b"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "T 1234 BCD",
+          "T-1234-BCD"
+        ],
+        "invalid": [
+          "T 123 BCD",
+          "T 1234 AEI",
+          "1234 BCD"
+        ]
+      },
+      "historical": false
+    },
+    {
+      "schemaVersion": 1,
       "id": "ES_TRAILER_CURRENT",
       "country": "ES",
       "name": "Remolques y semirremolques",
@@ -299,6 +608,10 @@ export const METADATA: MetadataBundle = {
             "I",
             "O",
             "U"
+          ],
+          "excludedValues": [
+            "SS",
+            "WW"
           ]
         },
         {
@@ -343,7 +656,78 @@ export const METADATA: MetadataBundle = {
           "AA-12-AA",
           "IA-123-AA",
           "AA-123-IO",
-          "AA-123-AAA"
+          "AA-123-AAA",
+          "WW-123-AA",
+          "SS-123-AA"
+        ]
+      },
+      "historical": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "FR_WW_PROVISIONAL",
+      "country": "FR",
+      "name": "Immatriculation provisoire (WW)",
+      "registrationType": "TEMPORARY_WW",
+      "validFrom": "2009-04-15",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "WW"
+        },
+        {
+          "name": "digits",
+          "type": "DIGITS",
+          "length": 3
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "I",
+            "O",
+            "U"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{prefix}-{digits}-{letters}",
+        "compact": "{prefix}{digits}{letters}"
+      },
+      "visual": {
+        "background": "PINK",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "FR-MODALITIES",
+          "section": "Article 8, Annexe VII"
+        },
+        {
+          "id": "FR-PLATES"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "WW-123-AA",
+          "WW 456 BC"
+        ],
+        "invalid": [
+          "WW-12-AA",
+          "WW-123-IO",
+          "AA-123-AA"
         ]
       },
       "historical": false
@@ -429,6 +813,128 @@ export const METADATA: MetadataBundle = {
     },
     {
       "schemaVersion": 1,
+      "id": "PT_GENERAL_1992_2005",
+      "country": "PT",
+      "name": "Série geral histórica (00-00-AA, 1992-2005)",
+      "registrationType": "ORDINARY",
+      "historical": true,
+      "validFrom": "1992-03-01",
+      "validTo": "2005-05-24",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "digits1",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "digits2",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2
+        }
+      ],
+      "formats": {
+        "national": "{digits1}-{digits2}-{letters}",
+        "compact": "{digits1}{digits2}{letters}"
+      },
+      "sources": [
+        {
+          "id": "PT-IMT-ID"
+        },
+        {
+          "id": "PT-RULES"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "00-00-AA",
+          "12-34-AB",
+          "99-99-ZZ"
+        ],
+        "invalid": [
+          "00-00-A",
+          "0A-00-AA",
+          "00-00-AAA"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "PT_GENERAL_2005_2020",
+      "country": "PT",
+      "name": "Série geral histórica (00-AA-00, 2005-2020)",
+      "registrationType": "ORDINARY",
+      "historical": true,
+      "validFrom": "2005-05-25",
+      "validTo": "2020-03-02",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "digits1",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2
+        },
+        {
+          "name": "digits2",
+          "type": "DIGITS",
+          "length": 2
+        }
+      ],
+      "formats": {
+        "national": "{digits1}-{letters}-{digits2}",
+        "compact": "{digits1}{letters}{digits2}"
+      },
+      "sources": [
+        {
+          "id": "PT-IMT-ID"
+        },
+        {
+          "id": "PT-RULES"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "00-AA-00",
+          "12-AB-34",
+          "99-ZZ-99"
+        ],
+        "invalid": [
+          "00-AA-0",
+          "00-A0-00",
+          "0A-AA-00"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
       "id": "PT_GENERAL_CURRENT",
       "country": "PT",
       "name": "Série geral atual (AA 00 AA)",
@@ -497,6 +1003,66 @@ export const METADATA: MetadataBundle = {
         ]
       },
       "historical": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "PT_GENERAL_UNTIL_1992",
+      "country": "PT",
+      "name": "Série geral histórica (AA-00-00, até 1992)",
+      "registrationType": "ORDINARY",
+      "historical": true,
+      "validTo": "1992-02-29",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2
+        },
+        {
+          "name": "digits1",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "digits2",
+          "type": "DIGITS",
+          "length": 2
+        }
+      ],
+      "formats": {
+        "national": "{letters}-{digits1}-{digits2}",
+        "compact": "{letters}{digits1}{digits2}"
+      },
+      "sources": [
+        {
+          "id": "PT-IMT-ID"
+        },
+        {
+          "id": "PT-RULES"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "AA-00-00",
+          "AB-12-34",
+          "ZZ-99-99"
+        ],
+        "invalid": [
+          "AA-00-0",
+          "AA-0A-00",
+          "1A-00-00"
+        ]
+      }
     }
   ]
 };

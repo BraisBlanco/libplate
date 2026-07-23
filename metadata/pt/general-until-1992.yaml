@@ -1,0 +1,39 @@
+schemaVersion: 1
+id: PT_GENERAL_UNTIL_1992
+country: PT
+name: Série geral histórica (AA-00-00, até 1992)
+registrationType: ORDINARY
+historical: true
+validTo: "1992-02-29"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: letters
+    type: LETTERS
+    length: 2
+  - name: digits1
+    type: DIGITS
+    length: 2
+  - name: digits2
+    type: DIGITS
+    length: 2
+formats:
+  national: "{letters}-{digits1}-{digits2}"
+  compact: "{letters}{digits1}{digits2}"
+sources:
+  - id: PT-IMT-ID
+  - id: PT-RULES
+examples:
+  valid:
+    - "AA-00-00"
+    - "AB-12-34"
+    - "ZZ-99-99"
+  invalid:
+    - "AA-00-0"
+    - "AA-0A-00"
+    - "1A-00-00"

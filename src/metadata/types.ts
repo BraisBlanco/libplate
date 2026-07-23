@@ -6,14 +6,20 @@ import type {
   VehicleCategory,
   VisualExpectation,
 } from "../model/index.js";
-import type { NamedToken } from "../tokens/index.js";
+import type { NamedToken, Token } from "../tokens/index.js";
 
 /** A segment as authored in the YAML metadata (mirrors the token grammar). */
 export type MetadataSegment =
   | { name: string; type: "LITERAL"; value: string }
   | { name: string; type: "DIGITS"; length: number }
   | { name: string; type: "CHARSET"; length: number; characters: string }
-  | { name: string; type: "LETTERS"; length: number; excluded?: string[] };
+  | {
+      name: string;
+      type: "LETTERS";
+      length: number;
+      excluded?: string[];
+      excludedValues?: string[];
+    };
 
 export interface SchemeVehicleInference {
   level: InferenceLevel;
@@ -79,12 +85,14 @@ export function segmentToNamedToken(segment: MetadataSegment): NamedToken {
           characters: segment.characters,
         },
       };
-    case "LETTERS":
-      return {
-        name: segment.name,
-        token: segment.excluded
-          ? { kind: "LETTERS", length: segment.length, excluded: segment.excluded }
-          : { kind: "LETTERS", length: segment.length },
+    case "LETTERS": {
+      const token: Extract<Token, { kind: "LETTERS" }> = {
+        kind: "LETTERS",
+        length: segment.length,
       };
+      if (segment.excluded) token.excluded = segment.excluded;
+      if (segment.excludedValues) token.excludedValues = segment.excludedValues;
+      return { name: segment.name, token };
+    }
   }
 }

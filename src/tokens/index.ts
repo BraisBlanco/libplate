@@ -36,6 +36,12 @@ interface LettersToken {
   length: number;
   /** Letters removed from the full A-Z alphabet, e.g. ["I", "O", "U"]. */
   excluded?: string[];
+  /**
+   * Whole-segment values this token must NOT equal, e.g. ["SS", "WW"] for the
+   * French SIV. Each value must be exactly `length` characters long. Compiled
+   * to a negative lookahead, so per-character rules (`excluded`) still apply.
+   */
+  excludedValues?: string[];
 }
 
 export type Token = LiteralToken | DigitsToken | CharsetToken | LettersToken;
@@ -73,16 +79,29 @@ function escapeForClass(chars: string): string {
   return chars.replace(/[\\\]^-]/g, "\\$&");
 }
 
+/** Escape a literal string for safe use in a regex (outside a character class). */
+function escapeLiteral(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 /** Regex fragment (no anchors) matching exactly this token. */
 function tokenRegex(token: Token): string {
   switch (token.kind) {
     case "LITERAL":
-      return token.value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      return escapeLiteral(token.value);
     case "DIGITS":
       return `[0-9]{${token.length}}`;
     case "CHARSET":
-    case "LETTERS":
       return `[${escapeForClass(tokenCharacters(token))}]{${tokenLength(token)}}`;
+    case "LETTERS": {
+      const charClass = `[${escapeForClass(tokenCharacters(token))}]{${tokenLength(token)}}`;
+      if (!token.excludedValues?.length) return charClass;
+      // Reject exact segment values (e.g. SS, WW) with a negative lookahead.
+      // Each value is the same length as the segment, so the lookahead lines
+      // up with the characters the class then consumes.
+      const alternation = token.excludedValues.map(escapeLiteral).join("|");
+      return `(?!(?:${alternation}))${charClass}`;
+    }
   }
 }
 

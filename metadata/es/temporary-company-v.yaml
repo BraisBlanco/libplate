@@ -1,0 +1,41 @@
+schemaVersion: 1
+id: ES_TEMPORARY_COMPANY_V
+country: ES
+name: Permiso temporal de empresa, vehículos ya matriculados (prefijo V)
+registrationType: TEMPORARY_COMPANY
+validFrom: "1999-07-26"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: V
+  - name: serial
+    type: DIGITS
+    length: 4
+  - name: series
+    type: CHARSET
+    length: 3
+    characters: BCDFGHJKLMNPRSTVWXYZ
+formats:
+  national: "{prefix} {serial} {series}"
+  compact: "{prefix}{serial}{series}"
+visual:
+  background: RED
+  foreground: WHITE
+sources:
+  - id: ES-RGV
+    section: "Anexo XVIII, I.C.b"
+examples:
+  valid:
+    - "V 1234 BCD"
+    - "V-1234-BCD"
+  invalid:
+    - "V 123 BCD"
+    - "V 1234 AEI"
+    - "1234 BCD"

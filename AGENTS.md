@@ -16,8 +16,9 @@ format", **not** that the plate was issued, is assigned, belongs to a vehicle,
 or is genuine. Never write code, docs, or messages that conflate format
 validity with existence.
 
-Supported today: Spain (ordinary + `R`/`E`/`C` prefixes), Portugal, France,
-Italy — current series. See `README.md` for the user-facing view.
+Supported today: Spain (ordinary + `R`/`E`/`C`/`H`/`T`/`P`/`S`/`V`), Portugal
+(current + three historical series), France (SIV + `WW` provisional), Italy
+(current). See `README.md` for the full matrix.
 
 ## The golden rule: metadata is the source of truth
 
@@ -45,9 +46,11 @@ src/index.ts                  ← public API
 ```
 
 The token grammar (`src/tokens/`) has four fixed-length kinds: `LITERAL`,
-`DIGITS`, `CHARSET`, `LETTERS`. Fixed length buys two things: a single anchored
-regex with **no backtracking** (no ReDoS), and deterministic segment extraction
-by slicing at offsets.
+`DIGITS`, `CHARSET`, `LETTERS`. `LETTERS` also takes `excluded` (per-position
+letters removed from A-Z) and `excludedValues` (whole-segment blacklist, e.g.
+`SS`/`WW`, compiled to a negative lookahead). Fixed length buys two things: a
+single anchored regex with **no backtracking** (no ReDoS), and deterministic
+segment extraction by slicing at offsets.
 
 ## Repository layout
 
@@ -125,9 +128,10 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
 
 - **PT current series** accepts the full A-Z alphabet; the positional
   vowel-exclusion rule (with double-vowel exceptions) is not yet modelled.
-- **FR SIV** accepts the reserved pairs `SS`/`WW`; `WW` is actually the
-  provisional regime. Properly excluding whole-segment values needs a grammar
-  feature — a good future task.
 - **IT `validFrom`** (1994) is an approximation.
+- **Deferred ES series** — diplomatic (`CD`/`OI`/`CC`/`TA`), state/military
+  bodies and the historical provincial series need variable-length groups and
+  code-table lookups the grammar doesn't have yet. Don't fake them with
+  over-permissive fixed-length patterns.
 
 These need grammar or scope work, not a quick patch. Discuss before changing.

@@ -9,16 +9,51 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 > vehicle, or has not been forged. That requires authorized access to
 > administrative registries.
 
-**Status:** early. Supported today:
+**Status:** early but growing. Every scheme cites its legal basis in
+[`docs/SOURCES.md`](docs/SOURCES.md).
 
-- **Spain** — current ordinary series plus the deterministic `R` (trailer),
-  `E` (special) and `C` (moped) prefixes.
-- **Portugal** — current general series (`AA 00 AA`, since 2020).
-- **France** — current SIV series (`AA-123-AA`).
-- **Italy** — current ordinary series (`AA 000 AA`).
+### Supported plate types
 
-Historical series, special regimes (diplomatic, temporary, etc.) and richer
-European detection are planned.
+**🇪🇸 Spain**
+
+| Type                           | Example      | Notes                            |
+| ------------------------------ | ------------ | -------------------------------- |
+| Ordinary series                | `1234 BCD`   | Category not inferable from text |
+| Trailer / semitrailer (`R`)    | `R 1234 BCD` | Deterministic category           |
+| Special vehicle (`E`)          | `E 1234 BCD` | Broad category                   |
+| Moped / motor cycle (`C`)      | `C 1234 BCD` | Deterministic category           |
+| Historical (`H`)               | `H 1234 BCD` | Historical-vehicle regime        |
+| Tourist (`T`)                  | `T 1234 BCD` | Tourist regime                   |
+| Temporary — private (`P`)      | `P 1234 BCD` | Green plate                      |
+| Temporary — company (`S`, `V`) | `S 1234 BCD` | `S` unregistered, `V` registered |
+
+**🇵🇹 Portugal**
+
+| Type                    | Example    | Notes               |
+| ----------------------- | ---------- | ------------------- |
+| Current general series  | `AA 00 AA` | Since 2020-03-03    |
+| Historical — until 1992 | `AA-00-00` | Opt-in in detection |
+| Historical — 1992–2005  | `00-00-AA` | Opt-in in detection |
+| Historical — 2005–2020  | `00-AA-00` | Opt-in in detection |
+
+**🇫🇷 France**
+
+| Type               | Example     | Notes                                     |
+| ------------------ | ----------- | ----------------------------------------- |
+| SIV current series | `AA-123-AA` | Letters `I`,`O`,`U` unused; not `SS`/`WW` |
+| Provisional (`WW`) | `WW-123-AA` | Temporary regime                          |
+
+**🇮🇹 Italy**
+
+| Type                    | Example     | Notes                            |
+| ----------------------- | ----------- | -------------------------------- |
+| Current ordinary series | `AA 000 AA` | Letters `I`,`O`,`Q`,`U` not used |
+
+**Not yet modelled** (references already staged in `docs/SOURCES.md`): Spanish
+diplomatic (`CD`/`OI`/`CC`/`TA`), state/military bodies and historical
+provincial series (need variable-length groups and code tables); French
+`W garage` and diplomatic series; Portuguese trailer/export/industrial-machine
+and diplomatic/military series.
 
 ## Install
 

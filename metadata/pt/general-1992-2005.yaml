@@ -1,0 +1,40 @@
+schemaVersion: 1
+id: PT_GENERAL_1992_2005
+country: PT
+name: Série geral histórica (00-00-AA, 1992-2005)
+registrationType: ORDINARY
+historical: true
+validFrom: "1992-03-01"
+validTo: "2005-05-24"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: digits1
+    type: DIGITS
+    length: 2
+  - name: digits2
+    type: DIGITS
+    length: 2
+  - name: letters
+    type: LETTERS
+    length: 2
+formats:
+  national: "{digits1}-{digits2}-{letters}"
+  compact: "{digits1}{digits2}{letters}"
+sources:
+  - id: PT-IMT-ID
+  - id: PT-RULES
+examples:
+  valid:
+    - "00-00-AA"
+    - "12-34-AB"
+    - "99-99-ZZ"
+  invalid:
+    - "00-00-A"
+    - "0A-00-AA"
+    - "00-00-AAA"

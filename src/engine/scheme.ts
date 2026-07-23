@@ -94,9 +94,12 @@ export function buildRegistrationInference(scheme: PlateScheme): RegistrationInf
       type === "DIPLOMATIC" ||
       type === "CONSULAR" ||
       type === "INTERNATIONAL_ORGANIZATION",
-    // The text alone can never rule historical status in or out, so anything
-    // not explicitly flagged historical reports `null` = "not determinable".
-    historical: scheme.historical ? true : null,
+    // A HISTORICAL-regime plate (e.g. Spain's `H` prefix) is deterministically
+    // historical. For every other regime the text can rule it neither in nor
+    // out, so report `null` = "not determinable". Note this is independent of
+    // the scheme's `historical` flag, which marks legacy/superseded series for
+    // detection opt-in, not the historical-vehicle regime.
+    historical: scheme.registrationType === "HISTORICAL" ? true : null,
   };
 }
 
