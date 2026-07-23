@@ -76,7 +76,7 @@ for (const file of files) {
   if (semanticError) continue;
 
   // Default optional fields so the runtime never has to.
-  scheme.historical ??= false;
+  scheme.legacySeries ??= false;
   schemes.push(scheme);
 }
 

@@ -3,7 +3,7 @@ id: PT_GENERAL_UNTIL_1992
 country: PT
 name: Série geral histórica (AA-00-00, até 1992)
 registrationType: ORDINARY
-historical: true
+legacySeries: true
 validTo: "1992-02-29"
 vehicleInference:
   level: NOT_INFERABLE
@@ -22,6 +22,7 @@ segments:
   - name: digits2
     type: DIGITS
     length: 2
+# No `visual`: historical plate colours are not confidently sourced.
 formats:
   national: "{letters}-{digits1}-{digits2}"
   compact: "{letters}{digits1}{digits2}"

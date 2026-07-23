@@ -64,7 +64,7 @@ export const METADATA: MetadataBundle = {
           "1234 BCD"
         ]
       },
-      "historical": false
+      "legacySeries": false
     },
     {
       "schemaVersion": 1,
@@ -133,7 +133,7 @@ export const METADATA: MetadataBundle = {
           "1234 BCD"
         ]
       },
-      "historical": false
+      "legacySeries": false
     },
     {
       "schemaVersion": 1,
@@ -194,7 +194,7 @@ export const METADATA: MetadataBundle = {
           "1234 BQD"
         ]
       },
-      "historical": false
+      "legacySeries": false
     },
     {
       "schemaVersion": 1,
@@ -263,7 +263,7 @@ export const METADATA: MetadataBundle = {
           "1234 BCD"
         ]
       },
-      "historical": false
+      "legacySeries": false
     },
     {
       "schemaVersion": 1,
@@ -325,7 +325,7 @@ export const METADATA: MetadataBundle = {
           "1234 BCD"
         ]
       },
-      "historical": false
+      "legacySeries": false
     },
     {
       "schemaVersion": 1,
@@ -387,7 +387,7 @@ export const METADATA: MetadataBundle = {
           "1234 BCD"
         ]
       },
-      "historical": false
+      "legacySeries": false
     },
     {
       "schemaVersion": 1,
@@ -449,7 +449,7 @@ export const METADATA: MetadataBundle = {
           "1234 BCD"
         ]
       },
-      "historical": false
+      "legacySeries": false
     },
     {
       "schemaVersion": 1,
@@ -511,7 +511,7 @@ export const METADATA: MetadataBundle = {
           "1234 BCD"
         ]
       },
-      "historical": false
+      "legacySeries": false
     },
     {
       "schemaVersion": 1,
@@ -580,7 +580,7 @@ export const METADATA: MetadataBundle = {
           "1234 BCD"
         ]
       },
-      "historical": false
+      "legacySeries": false
     },
     {
       "schemaVersion": 1,
@@ -661,7 +661,7 @@ export const METADATA: MetadataBundle = {
           "SS-123-AA"
         ]
       },
-      "historical": false
+      "legacySeries": false
     },
     {
       "schemaVersion": 1,
@@ -730,7 +730,7 @@ export const METADATA: MetadataBundle = {
           "AA-123-AA"
         ]
       },
-      "historical": false
+      "legacySeries": false
     },
     {
       "schemaVersion": 1,
@@ -809,7 +809,7 @@ export const METADATA: MetadataBundle = {
           "AA 1234 AA"
         ]
       },
-      "historical": false
+      "legacySeries": false
     },
     {
       "schemaVersion": 1,
@@ -817,7 +817,7 @@ export const METADATA: MetadataBundle = {
       "country": "PT",
       "name": "Série geral histórica (00-00-AA, 1992-2005)",
       "registrationType": "ORDINARY",
-      "historical": true,
+      "legacySeries": true,
       "validFrom": "1992-03-01",
       "validTo": "2005-05-24",
       "vehicleInference": {
@@ -878,7 +878,7 @@ export const METADATA: MetadataBundle = {
       "country": "PT",
       "name": "Série geral histórica (00-AA-00, 2005-2020)",
       "registrationType": "ORDINARY",
-      "historical": true,
+      "legacySeries": true,
       "validFrom": "2005-05-25",
       "validTo": "2020-03-02",
       "vehicleInference": {
@@ -1002,7 +1002,7 @@ export const METADATA: MetadataBundle = {
           "AA 000 AA"
         ]
       },
-      "historical": false
+      "legacySeries": false
     },
     {
       "schemaVersion": 1,
@@ -1010,7 +1010,7 @@ export const METADATA: MetadataBundle = {
       "country": "PT",
       "name": "Série geral histórica (AA-00-00, até 1992)",
       "registrationType": "ORDINARY",
-      "historical": true,
+      "legacySeries": true,
       "validTo": "1992-02-29",
       "vehicleInference": {
         "level": "NOT_INFERABLE"

@@ -18,6 +18,16 @@ describe("France — WW provisional and SIV reserved pairs", () => {
   it("does not classify a WW plate as ordinary SIV", () => {
     expect(parse("WW-123-AA", { country: "FR" }).scheme?.id).not.toBe("FR_SIV_CURRENT");
   });
+
+  it("detects a WW plate as ambiguous between FR and IT", () => {
+    // Italy's alphabet allows W, so WW-123-AA is also a valid Italian plate.
+    const result = detect("WW-123-AA");
+    expect(result.status).toBe("AMBIGUOUS");
+    const countries = result.candidates
+      ?.map((c) => c.country)
+      .sort((a, b) => a.localeCompare(b));
+    expect(countries).toEqual(["FR", "IT"]);
+  });
 });
 
 describe("Spain — regime prefixes", () => {

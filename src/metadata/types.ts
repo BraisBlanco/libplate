@@ -50,8 +50,13 @@ export interface PlateScheme {
   country: CountryCode;
   name: string;
   registrationType: RegistrationType;
-  /** Whether this scheme denotes a historically-registered plate. */
-  historical: boolean;
+  /**
+   * Whether this is a legacy/superseded series. Legacy series are opt-in in
+   * country-less detection (they inflate cross-country ambiguity). This is NOT
+   * the historical-vehicle regime — that is `registrationType: "HISTORICAL"`,
+   * surfaced to callers as `registration.historical`.
+   */
+  legacySeries: boolean;
   validFrom?: string;
   validTo?: string;
   vehicleInference: SchemeVehicleInference;

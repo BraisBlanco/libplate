@@ -3,7 +3,7 @@ id: PT_GENERAL_2005_2020
 country: PT
 name: Série geral histórica (00-AA-00, 2005-2020)
 registrationType: ORDINARY
-historical: true
+legacySeries: true
 validFrom: "2005-05-25"
 validTo: "2020-03-02"
 vehicleInference:
@@ -23,6 +23,7 @@ segments:
   - name: digits2
     type: DIGITS
     length: 2
+# No `visual`: historical plate colours are not confidently sourced.
 formats:
   national: "{digits1}-{letters}-{digits2}"
   compact: "{digits1}{letters}{digits2}"

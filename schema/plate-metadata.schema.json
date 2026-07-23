@@ -40,7 +40,7 @@
         "UNKNOWN"
       ]
     },
-    "historical": { "type": "boolean" },
+    "legacySeries": { "type": "boolean" },
     "validFrom": { "type": "string", "format": "date" },
     "validTo": { "type": "string", "format": "date" },
     "vehicleInference": {

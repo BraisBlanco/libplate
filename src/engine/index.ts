@@ -47,9 +47,9 @@ function selectSchemes(opts: ParseOptions): PlateScheme[] {
     const country = opts.country.toUpperCase();
     schemes = schemes.filter((s) => s.country === country);
   } else if (!opts.includeHistorical) {
-    // Historical schemes greatly increase cross-country ambiguity, so they are
-    // opt-in when detecting without a country hint.
-    schemes = schemes.filter((s) => !s.historical);
+    // Legacy/superseded series greatly increase cross-country ambiguity, so
+    // they are opt-in when detecting without a country hint.
+    schemes = schemes.filter((s) => !s.legacySeries);
   }
   return schemes.filter((s) => isActiveOn(s, opts.referenceDate));
 }
