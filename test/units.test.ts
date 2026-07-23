@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { compilePattern, extractComponents } from "../src/tokens/index.js";
+import { compilePattern, extractComponents, matchAll } from "../src/tokens/index.js";
 import { segmentToNamedToken } from "../src/metadata/types.js";
 import { applyFormat, buildCandidate, isActiveOn } from "../src/engine/scheme.js";
 import { getLibraryVersion, parse } from "../src/index.js";
@@ -11,9 +11,59 @@ describe("tokens — LETTERS", () => {
       { name: "a", token: { kind: "LETTERS", length: 2, excluded: ["I", "O", "U"] } },
       { name: "b", token: { kind: "DIGITS", length: 2 } },
     ]);
-    expect(compiled.regex.test("AB12")).toBe(true);
-    expect(compiled.regex.test("IO12")).toBe(false); // excluded letters
-    expect(extractComponents("AB12", compiled)).toEqual({ a: "AB", b: "12" });
+    expect(compiled.expansions).toHaveLength(1);
+    const expansion = compiled.expansions[0]!;
+    expect(expansion.regex.test("AB12")).toBe(true);
+    expect(expansion.regex.test("IO12")).toBe(false); // excluded letters
+    expect(extractComponents("AB12", expansion)).toEqual({ a: "AB", b: "12" });
+  });
+});
+
+describe("tokens — variable lengths and tables", () => {
+  it("expands a variable-length pattern into fixed shapes and finds all splits", () => {
+    const compiled = compilePattern([
+      { name: "uz", token: { kind: "TABLE", values: ["B", "BA", "WÜ"] } },
+      { name: "letters", token: { kind: "LETTERS", length: { min: 1, max: 2 } } },
+      {
+        name: "digits",
+        token: { kind: "DIGITS", length: { min: 1, max: 4 }, noLeadingZero: true },
+      },
+    ]);
+    // "BAB123" admits B|AB|123 and BA|B|123 — both must surface.
+    expect(matchAll("BAB123", compiled)).toEqual([
+      { uz: "B", letters: "AB", digits: "123" },
+      { uz: "BA", letters: "B", digits: "123" },
+    ]);
+    // Umlaut table values match; leading zero does not.
+    expect(matchAll("WÜX9", compiled)).toEqual([{ uz: "WÜ", letters: "X", digits: "9" }]);
+    expect(matchAll("BX0123", compiled)).toEqual([]);
+  });
+
+  it("prunes length combinations through disjunctive length rules", () => {
+    const compiled = compilePattern(
+      [
+        { name: "a", token: { kind: "LETTERS", length: { min: 1, max: 3 } } },
+        { name: "b", token: { kind: "DIGITS", length: { min: 1, max: 4 } } },
+      ],
+      [
+        { segments: ["a", "b"], max: 5 },
+        { segments: ["b"], max: 2 },
+      ],
+    );
+    expect(matchAll("ABC12", compiled)).toHaveLength(1); // total 5 — first rule
+    expect(matchAll("ABC1234", compiled)).toEqual([]); // total 7, digits 4 — neither
+    expect(matchAll("ABC12345", compiled)).toEqual([]); // beyond any expansion
+  });
+
+  it("rejects patterns that expand beyond the safety cap", () => {
+    const wide = { kind: "DIGITS", length: { min: 1, max: 9 } } as const;
+    expect(() =>
+      compilePattern([
+        { name: "a", token: wide },
+        { name: "b", token: wide },
+        { name: "c", token: wide },
+      ]),
+    ).toThrow(/fixed-length shapes/);
   });
 });
 
@@ -21,11 +71,23 @@ describe("metadata — segment conversion", () => {
   it("converts a LETTERS segment with and without exclusions", () => {
     expect(
       segmentToNamedToken({ name: "s", type: "LETTERS", length: 2, excluded: ["I"] }),
-    ).toEqual({ name: "s", token: { kind: "LETTERS", length: 2, excluded: ["I"] } });
+    ).toEqual({
+      name: "s",
+      token: { kind: "LETTERS", length: { min: 2, max: 2 }, excluded: ["I"] },
+    });
     expect(segmentToNamedToken({ name: "s", type: "LETTERS", length: 2 })).toEqual({
       name: "s",
-      token: { kind: "LETTERS", length: 2 },
+      token: { kind: "LETTERS", length: { min: 2, max: 2 } },
     });
+  });
+
+  it("resolves TABLE segments against the bundle tables", () => {
+    expect(
+      segmentToNamedToken({ name: "d", type: "TABLE", table: "t" }, { t: ["AA", "B"] }),
+    ).toEqual({ name: "d", token: { kind: "TABLE", values: ["AA", "B"] } });
+    expect(() => segmentToNamedToken({ name: "d", type: "TABLE", table: "t" })).toThrow(
+      /Unknown table/,
+    );
   });
 });
 

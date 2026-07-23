@@ -49,6 +49,21 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 | ----------------------- | ----------- | -------------------------------- |
 | Current ordinary series | `AA 000 AA` | Letters `I`,`O`,`Q`,`U` not used |
 
+**🇩🇪 Germany**
+
+| Type           | Example     | Notes                                        |
+| -------------- | ----------- | -------------------------------------------- |
+| Standard       | `B-XY 1234` | District from the official KBA table         |
+| Oldtimer (`H`) | `B-XY 123H` | Historical-vehicle regime; tighter length    |
+| Electric (`E`) | `M-XY 123E` | Ordinary regime, electric drive; same limits |
+
+German plates are matched against the official district-code table
+(assignable codes plus revoked codes still in circulation). Because separators
+are stripped for matching, a compact input like `BAB123` can admit several
+readings (`B-AB 123` Berlin vs `BA-B 123` Bamberg); libplate reports
+`AMBIGUOUS` with all candidates, and uses the separators you wrote as evidence
+to resolve the split when present.
+
 **🇧🇪 Belgium**
 
 | Type            | Example     | Notes                    |
@@ -68,12 +83,8 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 diplomatic (`CD`/`OI`/`CC`/`TA`), state/military bodies and historical
 provincial series; French `W garage` and diplomatic series; Portuguese
 trailer/export/industrial-machine and diplomatic/military series; older Dutch
-sidecodes (1-7). **Germany** is deferred by design: its district code is 1-3
-letters drawn from an official ~350-entry table (some with umlauts) and the
-gap between district and identifier is significant — none of which the current
-fixed-length, separator-stripping, A-Z-only grammar can represent. It needs
-variable-length groups, a code table, umlaut support and separator-aware
-matching first.
+sidecodes (1-7); German seasonal (`Saisonkennzeichen`), alternating
+(`Wechselkennzeichen`), green, Bundeswehr and diplomatic plates.
 
 ## Install
 
@@ -127,9 +138,11 @@ scheme, or the inferences. `validate` / `format` are thin conveniences.
   file under `metadata/`, validated against `schema/plate-metadata.schema.json`
   and compiled into an embedded module — the runtime ships no YAML parser and
   is browser-safe.
-- **No hand-written regex.** Patterns are expressed as fixed-length tokens
-  (`LITERAL`, `DIGITS`, `CHARSET`, `LETTERS`) that compile to a single anchored
-  regex with no backtracking (no ReDoS) and deterministic segment extraction.
+- **No hand-written regex.** Patterns are expressed as tokens (`LITERAL`,
+  `DIGITS`, `CHARSET`, `LETTERS`, `TABLE`), fixed-length or bounded
+  variable-length, that compile to a set of fixed-length anchored regexes with
+  no backtracking (no ReDoS) and deterministic segment extraction. Inputs that
+  admit several segmentations are reported as ambiguous — never guessed.
 - Every scheme cites its regulatory source and ships positive/negative
   examples that are exercised as conformance tests. The legal references are
   catalogued in [`docs/SOURCES.md`](docs/SOURCES.md) and are traceable from a

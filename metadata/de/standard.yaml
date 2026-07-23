@@ -1,0 +1,68 @@
+schemaVersion: 1
+id: DE_STANDARD
+country: DE
+name: Amtliches Kennzeichen (Unterscheidungszeichen + Erkennungsnummer)
+registrationType: ORDINARY
+# validFrom is deliberately omitted: the format is defined today by the FZV
+# 2023 but predates it (the district-based system dates back to 1956), and the
+# cited source does not state that introduction date.
+vehicleInference:
+  # The same format is shared across vehicle categories.
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # 1-3 letter district code (Unterscheidungszeichen), from the official
+  # BMV-approved list published by the KBA. Includes umlaut codes (WÜ, AÖ, …)
+  # and revoked codes that remain valid until the vehicle is deregistered
+  # (FZV § 9(3) sentence 6).
+  - name: district
+    type: TABLE
+    table: de-unterscheidungszeichen
+  # Erkennungsnummer: 1-2 letters (umlauts are not assigned, FZV Anlage 1)…
+  - name: letters
+    type: LETTERS
+    minLength: 1
+    maxLength: 2
+  # …plus a number 1-9999 (FZV Anlage 1: ranges start at 1, so no leading 0).
+  - name: number
+    type: DIGITS
+    minLength: 1
+    maxLength: 4
+    noLeadingZero: true
+# FZV Anlage 4 Abschnitt 1: at most eight characters in total.
+lengthRules:
+  anyOf:
+    - segments: [district, letters, number]
+      max: 8
+# Known limitation: combinations offensive to "die guten Sitten" (§ 9(1)
+# sentence 3, e.g. certain letter pairs) are refused by individual authorities;
+# there is no federal list to validate against, so they are accepted here.
+formats:
+  national: "{district}-{letters} {number}"
+  compact: "{district}{letters}{number}"
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: DE-FZV
+    section: "§ 9, Anlage 1, Anlage 4 (Abschnitt 1)"
+  - id: DE-KBA-UZ
+examples:
+  valid:
+    - "B-XY 1234"
+    - "M-A 1"
+    - "WÜ-AB 12"
+    - "HH-AB 1234"
+  invalid:
+    - "XX-AB 123"
+    # Note "B-ABC 123" would NOT belong here: separators are stripped for
+    # matching, and its compact form is the valid plate BA-BC 123 (Bamberg).
+    - "WÜ-ABC 123"
+    - "B-AB 0123"
+    - "BIT-XY 1234"
+    - "B-AB 12345"
+    - "B-Ä 123"

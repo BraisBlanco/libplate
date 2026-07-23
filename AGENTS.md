@@ -18,8 +18,9 @@ validity with existence.
 
 Supported today: Spain (ordinary + `R`/`E`/`C`/`H`/`T`/`P`/`S`/`V`), Portugal
 (current + three historical series), France (SIV + `WW` provisional), Italy
-(current), Belgium (standard), Netherlands (current + recent sidecodes). See
-`README.md` for the full matrix.
+(current), Germany (standard + `H` Oldtimer + `E` electric), Belgium
+(standard), Netherlands (current + recent sidecodes). See `README.md` for the
+full matrix.
 
 ## The golden rule: metadata is the source of truth
 
@@ -46,18 +47,30 @@ src/engine/*                  ← normalize · parse · validate · format · de
 src/index.ts                  ← public API
 ```
 
-The token grammar (`src/tokens/`) has four fixed-length kinds: `LITERAL`,
-`DIGITS`, `CHARSET`, `LETTERS`. `LETTERS` also takes `excluded` (per-position
-letters removed from A-Z) and `excludedValues` (whole-segment blacklist, e.g.
-`SS`/`WW`, compiled to a negative lookahead). Fixed length buys two things: a
-single anchored regex with **no backtracking** (no ReDoS), and deterministic
-segment extraction by slicing at offsets.
+The token grammar (`src/tokens/`) has five kinds: `LITERAL`, `DIGITS`,
+`CHARSET`, `LETTERS`, `TABLE`. `DIGITS`/`CHARSET`/`LETTERS` take a fixed
+`length` or a bounded `minLength`/`maxLength` range; `DIGITS` also takes
+`noLeadingZero`. `LETTERS` also takes `excluded` (per-position letters removed
+from A-Z) and `excludedValues` (whole-segment blacklist, e.g. `SS`/`WW`,
+compiled to a negative lookahead; fixed-length segments only). `TABLE` matches
+one value from a named set in `metadata/tables/*.json` (e.g. the ~770 German
+district codes, umlauts included). A scheme may add `lengthRules` (a
+disjunction of "these segments sum to at most N" rules, for regulations like
+the German eight-character limit).
+
+A pattern compiles to a set of fixed-length **expansions** — one anchored
+regex per combination of concrete segment lengths. That keeps the original
+guarantees (**no backtracking**/ReDoS, extraction by slicing at offsets) and
+adds one: an input admitting several segmentations yields ALL of them, so the
+engine can resolve them with evidence (the separators the caller wrote) or
+report `AMBIGUOUS_SEGMENTATION` — never an arbitrary regex-engine winner.
 
 ## Repository layout
 
 | Path                                | What                                                                    |
 | ----------------------------------- | ----------------------------------------------------------------------- |
 | `metadata/<CC>/*.yaml`              | Plate schemes, one file per scheme. Source of truth.                    |
+| `metadata/tables/*.json`            | Named value tables referenced by `TABLE` segments (with their sources). |
 | `metadata/version.json`             | `metadataVersion` (versioned independently of the code).                |
 | `schema/plate-metadata.schema.json` | JSON Schema every scheme is validated against.                          |
 | `scripts/build-metadata.mjs`        | Validates YAML → emits `src/generated/metadata.ts`.                     |
@@ -95,6 +108,11 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
 - **Never guess a country.** If input matches schemes in more than one country
   without a `country` option, return `AMBIGUOUS` with `candidates` — never pick
   one. (FR and IT share the `LL-NNN-LL` shape; this path is real.)
+- **Never guess a segmentation either.** When a compact input admits several
+  splits of the same scheme (German `BAB123` = `B-AB 123` or `BA-B 123`), the
+  separators the caller wrote are used as evidence; if they don't resolve it,
+  return `AMBIGUOUS` with reason `AMBIGUOUS_SEGMENTATION`. Separators never
+  reject an otherwise-unique match.
 - **`historical` is `null` when it can't be told from text.** Text alone can
   rarely rule historical status in or out; don't report `false` as if certain.
 - **Vehicle inference always carries `inferenceLevel` + `evidence`.** Never
@@ -131,16 +149,19 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
   vowel-exclusion rule (with double-vowel exceptions) is not yet modelled.
 - **IT `validFrom`** (1994) is an approximation.
 - **Deferred ES series** — diplomatic (`CD`/`OI`/`CC`/`TA`), state/military
-  bodies and the historical provincial series need variable-length groups and
-  code-table lookups the grammar doesn't have yet. Don't fake them with
-  over-permissive fixed-length patterns.
-- **Germany is deferred by design.** Its plate is a 1-3 letter district code
-  from an official ~350-entry table (some with umlauts) + identifier, and the
-  gap between the two is significant. The current grammar can't express it:
-  tokens are fixed-length, normalization strips the separators that delimit the
-  district, and the compact alphabet is A-Z/0-9 only (no umlauts). Supporting
-  it needs variable-length groups, a district table, umlaut handling and
-  separator-aware matching — a real project, not a quick pattern.
+  bodies and the historical provincial series still need dedicated code
+  tables. The grammar now supports variable-length groups and `TABLE` lookups
+  (added for Germany), so these are unblocked — but don't fake them with
+  over-permissive patterns in the meantime.
+- **DE scope.** Seasonal (`Saisonkennzeichen`), alternating
+  (`Wechselkennzeichen`), green, Bundeswehr and diplomatic plates are not
+  modelled. Combinations offensive to "die guten Sitten" (§ 9(1) FZV) are
+  refused by individual authorities with no federal list, so they validate
+  here. Because separators are stripped for matching, an input like
+  `B-ABC 123` is accepted as the valid resegmentation `BA-BC 123` (separators
+  disambiguate between valid splits but never reject a unique one). The
+  district table unions assignable codes with revoked-but-still-circulating
+  ones; text alone cannot tell which regime a given plate is under.
 - **BE/NL letter rules are simplified.** Belgium accepts full A-Z; the Dutch
   per-sidecode first-letter allocations and reserved-combination list are not
   modelled. Documented in the YAML.

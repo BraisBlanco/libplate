@@ -1,0 +1,62 @@
+schemaVersion: 1
+id: DE_ELECTRIC
+country: DE
+name: Kennzeichen für elektrisch betriebene Fahrzeuge (E-Kennzeichen)
+registrationType: ORDINARY
+# validFrom is deliberately omitted: the E series predates the FZV 2023 that
+# defines it today, and the cited source does not state its introduction date.
+vehicleInference:
+  # The E marks the drive type (Elektromobilitätsgesetz), not a vehicle
+  # category; cars, light vehicles and motorcycles all use it.
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # Same composition as the standard plate (FZV § 11(2))…
+  - name: district
+    type: TABLE
+    table: de-unterscheidungszeichen
+  - name: letters
+    type: LETTERS
+    minLength: 1
+    maxLength: 2
+  - name: number
+    type: DIGITS
+    minLength: 1
+    maxLength: 4
+    noLeadingZero: true
+  # …plus the letter E appended after the Erkennungsnummer, no space.
+  - name: suffix
+    type: LITERAL
+    value: "E"
+# FZV Anlage 4 Abschnitt 5a Nummer 1 applies the Oldtimer limits (Abschnitt 4)
+# to E plates: at most seven characters (not counting the E) on a one-line
+# plate, or an Erkennungsnummer of at most five characters on a two-line one.
+lengthRules:
+  anyOf:
+    - segments: [district, letters, number]
+      max: 7
+    - segments: [letters, number]
+      max: 5
+formats:
+  national: "{district}-{letters} {number}E"
+  compact: "{district}{letters}{number}E"
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: DE-FZV
+    section: "§ 11(2), Anlage 1, Anlage 4 (Abschnitt 5a)"
+  - id: DE-KBA-UZ
+examples:
+  valid:
+    - "M-XY 123E"
+    - "HH-A 99E"
+    - "BIT-AB 123E"
+  invalid:
+    - "HH-AB 1234E"
+    - "M-XY 0123E"
+    - "XX-A 1E"

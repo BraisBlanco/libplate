@@ -10,7 +10,12 @@ import type {
 import { METADATA } from "../generated/metadata.js";
 import type { PlateScheme } from "../metadata/types.js";
 import { LIBRARY_VERSION } from "../version.js";
-import { hasOnlyAllowedCharacters, MAX_RAW_LENGTH, normalize } from "./normalize.js";
+import {
+  hasOnlyAllowedCharacters,
+  MAX_RAW_LENGTH,
+  normalize,
+  separatorBoundaries,
+} from "./normalize.js";
 import {
   applyFormat,
   buildCandidate,
@@ -76,7 +81,10 @@ function rejectInput(base: ResultBase, opts: ParseOptions): PlateValidationResul
       ...base,
       status: "INVALID",
       errors: [
-        error("INVALID_CHARACTERS", "Input contains characters outside A-Z and 0-9."),
+        error(
+          "INVALID_CHARACTERS",
+          "Input contains characters outside A-Z, 0-9 and Ä/Ö/Ü.",
+        ),
       ],
     };
   }
@@ -121,25 +129,61 @@ function buildMatch(base: ResultBase, entry: MatchEntry): PlateValidationResult 
 }
 
 function buildAmbiguous(base: ResultBase, matches: MatchEntry[]): PlateValidationResult {
-  // More than one scheme matched: report an audited ambiguity, never guess.
+  // More than one match survived: report an audited ambiguity, never guess.
   const candidates: SchemeCandidate[] = matches.map((m) =>
     buildCandidate(m.scheme, m.components),
   );
   const distinctCountries = new Set(candidates.map((c) => c.country));
-  const reason: ValidationReason =
-    distinctCountries.size > 1 ? "AMBIGUOUS_COUNTRY" : "AMBIGUOUS_SCHEME";
+  const distinctSchemes = new Set(candidates.map((c) => c.scheme));
+  let reason: ValidationReason = "AMBIGUOUS_SCHEME";
+  let message = `Input matches ${candidates.length} schemes; more evidence is required to resolve it.`;
+  if (distinctCountries.size > 1) {
+    reason = "AMBIGUOUS_COUNTRY";
+  } else if (distinctSchemes.size === 1) {
+    // One scheme, several segmentations (e.g. German "BAB123" = B|AB 123 or
+    // BA|B 123). Writing the plate with its separators resolves this.
+    reason = "AMBIGUOUS_SEGMENTATION";
+    message = `Input matches one scheme with ${candidates.length} possible segmentations; write the plate with its separators to resolve it.`;
+  }
   return {
     ...base,
     status: "AMBIGUOUS",
     normalized: base.input.compact,
     candidates,
-    errors: [
-      error(
-        reason,
-        `Input matches ${candidates.length} schemes; more evidence is required to resolve it.`,
-      ),
-    ],
+    errors: [error(reason, message)],
   };
+}
+
+/**
+ * Segment boundaries (as compact-string indices) of a match, excluding the
+ * outer 0/length bounds.
+ */
+function matchBoundaries(entry: MatchEntry): Set<number> {
+  const boundaries = new Set<number>();
+  let offset = 0;
+  for (const segment of entry.scheme.segments) {
+    offset += entry.components[segment.name]?.length ?? 0;
+    boundaries.add(offset);
+  }
+  boundaries.delete(0);
+  boundaries.delete(offset); // total length
+  return boundaries;
+}
+
+/**
+ * Use the separators the caller wrote as evidence: a match is contradicted
+ * when a separator falls strictly inside one of its segments. Never filters
+ * down to nothing — if every match is contradicted, all are kept (the caller
+ * may space a plate unconventionally, which alone must not reject it).
+ */
+function filterBySeparators(matches: MatchEntry[], raw: string): MatchEntry[] {
+  const separators = separatorBoundaries(raw);
+  if (separators.size === 0) return matches;
+  const consistent = matches.filter((entry) => {
+    const boundaries = matchBoundaries(entry);
+    return [...separators].every((b) => boundaries.has(b));
+  });
+  return consistent.length > 0 ? consistent : matches;
 }
 
 /**
@@ -152,11 +196,13 @@ export function parse(input: string, opts: ParseOptions = {}): PlateValidationRe
   const rejection = rejectInput(base, opts);
   if (rejection) return rejection;
 
-  const matches: MatchEntry[] = [];
+  let matches: MatchEntry[] = [];
   for (const scheme of selectSchemes(opts)) {
-    const components = matchScheme(scheme, base.input.compact);
-    if (components) matches.push({ scheme, components });
+    for (const components of matchScheme(scheme, base.input.compact)) {
+      matches.push({ scheme, components });
+    }
   }
+  if (matches.length > 1) matches = filterBySeparators(matches, base.input.raw);
 
   if (matches.length === 0) return buildNoMatch(base, opts);
   if (matches.length === 1) return buildMatch(base, matches[0]!);

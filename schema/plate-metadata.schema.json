@@ -114,32 +114,41 @@
           {
             "type": "object",
             "additionalProperties": false,
-            "required": ["name", "type", "length"],
+            "required": ["name", "type"],
             "properties": {
               "name": { "type": "string" },
               "type": { "const": "DIGITS" },
-              "length": { "type": "integer", "minimum": 1 }
-            }
+              "length": { "type": "integer", "minimum": 1 },
+              "minLength": { "type": "integer", "minimum": 1 },
+              "maxLength": { "type": "integer", "minimum": 1 },
+              "noLeadingZero": { "type": "boolean" }
+            },
+            "allOf": [{ "$ref": "#/$defs/lengthSpec" }]
           },
           {
             "type": "object",
             "additionalProperties": false,
-            "required": ["name", "type", "length", "characters"],
+            "required": ["name", "type", "characters"],
             "properties": {
               "name": { "type": "string" },
               "type": { "const": "CHARSET" },
               "length": { "type": "integer", "minimum": 1 },
+              "minLength": { "type": "integer", "minimum": 1 },
+              "maxLength": { "type": "integer", "minimum": 1 },
               "characters": { "type": "string", "pattern": "^[A-Z0-9]+$" }
-            }
+            },
+            "allOf": [{ "$ref": "#/$defs/lengthSpec" }]
           },
           {
             "type": "object",
             "additionalProperties": false,
-            "required": ["name", "type", "length"],
+            "required": ["name", "type"],
             "properties": {
               "name": { "type": "string" },
               "type": { "const": "LETTERS" },
               "length": { "type": "integer", "minimum": 1 },
+              "minLength": { "type": "integer", "minimum": 1 },
+              "maxLength": { "type": "integer", "minimum": 1 },
               "excluded": {
                 "type": "array",
                 "items": { "type": "string", "pattern": "^[A-Z]$" }
@@ -148,9 +157,44 @@
                 "type": "array",
                 "items": { "type": "string", "pattern": "^[A-Z]+$" }
               }
+            },
+            "allOf": [{ "$ref": "#/$defs/lengthSpec" }]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "type", "table"],
+            "properties": {
+              "name": { "type": "string" },
+              "type": { "const": "TABLE" },
+              "table": { "type": "string", "pattern": "^[a-z0-9-]+$" }
             }
           }
         ]
+      }
+    },
+    "lengthRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["anyOf"],
+      "properties": {
+        "anyOf": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["segments", "max"],
+            "properties": {
+              "segments": {
+                "type": "array",
+                "minItems": 1,
+                "items": { "type": "string" }
+              },
+              "max": { "type": "integer", "minimum": 1 }
+            }
+          }
+        }
       }
     },
     "formats": {
@@ -194,6 +238,20 @@
     }
   },
   "$defs": {
+    "lengthSpec": {
+      "oneOf": [
+        {
+          "required": ["length"],
+          "not": {
+            "anyOf": [{ "required": ["minLength"] }, { "required": ["maxLength"] }]
+          }
+        },
+        {
+          "required": ["minLength", "maxLength"],
+          "not": { "required": ["length"] }
+        }
+      ]
+    },
     "color": {
       "enum": ["WHITE", "BLACK", "RED", "BLUE", "GREEN", "YELLOW", "PINK"]
     },

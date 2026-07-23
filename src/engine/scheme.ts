@@ -5,32 +5,34 @@ import type {
   VehicleCategoryInference,
   VisualExpectation,
 } from "../model/index.js";
-import {
-  compilePattern,
-  extractComponents,
-  type CompiledPattern,
-} from "../tokens/index.js";
+import { compilePattern, matchAll, type CompiledPattern } from "../tokens/index.js";
 import { segmentToNamedToken, type PlateScheme } from "../metadata/types.js";
+import { METADATA } from "../generated/metadata.js";
 
 const compiledCache = new WeakMap<PlateScheme, CompiledPattern>();
 
 function compiled(scheme: PlateScheme): CompiledPattern {
   let c = compiledCache.get(scheme);
   if (!c) {
-    c = compilePattern(scheme.segments.map(segmentToNamedToken));
+    c = compilePattern(
+      scheme.segments.map((s) => segmentToNamedToken(s, METADATA.tables)),
+      scheme.lengthRules?.anyOf ?? [],
+    );
     compiledCache.set(scheme, c);
   }
   return c;
 }
 
-/** Extract components if the compact string matches the scheme, else null. */
+/**
+ * Every segmentation of the compact string this scheme admits. Fixed-length
+ * schemes yield at most one; schemes with variable-length segments can yield
+ * several (an honest ambiguity the engine resolves or reports).
+ */
 export function matchScheme(
   scheme: PlateScheme,
   compact: string,
-): Record<string, string> | null {
-  const c = compiled(scheme);
-  if (!c.regex.test(compact)) return null;
-  return extractComponents(compact, c);
+): Record<string, string>[] {
+  return matchAll(compact, compiled(scheme));
 }
 
 /** Fill a `{placeholder}` template from extracted components. */

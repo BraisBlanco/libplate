@@ -1,7 +1,9 @@
 # Design note: German (DE) plate support
 
-**Status:** planned / not yet implemented. This note is the entry point to
-continue the work in a fresh session. Read `AGENTS.md` first for project rules.
+**Status:** IMPLEMENTED (July 2026, metadata 2026.07.1). Kept as the record of
+the design and of where the implementation deviated from this plan — see the
+"Implementation outcome" section at the end. Read `AGENTS.md` for the current
+state of the grammar.
 
 ## Goal
 
@@ -120,3 +122,43 @@ project rules (see `AGENTS.md` → Known limitations). Hence this plan.
 3. Whether to validate district codes against the full table (accurate, ~350
    entries to maintain) or accept any 1–3 letters (over-permissive — likely no,
    per project rules).
+
+## Implementation outcome (2026-07-23)
+
+Shipped as `DE_STANDARD`, `DE_HISTORIC` (H) and `DE_ELECTRIC` (E), with the
+grammar work of phases A-C. Deviations from the plan above, and why:
+
+- **Expansions instead of capture groups (phase A).** `compilePattern` does
+  not emit variable-length capture groups; it enumerates every combination of
+  concrete segment lengths into fixed-length "expansions", each an anchored
+  regex with offset-based extraction. This keeps the no-backtracking guarantee
+  trivially AND yields _all_ segmentations of an input, which the capture-group
+  approach cannot (a regex returns one match). No compile-time adjacency
+  rejection is needed — ambiguity is handled honestly at runtime.
+- **Separator evidence (phase C).** Option 1 (table-driven split on the
+  compact form) was implemented, plus a refinement: when several splits of the
+  same scheme survive, the separators the caller wrote filter them (a split is
+  contradicted if a separator falls strictly inside one of its segments). So
+  `B-AB 123` resolves to Berlin, `BA-B 123` to Bamberg, and bare `BAB123`
+  returns `AMBIGUOUS` with reason `AMBIGUOUS_SEGMENTATION`. Separators never
+  reject a unique match (so `B-ABC 123` validates as the resegmentation
+  `BA-BC 123` — consistent with the project's separator-stripping leniency).
+- **FZV 2023, not FZV 2011.** The FZV of 12 Dec 2011 cited in this note was
+  replaced by the FZV of 20 July 2023. Notably the district-code list is no
+  longer an annex of the FZV: codes are set by the BMV per § 9(3) and the
+  consolidated list is published by the KBA. The table
+  (`metadata/tables/de-unterscheidungszeichen.json`) was built from the KBA
+  publication (Stand 16.04.2026): 716 assignable + 55 revoked-but-still-
+  circulating codes = 769 values (§ 9(3) sentence 6 keeps revoked codes valid
+  until deregistration).
+- **Length limits are richer than "max 8".** FZV Anlage 4: standard plates
+  max 8 characters; H and E plates max 7 on a one-line plate OR an identifier
+  of max 5 on a two-line plate. Modelled as disjunctive `lengthRules` — the
+  layout cannot be told from text, so a combination legal on either layout is
+  accepted.
+- **Scope decisions** (questions at the end of the plan): E and H shipped as
+  separate schemes (no OPTIONAL token needed); ambiguity behaviour =
+  `AMBIGUOUS` as recommended; the full official table is validated against
+  (not "any 1-3 letters"). Seasonal, Wechselkennzeichen, green, Bundeswehr and
+  diplomatic plates remain out of scope, as do the (non-federal) "gute Sitten"
+  letter-combination bans.

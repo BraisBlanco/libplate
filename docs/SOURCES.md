@@ -16,7 +16,7 @@ metadata release, re-verify the sources touched by the changed schemes.
 
 ```
 sourceCheckedAt: 2026-07-23
-metadataVersion:  2026.07.0
+metadataVersion:  2026.07.1
 ```
 
 ---
@@ -52,6 +52,13 @@ metadataVersion:  2026.07.0
 | -------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | `IT-CDS` | _Codice della Strada_, D.Lgs. 30 aprile 1992, n. 285 (art. 93)               | Vehicle registration and the plate requirement                   | <https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:1992-04-30;285>                     |
 | `IT-REG` | _Regolamento di esecuzione_, D.P.R. 16 dicembre 1992, n. 495 (artt. 254-258) | Ordinary `AA 000 AA` series; letters `I`, `O`, `Q`, `U` not used | <https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.del.presidente.della.repubblica:1992-12-16;495> |
+
+### Germany
+
+| ID          | Reference                                                                                              | Used for                                                                                                                                                                                                         | URL                                                                                                                                                |
+| ----------- | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `DE-FZV`    | Fahrzeug-Zulassungsverordnung (FZV) of 20 July 2023, consolidated (replaced the FZV 2011)              | Plate composition: district + identifier (§ 9); Oldtimer `H` suffix (§ 10(1)); electric `E` suffix (§ 11(2)); identifier alphabet and number ranges (Anlage 1); character-count limits per plate type (Anlage 4) | <https://www.gesetze-im-internet.de/fzv_2023/>                                                                                                     |
+| `DE-KBA-UZ` | Kraftfahrt-Bundesamt, _Kfz-Kennzeichen und auslaufende Kennzeichen in Deutschland_ (Stand: 16.04.2026) | District-code table (`metadata/tables/de-unterscheidungszeichen.json`): codes approved for assignment plus revoked codes still valid until deregistration (§ 9(3) FZV). Codes are set by the BMV per § 9(3)      | <https://www.kba.de/DE/Service/Veroeffentlichungen/Oeffentlichkeitsarbeit/Faltblaetter_Broschueren/kraftfahrzeugkennzeichen_faltblatt_inhalt.html> |
 
 ### Belgium
 
@@ -93,12 +100,6 @@ land.
 | ---------------- | ------------------------------------------------------------- | ----------------------------- | ------------------------------------------------------------- |
 | `FR-TRAILERS`    | Service Public, trailer/caravan registration                  | Registration by PTAC          | <https://www.service-public.fr/particuliers/vosdroits/F21112> |
 | `FR-PLATE-SPECS` | Arrêté du 9 février 2009 (plate characteristics and mounting) | Physical plate specifications | <https://www.legifrance.gouv.fr/loda/id/JORFTEXT000020237128> |
-
-### Germany
-
-| ID       | Reference                                                 | Covers                                                                                                                                                                     | URL                                            |
-| -------- | --------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| `DE-FZV` | Fahrzeug-Zulassungsverordnung (FZV), 12 Dec 2011 (§§ 8-9) | District code (`Unterscheidungszeichen`, 1-3 letters, incl. umlauts) + identifier; needs variable-length groups, a district-code table, and separator-significant matching | <https://www.gesetze-im-internet.de/fzv_2011/> |
 
 ---
 

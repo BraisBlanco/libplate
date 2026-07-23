@@ -1,0 +1,62 @@
+schemaVersion: 1
+id: DE_HISTORIC
+country: DE
+name: Oldtimerkennzeichen (H-Kennzeichen)
+registrationType: HISTORICAL
+# validFrom is deliberately omitted: the H series predates the FZV 2023 that
+# defines it today, and the cited source does not state its introduction date.
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # Same composition as the standard plate (FZV § 10(1) sentence 2)…
+  - name: district
+    type: TABLE
+    table: de-unterscheidungszeichen
+  - name: letters
+    type: LETTERS
+    minLength: 1
+    maxLength: 2
+  - name: number
+    type: DIGITS
+    minLength: 1
+    maxLength: 4
+    noLeadingZero: true
+  # …plus the letter H appended after the Erkennungsnummer, no space.
+  - name: suffix
+    type: LITERAL
+    value: "H"
+# FZV Anlage 4 Abschnitt 4: at most seven characters (not counting the H) on
+# a one-line plate, or an Erkennungsnummer of at most five characters on a
+# two-line plate. The plate layout cannot be told from text, so a combination
+# allowed on either layout is accepted.
+lengthRules:
+  anyOf:
+    - segments: [district, letters, number]
+      max: 7
+    - segments: [letters, number]
+      max: 5
+formats:
+  national: "{district}-{letters} {number}H"
+  compact: "{district}{letters}{number}H"
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: DE-FZV
+    section: "§ 10(1), Anlage 1, Anlage 4 (Abschnitt 4)"
+  - id: DE-KBA-UZ
+examples:
+  valid:
+    - "B-XY 123H"
+    - "WÜ-AB 12H"
+    - "BIT-AB 123H"
+  invalid:
+    - "HH-AB 1234H"
+    - "B-AB 0123H"
+    - "XX-AB 12H"
+    - "B-XY 1234HH"
