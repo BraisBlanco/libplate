@@ -272,6 +272,231 @@ export const METADATA: MetadataBundle = {
         ]
       },
       "historical": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "FR_SIV_CURRENT",
+      "country": "FR",
+      "name": "Système d'immatriculation des véhicules (SIV)",
+      "registrationType": "ORDINARY",
+      "validFrom": "2009-04-15",
+      "vehicleInference": {
+        "level": "REGISTRY_REQUIRED"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "letters1",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "I",
+            "O",
+            "U"
+          ]
+        },
+        {
+          "name": "digits",
+          "type": "DIGITS",
+          "length": 3
+        },
+        {
+          "name": "letters2",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "I",
+            "O",
+            "U"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{letters1}-{digits}-{letters2}",
+        "compact": "{letters1}{digits}{letters2}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "FR-SIV"
+        },
+        {
+          "id": "FR-PLATES"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "AA-123-AA",
+          "AB 123 CD",
+          "AA-001-AA"
+        ],
+        "invalid": [
+          "AA-12-AA",
+          "IA-123-AA",
+          "AA-123-IO",
+          "AA-123-AAA"
+        ]
+      },
+      "historical": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "IT_CURRENT",
+      "country": "IT",
+      "name": "Targa automobilistica ordinaria (AA 000 AA)",
+      "registrationType": "ORDINARY",
+      "validFrom": "1994-01-01",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "letters1",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "I",
+            "O",
+            "Q",
+            "U"
+          ]
+        },
+        {
+          "name": "digits",
+          "type": "DIGITS",
+          "length": 3
+        },
+        {
+          "name": "letters2",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "I",
+            "O",
+            "Q",
+            "U"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{letters1} {digits} {letters2}",
+        "compact": "{letters1}{digits}{letters2}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "IT-CDS",
+          "section": "Art. 93"
+        },
+        {
+          "id": "IT-REG",
+          "section": "Artt. 254-258"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "AA 000 AA",
+          "AB 123 CD",
+          "ZZ 999 ZZ"
+        ],
+        "invalid": [
+          "AA 00 AA",
+          "IA 123 AA",
+          "AQ 123 AA",
+          "AA 1234 AA"
+        ]
+      },
+      "historical": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "PT_GENERAL_CURRENT",
+      "country": "PT",
+      "name": "Série geral atual (AA 00 AA)",
+      "registrationType": "ORDINARY",
+      "validFrom": "2020-03-03",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "letters1",
+          "type": "LETTERS",
+          "length": 2
+        },
+        {
+          "name": "digits",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "letters2",
+          "type": "LETTERS",
+          "length": 2
+        }
+      ],
+      "formats": {
+        "national": "{letters1} {digits} {letters2}",
+        "compact": "{letters1}{digits}{letters2}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "PT-RULES",
+          "section": "Artigo 3.º"
+        },
+        {
+          "id": "PT-2020"
+        },
+        {
+          "id": "PT-IMT-ID"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "AA 01 AA",
+          "AA-01-AA",
+          "BB 12 CD",
+          "ZZ 99 ZZ"
+        ],
+        "invalid": [
+          "AA 1 AA",
+          "A0 00 AA",
+          "AA 00 A",
+          "1A 00 AA",
+          "AA 000 AA"
+        ]
+      },
+      "historical": false
     }
   ]
 };

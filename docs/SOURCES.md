@@ -23,16 +23,33 @@ metadataVersion:  2026.07.0
 
 ## Currently referenced by shipped metadata
 
-### `ES-RGV` — Spain, General Vehicle Regulation
+### Spain
 
-- **Reference:** Real Decreto 2822/1998, _Reglamento General de Vehículos_
-  (consolidated text). Especially **Anexo XVIII** (plate types, series and
-  visual characteristics).
-- **Used for:** all shipped Spanish schemes — ordinary series (`Anexo XVIII,
-I.A.a`), special vehicles `E` (`I.A.b`), trailers `R` (`I.A.c`), mopeds `C`
-  (`I.A.d`).
-- **URL:** <https://www.boe.es/buscar/act.php?id=BOE-A-1999-1826>
-- **Checked:** 2026-07-23
+| ID       | Reference                                                                                  | Used for                                                                               | URL                                                    |
+| -------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| `ES-RGV` | Real Decreto 2822/1998, _Reglamento General de Vehículos_ (consolidated), esp. Anexo XVIII | Ordinary series (I.A.a), special `E` (I.A.b), trailers `R` (I.A.c), mopeds `C` (I.A.d) | <https://www.boe.es/buscar/act.php?id=BOE-A-1999-1826> |
+
+### Portugal
+
+| ID          | Reference                                        | Used for                                       | URL                                                                                 |
+| ----------- | ------------------------------------------------ | ---------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `PT-RULES`  | Decreto-Lei n.º 54/2005 (consolidated), art. 3.º | General series composition                     | <https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/2005-128021130> |
+| `PT-2020`   | Decreto-Lei n.º 2/2020                           | Current `AA 00 AA` series and 2020 plate model | <https://diariodarepublica.pt/dr/detalhe/decreto-lei/2-2020-128071719>              |
+| `PT-IMT-ID` | IMT, vehicle identification                      | Official table of periods and formats          | <https://www.imt-ip.pt/veiculos/identificacao-veiculos/>                            |
+
+### France
+
+| ID          | Reference                             | Used for                                               | URL                                                           |
+| ----------- | ------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------- |
+| `FR-SIV`    | Service Public, SIV                   | Current SIV series `AA-123-AA`                         | <https://www.service-public.fr/particuliers/vosdroits/F17638> |
+| `FR-PLATES` | Service Public, plate characteristics | Visual characteristics; letters `I`, `O`, `U` not used | <https://www.service-public.fr/particuliers/vosdroits/F20319> |
+
+### Italy
+
+| ID       | Reference                                                                    | Used for                                                         | URL                                                                                                           |
+| -------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `IT-CDS` | _Codice della Strada_, D.Lgs. 30 aprile 1992, n. 285 (art. 93)               | Vehicle registration and the plate requirement                   | <https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:1992-04-30;285>                     |
+| `IT-REG` | _Regolamento di esecuzione_, D.P.R. 16 dicembre 1992, n. 495 (artt. 254-258) | Ordinary `AA 000 AA` series; letters `I`, `O`, `Q`, `U` not used | <https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.del.presidente.della.repubblica:1992-12-16;495> |
 
 ---
 
@@ -52,20 +69,15 @@ land.
 
 ### Portugal
 
-| ID                   | Reference                                                                 | Covers                                                                                 | URL                                                                                 |
-| -------------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `PT-RULES`           | Decreto-Lei n.º 54/2005, plate number and plate regulation (consolidated) | Series succession, trailers (art. 4), industrial machines (art. 3, 5), export (art. 6) | <https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/2005-128021130> |
-| `PT-2020`            | Decreto-Lei n.º 2/2020                                                    | New series and plate models (from 2020-03-03)                                          | <https://diariodarepublica.pt/dr/detalhe/decreto-lei/2-2020-128071719>              |
-| `PT-IMT-ID`          | IMT, vehicle identification                                               | Official table of periods and formats                                                  | <https://www.imt-ip.pt/veiculos/identificacao-veiculos/>                            |
-| `PT-IMT-NEW`         | IMT, press release on the 2020 plates                                     | Letter-exclusion rules in the current series                                           | <https://www.imt-ip.pt/noticias/comunicado-de-imprensa-novas-matriculas/>           |
-| `PT-IMT-NEW-VEHICLE` | IMT, registration of new vehicles                                         | Trailers and industrial machines details                                               | <https://www.imt-ip.pt/veiculos/matricula/matricula-de-veiculos-novos/>             |
+| ID                   | Reference                             | Covers                                                                       | URL                                                                       |
+| -------------------- | ------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `PT-IMT-NEW`         | IMT, press release on the 2020 plates | Letter-exclusion rules in the current series (positional vowel restrictions) | <https://www.imt-ip.pt/noticias/comunicado-de-imprensa-novas-matriculas/> |
+| `PT-IMT-NEW-VEHICLE` | IMT, registration of new vehicles     | Trailers and industrial machines details                                     | <https://www.imt-ip.pt/veiculos/matricula/matricula-de-veiculos-novos/>   |
 
 ### France
 
 | ID               | Reference                                                        | Covers                                                      | URL                                                           |
 | ---------------- | ---------------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------- |
-| `FR-SIV`         | Service Public, SIV / FNI / mopeds                               | Current and historical registration systems                 | <https://www.service-public.fr/particuliers/vosdroits/F17638> |
-| `FR-PLATES`      | Service Public, plate characteristics                            | Vehicles, trailers, collection, `W`/`WW`                    | <https://www.service-public.fr/particuliers/vosdroits/F20319> |
 | `FR-TRAILERS`    | Service Public, trailer/caravan registration                     | Registration by PTAC                                        | <https://www.service-public.fr/particuliers/vosdroits/F21112> |
 | `FR-MODALITIES`  | Arrêté du 9 février 2009 (registration procedures, consolidated) | Articles 8, 9 and Annexe VII (`W`, `WW`, diplomatic series) | <https://www.legifrance.gouv.fr/loda/id/JORFTEXT000020237165> |
 | `FR-PLATE-SPECS` | Arrêté du 9 février 2009 (plate characteristics and mounting)    | Physical plate specifications                               | <https://www.legifrance.gouv.fr/loda/id/JORFTEXT000020237128> |

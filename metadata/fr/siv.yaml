@@ -1,0 +1,49 @@
+schemaVersion: 1
+id: FR_SIV_CURRENT
+country: FR
+name: Système d'immatriculation des véhicules (SIV)
+registrationType: ORDINARY
+validFrom: "2009-04-15"
+vehicleInference:
+  # The same national format is used across vehicle categories; the category
+  # cannot be told from the text and requires the registry.
+  level: REGISTRY_REQUIRED
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # The letters I, O and U are not used. NOTE: the reserved pairs SS and WW
+  # (WW is the provisional series) are not yet excluded — those regimes are not
+  # modelled. See FR-MODALITIES.
+  - name: letters1
+    type: LETTERS
+    length: 2
+    excluded: [I, O, U]
+  - name: digits
+    type: DIGITS
+    length: 3
+  - name: letters2
+    type: LETTERS
+    length: 2
+    excluded: [I, O, U]
+formats:
+  national: "{letters1}-{digits}-{letters2}"
+  compact: "{letters1}{digits}{letters2}"
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: FR-SIV
+  - id: FR-PLATES
+examples:
+  valid:
+    - "AA-123-AA"
+    - "AB 123 CD"
+    - "AA-001-AA"
+  invalid:
+    - "AA-12-AA"
+    - "IA-123-AA"
+    - "AA-123-IO"
+    - "AA-123-AAA"

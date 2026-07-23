@@ -9,8 +9,15 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 > vehicle, or has not been forged. That requires authorized access to
 > administrative registries.
 
-**Status:** early. This first release supports **Spain** (current ordinary
-series plus the deterministic `R`, `E` and `C` prefixes). Portugal, France and
+**Status:** early. Supported today:
+
+- **Spain** — current ordinary series plus the deterministic `R` (trailer),
+  `E` (special) and `C` (moped) prefixes.
+- **Portugal** — current general series (`AA 00 AA`, since 2020).
+- **France** — current SIV series (`AA-123-AA`).
+- **Italy** — current ordinary series (`AA 000 AA`).
+
+Historical series, special regimes (diplomatic, temporary, etc.) and richer
 European detection are planned.
 
 ## Install
