@@ -47,6 +47,7 @@ export type RegistrationType =
   | "DIPLOMATIC"
   | "CONSULAR"
   | "INTERNATIONAL_ORGANIZATION"
+  | "DIPLOMATIC_STAFF"
   | "TOURIST"
   | "HISTORICAL"
   | "EXPORT"

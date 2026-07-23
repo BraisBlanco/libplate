@@ -16,7 +16,7 @@ metadata release, re-verify the sources touched by the changed schemes.
 
 ```
 sourceCheckedAt: 2026-07-23
-metadataVersion:  2026.07.1
+metadataVersion:  2026.07.2
 ```
 
 ---
@@ -25,10 +25,11 @@ metadataVersion:  2026.07.1
 
 ### Spain
 
-| ID              | Reference                                                                                  | Used for                                                                                                                                                                                       | URL                                                     |
-| --------------- | ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| `ES-RGV`        | Real Decreto 2822/1998, _Reglamento General de Vehículos_ (consolidated), esp. Anexo XVIII | Ordinary series (I.A.a); special `E` (I.A.b), trailers `R` (I.A.c), mopeds `C` (I.A.d); historical `H` (I.B.c), tourist `T` (I.B.b), temporary private `P` (I.C.a) and company `S`/`V` (I.C.b) | <https://www.boe.es/buscar/act.php?id=BOE-A-1999-1826>  |
-| `ES-HIST-RULES` | Real Decreto 892/2024, _Reglamento de Vehículos Históricos_                                | Historical-vehicle regime (`H` prefix; Group A / Group B)                                                                                                                                      | <https://www.boe.es/buscar/act.php?id=BOE-A-2024-18614> |
+| ID              | Reference                                                                                  | Used for                                                                                                                                                                                                                                                                                                     | URL                                                         |
+| --------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------- |
+| `ES-RGV`        | Real Decreto 2822/1998, _Reglamento General de Vehículos_ (consolidated), esp. Anexo XVIII | Ordinary series (I.A.a); special `E` (I.A.b), trailers `R` (I.A.c), mopeds `C` (I.A.d); diplomatic regime `CD`/`OI`/`CC`/`TA` (I.B.a — structure and colours; digit widths are not fixed by the RGV); historical `H` (I.B.c), tourist `T` (I.B.b), temporary private `P` (I.C.a) and company `S`/`V` (I.C.b) | <https://www.boe.es/buscar/act.php?id=BOE-A-1999-1826>      |
+| `ES-HIST-RULES` | Real Decreto 892/2024, _Reglamento de Vehículos Históricos_                                | Historical-vehicle regime (`H` prefix; Group A / Group B)                                                                                                                                                                                                                                                    | <https://www.boe.es/buscar/act.php?id=BOE-A-2024-18614>     |
+| `ES-DGT-TYPES`  | DGT, "Matrículas de todos los colores"                                                     | Digit widths of the diplomatic-regime groups (`CD`/`CC`: 2 + 2-3; `OI`: 2-3 + 2-3; `TA`: 2-3 + serial, width unstated — modelled as 2-3 by analogy)                                                                                                                                                          | <https://www.dgt.es/comunicacion/noticias/tipos-matricula/> |
 
 ### Portugal
 
@@ -82,10 +83,9 @@ land.
 
 ### Spain
 
-| ID             | Reference                                     | Covers                                                                                                                 | URL                                                                                                                  |
-| -------------- | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `ES-DGT-TYPES` | DGT, "Matrículas de todos los colores"        | Overview of current and historical plate types and systems (incl. provincial series, diplomatic and state-body plates) | <https://www.dgt.es/comunicacion/noticias/tipos-matricula/>                                                          |
-| `ES-HIST-DGT`  | DGT, historical-vehicle registration, Group A | Group A keeps its ordinary plate + circular `H` badge                                                                  | <https://www.dgt.es/nuestros-servicios/tu-vehiculo/vehiculos-historicos/matriculacion-vehiculos-historicos/grupo-a/> |
+| ID            | Reference                                     | Covers                                                | URL                                                                                                                  |
+| ------------- | --------------------------------------------- | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `ES-HIST-DGT` | DGT, historical-vehicle registration, Group A | Group A keeps its ordinary plate + circular `H` badge | <https://www.dgt.es/nuestros-servicios/tu-vehiculo/vehiculos-historicos/matriculacion-vehiculos-historicos/grupo-a/> |
 
 ### Portugal
 

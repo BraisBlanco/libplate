@@ -1,0 +1,54 @@
+schemaVersion: 1
+id: ES_INTERNATIONAL_OI
+country: ES
+name: Matrícula diplomática — Organizaciones internacionales (OI)
+registrationType: INTERNATIONAL_ORGANIZATION
+validFrom: "1999-07-26"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: OI
+  # Organization prefixes continue the series reserved for diplomatic
+  # missions ("serie correlativa", RGV), hence 2-3 digits per the DGT
+  # overview. No official public prefix table (documented limitation).
+  - name: organization
+    type: DIGITS
+    minLength: 2
+    maxLength: 3
+  - name: serial
+    type: DIGITS
+    minLength: 2
+    maxLength: 3
+# A 5-digit compact form like OI12345 admits two segmentations (2+3 / 3+2);
+# the separators the caller wrote resolve it, otherwise the engine reports
+# AMBIGUOUS_SEGMENTATION. Do not add such forms to the examples below.
+formats:
+  national: "{prefix} {organization} {serial}"
+  compact: "{prefix}{organization}{serial}"
+visual:
+  background: BLUE
+  foreground: WHITE
+sources:
+  - id: ES-RGV
+    section: "Anexo XVIII, I.B.a) 2.º"
+  - id: ES-DGT-TYPES
+examples:
+  valid:
+    - "OI 12 34"
+    - "OI 123 45"
+    - "OI-12-345"
+    - "OI123456"
+  invalid:
+    # Note "OI 1 234" would NOT belong here: separators are stripped for
+    # matching and its compact form OI1234 is the (unique) valid split
+    # OI 12 34 — separators never reject a unique match.
+    - "OI 123"
+    - "OI 1234 567"
+    - "IO 12 34"

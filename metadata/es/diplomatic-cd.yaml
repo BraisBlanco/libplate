@@ -1,0 +1,54 @@
+schemaVersion: 1
+id: ES_DIPLOMATIC_CD
+country: ES
+name: Matrícula diplomática — Cuerpo Diplomático (CD)
+registrationType: DIPLOMATIC
+validFrom: "1999-07-26"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: CD
+  # Fixed prefix assigned to each diplomatic mission (prefix 1 = Decanato del
+  # Cuerpo Diplomático). The RGV defines the assignment procedure but fixes no
+  # digit count; the two-digit width comes from the DGT overview. No official
+  # public table of mission prefixes exists, so any two digits are accepted
+  # (documented limitation). Leading zeros allowed: no official text states
+  # how single-digit prefixes are padded.
+  - name: mission
+    type: DIGITS
+    length: 2
+  # Vehicle serial ("número de orden") within the mission; 2-3 digits per the
+  # DGT overview.
+  - name: serial
+    type: DIGITS
+    minLength: 2
+    maxLength: 3
+formats:
+  national: "{prefix} {mission} {serial}"
+  compact: "{prefix}{mission}{serial}"
+visual:
+  background: RED
+  foreground: WHITE
+sources:
+  - id: ES-RGV
+    section: "Anexo XVIII, I.B.a) 1.º"
+  - id: ES-DGT-TYPES
+examples:
+  valid:
+    - "CD 12 345"
+    - "CD-01-23"
+    - "CD1245"
+  invalid:
+    # 3-digit mission group: no segmentation fits (mission is fixed at 2 and
+    # the serial tops out at 3 digits, so 6 trailing digits never split).
+    - "CD 123 4567"
+    - "CD 123"
+    - "DC 12 345"
+    - "CD 12 34 56"

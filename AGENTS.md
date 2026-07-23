@@ -16,7 +16,8 @@ format", **not** that the plate was issued, is assigned, belongs to a vehicle,
 or is genuine. Never write code, docs, or messages that conflate format
 validity with existence.
 
-Supported today: Spain (ordinary + `R`/`E`/`C`/`H`/`T`/`P`/`S`/`V`), Portugal
+Supported today: Spain (ordinary + `R`/`E`/`C`/`H`/`T`/`P`/`S`/`V` + diplomatic
+`CD`/`CC`/`OI`/`TA`), Portugal
 (current + three historical series), France (SIV + `WW` provisional), Italy
 (current), Germany (standard + `H` Oldtimer + `E` electric), Belgium
 (standard), Netherlands (current + recent sidecodes). See `README.md` for the
@@ -148,11 +149,19 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
 - **PT current series** accepts the full A-Z alphabet; the positional
   vowel-exclusion rule (with double-vowel exceptions) is not yet modelled.
 - **IT `validFrom`** (1994) is an approximation.
-- **Deferred ES series** — diplomatic (`CD`/`OI`/`CC`/`TA`), state/military
-  bodies and the historical provincial series still need dedicated code
-  tables. The grammar now supports variable-length groups and `TABLE` lookups
-  (added for Germany), so these are unblocked — but don't fake them with
-  over-permissive patterns in the meantime.
+- **Deferred ES series** — state/military bodies and the historical provincial
+  series still need dedicated code tables. The grammar now supports
+  variable-length groups and `TABLE` lookups (added for Germany), so these are
+  unblocked — but don't fake them with over-permissive patterns in the
+  meantime.
+- **ES diplomatic prefixes are width-checked only.** The RGV defines the
+  mission/organization prefix assignment procedurally and no official public
+  table exists, so `CD`/`CC`/`OI`/`TA` validate the DGT-documented digit
+  widths (the TA serial width is an analogy-based assumption). Compact 5-digit
+  `OI`/`TA` forms are genuinely ambiguous (2+3 vs 3+2) and resolve via
+  separator evidence or `AMBIGUOUS_SEGMENTATION`; compact `CD`/`CC` + 4 digits
+  also reads as a German `C-…` plate, so country-less detection is ambiguous
+  there.
 - **DE scope.** Seasonal (`Saisonkennzeichen`), alternating
   (`Wechselkennzeichen`), green, Bundeswehr and diplomatic plates are not
   modelled. Combinations offensive to "die guten Sitten" (§ 9(1) FZV) are

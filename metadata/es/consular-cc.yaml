@@ -1,0 +1,47 @@
+schemaVersion: 1
+id: ES_CONSULAR_CC
+country: ES
+name: Matrícula diplomática — Oficinas consulares (CC)
+registrationType: CONSULAR
+validFrom: "1999-07-26"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # Prefix of the diplomatic mission the consular office depends on (or the
+  # prefix assigned to the State when there is no such dependence). Same
+  # numbering as the CD series; two-digit width per the DGT overview, no
+  # official public prefix table (documented limitation).
+  - name: prefix
+    type: LITERAL
+    value: CC
+  - name: mission
+    type: DIGITS
+    length: 2
+  - name: serial
+    type: DIGITS
+    minLength: 2
+    maxLength: 3
+formats:
+  national: "{prefix} {mission} {serial}"
+  compact: "{prefix}{mission}{serial}"
+visual:
+  background: GREEN
+  foreground: WHITE
+sources:
+  - id: ES-RGV
+    section: "Anexo XVIII, I.B.a) 3.º"
+  - id: ES-DGT-TYPES
+examples:
+  valid:
+    - "CC 12 345"
+    - "CC-07-89"
+    - "CC1245"
+  invalid:
+    - "CC 123 4567"
+    - "CC 123"
+    - "C 12 345"

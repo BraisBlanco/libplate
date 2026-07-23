@@ -3,7 +3,7 @@
 import type { MetadataBundle } from "../metadata/types.js";
 
 export const METADATA: MetadataBundle = {
-  "metadataVersion": "2026.07.1",
+  "metadataVersion": "2026.07.2",
   "tables": {
     "de-unterscheidungszeichen": [
       "A",
@@ -1108,6 +1108,139 @@ export const METADATA: MetadataBundle = {
     },
     {
       "schemaVersion": 1,
+      "id": "ES_CONSULAR_CC",
+      "country": "ES",
+      "name": "Matrícula diplomática — Oficinas consulares (CC)",
+      "registrationType": "CONSULAR",
+      "validFrom": "1999-07-26",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "CC"
+        },
+        {
+          "name": "mission",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 2,
+          "maxLength": 3
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {mission} {serial}",
+        "compact": "{prefix}{mission}{serial}"
+      },
+      "visual": {
+        "background": "GREEN",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "ES-RGV",
+          "section": "Anexo XVIII, I.B.a) 3.º"
+        },
+        {
+          "id": "ES-DGT-TYPES"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "CC 12 345",
+          "CC-07-89",
+          "CC1245"
+        ],
+        "invalid": [
+          "CC 123 4567",
+          "CC 123",
+          "C 12 345"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "ES_DIPLOMATIC_CD",
+      "country": "ES",
+      "name": "Matrícula diplomática — Cuerpo Diplomático (CD)",
+      "registrationType": "DIPLOMATIC",
+      "validFrom": "1999-07-26",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "CD"
+        },
+        {
+          "name": "mission",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 2,
+          "maxLength": 3
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {mission} {serial}",
+        "compact": "{prefix}{mission}{serial}"
+      },
+      "visual": {
+        "background": "RED",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "ES-RGV",
+          "section": "Anexo XVIII, I.B.a) 1.º"
+        },
+        {
+          "id": "ES-DGT-TYPES"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "CD 12 345",
+          "CD-01-23",
+          "CD1245"
+        ],
+        "invalid": [
+          "CD 123 4567",
+          "CD 123",
+          "DC 12 345",
+          "CD 12 34 56"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
       "id": "ES_HISTORICAL",
       "country": "ES",
       "name": "Vehículos históricos (prefijo H)",
@@ -1163,6 +1296,74 @@ export const METADATA: MetadataBundle = {
           "H 123 BCD",
           "H 1234 AEI",
           "1234 BCD"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "ES_INTERNATIONAL_OI",
+      "country": "ES",
+      "name": "Matrícula diplomática — Organizaciones internacionales (OI)",
+      "registrationType": "INTERNATIONAL_ORGANIZATION",
+      "validFrom": "1999-07-26",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "OI"
+        },
+        {
+          "name": "organization",
+          "type": "DIGITS",
+          "minLength": 2,
+          "maxLength": 3
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 2,
+          "maxLength": 3
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {organization} {serial}",
+        "compact": "{prefix}{organization}{serial}"
+      },
+      "visual": {
+        "background": "BLUE",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "ES-RGV",
+          "section": "Anexo XVIII, I.B.a) 2.º"
+        },
+        {
+          "id": "ES-DGT-TYPES"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "OI 12 34",
+          "OI 123 45",
+          "OI-12-345",
+          "OI123456"
+        ],
+        "invalid": [
+          "OI 123",
+          "OI 1234 567",
+          "IO 12 34"
         ]
       },
       "legacySeries": false
@@ -1362,6 +1563,74 @@ export const METADATA: MetadataBundle = {
           "E 123 BCD",
           "E 1234 AEI",
           "1234 BCD"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "ES_TA",
+      "country": "ES",
+      "name": "Matrícula diplomática — Personal técnico-administrativo (TA)",
+      "registrationType": "DIPLOMATIC_STAFF",
+      "validFrom": "1999-07-26",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "TA"
+        },
+        {
+          "name": "mission",
+          "type": "DIGITS",
+          "minLength": 2,
+          "maxLength": 3
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 2,
+          "maxLength": 3
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {mission} {serial}",
+        "compact": "{prefix}{mission}{serial}"
+      },
+      "visual": {
+        "background": "YELLOW",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "ES-RGV",
+          "section": "Anexo XVIII, I.B.a) 4.º"
+        },
+        {
+          "id": "ES-DGT-TYPES"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "TA 12 34",
+          "TA 123 45",
+          "TA-12-345",
+          "TA123456"
+        ],
+        "invalid": [
+          "TA 123",
+          "TA 1234 567",
+          "AT 12 34"
         ]
       },
       "legacySeries": false

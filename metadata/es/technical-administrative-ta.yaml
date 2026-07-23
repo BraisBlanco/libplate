@@ -1,0 +1,56 @@
+schemaVersion: 1
+id: ES_TA
+country: ES
+name: Matrícula diplomática — Personal técnico-administrativo (TA)
+# TA plates sit under "Matrícula en régimen diplomático" in the RGV, but the
+# holders (technical-administrative staff of missions, international
+# organizations and consular offices) are not diplomatic agents — hence the
+# dedicated DIPLOMATIC_STAFF type, which still sets registration.diplomatic.
+registrationType: DIPLOMATIC_STAFF
+validFrom: "1999-07-26"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: TA
+  # Prefix of the mission, organization or consular office the holder serves;
+  # 2-3 digits per the DGT overview. No official public prefix table
+  # (documented limitation).
+  - name: mission
+    type: DIGITS
+    minLength: 2
+    maxLength: 3
+  # The DGT overview does not state the serial's width for TA; 2-3 digits is
+  # assumed by analogy with the CD/CC/OI series (documented assumption).
+  - name: serial
+    type: DIGITS
+    minLength: 2
+    maxLength: 3
+# Like OI, a 5-digit compact form (TA12345) is genuinely ambiguous (2+3 / 3+2)
+# and resolves via the caller's separators or AMBIGUOUS_SEGMENTATION.
+formats:
+  national: "{prefix} {mission} {serial}"
+  compact: "{prefix}{mission}{serial}"
+visual:
+  background: YELLOW
+  foreground: BLACK
+sources:
+  - id: ES-RGV
+    section: "Anexo XVIII, I.B.a) 4.º"
+  - id: ES-DGT-TYPES
+examples:
+  valid:
+    - "TA 12 34"
+    - "TA 123 45"
+    - "TA-12-345"
+    - "TA123456"
+  invalid:
+    - "TA 123"
+    - "TA 1234 567"
+    - "AT 12 34"

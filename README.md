@@ -26,6 +26,16 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 | Tourist (`T`)                  | `T 1234 BCD` | Tourist regime                   |
 | Temporary — private (`P`)      | `P 1234 BCD` | Green plate                      |
 | Temporary — company (`S`, `V`) | `S 1234 BCD` | `S` unregistered, `V` registered |
+| Diplomatic missions (`CD`)     | `CD 12 345`  | Red plate                        |
+| Consular offices (`CC`)        | `CC 12 345`  | Green plate                      |
+| International orgs (`OI`)      | `OI 123 45`  | Blue plate                       |
+| Technical-admin staff (`TA`)   | `TA 123 45`  | Yellow plate                     |
+
+Spanish diplomatic-regime plates validate the documented group widths only:
+no official public table of mission/organization prefixes exists. For `OI` and
+`TA`, a 5-digit compact input like `OI12345` admits two splits (`OI 12 345` /
+`OI 123 45`); libplate uses the separators you wrote as evidence and reports
+`AMBIGUOUS` when they don't decide it.
 
 **🇵🇹 Portugal**
 
@@ -80,7 +90,7 @@ to resolve the split when present.
 | Sidecode 8 (since 2006)  | `9-XXX-99` |                                       |
 
 **Not yet modelled** (references already staged in `docs/SOURCES.md`): Spanish
-diplomatic (`CD`/`OI`/`CC`/`TA`), state/military bodies and historical
+state/military bodies and historical
 provincial series; French `W garage` and diplomatic series; Portuguese
 trailer/export/industrial-machine and diplomatic/military series; older Dutch
 sidecodes (1-7); German seasonal (`Saisonkennzeichen`), alternating

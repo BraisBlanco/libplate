@@ -58,6 +58,96 @@ describe("Spain — regime prefixes", () => {
   });
 });
 
+describe("Spain — diplomatic regime (CD/CC/OI/TA)", () => {
+  it("validates the four series with their registration types and colours", () => {
+    const cd = parse("CD 12 345", { country: "ES" });
+    expect(cd.status).toBe("VALID");
+    expect(cd.scheme?.id).toBe("ES_DIPLOMATIC_CD");
+    expect(cd.registration?.type).toBe("DIPLOMATIC");
+    expect(cd.visual).toEqual({ background: "RED", foreground: "WHITE" });
+
+    const cc = parse("CC 12 345", { country: "ES" });
+    expect(cc.scheme?.id).toBe("ES_CONSULAR_CC");
+    expect(cc.registration?.type).toBe("CONSULAR");
+    expect(cc.visual).toEqual({ background: "GREEN", foreground: "WHITE" });
+
+    const oi = parse("OI 12 34", { country: "ES" });
+    expect(oi.scheme?.id).toBe("ES_INTERNATIONAL_OI");
+    expect(oi.registration?.type).toBe("INTERNATIONAL_ORGANIZATION");
+    expect(oi.visual).toEqual({ background: "BLUE", foreground: "WHITE" });
+
+    const ta = parse("TA 123 45", { country: "ES" });
+    expect(ta.scheme?.id).toBe("ES_TA");
+    expect(ta.registration?.type).toBe("DIPLOMATIC_STAFF");
+    expect(ta.visual).toEqual({ background: "YELLOW", foreground: "BLACK" });
+  });
+
+  it("sets the diplomatic flag on all four series", () => {
+    for (const plate of ["CD 12 345", "CC 12 345", "OI 12 34", "TA 123 45"]) {
+      const result = parse(plate, { country: "ES" });
+      expect(result.registration?.diplomatic).toBe(true);
+      expect(result.registration?.temporary).toBe(false);
+      expect(result.registration?.historical).toBeNull();
+    }
+  });
+
+  it("reports AMBIGUOUS for a 5-digit compact OI/TA form", () => {
+    // OI 12 345 and OI 123 45 are both valid readings of OI12345.
+    const result = parse("OI12345", { country: "ES" });
+    expect(result.status).toBe("AMBIGUOUS");
+    expect(result.errors[0]?.reason).toBe("AMBIGUOUS_SEGMENTATION");
+    expect(result.candidates).toHaveLength(2);
+  });
+
+  it("uses the caller's separators as evidence to resolve the OI/TA split", () => {
+    const short = parse("OI 12 345", { country: "ES" });
+    expect(short.status).toBe("VALID");
+    expect(short.scheme?.components).toEqual({
+      prefix: "OI",
+      organization: "12",
+      serial: "345",
+    });
+
+    const long = parse("TA-123-45", { country: "ES" });
+    expect(long.status).toBe("VALID");
+    expect(long.scheme?.components).toEqual({
+      prefix: "TA",
+      mission: "123",
+      serial: "45",
+    });
+  });
+
+  it("never rejects a unique split because of separator placement", () => {
+    // OI1234 admits only the 2+2 split; the odd separators are ignored.
+    const result = parse("OI 1 234", { country: "ES" });
+    expect(result.status).toBe("VALID");
+    expect(result.formatted).toBe("OI 12 34");
+  });
+
+  it("detects CD + 4 digits as ambiguous between ES and DE", () => {
+    // Compact CD1245 also reads as the German plate C-D 1245 (C = Chemnitz).
+    const result = detect("CD1245");
+    expect(result.status).toBe("AMBIGUOUS");
+    expect(result.errors[0]?.reason).toBe("AMBIGUOUS_COUNTRY");
+    const countries = result.candidates
+      ?.map((c) => c.country)
+      .sort((a, b) => a.localeCompare(b));
+    expect(countries).toEqual(["DE", "ES"]);
+  });
+
+  it("detects the 7-character and TA forms as uniquely Spanish", () => {
+    // Five digits exceed the German number group (max 4), and neither T nor
+    // TA is a German district code.
+    const seven = detect("CD 12 345");
+    expect(seven.status).toBe("VALID");
+    expect(seven.country).toBe("ES");
+
+    const ta = detect("TA 123 45");
+    expect(ta.status).toBe("VALID");
+    expect(ta.scheme?.id).toBe("ES_TA");
+  });
+});
+
 describe("Portugal — historical series", () => {
   it("validates a historical series when the country is given", () => {
     const result = parse("00-00-AA", { country: "PT" });

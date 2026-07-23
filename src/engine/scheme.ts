@@ -95,7 +95,11 @@ export function buildRegistrationInference(scheme: PlateScheme): RegistrationInf
     diplomatic:
       type === "DIPLOMATIC" ||
       type === "CONSULAR" ||
-      type === "INTERNATIONAL_ORGANIZATION",
+      type === "INTERNATIONAL_ORGANIZATION" ||
+      // Technical-administrative staff plates (ES `TA`) sit under the same
+      // "régimen diplomático" heading in the RGV even though their holders
+      // are not diplomatic agents.
+      type === "DIPLOMATIC_STAFF",
     // A HISTORICAL-regime plate (e.g. Spain's `H` prefix) is deterministically
     // historical. For every other regime the text can rule it neither in nor
     // out, so report `null` = "not determinable". Note this is independent of
