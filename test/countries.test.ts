@@ -50,7 +50,9 @@ describe("cross-country ambiguity", () => {
     const result = detect("AB-123-CD");
     expect(result.status).toBe("AMBIGUOUS");
     expect(result.errors[0]?.reason).toBe("AMBIGUOUS_COUNTRY");
-    const countries = result.candidates?.map((c) => c.country).sort();
+    const countries = result.candidates
+      ?.map((c) => c.country)
+      .sort((a, b) => a.localeCompare(b));
     expect(countries).toEqual(["FR", "IT"]);
   });
 
