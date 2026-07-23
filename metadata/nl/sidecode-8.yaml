@@ -1,0 +1,40 @@
+schemaVersion: 1
+id: NL_SIDECODE_8
+country: NL
+name: Serie 9-XXX-99 (sidecode 8, desde 2006)
+registrationType: ORDINARY
+validFrom: "2006-01-01"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: digit1
+    type: DIGITS
+    length: 1
+  - name: letters
+    type: LETTERS
+    length: 3
+    excluded: [A, C, E, I, M, O, Q, U, W]
+  - name: digits2
+    type: DIGITS
+    length: 2
+formats:
+  national: "{digit1}-{letters}-{digits2}"
+  compact: "{digit1}{letters}{digits2}"
+visual:
+  background: YELLOW
+  foreground: BLACK
+sources:
+  - id: NL-KENTEKEN
+examples:
+  valid:
+    - "1-KBB-00"
+    - "9-KST-99"
+  invalid:
+    - "1-KB-00"
+    - "1-AAA-00"
+    - "1-KBB-000"

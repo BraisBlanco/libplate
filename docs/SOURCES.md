@@ -53,6 +53,18 @@ metadataVersion:  2026.07.0
 | `IT-CDS` | _Codice della Strada_, D.Lgs. 30 aprile 1992, n. 285 (art. 93)               | Vehicle registration and the plate requirement                   | <https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:1992-04-30;285>                     |
 | `IT-REG` | _Regolamento di esecuzione_, D.P.R. 16 dicembre 1992, n. 495 (artt. 254-258) | Ordinary `AA 000 AA` series; letters `I`, `O`, `Q`, `U` not used | <https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.del.presidente.della.repubblica:1992-12-16;495> |
 
+### Belgium
+
+| ID           | Reference                                                                | Used for                                  | URL                                                                         |
+| ------------ | ------------------------------------------------------------------------ | ----------------------------------------- | --------------------------------------------------------------------------- |
+| `BE-KB-2001` | Arrêté royal du 20 juillet 2001 relatif à l'immatriculation de véhicules | Standard series `1-ABC-123`; red on white | <https://www.ejustice.just.fgov.be/eli/arrete/2001/07/20/2001014153/justel> |
+
+### Netherlands
+
+| ID            | Reference                       | Used for                                                                                | URL                                      |
+| ------------- | ------------------------------- | --------------------------------------------------------------------------------------- | ---------------------------------------- |
+| `NL-KENTEKEN` | Kentekenreglement (BWBR0006951) | Current series `XXX-99-X` and recent sidecodes; letters omit vowels, `C`, `Q`, `M`, `W` | <https://wetten.overheid.nl/BWBR0006951> |
+
 ---
 
 ## Reference library for upcoming schemes
@@ -81,6 +93,12 @@ land.
 | ---------------- | ------------------------------------------------------------- | ----------------------------- | ------------------------------------------------------------- |
 | `FR-TRAILERS`    | Service Public, trailer/caravan registration                  | Registration by PTAC          | <https://www.service-public.fr/particuliers/vosdroits/F21112> |
 | `FR-PLATE-SPECS` | Arrêté du 9 février 2009 (plate characteristics and mounting) | Physical plate specifications | <https://www.legifrance.gouv.fr/loda/id/JORFTEXT000020237128> |
+
+### Germany
+
+| ID       | Reference                                                 | Covers                                                                                                                                                                     | URL                                            |
+| -------- | --------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `DE-FZV` | Fahrzeug-Zulassungsverordnung (FZV), 12 Dec 2011 (§§ 8-9) | District code (`Unterscheidungszeichen`, 1-3 letters, incl. umlauts) + identifier; needs variable-length groups, a district-code table, and separator-significant matching | <https://www.gesetze-im-internet.de/fzv_2011/> |
 
 ---
 

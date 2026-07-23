@@ -1,0 +1,46 @@
+schemaVersion: 1
+id: NL_CURRENT
+country: NL
+name: Serie actual (XXX-99-X, desde 2024)
+registrationType: ORDINARY
+validFrom: "2024-06-04"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # Dutch plates omit vowels (word avoidance), C and Q (confusable with 0), and
+  # M and W (too wide). Per-sidecode first-letter allocations and the reserved
+  # combination list (SS, NSB, …) are not modelled.
+  - name: letters1
+    type: LETTERS
+    length: 3
+    excluded: [A, C, E, I, M, O, Q, U, W]
+  - name: digits
+    type: DIGITS
+    length: 2
+  - name: letters2
+    type: LETTERS
+    length: 1
+    excluded: [A, C, E, I, M, O, Q, U, W]
+formats:
+  national: "{letters1}-{digits}-{letters2}"
+  compact: "{letters1}{digits}{letters2}"
+visual:
+  background: YELLOW
+  foreground: BLACK
+sources:
+  - id: NL-KENTEKEN
+examples:
+  valid:
+    - "GBB-01-B"
+    - "GBB 01 B"
+    - "KLT-42-N"
+  invalid:
+    - "GBB-1-B"
+    - "GBB-01-BB"
+    - "AAA-01-B"
+    - "GB-01-B"

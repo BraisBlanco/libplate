@@ -1,0 +1,41 @@
+schemaVersion: 1
+id: NL_SIDECODE_9
+country: NL
+name: Serie XX-999-X (sidecode 9, desde 2011)
+registrationType: ORDINARY
+validFrom: "2011-01-01"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: letters1
+    type: LETTERS
+    length: 2
+    excluded: [A, C, E, I, M, O, Q, U, W]
+  - name: digits
+    type: DIGITS
+    length: 3
+  - name: letters2
+    type: LETTERS
+    length: 1
+    excluded: [A, C, E, I, M, O, Q, U, W]
+formats:
+  national: "{letters1}-{digits}-{letters2}"
+  compact: "{letters1}{digits}{letters2}"
+visual:
+  background: YELLOW
+  foreground: BLACK
+sources:
+  - id: NL-KENTEKEN
+examples:
+  valid:
+    - "GB-001-B"
+    - "GB 001 B"
+  invalid:
+    - "GB-01-B"
+    - "GA-001-B"
+    - "GBB-001-B"

@@ -7,6 +7,68 @@ export const METADATA: MetadataBundle = {
   "schemes": [
     {
       "schemaVersion": 1,
+      "id": "BE_STANDARD_CURRENT",
+      "country": "BE",
+      "name": "Série standard européenne (1-ABC-123)",
+      "registrationType": "ORDINARY",
+      "validFrom": "2010-11-15",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "series",
+          "type": "DIGITS",
+          "length": 1
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 3
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{series}-{letters}-{number}",
+        "compact": "{series}{letters}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "RED"
+      },
+      "sources": [
+        {
+          "id": "BE-KB-2001"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "1-ABC-123",
+          "2-ABC-123",
+          "1 ABC 123"
+        ],
+        "invalid": [
+          "1-AB-123",
+          "1-ABC-12",
+          "AB-123-CD",
+          "1-ABCD-123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
       "id": "ES_HISTORICAL",
       "country": "ES",
       "name": "Vehículos históricos (prefijo H)",
@@ -807,6 +869,325 @@ export const METADATA: MetadataBundle = {
           "IA 123 AA",
           "AQ 123 AA",
           "AA 1234 AA"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "NL_CURRENT",
+      "country": "NL",
+      "name": "Serie actual (XXX-99-X, desde 2024)",
+      "registrationType": "ORDINARY",
+      "validFrom": "2024-06-04",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "letters1",
+          "type": "LETTERS",
+          "length": 3,
+          "excluded": [
+            "A",
+            "C",
+            "E",
+            "I",
+            "M",
+            "O",
+            "Q",
+            "U",
+            "W"
+          ]
+        },
+        {
+          "name": "digits",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "letters2",
+          "type": "LETTERS",
+          "length": 1,
+          "excluded": [
+            "A",
+            "C",
+            "E",
+            "I",
+            "M",
+            "O",
+            "Q",
+            "U",
+            "W"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{letters1}-{digits}-{letters2}",
+        "compact": "{letters1}{digits}{letters2}"
+      },
+      "visual": {
+        "background": "YELLOW",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "NL-KENTEKEN"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "GBB-01-B",
+          "GBB 01 B",
+          "KLT-42-N"
+        ],
+        "invalid": [
+          "GBB-1-B",
+          "GBB-01-BB",
+          "AAA-01-B",
+          "GB-01-B"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "NL_SIDECODE_10",
+      "country": "NL",
+      "name": "Serie X-999-XX (sidecode 10, desde 2015)",
+      "registrationType": "ORDINARY",
+      "validFrom": "2015-01-01",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "letters1",
+          "type": "LETTERS",
+          "length": 1,
+          "excluded": [
+            "A",
+            "C",
+            "E",
+            "I",
+            "M",
+            "O",
+            "Q",
+            "U",
+            "W"
+          ]
+        },
+        {
+          "name": "digits",
+          "type": "DIGITS",
+          "length": 3
+        },
+        {
+          "name": "letters2",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "A",
+            "C",
+            "E",
+            "I",
+            "M",
+            "O",
+            "Q",
+            "U",
+            "W"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{letters1}-{digits}-{letters2}",
+        "compact": "{letters1}{digits}{letters2}"
+      },
+      "visual": {
+        "background": "YELLOW",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "NL-KENTEKEN"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "G-001-BB",
+          "G 001 BB"
+        ],
+        "invalid": [
+          "G-01-BB",
+          "A-001-BB",
+          "G-001-BBB"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "NL_SIDECODE_8",
+      "country": "NL",
+      "name": "Serie 9-XXX-99 (sidecode 8, desde 2006)",
+      "registrationType": "ORDINARY",
+      "validFrom": "2006-01-01",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "digit1",
+          "type": "DIGITS",
+          "length": 1
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 3,
+          "excluded": [
+            "A",
+            "C",
+            "E",
+            "I",
+            "M",
+            "O",
+            "Q",
+            "U",
+            "W"
+          ]
+        },
+        {
+          "name": "digits2",
+          "type": "DIGITS",
+          "length": 2
+        }
+      ],
+      "formats": {
+        "national": "{digit1}-{letters}-{digits2}",
+        "compact": "{digit1}{letters}{digits2}"
+      },
+      "visual": {
+        "background": "YELLOW",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "NL-KENTEKEN"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "1-KBB-00",
+          "9-KST-99"
+        ],
+        "invalid": [
+          "1-KB-00",
+          "1-AAA-00",
+          "1-KBB-000"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "NL_SIDECODE_9",
+      "country": "NL",
+      "name": "Serie XX-999-X (sidecode 9, desde 2011)",
+      "registrationType": "ORDINARY",
+      "validFrom": "2011-01-01",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "letters1",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "A",
+            "C",
+            "E",
+            "I",
+            "M",
+            "O",
+            "Q",
+            "U",
+            "W"
+          ]
+        },
+        {
+          "name": "digits",
+          "type": "DIGITS",
+          "length": 3
+        },
+        {
+          "name": "letters2",
+          "type": "LETTERS",
+          "length": 1,
+          "excluded": [
+            "A",
+            "C",
+            "E",
+            "I",
+            "M",
+            "O",
+            "Q",
+            "U",
+            "W"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{letters1}-{digits}-{letters2}",
+        "compact": "{letters1}{digits}{letters2}"
+      },
+      "visual": {
+        "background": "YELLOW",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "NL-KENTEKEN"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "GB-001-B",
+          "GB 001 B"
+        ],
+        "invalid": [
+          "GB-01-B",
+          "GA-001-B",
+          "GBB-001-B"
         ]
       },
       "legacySeries": false

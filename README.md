@@ -49,11 +49,31 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 | ----------------------- | ----------- | -------------------------------- |
 | Current ordinary series | `AA 000 AA` | Letters `I`,`O`,`Q`,`U` not used |
 
+**🇧🇪 Belgium**
+
+| Type            | Example     | Notes                    |
+| --------------- | ----------- | ------------------------ |
+| Standard series | `1-ABC-123` | Red on white; since 2010 |
+
+**🇳🇱 Netherlands**
+
+| Type                     | Example    | Notes                                 |
+| ------------------------ | ---------- | ------------------------------------- |
+| Current series (2024)    | `XXX-99-X` | Yellow; no vowels, `C`, `Q`, `M`, `W` |
+| Sidecode 10 (since 2015) | `X-999-XX` |                                       |
+| Sidecode 9 (since 2011)  | `XX-999-X` |                                       |
+| Sidecode 8 (since 2006)  | `9-XXX-99` |                                       |
+
 **Not yet modelled** (references already staged in `docs/SOURCES.md`): Spanish
 diplomatic (`CD`/`OI`/`CC`/`TA`), state/military bodies and historical
-provincial series (need variable-length groups and code tables); French
-`W garage` and diplomatic series; Portuguese trailer/export/industrial-machine
-and diplomatic/military series.
+provincial series; French `W garage` and diplomatic series; Portuguese
+trailer/export/industrial-machine and diplomatic/military series; older Dutch
+sidecodes (1-7). **Germany** is deferred by design: its district code is 1-3
+letters drawn from an official ~350-entry table (some with umlauts) and the
+gap between district and identifier is significant — none of which the current
+fixed-length, separator-stripping, A-Z-only grammar can represent. It needs
+variable-length groups, a code table, umlaut support and separator-aware
+matching first.
 
 ## Install
 

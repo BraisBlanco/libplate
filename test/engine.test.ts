@@ -106,9 +106,9 @@ describe("convenience helpers", () => {
   });
 
   it("exposes supported countries, schemes and versions", () => {
-    expect(getSupportedCountries()).toEqual(["ES", "FR", "IT", "PT"]);
+    expect(getSupportedCountries()).toEqual(["BE", "ES", "FR", "IT", "NL", "PT"]);
     expect(getSupportedSchemes("ES")).toContain("ES_TRAILER_CURRENT");
-    expect(getSupportedSchemes()).toHaveLength(16);
+    expect(getSupportedSchemes()).toHaveLength(21);
     expect(getMetadataVersion()).toMatch(/^\d{4}\.\d{2}\.\d+$/);
   });
 });

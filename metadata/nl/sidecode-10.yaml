@@ -1,0 +1,41 @@
+schemaVersion: 1
+id: NL_SIDECODE_10
+country: NL
+name: Serie X-999-XX (sidecode 10, desde 2015)
+registrationType: ORDINARY
+validFrom: "2015-01-01"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: letters1
+    type: LETTERS
+    length: 1
+    excluded: [A, C, E, I, M, O, Q, U, W]
+  - name: digits
+    type: DIGITS
+    length: 3
+  - name: letters2
+    type: LETTERS
+    length: 2
+    excluded: [A, C, E, I, M, O, Q, U, W]
+formats:
+  national: "{letters1}-{digits}-{letters2}"
+  compact: "{letters1}{digits}{letters2}"
+visual:
+  background: YELLOW
+  foreground: BLACK
+sources:
+  - id: NL-KENTEKEN
+examples:
+  valid:
+    - "G-001-BB"
+    - "G 001 BB"
+  invalid:
+    - "G-01-BB"
+    - "A-001-BB"
+    - "G-001-BBB"

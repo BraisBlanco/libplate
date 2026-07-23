@@ -1,0 +1,45 @@
+schemaVersion: 1
+id: BE_STANDARD_CURRENT
+country: BE
+name: Série standard européenne (1-ABC-123)
+registrationType: ORDINARY
+validFrom: "2010-11-15"
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # NOTE: the leading digit is a series indicator (1, then 2 since 2021). Letter
+  # restrictions have evolved and differ between sources, so the full A-Z
+  # alphabet is accepted to avoid rejecting valid plates. First-letter reserved
+  # regimes (CD, G, M/W, …) and the reserved 000 number block are not modelled.
+  - name: series
+    type: DIGITS
+    length: 1
+  - name: letters
+    type: LETTERS
+    length: 3
+  - name: number
+    type: DIGITS
+    length: 3
+formats:
+  national: "{series}-{letters}-{number}"
+  compact: "{series}{letters}{number}"
+visual:
+  background: WHITE
+  foreground: RED
+sources:
+  - id: BE-KB-2001
+examples:
+  valid:
+    - "1-ABC-123"
+    - "2-ABC-123"
+    - "1 ABC 123"
+  invalid:
+    - "1-AB-123"
+    - "1-ABC-12"
+    - "AB-123-CD"
+    - "1-ABCD-123"

@@ -18,7 +18,8 @@ validity with existence.
 
 Supported today: Spain (ordinary + `R`/`E`/`C`/`H`/`T`/`P`/`S`/`V`), Portugal
 (current + three historical series), France (SIV + `WW` provisional), Italy
-(current). See `README.md` for the full matrix.
+(current), Belgium (standard), Netherlands (current + recent sidecodes). See
+`README.md` for the full matrix.
 
 ## The golden rule: metadata is the source of truth
 
@@ -133,5 +134,15 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
   bodies and the historical provincial series need variable-length groups and
   code-table lookups the grammar doesn't have yet. Don't fake them with
   over-permissive fixed-length patterns.
+- **Germany is deferred by design.** Its plate is a 1-3 letter district code
+  from an official ~350-entry table (some with umlauts) + identifier, and the
+  gap between the two is significant. The current grammar can't express it:
+  tokens are fixed-length, normalization strips the separators that delimit the
+  district, and the compact alphabet is A-Z/0-9 only (no umlauts). Supporting
+  it needs variable-length groups, a district table, umlaut handling and
+  separator-aware matching — a real project, not a quick pattern.
+- **BE/NL letter rules are simplified.** Belgium accepts full A-Z; the Dutch
+  per-sidecode first-letter allocations and reserved-combination list are not
+  modelled. Documented in the YAML.
 
 These need grammar or scope work, not a quick patch. Discuss before changing.
