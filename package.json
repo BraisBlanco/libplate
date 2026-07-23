@@ -1,0 +1,71 @@
+{
+  "name": "libplate",
+  "version": "0.1.0",
+  "description": "Format validation, parsing and structured analysis of European vehicle registration plates. Starts with Spain.",
+  "keywords": [
+    "license-plate",
+    "number-plate",
+    "matricula",
+    "vehicle-registration",
+    "validation",
+    "spain"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "metadata",
+    "schema"
+  ],
+  "scripts": {
+    "metadata": "node scripts/build-metadata.mjs",
+    "prebuild": "npm run metadata",
+    "build": "tsup",
+    "pretypecheck": "npm run metadata",
+    "typecheck": "tsc --noEmit",
+    "pretest": "npm run metadata",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "coverage": "npm run metadata && vitest run --coverage",
+    "prelint": "npm run metadata",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "knip": "npm run metadata && knip",
+    "check": "npm run typecheck && npm run lint && npm run format:check && npm run knip && npm run coverage"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@types/node": "^22.10.2",
+    "@vitest/coverage-v8": "^2.1.9",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "eslint": "^9.39.5",
+    "eslint-config-prettier": "^9.1.2",
+    "eslint-plugin-sonarjs": "^3.0.7",
+    "eslint-plugin-unused-imports": "^4.4.1",
+    "globals": "^15.15.0",
+    "knip": "^5.88.1",
+    "prettier": "^3.9.6",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.65.0",
+    "vitest": "^2.1.8",
+    "yaml": "^2.6.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

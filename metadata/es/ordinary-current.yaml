@@ -1,0 +1,45 @@
+schemaVersion: 1
+id: ES_ORDINARY_CURRENT
+country: ES
+name: Serie ordinaria nacional actual
+registrationType: ORDINARY
+validFrom: "2000-09-18"
+vehicleInference:
+  # The ordinary series is shared across cars, motorcycles, vans, trucks,
+  # buses and others. Nothing about the text narrows the category.
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: serial
+    type: DIGITS
+    length: 4
+  - name: series
+    type: CHARSET
+    length: 3
+    # Vowels A E I O U and the letters N-with-tilde and Q are excluded.
+    characters: BCDFGHJKLMNPRSTVWXYZ
+formats:
+  national: "{serial} {series}"
+  compact: "{serial}{series}"
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: ES-RGV
+    section: "Anexo XVIII, I.A.a"
+examples:
+  valid:
+    - "1234 BCD"
+    - "1234-BCD"
+    - "0000 BBB"
+    - "9999 ZZZ"
+  invalid:
+    - "123 BCD"
+    - "1234 AEI"
+    - "1234 BCDE"
+    - "12345 BCD"
+    - "1234 BQD"

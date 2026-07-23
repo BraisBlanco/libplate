@@ -1,0 +1,47 @@
+schemaVersion: 1
+id: ES_MOPED_CURRENT
+country: ES
+name: Ciclomotores y ciclos de motor
+registrationType: ORDINARY
+validFrom: "1999-07-26"
+vehicleInference:
+  # Regulatory terminology is deliberately broad here; do not collapse this to
+  # "motorcycle".
+  category: MOPED_OR_MOTOR_CYCLE
+  level: DETERMINISTIC
+  evidence:
+    - type: PREFIX
+      value: C
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: C
+  - name: serial
+    type: DIGITS
+    length: 4
+  - name: series
+    type: CHARSET
+    length: 3
+    characters: BCDFGHJKLMNPRSTVWXYZ
+formats:
+  national: "{prefix} {serial} {series}"
+  compact: "{prefix}{serial}{series}"
+visual:
+  background: YELLOW
+  foreground: BLACK
+sources:
+  - id: ES-RGV
+    section: "Anexo XVIII, I.A.d"
+examples:
+  valid:
+    - "C 1234 BCD"
+    - "C-1234-BCD"
+  invalid:
+    - "C 123 BCD"
+    - "C 1234 AEI"
+    - "1234 BCD"

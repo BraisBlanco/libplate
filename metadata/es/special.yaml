@@ -1,0 +1,47 @@
+schemaVersion: 1
+id: ES_SPECIAL_CURRENT
+country: ES
+name: Vehículos especiales
+registrationType: SPECIAL
+validFrom: "1999-07-26"
+vehicleInference:
+  # The E prefix identifies the broad "special vehicle" class but not the
+  # subtype (agricultural tractor, public-works machinery, etc.).
+  category: SPECIAL_VEHICLE
+  level: CATEGORY_ONLY
+  evidence:
+    - type: PREFIX
+      value: E
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: E
+  - name: serial
+    type: DIGITS
+    length: 4
+  - name: series
+    type: CHARSET
+    length: 3
+    characters: BCDFGHJKLMNPRSTVWXYZ
+formats:
+  national: "{prefix} {serial} {series}"
+  compact: "{prefix}{serial}{series}"
+visual:
+  background: WHITE
+  foreground: RED
+sources:
+  - id: ES-RGV
+    section: "Anexo XVIII, I.A.b"
+examples:
+  valid:
+    - "E 1234 BCD"
+    - "E-1234-BCD"
+  invalid:
+    - "E 123 BCD"
+    - "E 1234 AEI"
+    - "1234 BCD"

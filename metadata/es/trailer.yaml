@@ -1,0 +1,47 @@
+schemaVersion: 1
+id: ES_TRAILER_CURRENT
+country: ES
+name: Remolques y semirremolques
+registrationType: ORDINARY
+validFrom: "1999-07-26"
+vehicleInference:
+  # The plate cannot reliably separate a trailer from a semitrailer, so the
+  # combined category is used.
+  category: TRAILER_OR_SEMITRAILER
+  level: DETERMINISTIC
+  evidence:
+    - type: PREFIX
+      value: R
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: R
+  - name: serial
+    type: DIGITS
+    length: 4
+  - name: series
+    type: CHARSET
+    length: 3
+    characters: BCDFGHJKLMNPRSTVWXYZ
+formats:
+  national: "{prefix} {serial} {series}"
+  compact: "{prefix}{serial}{series}"
+visual:
+  background: RED
+  foreground: BLACK
+sources:
+  - id: ES-RGV
+    section: "Anexo XVIII, I.A.c"
+examples:
+  valid:
+    - "R 1234 BCD"
+    - "R-1234-BCD"
+  invalid:
+    - "R 123 BCD"
+    - "R 1234 AEI"
+    - "1234 BCD"
