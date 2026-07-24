@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>libplate — implementation examples</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --fg: #1a1d21;
+        --muted: #5c6470;
+        --card: #f6f8fa;
+        --border: #d8dde3;
+        --accent: #0b57d0;
+        --code-bg: #f0f2f5;
+        --valid: #1a7f37;
+        --invalid: #cf222e;
+        --ambiguous: #9a6700;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0d1117;
+          --fg: #e6edf3;
+          --muted: #8b949e;
+          --card: #161b22;
+          --border: #30363d;
+          --accent: #58a6ff;
+          --code-bg: #1c2129;
+          --valid: #3fb950;
+          --invalid: #f85149;
+          --ambiguous: #d29922;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font:
+          16px/1.6 system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+      }
+      main {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 4rem;
+      }
+      h1 {
+        font-size: 1.8rem;
+        margin: 0 0 0.25rem;
+      }
+      h2 {
+        font-size: 1.25rem;
+        margin: 2.5rem 0 0.75rem;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 0.4rem;
+      }
+      p.lead {
+        color: var(--muted);
+        margin-top: 0;
+      }
+      p.note {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      a {
+        color: var(--accent);
+      }
+      pre {
+        background: var(--code-bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 0.9rem 1rem;
+        overflow-x: auto;
+        font-size: 0.85rem;
+        line-height: 1.55;
+      }
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+      p code,
+      li code {
+        background: var(--code-bg);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.05rem 0.3rem;
+        font-size: 0.85em;
+      }
+      .comment {
+        color: var(--muted);
+      }
+
+      /* Playground */
+      .playground {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 1.25rem;
+        margin-top: 1rem;
+      }
+      .playground .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: center;
+      }
+      .playground input[type="text"] {
+        flex: 1 1 200px;
+        font: inherit;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        padding: 0.5rem 0.7rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--bg);
+        color: var(--fg);
+        text-transform: uppercase;
+      }
+      .playground select {
+        font: inherit;
+        padding: 0.5rem 0.5rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--bg);
+        color: var(--fg);
+      }
+      .playground label.check {
+        display: inline-flex;
+        gap: 0.4rem;
+        align-items: center;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+      .badge {
+        display: inline-block;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        padding: 0.15rem 0.6rem;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+      }
+      .badge.VALID {
+        color: var(--valid);
+        border-color: var(--valid);
+      }
+      .badge.INVALID {
+        color: var(--invalid);
+        border-color: var(--invalid);
+      }
+      .badge.AMBIGUOUS,
+      .badge.POSSIBLE {
+        color: var(--ambiguous);
+        border-color: var(--ambiguous);
+      }
+      .badge.UNSUPPORTED {
+        color: var(--muted);
+      }
+      .samples {
+        margin: 0.75rem 0 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+      .samples button {
+        font: inherit;
+        font-size: 0.8rem;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        padding: 0.2rem 0.6rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--bg);
+        color: var(--fg);
+        cursor: pointer;
+      }
+      .samples button:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      #playground-output {
+        margin-top: 1rem;
+        max-height: 420px;
+        overflow: auto;
+      }
+      #playground-error {
+        display: none;
+        border: 1px solid var(--ambiguous);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+        margin-top: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>libplate</h1>
+      <p class="lead">
+        Implementation examples — format validation, parsing and structured analysis of
+        European vehicle registration plates. See the
+        <a href="../README.md">README</a> for the full list of supported schemes.
+      </p>
+      <p class="note">
+        libplate validates known plate <em>formats</em> and extracts the information
+        encoded in them. It cannot prove that a plate has been issued, is currently
+        assigned, or belongs to the observed vehicle.
+      </p>
+
+      <h2>Live playground</h2>
+      <p class="note">
+        Runs the real library from <code>dist/index.js</code>. If nothing happens below:
+        run <code>npm run build</code> first, then serve the repo over HTTP (e.g.
+        <code>python3 -m http.server</code> from the repo root) and open
+        <code>/examples/</code> — browsers block module imports from <code>file://</code>.
+      </p>
+      <div class="playground">
+        <div class="row">
+          <input
+            id="plate-input"
+            type="text"
+            value="R-1234-BCD"
+            spellcheck="false"
+            placeholder="Type a plate…"
+          />
+          <select id="country-select">
+            <option value="">Auto-detect</option>
+          </select>
+          <label class="check">
+            <input id="historical-check" type="checkbox" />
+            includeHistorical
+          </label>
+          <span id="status-badge" class="badge">…</span>
+        </div>
+        <div class="samples" id="samples">
+          <button>1234 BCD</button>
+          <button>R 1234 BCD</button>
+          <button>CD 12 345</button>
+          <button>M-1234-AB</button>
+          <button>AA 00 AA</button>
+          <button>AA-123-AA</button>
+          <button>B-XY 1234</button>
+          <button>BAB123</button>
+          <button>1-ABC-123</button>
+          <button>Q-ABC-123</button>
+          <button>WA-25-ABC</button>
+          <button>X5FJPD</button>
+          <button>OI12345</button>
+        </div>
+        <pre id="playground-output"><code>Loading library…</code></pre>
+        <div id="playground-error"></div>
+      </div>
+
+      <h2>Install</h2>
+      <pre><code>npm install libplate</code></pre>
+
+      <h2>1. <code>parse</code> — the primary API</h2>
+      <p>
+        Use <code>parse</code> whenever you need the reason, the matched scheme, or the
+        vehicle inferences. Everything else is a thin convenience over it.
+      </p>
+      <pre><code>import { parse } from "libplate";
+
+const result = parse("R-1234-BCD", { country: "ES" });
+
+result.status;                 <span class="comment">// "VALID"</span>
+result.normalized;             <span class="comment">// "R1234BCD"   (canonical, no separators)</span>
+result.formatted;              <span class="comment">// "R 1234 BCD" (national display format)</span>
+result.scheme.id;              <span class="comment">// "ES_TRAILER_CURRENT"</span>
+result.scheme.name;            <span class="comment">// "Remolques y semirremolques"</span>
+result.scheme.components;      <span class="comment">// { prefix: "R", serial: "1234", series: "BCD" }</span>
+result.scheme.sourceRefs;      <span class="comment">// ["ES-RGV (Anexo XVIII, I.A.c)"] — legal basis</span>
+
+result.registration.type;      <span class="comment">// "ORDINARY"</span>
+result.vehicle.category;       <span class="comment">// "TRAILER_OR_SEMITRAILER"</span>
+result.vehicle.inferenceLevel; <span class="comment">// "DETERMINISTIC" — the R prefix decides it</span>
+result.vehicle.evidence;       <span class="comment">// [{ type: "PREFIX", value: "R" }]</span>
+result.visual;                 <span class="comment">// { background: "RED", foreground: "BLACK" }</span></code></pre>
+      <p>
+        Category inference is honest about its limits: an ordinary Spanish plate like
+        <code>1234 BCD</code> reports <code>inferenceLevel: "NOT_INFERABLE"</code> because
+        the text alone cannot distinguish a car from a van.
+      </p>
+
+      <h2>2. <code>validate</code> / <code>format</code> — conveniences</h2>
+      <pre><code>import { validate, format } from "libplate";
+
+validate("1234 BCD", { country: "ES" });  <span class="comment">// true</span>
+validate("1234 BCÑ", { country: "ES" });  <span class="comment">// false (Ñ is not in the series charset)</span>
+
+format("1234-bcd", { country: "ES" });    <span class="comment">// "1234 BCD"</span>
+format("aa123aa",  { country: "FR" });    <span class="comment">// "AA-123-AA"</span>
+format("garbage",  { country: "ES" });    <span class="comment">// null when invalid</span></code></pre>
+
+      <h2>3. <code>detect</code> — no country hint</h2>
+      <p>
+        <code>detect</code> tries every supported country. When exactly one scheme matches
+        you get a normal result; when several match, the status is
+        <code>"AMBIGUOUS"</code> and <code>candidates</code> lists them — the library
+        never guesses a single country.
+      </p>
+      <pre><code>import { detect } from "libplate";
+
+detect("C 1234 BCD");
+<span class="comment">// status:  "VALID"</span>
+<span class="comment">// country: "ES", scheme.id: "ES_MOPED_CURRENT"</span>
+<span class="comment">// vehicle: { category: "MOPED_OR_MOTOR_CYCLE", inferenceLevel: "DETERMINISTIC" }</span>
+
+detect("BAB123");
+<span class="comment">// status: "AMBIGUOUS", errors[0].reason: "AMBIGUOUS_SEGMENTATION"</span>
+<span class="comment">// candidates: [</span>
+<span class="comment">//   { country: "DE", scheme: "DE_STANDARD", formatted: "B-AB 123" },  // Berlin</span>
+<span class="comment">//   { country: "DE", scheme: "DE_STANDARD", formatted: "BA-B 123" },  // Bamberg</span>
+<span class="comment">// ]</span>
+
+detect("B-AB 123");
+<span class="comment">// status: "VALID" — the separators you wrote are used as evidence</span></code></pre>
+
+      <h2>4. Options: <code>referenceDate</code> and <code>includeHistorical</code></h2>
+      <pre><code>import { parse, detect } from "libplate";
+
+<span class="comment">// Legacy Spanish provincial series (1971-2000): valid with a country hint.</span>
+parse("M-1234-AB", { country: "ES" });
+<span class="comment">// status: "VALID", scheme.id: "ES_PROVINCIAL_1971_2000"</span>
+
+<span class="comment">// referenceDate filters schemes by their validity period.</span>
+parse("M-1234-AB", { country: "ES", referenceDate: "1985-06-01" });
+<span class="comment">// status: "VALID" — the series was being issued in 1985</span>
+
+<span class="comment">// Historical schemes are opt-in for country-less detection, because their</span>
+<span class="comment">// shapes collide across countries and would flood results with ambiguity.</span>
+detect("00-00-AA");                             <span class="comment">// status: "INVALID"</span>
+detect("00-00-AA", { includeHistorical: true });
+<span class="comment">// status: "VALID", country: "PT", scheme.id: "PT_GENERAL_1992_2005"</span></code></pre>
+
+      <h2>5. Driving UI logic from reason codes</h2>
+      <p>
+        <code>errors[*].reason</code> carries stable machine-readable codes, so you never
+        have to parse human messages.
+      </p>
+      <pre><code>import { parse } from "libplate";
+
+function plateFieldFeedback(input, country) {
+  const result = parse(input, { country });
+
+  switch (result.status) {
+    case "VALID":
+      return { ok: true, display: result.formatted };
+    case "AMBIGUOUS":
+      <span class="comment">// Let the user pick among result.candidates</span>
+      return { ok: false, choices: result.candidates };
+    default:
+      switch (result.errors[0]?.reason) {
+        case "TOO_SHORT":
+        case "TOO_LONG":
+        case "INVALID_LENGTH":
+          return { ok: false, hint: "Check the plate length" };
+        case "INVALID_CHARACTERS":
+          return { ok: false, hint: "Contains characters no scheme allows" };
+        case "UNSUPPORTED_COUNTRY":
+          return { ok: false, hint: "Country not supported yet" };
+        default:
+          return { ok: false, hint: "Not a recognized plate format" };
+      }
+  }
+}</code></pre>
+
+      <h2>6. Introspection</h2>
+      <pre><code>import {
+  getSupportedCountries,
+  getSupportedSchemes,
+  getMetadataVersion,
+  getLibraryVersion,
+} from "libplate";
+
+getSupportedCountries();     <span class="comment">// ["BE", "DE", "ES", "FR", "IT", "NL", "PT"]</span>
+getSupportedSchemes("ES");   <span class="comment">// ["ES_ORDINARY_CURRENT", "ES_TRAILER_CURRENT", ...]</span>
+getMetadataVersion();        <span class="comment">// e.g. "2026.07.3" — the compiled scheme tables</span>
+getLibraryVersion();         <span class="comment">// e.g. "0.1.0"</span></code></pre>
+
+      <h2>CommonJS</h2>
+      <pre><code>const { parse } = require("libplate");</code></pre>
+
+      <script type="module">
+        const input = document.getElementById("plate-input");
+        const select = document.getElementById("country-select");
+        const historical = document.getElementById("historical-check");
+        const badge = document.getElementById("status-badge");
+        const output = document.querySelector("#playground-output code");
+        const errorBox = document.getElementById("playground-error");
+
+        let lib = null;
+        try {
+          lib = await import("../dist/index.js");
+        } catch (e) {
+          badge.textContent = "unavailable";
+          output.textContent = "";
+          errorBox.style.display = "block";
+          errorBox.textContent =
+            "Could not load ../dist/index.js — run `npm run build`, serve the " +
+            "repo root over HTTP and open /examples/. (" +
+            e.message +
+            ")";
+        }
+
+        if (lib) {
+          for (const c of lib.getSupportedCountries()) {
+            const opt = document.createElement("option");
+            opt.value = c;
+            opt.textContent = c;
+            select.appendChild(opt);
+          }
+
+          const run = () => {
+            const opts = {};
+            if (select.value) opts.country = select.value;
+            if (historical.checked) opts.includeHistorical = true;
+            const result = select.value
+              ? lib.parse(input.value, opts)
+              : lib.detect(input.value, opts);
+            badge.textContent = result.status;
+            badge.className = "badge " + result.status;
+            output.textContent = JSON.stringify(result, null, 2);
+          };
+
+          input.addEventListener("input", run);
+          select.addEventListener("change", run);
+          historical.addEventListener("change", run);
+          document.getElementById("samples").addEventListener("click", (e) => {
+            if (e.target.tagName === "BUTTON") {
+              input.value = e.target.textContent;
+              run();
+            }
+          });
+          run();
+        }
+      </script>
+    </main>
+  </body>
+</html>
