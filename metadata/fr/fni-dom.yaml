@@ -1,0 +1,53 @@
+schemaVersion: 1
+id: FR_FNI_DOM
+country: FR
+name: Fichier national des immatriculations, série des DOM (1950-2009)
+registrationType: ORDINARY
+# Same legacy status as FR_FNI_METROPOLE: the conversion deadline was
+# repealed, plates circulate until the next registration formality.
+legacySeries: true
+validFrom: "1950-09-01"
+validTo: "2009-10-14"
+vehicleInference:
+  level: REGISTRY_REQUIRED
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # Annexe I, I-A, DOM case: 1-999 ordinal, 1-3 letter series, 3-digit
+  # department; at most 9 characters, which every combination satisfies.
+  # Official example: "182 ABE 974". Only the four historical DOM appear in
+  # the annexe-era lists; Saint-Pierre-et-Miquelon (975) and Mayotte (976)
+  # registrations under this composition are not traced to the official text
+  # and are not modelled.
+  - name: ordinal
+    type: DIGITS
+    minLength: 1
+    maxLength: 3
+    noLeadingZero: true
+  - name: series
+    type: LETTERS
+    minLength: 1
+    maxLength: 3
+  - name: dept
+    type: PATTERNS
+    patterns: ["971", "972", "973", "974"]
+formats:
+  national: "{ordinal} {series} {dept}"
+  compact: "{ordinal}{series}{dept}"
+sources:
+  - id: FR-FNI-1984
+    section: "Annexe I, I-A"
+  - id: FR-FNI-SUNSET
+examples:
+  valid:
+    - "182 ABE 974"
+    - "1 A 971"
+    - "999 ZZZ 972"
+  invalid:
+    - "182 ABE 975"
+    - "1234 AB 971"
+    - "182 ABE 97"
+    - "082 ABE 974"

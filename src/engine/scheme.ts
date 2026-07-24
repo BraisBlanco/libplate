@@ -62,7 +62,6 @@ export function buildSchemeMatch(
     id: scheme.id,
     country: scheme.country,
     name: scheme.name,
-    sourceRefs: scheme.sources.map((s) => (s.section ? `${s.id} (${s.section})` : s.id)),
     components,
   };
   if (scheme.validFrom) match.validFrom = scheme.validFrom;

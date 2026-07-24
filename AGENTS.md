@@ -19,7 +19,9 @@ validity with existence.
 Supported today: Spain (ordinary + `R`/`E`/`C`/`H`/`T`/`P`/`S`/`V` + diplomatic
 `CD`/`CC`/`OI`/`TA` + the 1900-1971 and 1971-2000 provincial series), Portugal
 (current + three historical series + trailers, export and industrial
-machines), France (SIV + `WW` provisional), Italy (ordinary — also trailer
+machines), France (SIV + `WW` provisional + `W` garage + the 2004-2015 moped
+series + diplomatic `CMD`/`CD`/`C`/`K` + the FNI 1950-2009 métropole and DOM
+series), Italy (ordinary — also trailer
 rears since 2013 — + motorcycles, mopeds, agricultural/operating machines,
 `EE`, targa prova), Germany (standard + `H` Oldtimer + `E` electric), Belgium
 (standard + `O`/`Q`/`T`/`M`/`S`/`G` letter-index categories + `Z`/`Y`/`V`
@@ -66,7 +68,10 @@ positional digit/letter arrangements (`N` = digit, `L` = letter from an
 optional `letters` charset, anything else literal — e.g. the Polish
 `[NNNNL, NLNNN, …]` serials or the fixed `P` of `NNPNN`), with a per-scheme
 `digitBlocks` rule (`NO_LEADING_ZERO`, or `NO_ZERO_BLOCK` for ranges like
-0001-9999) applied to each maximal digit run; same-length arrangements
+0001-9999) applied to each maximal digit run. A literal digit is part of the
+digit run it touches, and satisfies the rule by itself in first position —
+`1NN` under `NO_LEADING_ZERO` is exactly 100-199 (this is how the French
+diplomatic entity ranges are encoded); same-length arrangements
 compile into one fixed-shape alternation, so a `PATTERNS` segment is a single
 component with a single boundary. A scheme may add `lengthRules` (a
 disjunction of "these segments sum to at most N" rules, for regulations like
@@ -222,6 +227,31 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
   valid (plates follow the holder) — same trade-off as the NL sidecodes.
   Personalized, royal court and `A`/`E`/`P` short plates are not modelled.
 
+- **FR SIV letter exclusions are practice, not regulation.** Annexe VII, A of
+  the arrêté du 9 février 2009 prescribes only "2 lettres + 3 chiffres +
+  2 lettres"; the `I`/`O`/`U` and `SS` exclusions come from the official
+  service-public.fr page (SIV allocation practice). Same for the FNI series
+  (`I`/`O` never issued, `U` dropped 1984 — a 1992 circulaire nobody can
+  trace), so FNI accepts the full alphabet. FNI Annexe I itself is not in the
+  Légifrance consolidation and was verified via a facsimile reproduction.
+- **FR text-identical variants and unpublished series are not modelled.**
+  Transit temporaire / importation en transit reuse the ordinary SIV number
+  (white-on-red plate with a validity date — certificate mentions of art. 4,
+  colours of art. 7), and collection vehicles may use black plates; `visual`
+  reports the default white. Military numbers are assigned under
+  defense-internal instructions with no published format. New Caledonia,
+  French Polynesia and Wallis-et-Futuna run local systems with no findable
+  official composition text. The diplomatic `Z`/`X` fiscal suffixes and the
+  ESA `973` / Strasbourg `67` completions are not modelled; diplomatic
+  entity/country codes have no public assignment table (range-checked only);
+  the `K` tail accepts the 1-5 digit union without splitting a consular
+  order number from its department (over-permissive for embassy serials
+  officially ≥ 100). An FNI number whose series reads as a diplomatic status
+  group over a department-like tail (`100 CD 20`) is genuinely ambiguous.
+  The moped series' official 2-digit minimum is 11; 10 is accepted (no
+  per-segment minimum value in the grammar). FNI-era transit (`TT`/`TAA-TZZ`/
+  `IT`/`TTW`/`TTQ`), export (`W?L`/`W?E`) and FFECSA/DF series are not
+  modelled.
 - **PL sub-ranges and colour variants are not fully carved out.** The
   professional serial's final two-digit block (01-99) accepts 00 (`digitBlocks`
   is per-segment and the leading block legitimately starts at 00), and the

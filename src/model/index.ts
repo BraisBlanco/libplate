@@ -109,7 +109,8 @@ export interface VehicleCategoryInference {
   evidence: Evidence[];
 }
 
-export type PlateColor = "WHITE" | "BLACK" | "RED" | "BLUE" | "GREEN" | "YELLOW" | "PINK";
+export type PlateColor =
+  "WHITE" | "BLACK" | "RED" | "BLUE" | "GREEN" | "YELLOW" | "PINK" | "ORANGE";
 
 /**
  * Expected visual appearance for a scheme. Informational in v1: the library
@@ -128,7 +129,6 @@ export interface SchemeMatch {
   name: string;
   validFrom?: string;
   validTo?: string;
-  sourceRefs: string[];
   /** Segment name -> extracted substring, e.g. { serial: "1234", series: "BCD" }. */
   components: Record<string, string>;
 }

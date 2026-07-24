@@ -1,0 +1,53 @@
+schemaVersion: 1
+id: FR_INTERNATIONAL_ORG_CD
+country: FR
+name: Série diplomatique CMD/CD des organisations internationales
+registrationType: INTERNATIONAL_ORGANIZATION
+# Same legal basis and plate as FR_DIPLOMATIC_CD; split out because the
+# 400-499/600/700 entity range identifies an international organization in
+# France rather than a diplomatic mission, which is a different regime.
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # Annexe VII, D: 400-499 for organizations with headquarters or an office
+  # in France, plus 600 (Conseil de l'Europe, Strasbourg) and 700 (Centre
+  # international de recherche sur le cancer, Lyon). No public table of the
+  # 4NN assignments exists, so codes are range-checked only.
+  - name: entity
+    type: PATTERNS
+    patterns: ["4NN", "600", "700"]
+    digitBlocks: NO_LEADING_ZERO
+  - name: status
+    type: PATTERNS
+    patterns: ["CMD", "CD"]
+  # 1-9999. Z/X fiscal suffixes not modelled (see FR_DIPLOMATIC_CD).
+  - name: serial
+    type: DIGITS
+    minLength: 1
+    maxLength: 4
+    noLeadingZero: true
+formats:
+  national: "{entity} {status} {serial}"
+  compact: "{entity}{status}{serial}"
+visual:
+  background: GREEN
+  foreground: ORANGE
+sources:
+  - id: FR-MODALITIES
+    section: "Article 6, Annexe VII, D"
+  - id: FR-PLATE-SPECS
+    section: "Article 7"
+examples:
+  valid:
+    - "401 CD 5"
+    - "600 CMD 1000"
+    - "700 CD 123"
+  invalid:
+    - "800 CD 1234"
+    - "401 CE 1234"
+    - "401 CD 12345"

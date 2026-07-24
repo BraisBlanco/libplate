@@ -2,8 +2,9 @@
 
 Every plate scheme in `metadata/**/*.yaml` cites its legal basis through one or
 more `sources[].id` entries. This document is the registry those IDs resolve
-to. The same IDs appear in a validation result under `scheme.sourceRefs`, so a
-result can always be traced back to the regulation that defines the format.
+to. A validation result carries the stable `scheme.id`, which identifies the
+YAML scheme and, through its `sources` list, the regulation that defines the
+format — the legal citations themselves live here, not in the API.
 
 > **Scope of these sources.** They document the _format, series and visual
 > characteristics_ of plates as prescribed by regulation. They do **not**
@@ -16,7 +17,7 @@ metadata release, re-verify the sources touched by the changed schemes.
 
 ```
 sourceCheckedAt: 2026-07-24
-metadataVersion:  2026.07.5
+metadataVersion:  2026.07.6
 ```
 
 ---
@@ -48,11 +49,15 @@ metadataVersion:  2026.07.5
 
 ### France
 
-| ID              | Reference                                                                             | Used for                                                                                  | URL                                                           |
-| --------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| `FR-SIV`        | Service Public, SIV                                                                   | Current SIV series `AA-123-AA`; letters `I`, `O`, `U` unused; first group never `SS`/`WW` | <https://www.service-public.fr/particuliers/vosdroits/F17638> |
-| `FR-PLATES`     | Service Public, plate characteristics                                                 | Visual characteristics; `WW` pink background from 2026                                    | <https://www.service-public.fr/particuliers/vosdroits/F20319> |
-| `FR-MODALITIES` | Arrêté du 9 février 2009 (registration procedures, consolidated), art. 8 & Annexe VII | `WW` provisional series                                                                   | <https://www.legifrance.gouv.fr/loda/id/JORFTEXT000020237165> |
+| ID               | Reference                                                                                                                  | Used for                                                                                                                                                                                                                 | URL                                                           |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------- |
+| `FR-SIV`         | Service Public, SIV                                                                                                        | Current SIV series `AA-123-AA`; the `I`/`O`/`U` and `SS` exclusions (allocation practice — Annexe VII prescribes the composition only)                                                                                   | <https://www.service-public.fr/particuliers/vosdroits/F17638> |
+| `FR-PLATES`      | Service Public, plate characteristics                                                                                      | Visual characteristics; `WW` pink background from 2026                                                                                                                                                                   | <https://www.service-public.fr/particuliers/vosdroits/F20319> |
+| `FR-MODALITIES`  | Arrêté du 9 février 2009 (registration procedures, consolidated), art. 6, 8, 9 & Annexe VII                                | Number compositions: definitive incl. the 2004-2015 moped case (A), `W` garage (B), `WW` (C), diplomatic/consular/K (D)                                                                                                  | <https://www.legifrance.gouv.fr/loda/id/JORFTEXT000020237165> |
+| `FR-PLATE-SPECS` | Arrêté du 9 février 2009 (plate characteristics and mounting, consolidated), art. 7                                        | Colours per series: diplomatic CMD/CD orange-on-green, C/K white-on-green; TT/import white-on-red; collection black variant                                                                                              | <https://www.legifrance.gouv.fr/loda/id/JORFTEXT000020237128> |
+| `FR-FNI-1984`    | Arrêté du 5 novembre 1984 relatif à l'immatriculation des véhicules (repealed 2009), Annexe I                              | FNI composition (métropole and DOM) and department codes. Légifrance consolidates the articles but not Annexe I; the composition was verified against a facsimile reproduction of the modified text and the JO/BO annexe | <https://www.legifrance.gouv.fr/loda/id/LEGITEXT000006075077> |
+| `FR-FNI-SUNSET`  | Arrêté du 7 mai 2020 (deletes the 31/12/2020 FNI deadline; mirrors décret n° 2019-1328 art. 4 for décret 2009-136 art. 13) | FNI plates remain in circulation indefinitely (conversion only on the next registration formality)                                                                                                                       | <https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000041885380> |
+| `FR-PINK-2026`   | Arrêté du 21 novembre 2025 (W/WW plate colours)                                                                            | `W` garage and `WW` plates black-on-pink since 2026-01-01; `WW` carries the MM/AA end of validity in place of the territorial identifier                                                                                 | <https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000052971649> |
 
 ### Italy
 
@@ -134,10 +139,9 @@ land.
 
 ### France
 
-| ID               | Reference                                                     | Covers                        | URL                                                           |
-| ---------------- | ------------------------------------------------------------- | ----------------------------- | ------------------------------------------------------------- |
-| `FR-TRAILERS`    | Service Public, trailer/caravan registration                  | Registration by PTAC          | <https://www.service-public.fr/particuliers/vosdroits/F21112> |
-| `FR-PLATE-SPECS` | Arrêté du 9 février 2009 (plate characteristics and mounting) | Physical plate specifications | <https://www.legifrance.gouv.fr/loda/id/JORFTEXT000020237128> |
+| ID            | Reference                                    | Covers               | URL                                                           |
+| ------------- | -------------------------------------------- | -------------------- | ------------------------------------------------------------- |
+| `FR-TRAILERS` | Service Public, trailer/caravan registration | Registration by PTAC | <https://www.service-public.fr/particuliers/vosdroits/F21112> |
 
 ---
 

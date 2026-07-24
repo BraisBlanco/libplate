@@ -1,0 +1,63 @@
+schemaVersion: 1
+id: FR_DIPLOMATIC_STAFF_K
+country: FR
+name: Série K (personnel non diplomatique et fonctionnaires internationaux)
+registrationType: DIPLOMATIC_STAFF
+# Same legal basis as FR_DIPLOMATIC_CD. K plates cover embassy and consular
+# staff without diplomatic status and international-organization
+# functionaries; the entity group reuses the CMD/CD ranges.
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+    - "."
+segments:
+  # 1-199 embassies/consulates, organization letter + 200-399 delegations,
+  # 400-499/600/700 organizations (see the CD schemes for the meaning of
+  # each range; assignments have no public table).
+  - name: entity
+    type: PATTERNS
+    patterns: ["N", "NN", "1NN", "L2NN", "L3NN", "4NN", "600", "700"]
+    letters: UES
+    digitBlocks: NO_LEADING_ZERO
+  - name: status
+    type: LITERAL
+    value: K
+  # The published sub-ranges differ per holder: embassies use 100-9999,
+  # consulates an order number 1-999 followed by the post's department
+  # (written with a dot, e.g. "105 K 10.75"), delegations and organizations
+  # 1-999/1-9999. The per-entity structure is not expressible as one token
+  # sequence, so this segment accepts the 1-5 digit union WITHOUT splitting
+  # a consular tail into order number and department — over-permissive for
+  # small embassy serials (officially >= 100) and unvalidated consular
+  # departments, documented limitation. Z/X fiscal suffixes not modelled.
+  - name: serial
+    type: PATTERNS
+    patterns: ["N", "NN", "NNN", "NNNN", "NNNNN"]
+    digitBlocks: NO_LEADING_ZERO
+formats:
+  national: "{entity} {status} {serial}"
+  compact: "{entity}{status}{serial}"
+visual:
+  # Art. 7 of the plaques arrêté: "caractères blancs sur fond vert jaspe".
+  background: GREEN
+  foreground: WHITE
+sources:
+  - id: FR-MODALITIES
+    section: "Article 6, Annexe VII, D"
+  - id: FR-PLATE-SPECS
+    section: "Article 7"
+examples:
+  valid:
+    - "105 K 100"
+    - "U 305 K 10"
+    - "401 K 1000"
+    - "105 K 1.75"
+  invalid:
+    - "105 K 123456"
+    - "800 K 100"
+    - "105 K 012"
+    - "A 305 K 10"

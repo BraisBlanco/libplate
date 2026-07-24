@@ -1,7 +1,10 @@
 import type { InputRepresentations } from "../model/index.js";
 
-/** Whitespace plus the various Unicode hyphen/dash/minus characters. */
-const SEPARATORS = /[\s\-‐-―−]/;
+/**
+ * Whitespace, the various Unicode hyphen/dash/minus characters, and the dot
+ * (French consular/K plates write the department after one, e.g. "105 C 1.75").
+ */
+const SEPARATORS = /[\s.\-‐-―−]/;
 
 const SEPARATORS_ALL = new RegExp(SEPARATORS.source, "g");
 

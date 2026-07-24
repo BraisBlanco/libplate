@@ -1,0 +1,59 @@
+schemaVersion: 1
+id: FR_CONSULAR_C
+country: FR
+name: Série consulaire C (corps consulaire)
+registrationType: CONSULAR
+# Same legal basis as FR_DIPLOMATIC_CD; the C series identifies consular
+# posts and always carries the department of the post after a dot
+# (official example: "105 C 1.75").
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+    - "."
+segments:
+  # Annexe VII, D: sending-country code 1-199 (no public assignment table;
+  # range-checked only).
+  - name: country
+    type: PATTERNS
+    patterns: ["N", "NN", "1NN"]
+    digitBlocks: NO_LEADING_ZERO
+  - name: status
+    type: LITERAL
+    value: C
+  # Order number 1-999 within the post.
+  - name: serial
+    type: DIGITS
+    minLength: 1
+    maxLength: 3
+    noLeadingZero: true
+  # Department of the consular post. Z/X fiscal suffixes not modelled (see
+  # FR_DIPLOMATIC_CD).
+  - name: dept
+    type: TABLE
+    table: fr-departements
+formats:
+  national: "{country} {status} {serial}.{dept}"
+  compact: "{country}{status}{serial}{dept}"
+visual:
+  # Art. 7 of the plaques arrêté: "caractères blancs sur fond vert jaspe".
+  background: GREEN
+  foreground: WHITE
+sources:
+  - id: FR-MODALITIES
+    section: "Article 6, Annexe VII, D"
+  - id: FR-PLATE-SPECS
+    section: "Article 7"
+examples:
+  valid:
+    - "105 C 1.75"
+    - "5 C 123.2A"
+    - "24 C 3.06"
+  invalid:
+    - "105 C 1.99"
+    - "400 C 1.75"
+    - "1050 C 1.75"
+    - "105 C 0.75"

@@ -1,0 +1,66 @@
+schemaVersion: 1
+id: FR_MOPED_2004
+country: FR
+name: Cyclomoteurs, série dédiée (2004-2015)
+registrationType: ORDINARY
+# Closed series: since 2015-07-01 new mopeds receive the ordinary SIV number
+# (Annexe VII as modified by the arrêté du 25 juin 2015). Numbers issued
+# before keep circulating, so the series is legacy for detection only.
+legacySeries: true
+# Registration became mandatory for new mopeds on 2004-07-01 (existing ones
+# by 2011) under the FNI (1984 arrêté, Annexe I I-A1); the SIV kept the same
+# composition until the 2015-06-30 cutoff stated in Annexe VII, A.
+validFrom: "2004-07-01"
+validTo: "2015-06-30"
+vehicleInference:
+  # The dedicated composition was reserved for cyclomoteurs.
+  level: DETERMINISTIC
+  category: MOPED_OR_MOTOR_CYCLE
+  evidence:
+    - type: PATTERN
+      value: "dedicated cyclomoteur composition (1-2 letters, 2-3 digits, 1 letter)"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # Annexe VII, A: "1 à 2 lettres, suivies de 2 à 3 chiffres, suivis de
+  # 1 lettre" (example "A 11 A"). The 1984 annexe gives the ranges: letters
+  # "A à ZZ", digits "11 à 999", final letter "A à Z". A 2-digit ordinal of
+  # 10 is accepted here although the official range starts at 11 (the token
+  # grammar has no per-segment minimum value) — over-permissive by one
+  # value, documented. No published letter exclusions.
+  - name: letters
+    type: LETTERS
+    minLength: 1
+    maxLength: 2
+  - name: digits
+    type: DIGITS
+    minLength: 2
+    maxLength: 3
+    noLeadingZero: true
+  - name: letter
+    type: LETTERS
+    length: 1
+formats:
+  national: "{letters} {digits} {letter}"
+  compact: "{letters}{digits}{letter}"
+# No visual: small-format plates spanned both the FNI and SIV liveries and
+# the pre-2015 small plates had to be swapped for the current format by
+# 2017-07-01 (plaques arrêté, art. 11 bis).
+sources:
+  - id: FR-MODALITIES
+    section: "Annexe VII, A (cas particulier des cyclomoteurs)"
+  - id: FR-FNI-1984
+    section: "Annexe I, I-A1"
+examples:
+  valid:
+    - "A 11 A"
+    - "AB 123 C"
+    - "Z 999 Z"
+  invalid:
+    - "A 1 A"
+    - "ABC 12 A"
+    - "A 12 AB"
+    - "A 011 A"

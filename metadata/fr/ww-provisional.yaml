@@ -33,8 +33,9 @@ visual:
   foreground: BLACK
 sources:
   - id: FR-MODALITIES
-    section: "Article 8, Annexe VII"
+    section: "Article 8, Annexe VII (C)"
   - id: FR-PLATES
+  - id: FR-PINK-2026
 examples:
   valid:
     - "WW-123-AA"

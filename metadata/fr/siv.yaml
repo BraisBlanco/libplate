@@ -14,8 +14,13 @@ normalization:
     - " "
     - "-"
 segments:
-  # The letters I, O and U are not used. The first group also never equals SS
-  # (offensive) or WW (reserved for the provisional series, see FR_WW_PROVISIONAL).
+  # The letters I, O and U are not used, and the first group never equals SS
+  # (offensive) or WW (reserved for the provisional series, see
+  # FR_WW_PROVISIONAL). NOTE: none of this is in the regulation — Annexe VII, A
+  # only prescribes "2 lettres, suivies de 3 chiffres, suivis de 2 lettres".
+  # The exclusions are SIV allocation practice documented by the official
+  # service-public.fr page (FR-SIV); only the W/WW series are implicitly
+  # reserved by Annexe VII itself.
   - name: letters1
     type: LETTERS
     length: 2
@@ -31,12 +36,20 @@ segments:
 formats:
   national: "{letters1}-{digits}-{letters2}"
   compact: "{letters1}{digits}{letters2}"
+# Default livery. Regime variants share this exact number format and differ
+# only by plate colour or certificate mentions (art. 4 of the modalités
+# arrêté; art. 7 of the plaques arrêté): transit temporaire / importation en
+# transit plates are white-on-red with an end-of-validity date, collection
+# vehicles may use white-on-black. None of these is inferable from text, so
+# the default is reported.
 visual:
   background: WHITE
   foreground: BLACK
 sources:
   - id: FR-SIV
   - id: FR-PLATES
+  - id: FR-MODALITIES
+    section: "Annexe VII, A"
 examples:
   valid:
     - "AA-123-AA"

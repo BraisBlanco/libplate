@@ -1,0 +1,49 @@
+schemaVersion: 1
+id: FR_W_GARAGE
+country: FR
+name: Immatriculation provisoire W garage
+registrationType: PROFESSIONAL_TEMPORARY
+validFrom: "2009-04-15"
+vehicleInference:
+  # Issued to automotive professionals (manufacturers, dealers, repairers,
+  # agricultural coops — art. 9 and Annexe IX) for prototypes, vehicles
+  # under repair or held for resale; says nothing about the vehicle.
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # Annexe VII, B: "W, suivie de 3 chiffres, suivis de 2 lettres"
+  # (example W-111-AA). No published letter exclusions.
+  - name: prefix
+    type: LITERAL
+    value: W
+  - name: digits
+    type: DIGITS
+    length: 3
+  - name: letters
+    type: LETTERS
+    length: 2
+formats:
+  national: "{prefix}-{digits}-{letters}"
+  compact: "{prefix}{digits}{letters}"
+visual:
+  # Black characters on a pink background since 2026-01-01 (arrêté du
+  # 21 novembre 2025); black on white before.
+  background: PINK
+  foreground: BLACK
+sources:
+  - id: FR-MODALITIES
+    section: "Article 9, Annexes VII (B) et IX"
+  - id: FR-PINK-2026
+examples:
+  valid:
+    - "W-123-AB"
+    - "W 456 CD"
+  invalid:
+    - "W-12-AB"
+    - "W-123-A"
+    - "WW-123-AB"
+    - "X-123-AB"

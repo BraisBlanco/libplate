@@ -59,10 +59,25 @@ digits (`SE 1234`) shares its compact form with the pre-1992 general series
 
 **🇫🇷 France**
 
-| Type               | Example     | Notes                                     |
-| ------------------ | ----------- | ----------------------------------------- |
-| SIV current series | `AA-123-AA` | Letters `I`,`O`,`U` unused; not `SS`/`WW` |
-| Provisional (`WW`) | `WW-123-AA` | Temporary regime                          |
+| Type                        | Example       | Notes                                       |
+| --------------------------- | ------------- | ------------------------------------------- |
+| SIV current series          | `AA-123-AA`   | Letters `I`,`O`,`U` unused; not `SS`/`WW`   |
+| Provisional (`WW`)          | `WW-123-AA`   | Temporary regime; pink plate since 2026     |
+| W garage (professionals)    | `W-123-AB`    | Annual professional plate; pink since 2026  |
+| Mopeds (2004-2015)          | `AB 123 C`    | Closed series, still circulating            |
+| FNI métropole (1950-2009)   | `5723 HB 62`  | Legacy; official department table           |
+| FNI DOM (1950-2009)         | `182 ABE 974` | Legacy; 3-digit DOM codes                   |
+| Diplomatic (`CMD`/`CD`)     | `5 CD 1234`   | Green plate; embassies, delegations, `500`  |
+| International orgs (`CD`)   | `401 CD 5`    | Entity codes 400-499, 600, 700              |
+| Consular (`C`)              | `105 C 1.75`  | Department of the post after a dot          |
+| Staff / functionaries (`K`) | `105 K 100`   | Embassy, consular and organization variants |
+
+The SIV letter exclusions are allocation practice documented by
+service-public.fr — Annexe VII of the arrêté du 9 février 2009 prescribes only
+the 2+3+2 composition. An FNI number whose series spells a diplomatic status
+group over a department-like serial (`100 CD 20`) is a genuine text ambiguity
+and is reported as `AMBIGUOUS`. Transit temporaire / import plates reuse the
+ordinary SIV number on a red plate, so they are not a separate scheme.
 
 **🇮🇹 Italy**
 
@@ -249,8 +264,9 @@ scheme, or the inferences. `validate` / `format` are thin conveniences.
   admit several segmentations are reported as ambiguous — never guessed.
 - Every scheme cites its regulatory source and ships positive/negative
   examples that are exercised as conformance tests. The legal references are
-  catalogued in [`docs/SOURCES.md`](docs/SOURCES.md) and are traceable from a
-  result via `scheme.sourceRefs`.
+  catalogued in [`docs/SOURCES.md`](docs/SOURCES.md); the stable `scheme.id`
+  in a result is the key to look them up (the API itself carries no legal
+  citations — that is documentation, not validation output).
 
 ## Development
 

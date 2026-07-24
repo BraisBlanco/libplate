@@ -271,7 +271,6 @@ result.formatted;              <span class="comment">// "R 1234 BCD" (national d
 result.scheme.id;              <span class="comment">// "ES_TRAILER_CURRENT"</span>
 result.scheme.name;            <span class="comment">// "Remolques y semirremolques"</span>
 result.scheme.components;      <span class="comment">// { prefix: "R", serial: "1234", series: "BCD" }</span>
-result.scheme.sourceRefs;      <span class="comment">// ["ES-RGV (Anexo XVIII, I.A.c)"] — legal basis</span>
 
 result.registration.type;      <span class="comment">// "ORDINARY"</span>
 result.vehicle.category;       <span class="comment">// "TRAILER_OR_SEMITRAILER"</span>
@@ -375,7 +374,7 @@ function plateFieldFeedback(input, country) {
   getLibraryVersion,
 } from "libplate";
 
-getSupportedCountries();     <span class="comment">// ["BE", "DE", "ES", "FR", "IT", "NL", "PT"]</span>
+getSupportedCountries();     <span class="comment">// ["AT", "BE", "DE", "ES", "FR", "IT", "NL", "PL", "PT"]</span>
 getSupportedSchemes("ES");   <span class="comment">// ["ES_ORDINARY_CURRENT", "ES_TRAILER_CURRENT", ...]</span>
 getMetadataVersion();        <span class="comment">// e.g. "2026.07.3" — the compiled scheme tables</span>
 getLibraryVersion();         <span class="comment">// e.g. "0.1.0"</span></code></pre>

@@ -1,0 +1,74 @@
+schemaVersion: 1
+id: FR_FNI_METROPOLE
+country: FR
+name: Fichier national des immatriculations, série métropolitaine (1950-2009)
+registrationType: ORDINARY
+# Legacy for detection purposes only: the 31/12/2020 conversion deadline of
+# décret 2009-136 art. 13 was deleted (décret 2019-1328 art. 4; arrêté du
+# 7 mai 2020 for the plates side), so FNI plates circulate indefinitely and
+# convert to SIV only on the next registration formality.
+legacySeries: true
+# validFrom approximates the arrêté du 1er septembre 1950 that created the
+# FNI; the composition modelled here is the consolidated arrêté du
+# 5 novembre 1984, Annexe I. validTo is the SIV switchover for used vehicles
+# (new vehicles moved on 2009-04-15 already).
+validFrom: "1950-09-01"
+validTo: "2009-10-14"
+vehicleInference:
+  # The same composition served every vehicle category; the category
+  # requires the registry.
+  level: REGISTRY_REQUIRED
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # Annexe I, I-A: 1-9999 ordinal, then a 1-2 letter series (3 letters in
+  # Paris first, then everywhere once the 2-letter series ran out), then the
+  # department code; at most 8 characters in total, which exactly rules out
+  # the 4-digit + 3-letter combination. I/O were never issued and U was
+  # dropped in 1984, but no published text says so (a 1992 circulaire is
+  # untraceable), so the full alphabet is accepted (documented limitation).
+  # Series equal to a diplomatic status group (C, K, CD, CMD) followed by a
+  # 2-digit group readable as a department make a genuine text ambiguity
+  # with the diplomatic series (e.g. "100 CD 20"); the engine reports those
+  # as ambiguous.
+  - name: ordinal
+    type: DIGITS
+    minLength: 1
+    maxLength: 4
+    noLeadingZero: true
+  - name: series
+    type: LETTERS
+    minLength: 1
+    maxLength: 3
+  - name: dept
+    type: TABLE
+    table: fr-departements
+lengthRules:
+  anyOf:
+    - segments: [ordinal, series, dept]
+      max: 8
+formats:
+  national: "{ordinal} {series} {dept}"
+  compact: "{ordinal}{series}{dept}"
+# No visual: the era spans black plates with silver characters and the later
+# reflective white-front/yellow-rear pair (arrêté du 1er juillet 1996,
+# repealed), and old liveries remain legal on the vehicle.
+sources:
+  - id: FR-FNI-1984
+    section: "Annexe I, I-A"
+  - id: FR-FNI-SUNSET
+examples:
+  valid:
+    - "5723 HB 62"
+    - "448 NRC 75"
+    - "34 BXY 2A"
+    - "1 A 01"
+  invalid:
+    - "5723 HBC 62"
+    - "5723 HB 96"
+    - "0572 HB 62"
+    - "448 NRC 750"
+    - "448 NRCD 75"

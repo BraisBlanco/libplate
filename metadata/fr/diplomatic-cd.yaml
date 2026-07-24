@@ -1,0 +1,65 @@
+schemaVersion: 1
+id: FR_DIPLOMATIC_CD
+country: FR
+name: Série diplomatique CMD/CD (missions diplomatiques et délégations)
+registrationType: DIPLOMATIC
+# The diplomatic number is a supplementary number granted by decision of the
+# foreign-affairs and finance ministries (art. 6); the composition is fully
+# published in Annexe VII, D and predates the SIV (same system in the 1984
+# arrêté, Annexe I, I-C), so no validFrom is pinned.
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # Annexe VII, D. The entity group is: 1-199 for embassies, 500 for foreign
+  # "hautes personnalités", or an organization letter (U = UNESCO, E = OCDE,
+  # S = Conseil de l'Europe) followed by 200-399 for national delegations to
+  # those organizations. The country/delegation code assignment itself is
+  # administrative and has no public table, so codes are range-checked only.
+  - name: entity
+    type: PATTERNS
+    patterns: ["N", "NN", "1NN", "500", "L2NN", "L3NN"]
+    letters: UES
+    digitBlocks: NO_LEADING_ZERO
+  # CMD marks the head of mission, CD the diplomatic corps.
+  - name: status
+    type: PATTERNS
+    patterns: ["CMD", "CD"]
+  # 1-9999 for embassies; delegations and the 500 series officially stop at
+  # 999 but the per-entity cap is not expressible, so the union is accepted.
+  # The fiscal-status suffixes Z (tax-exempt on issue) and X (no
+  # fiscal/customs immunity) and the ESA "973" / Strasbourg "67" completions
+  # are not modelled (documented limitation).
+  - name: serial
+    type: DIGITS
+    minLength: 1
+    maxLength: 4
+    noLeadingZero: true
+formats:
+  national: "{entity} {status} {serial}"
+  compact: "{entity}{status}{serial}"
+visual:
+  # Art. 7 of the plaques arrêté: "caractères orangés sur fond vert jaspe".
+  background: GREEN
+  foreground: ORANGE
+sources:
+  - id: FR-MODALITIES
+    section: "Article 6, Annexe VII, D"
+  - id: FR-PLATE-SPECS
+    section: "Article 7"
+examples:
+  valid:
+    - "5 CD 1234"
+    - "26 CMD 1"
+    - "100 CD 2026"
+    - "U 305 CD 12"
+    - "500 CD 7"
+  invalid:
+    - "200 CD 1234"
+    - "5 CE 123"
+    - "5 CD 12345"
+    - "0 CD 12"

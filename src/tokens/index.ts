@@ -170,6 +170,34 @@ function digitRunRegex(count: number, rule: DigitBlockRule): string {
   }
 }
 
+/** Whether a pattern position is part of a digit run (`N` or a digit literal). */
+function isDigitPosition(ch: string): boolean {
+  return ch === "N" || (ch >= "0" && ch <= "9");
+}
+
+/**
+ * Regex fragment for one maximal digit run that may mix `N` positions with
+ * digit literals (e.g. the `1NN` of the French diplomatic country codes
+ * 100-199). The digit-block rule sees the run as a whole: a literal first
+ * digit satisfies (or violates) `NO_LEADING_ZERO` by itself, so only an `N`
+ * in first position gets tightened to `[1-9]`.
+ */
+function mixedDigitRunRegex(run: string, rule: DigitBlockRule): string {
+  if (!/\d/.test(run)) return digitRunRegex(run.length, rule);
+  let out = "";
+  for (let i = 0; i < run.length; i += 1) {
+    const ch = run[i]!;
+    if (ch !== "N") out += ch;
+    else out += i === 0 && rule === "NO_LEADING_ZERO" ? "[1-9]" : "[0-9]";
+  }
+  // NO_ZERO_BLOCK only needs the lookahead when the literals alone don't
+  // already rule the all-zero run out.
+  if (rule === "NO_ZERO_BLOCK" && !/[1-9]/.test(run)) {
+    out = `(?!0{${run.length}})${out}`;
+  }
+  return out;
+}
+
 /** Regex fragment (no anchors, fixed shape) for one positional pattern. */
 function positionalPatternRegex(pattern: string, token: PatternsToken): string {
   const letterClass = `[${escapeForClass(token.letters ?? FULL_ALPHABET)}]`;
@@ -178,10 +206,10 @@ function positionalPatternRegex(pattern: string, token: PatternsToken): string {
   let i = 0;
   while (i < pattern.length) {
     const ch = pattern[i]!;
-    if (ch === "N") {
+    if (isDigitPosition(ch)) {
       let run = 0;
-      while (pattern[i + run] === "N") run += 1;
-      out += digitRunRegex(run, rule);
+      while (i + run < pattern.length && isDigitPosition(pattern[i + run]!)) run += 1;
+      out += mixedDigitRunRegex(pattern.slice(i, i + run), rule);
       i += run;
     } else if (ch === "L") {
       let run = 0;

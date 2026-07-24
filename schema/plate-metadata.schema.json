@@ -272,7 +272,7 @@
       ]
     },
     "color": {
-      "enum": ["WHITE", "BLACK", "RED", "BLUE", "GREEN", "YELLOW", "PINK"]
+      "enum": ["WHITE", "BLACK", "RED", "BLUE", "GREEN", "YELLOW", "PINK", "ORANGE"]
     },
     "vehicleCategory": {
       "enum": [

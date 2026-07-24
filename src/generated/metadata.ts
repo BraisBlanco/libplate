@@ -3,7 +3,7 @@
 import type { MetadataBundle } from "../metadata/types.js";
 
 export const METADATA: MetadataBundle = {
-  "metadataVersion": "2026.07.5",
+  "metadataVersion": "2026.07.6",
   "tables": {
     "at-behoerden": [
       "AM",
@@ -963,6 +963,105 @@ export const METADATA: MetadataBundle = {
       "VI",
       "Z",
       "ZA"
+    ],
+    "fr-departements": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "2A",
+      "2B",
+      "30",
+      "31",
+      "32",
+      "33",
+      "34",
+      "35",
+      "36",
+      "37",
+      "38",
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47",
+      "48",
+      "49",
+      "50",
+      "51",
+      "52",
+      "53",
+      "54",
+      "55",
+      "56",
+      "57",
+      "58",
+      "59",
+      "60",
+      "61",
+      "62",
+      "63",
+      "64",
+      "65",
+      "66",
+      "67",
+      "68",
+      "69",
+      "70",
+      "71",
+      "72",
+      "73",
+      "74",
+      "75",
+      "76",
+      "77",
+      "78",
+      "79",
+      "80",
+      "81",
+      "82",
+      "83",
+      "84",
+      "85",
+      "86",
+      "87",
+      "88",
+      "89",
+      "90",
+      "91",
+      "92",
+      "93",
+      "94",
+      "95"
     ],
     "pl-wojewodztwa-profesjonalne": [
       "B",
@@ -4171,6 +4270,553 @@ export const METADATA: MetadataBundle = {
     },
     {
       "schemaVersion": 1,
+      "id": "FR_CONSULAR_C",
+      "country": "FR",
+      "name": "Série consulaire C (corps consulaire)",
+      "registrationType": "CONSULAR",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-",
+          "."
+        ]
+      },
+      "segments": [
+        {
+          "name": "country",
+          "type": "PATTERNS",
+          "patterns": [
+            "N",
+            "NN",
+            "1NN"
+          ],
+          "digitBlocks": "NO_LEADING_ZERO"
+        },
+        {
+          "name": "status",
+          "type": "LITERAL",
+          "value": "C"
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 3,
+          "noLeadingZero": true
+        },
+        {
+          "name": "dept",
+          "type": "TABLE",
+          "table": "fr-departements"
+        }
+      ],
+      "formats": {
+        "national": "{country} {status} {serial}.{dept}",
+        "compact": "{country}{status}{serial}{dept}"
+      },
+      "visual": {
+        "background": "GREEN",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "FR-MODALITIES",
+          "section": "Article 6, Annexe VII, D"
+        },
+        {
+          "id": "FR-PLATE-SPECS",
+          "section": "Article 7"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "105 C 1.75",
+          "5 C 123.2A",
+          "24 C 3.06"
+        ],
+        "invalid": [
+          "105 C 1.99",
+          "400 C 1.75",
+          "1050 C 1.75",
+          "105 C 0.75"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "FR_DIPLOMATIC_CD",
+      "country": "FR",
+      "name": "Série diplomatique CMD/CD (missions diplomatiques et délégations)",
+      "registrationType": "DIPLOMATIC",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "entity",
+          "type": "PATTERNS",
+          "patterns": [
+            "N",
+            "NN",
+            "1NN",
+            "500",
+            "L2NN",
+            "L3NN"
+          ],
+          "letters": "UES",
+          "digitBlocks": "NO_LEADING_ZERO"
+        },
+        {
+          "name": "status",
+          "type": "PATTERNS",
+          "patterns": [
+            "CMD",
+            "CD"
+          ]
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 4,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{entity} {status} {serial}",
+        "compact": "{entity}{status}{serial}"
+      },
+      "visual": {
+        "background": "GREEN",
+        "foreground": "ORANGE"
+      },
+      "sources": [
+        {
+          "id": "FR-MODALITIES",
+          "section": "Article 6, Annexe VII, D"
+        },
+        {
+          "id": "FR-PLATE-SPECS",
+          "section": "Article 7"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "5 CD 1234",
+          "26 CMD 1",
+          "100 CD 2026",
+          "U 305 CD 12",
+          "500 CD 7"
+        ],
+        "invalid": [
+          "200 CD 1234",
+          "5 CE 123",
+          "5 CD 12345",
+          "0 CD 12"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "FR_DIPLOMATIC_STAFF_K",
+      "country": "FR",
+      "name": "Série K (personnel non diplomatique et fonctionnaires internationaux)",
+      "registrationType": "DIPLOMATIC_STAFF",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-",
+          "."
+        ]
+      },
+      "segments": [
+        {
+          "name": "entity",
+          "type": "PATTERNS",
+          "patterns": [
+            "N",
+            "NN",
+            "1NN",
+            "L2NN",
+            "L3NN",
+            "4NN",
+            "600",
+            "700"
+          ],
+          "letters": "UES",
+          "digitBlocks": "NO_LEADING_ZERO"
+        },
+        {
+          "name": "status",
+          "type": "LITERAL",
+          "value": "K"
+        },
+        {
+          "name": "serial",
+          "type": "PATTERNS",
+          "patterns": [
+            "N",
+            "NN",
+            "NNN",
+            "NNNN",
+            "NNNNN"
+          ],
+          "digitBlocks": "NO_LEADING_ZERO"
+        }
+      ],
+      "formats": {
+        "national": "{entity} {status} {serial}",
+        "compact": "{entity}{status}{serial}"
+      },
+      "visual": {
+        "background": "GREEN",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "FR-MODALITIES",
+          "section": "Article 6, Annexe VII, D"
+        },
+        {
+          "id": "FR-PLATE-SPECS",
+          "section": "Article 7"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "105 K 100",
+          "U 305 K 10",
+          "401 K 1000",
+          "105 K 1.75"
+        ],
+        "invalid": [
+          "105 K 123456",
+          "800 K 100",
+          "105 K 012",
+          "A 305 K 10"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "FR_FNI_DOM",
+      "country": "FR",
+      "name": "Fichier national des immatriculations, série des DOM (1950-2009)",
+      "registrationType": "ORDINARY",
+      "legacySeries": true,
+      "validFrom": "1950-09-01",
+      "validTo": "2009-10-14",
+      "vehicleInference": {
+        "level": "REGISTRY_REQUIRED"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "ordinal",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 3,
+          "noLeadingZero": true
+        },
+        {
+          "name": "series",
+          "type": "LETTERS",
+          "minLength": 1,
+          "maxLength": 3
+        },
+        {
+          "name": "dept",
+          "type": "PATTERNS",
+          "patterns": [
+            "971",
+            "972",
+            "973",
+            "974"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{ordinal} {series} {dept}",
+        "compact": "{ordinal}{series}{dept}"
+      },
+      "sources": [
+        {
+          "id": "FR-FNI-1984",
+          "section": "Annexe I, I-A"
+        },
+        {
+          "id": "FR-FNI-SUNSET"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "182 ABE 974",
+          "1 A 971",
+          "999 ZZZ 972"
+        ],
+        "invalid": [
+          "182 ABE 975",
+          "1234 AB 971",
+          "182 ABE 97",
+          "082 ABE 974"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "FR_FNI_METROPOLE",
+      "country": "FR",
+      "name": "Fichier national des immatriculations, série métropolitaine (1950-2009)",
+      "registrationType": "ORDINARY",
+      "legacySeries": true,
+      "validFrom": "1950-09-01",
+      "validTo": "2009-10-14",
+      "vehicleInference": {
+        "level": "REGISTRY_REQUIRED"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "ordinal",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 4,
+          "noLeadingZero": true
+        },
+        {
+          "name": "series",
+          "type": "LETTERS",
+          "minLength": 1,
+          "maxLength": 3
+        },
+        {
+          "name": "dept",
+          "type": "TABLE",
+          "table": "fr-departements"
+        }
+      ],
+      "lengthRules": {
+        "anyOf": [
+          {
+            "segments": [
+              "ordinal",
+              "series",
+              "dept"
+            ],
+            "max": 8
+          }
+        ]
+      },
+      "formats": {
+        "national": "{ordinal} {series} {dept}",
+        "compact": "{ordinal}{series}{dept}"
+      },
+      "sources": [
+        {
+          "id": "FR-FNI-1984",
+          "section": "Annexe I, I-A"
+        },
+        {
+          "id": "FR-FNI-SUNSET"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "5723 HB 62",
+          "448 NRC 75",
+          "34 BXY 2A",
+          "1 A 01"
+        ],
+        "invalid": [
+          "5723 HBC 62",
+          "5723 HB 96",
+          "0572 HB 62",
+          "448 NRC 750",
+          "448 NRCD 75"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "FR_INTERNATIONAL_ORG_CD",
+      "country": "FR",
+      "name": "Série diplomatique CMD/CD des organisations internationales",
+      "registrationType": "INTERNATIONAL_ORGANIZATION",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "entity",
+          "type": "PATTERNS",
+          "patterns": [
+            "4NN",
+            "600",
+            "700"
+          ],
+          "digitBlocks": "NO_LEADING_ZERO"
+        },
+        {
+          "name": "status",
+          "type": "PATTERNS",
+          "patterns": [
+            "CMD",
+            "CD"
+          ]
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 4,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{entity} {status} {serial}",
+        "compact": "{entity}{status}{serial}"
+      },
+      "visual": {
+        "background": "GREEN",
+        "foreground": "ORANGE"
+      },
+      "sources": [
+        {
+          "id": "FR-MODALITIES",
+          "section": "Article 6, Annexe VII, D"
+        },
+        {
+          "id": "FR-PLATE-SPECS",
+          "section": "Article 7"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "401 CD 5",
+          "600 CMD 1000",
+          "700 CD 123"
+        ],
+        "invalid": [
+          "800 CD 1234",
+          "401 CE 1234",
+          "401 CD 12345"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "FR_MOPED_2004",
+      "country": "FR",
+      "name": "Cyclomoteurs, série dédiée (2004-2015)",
+      "registrationType": "ORDINARY",
+      "legacySeries": true,
+      "validFrom": "2004-07-01",
+      "validTo": "2015-06-30",
+      "vehicleInference": {
+        "level": "DETERMINISTIC",
+        "category": "MOPED_OR_MOTOR_CYCLE",
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "dedicated cyclomoteur composition (1-2 letters, 2-3 digits, 1 letter)"
+          }
+        ]
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "minLength": 1,
+          "maxLength": 2
+        },
+        {
+          "name": "digits",
+          "type": "DIGITS",
+          "minLength": 2,
+          "maxLength": 3,
+          "noLeadingZero": true
+        },
+        {
+          "name": "letter",
+          "type": "LETTERS",
+          "length": 1
+        }
+      ],
+      "formats": {
+        "national": "{letters} {digits} {letter}",
+        "compact": "{letters}{digits}{letter}"
+      },
+      "sources": [
+        {
+          "id": "FR-MODALITIES",
+          "section": "Annexe VII, A (cas particulier des cyclomoteurs)"
+        },
+        {
+          "id": "FR-FNI-1984",
+          "section": "Annexe I, I-A1"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "A 11 A",
+          "AB 123 C",
+          "Z 999 Z"
+        ],
+        "invalid": [
+          "A 1 A",
+          "ABC 12 A",
+          "A 12 AB",
+          "A 011 A"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
       "id": "FR_SIV_CURRENT",
       "country": "FR",
       "name": "Système d'immatriculation des véhicules (SIV)",
@@ -4231,6 +4877,10 @@ export const METADATA: MetadataBundle = {
         },
         {
           "id": "FR-PLATES"
+        },
+        {
+          "id": "FR-MODALITIES",
+          "section": "Annexe VII, A"
         }
       ],
       "examples": {
@@ -4246,6 +4896,71 @@ export const METADATA: MetadataBundle = {
           "AA-123-AAA",
           "WW-123-AA",
           "SS-123-AA"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "FR_W_GARAGE",
+      "country": "FR",
+      "name": "Immatriculation provisoire W garage",
+      "registrationType": "PROFESSIONAL_TEMPORARY",
+      "validFrom": "2009-04-15",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "W"
+        },
+        {
+          "name": "digits",
+          "type": "DIGITS",
+          "length": 3
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2
+        }
+      ],
+      "formats": {
+        "national": "{prefix}-{digits}-{letters}",
+        "compact": "{prefix}{digits}{letters}"
+      },
+      "visual": {
+        "background": "PINK",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "FR-MODALITIES",
+          "section": "Article 9, Annexes VII (B) et IX"
+        },
+        {
+          "id": "FR-PINK-2026"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "W-123-AB",
+          "W 456 CD"
+        ],
+        "invalid": [
+          "W-12-AB",
+          "W-123-A",
+          "WW-123-AB",
+          "X-123-AB"
         ]
       },
       "legacySeries": false
@@ -4300,10 +5015,13 @@ export const METADATA: MetadataBundle = {
       "sources": [
         {
           "id": "FR-MODALITIES",
-          "section": "Article 8, Annexe VII"
+          "section": "Article 8, Annexe VII (C)"
         },
         {
           "id": "FR-PLATES"
+        },
+        {
+          "id": "FR-PINK-2026"
         }
       ],
       "examples": {
