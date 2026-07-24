@@ -1,0 +1,70 @@
+schemaVersion: 1
+id: PL_ORDINARY_CAR
+country: PL
+name: Tablice zwyczajne samochodowe (wyróżnik jednoliterowy powiatu)
+registrationType: ORDINARY
+# The voivodeship+powiat discriminant system (white plates) entered into force
+# on 2000-05-01 (rozp. MTiGM z 19.06.1999, Dz.U. 1999 nr 59 poz. 632, § 49);
+# the format is defined today by Dz.U. 2024 poz. 1709. The EU band replaced
+# the plain blue band on 2006-05-02 (Dz.U. 2006 nr 70 poz. 489); band changes
+# do not alter the number format.
+validFrom: "2000-05-01"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # "Samochodowe" plates cover everything that is not a motorcycle/moped-class
+  # vehicle (those use the 4-character serials of PL_ORDINARY_MOTORCYCLE).
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - VAN
+    - TRUCK
+    - BUS
+    - TRAILER_OR_SEMITRAILER
+    - SPECIAL_VEHICLE
+  evidence:
+    - type: PATTERN
+      value: "five-character vehicle discriminant (tablice samochodowe, § 30 ust. 2 pkt 1)"
+segments:
+  # Voivodeship letter + one-letter powiat discriminant (Załącznik nr 13).
+  - name: prefix
+    type: TABLE
+    table: pl-wyrozniki-2
+  # Wyróżnik pojazdu, § 30 ust. 2 pkt 1 lit. a — the five permitted
+  # digit/letter arrangements, in issuing order. Serial letters exclude
+  # B, D, I, O, Z (§ 31 ust. 1) on top of the Q-less base set (§ 30 ust. 1);
+  # digit blocks run from 1/01/001/0001/00001 (never all zeros).
+  - name: serial
+    type: PATTERNS
+    patterns: [NNNNN, NNNNL, NNNLL, NLNNN, NLLNN]
+    letters: ACEFGHJKLMNPRSTUVWXY
+    digitBlocks: NO_ZERO_BLOCK
+formats:
+  national: "{prefix} {serial}"
+  compact: "{prefix}{serial}"
+# EV/hydrogen vehicles carry the same number black-on-green (§ 27 ust. 2 pkt 2,
+# since 2020-01-01, Dz.U. 2019 poz. 1272); the visual below is the default.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: PL-ROZP-2024
+    section: "§ 30 ust. 1-2 pkt 1 lit. a; § 31; Załącznik nr 13"
+  - id: PL-ROZP-1999
+    section: "§ 49"
+examples:
+  valid:
+    - "WA 12345"
+    - "GD 0001A"
+    - "KR 1JC38"
+    - "PO 123XY"
+  invalid:
+    - "WA 123456"
+    - "QA 12345"
+    - "WA 1234B"
+    - "WA ABCDE"
+    - "XY 12345"
+    - "WA 00000"

@@ -6,7 +6,7 @@ import type {
   VehicleCategory,
   VisualExpectation,
 } from "../model/index.js";
-import type { LengthRule, NamedToken, Token } from "../tokens/index.js";
+import type { DigitBlockRule, LengthRule, NamedToken, Token } from "../tokens/index.js";
 
 /** Length as authored in the YAML: fixed (`length`) or bounded (`min`/`max`). */
 interface AuthoredLength {
@@ -26,7 +26,14 @@ export type MetadataSegment =
       excluded?: string[];
       excludedValues?: string[];
     } & AuthoredLength)
-  | { name: string; type: "TABLE"; table: string };
+  | { name: string; type: "TABLE"; table: string }
+  | {
+      name: string;
+      type: "PATTERNS";
+      patterns: string[];
+      letters?: string;
+      digitBlocks?: DigitBlockRule;
+    };
 
 export interface SchemeVehicleInference {
   level: InferenceLevel;
@@ -96,6 +103,19 @@ function toTokenLength(segment: AuthoredLength): { min: number; max: number } {
   return { min: segment.minLength ?? 1, max: segment.maxLength ?? 1 };
 }
 
+/** Build the PATTERNS token, adding the optional fields only when set. */
+function patternsToken(
+  segment: Extract<MetadataSegment, { type: "PATTERNS" }>,
+): Extract<Token, { kind: "PATTERNS" }> {
+  const token: Extract<Token, { kind: "PATTERNS" }> = {
+    kind: "PATTERNS",
+    patterns: segment.patterns,
+  };
+  if (segment.letters) token.letters = segment.letters;
+  if (segment.digitBlocks) token.digitBlocks = segment.digitBlocks;
+  return token;
+}
+
 /** Convert an authored segment into a named grammar token. */
 export function segmentToNamedToken(
   segment: MetadataSegment,
@@ -137,5 +157,7 @@ export function segmentToNamedToken(
       }
       return { name: segment.name, token: { kind: "TABLE", values } };
     }
+    case "PATTERNS":
+      return { name: segment.name, token: patternsToken(segment) };
   }
 }

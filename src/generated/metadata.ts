@@ -3,8 +3,138 @@
 import type { MetadataBundle } from "../metadata/types.js";
 
 export const METADATA: MetadataBundle = {
-  "metadataVersion": "2026.07.4",
+  "metadataVersion": "2026.07.5",
   "tables": {
+    "at-behoerden": [
+      "AM",
+      "B",
+      "BA",
+      "BL",
+      "BM",
+      "BN",
+      "BR",
+      "BZ",
+      "DL",
+      "DO",
+      "E",
+      "EF",
+      "EU",
+      "FB",
+      "FE",
+      "FF",
+      "FK",
+      "FR",
+      "G",
+      "GB",
+      "GD",
+      "GF",
+      "GM",
+      "GR",
+      "GS",
+      "GU",
+      "HA",
+      "HB",
+      "HE",
+      "HF",
+      "HL",
+      "HO",
+      "I",
+      "IL",
+      "IM",
+      "JE",
+      "JO",
+      "JU",
+      "K",
+      "KB",
+      "KF",
+      "KG",
+      "KI",
+      "KL",
+      "KO",
+      "KR",
+      "KS",
+      "KU",
+      "L",
+      "LA",
+      "LB",
+      "LE",
+      "LF",
+      "LI",
+      "LL",
+      "LN",
+      "LZ",
+      "MA",
+      "MD",
+      "ME",
+      "MI",
+      "MT",
+      "MU",
+      "MZ",
+      "ND",
+      "NK",
+      "OP",
+      "OW",
+      "P",
+      "PE",
+      "PL",
+      "RA",
+      "RE",
+      "RI",
+      "RO",
+      "S",
+      "SB",
+      "SD",
+      "SE",
+      "SL",
+      "SO",
+      "SP",
+      "SR",
+      "SV",
+      "SW",
+      "SZ",
+      "TA",
+      "TU",
+      "UU",
+      "VB",
+      "VI",
+      "VK",
+      "VL",
+      "VO",
+      "W",
+      "WB",
+      "WE",
+      "WL",
+      "WN",
+      "WO",
+      "WT",
+      "WU",
+      "WY",
+      "WZ",
+      "ZE",
+      "ZT"
+    ],
+    "at-vertretungen": [
+      "BD",
+      "BK",
+      "GD",
+      "GK",
+      "KD",
+      "KK",
+      "ND",
+      "NK",
+      "OD",
+      "OK",
+      "SD",
+      "SK",
+      "STD",
+      "STK",
+      "TD",
+      "TK",
+      "VD",
+      "VK",
+      "WD",
+      "WK"
+    ],
     "de-unterscheidungszeichen": [
       "A",
       "AA",
@@ -834,6 +964,742 @@ export const METADATA: MetadataBundle = {
       "Z",
       "ZA"
     ],
+    "pl-wojewodztwa-profesjonalne": [
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "K",
+      "L",
+      "N",
+      "O",
+      "P",
+      "R",
+      "S",
+      "T",
+      "W",
+      "Z"
+    ],
+    "pl-wojewodztwa": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "R",
+      "S",
+      "T",
+      "V",
+      "W",
+      "X",
+      "Y",
+      "Z"
+    ],
+    "pl-wyrozniki-2": [
+      "AA",
+      "AB",
+      "AD",
+      "AE",
+      "AF",
+      "AG",
+      "AH",
+      "AI",
+      "AJ",
+      "AK",
+      "AL",
+      "AM",
+      "AN",
+      "AO",
+      "AP",
+      "AR",
+      "AS",
+      "AT",
+      "AU",
+      "AV",
+      "AW",
+      "AX",
+      "AY",
+      "AZ",
+      "BI",
+      "BL",
+      "BS",
+      "CB",
+      "CG",
+      "CT",
+      "CW",
+      "DB",
+      "DJ",
+      "DL",
+      "DW",
+      "DX",
+      "ED",
+      "EL",
+      "EP",
+      "ES",
+      "FG",
+      "FZ",
+      "GA",
+      "GD",
+      "GS",
+      "IB",
+      "IC",
+      "ID",
+      "IE",
+      "IG",
+      "IH",
+      "II",
+      "IJ",
+      "IK",
+      "IL",
+      "IM",
+      "IO",
+      "IR",
+      "IT",
+      "IW",
+      "IY",
+      "IZ",
+      "JK",
+      "JN",
+      "JR",
+      "JT",
+      "KK",
+      "KN",
+      "KR",
+      "KT",
+      "LB",
+      "LC",
+      "LU",
+      "LZ",
+      "MA",
+      "MK",
+      "ML",
+      "MN",
+      "MO",
+      "MP",
+      "MX",
+      "MY",
+      "MZ",
+      "NE",
+      "NO",
+      "OB",
+      "OK",
+      "OP",
+      "PA",
+      "PK",
+      "PL",
+      "PN",
+      "PO",
+      "PP",
+      "PX",
+      "PY",
+      "PZ",
+      "RK",
+      "RP",
+      "RT",
+      "RZ",
+      "SB",
+      "SC",
+      "SD",
+      "SE",
+      "SG",
+      "SH",
+      "SI",
+      "SJ",
+      "SK",
+      "SL",
+      "SM",
+      "SO",
+      "SR",
+      "ST",
+      "SW",
+      "SY",
+      "SZ",
+      "TK",
+      "VB",
+      "VJ",
+      "VL",
+      "VW",
+      "VX",
+      "WA",
+      "WB",
+      "WD",
+      "WE",
+      "WF",
+      "WG",
+      "WH",
+      "WI",
+      "WJ",
+      "WK",
+      "WL",
+      "WM",
+      "WN",
+      "WO",
+      "WP",
+      "WR",
+      "WS",
+      "WT",
+      "WU",
+      "WV",
+      "WW",
+      "WX",
+      "WY",
+      "WZ",
+      "XA",
+      "XD",
+      "XS",
+      "YK",
+      "YP",
+      "YT",
+      "YZ",
+      "ZK",
+      "ZS",
+      "ZZ"
+    ],
+    "pl-wyrozniki-3": [
+      "ABR",
+      "ACI",
+      "AGM",
+      "AGR",
+      "AGS",
+      "AKZ",
+      "ALI",
+      "ALS",
+      "AMA",
+      "AML",
+      "AND",
+      "AOR",
+      "AOS",
+      "AOT",
+      "APA",
+      "API",
+      "APL",
+      "APN",
+      "APP",
+      "APR",
+      "APS",
+      "APU",
+      "APW",
+      "APX",
+      "APY",
+      "APZ",
+      "ARA",
+      "ASC",
+      "ASE",
+      "ASI",
+      "ASK",
+      "ASZ",
+      "AWE",
+      "AWL",
+      "AWY",
+      "AZU",
+      "AZW",
+      "AZY",
+      "BAU",
+      "BBI",
+      "BGR",
+      "BHA",
+      "BIA",
+      "BIB",
+      "BKL",
+      "BLM",
+      "BMN",
+      "BSE",
+      "BSI",
+      "BSK",
+      "BSU",
+      "BWM",
+      "BZA",
+      "CAL",
+      "CBC",
+      "CBR",
+      "CBY",
+      "CCE",
+      "CCH",
+      "CCM",
+      "CGD",
+      "CGR",
+      "CIN",
+      "CLI",
+      "CMG",
+      "CNA",
+      "CRA",
+      "CRY",
+      "CSE",
+      "CSW",
+      "CTR",
+      "CTU",
+      "CWA",
+      "CWL",
+      "CZN",
+      "DBA",
+      "DBL",
+      "DDZ",
+      "DGL",
+      "DGR",
+      "DJA",
+      "DJE",
+      "DKA",
+      "DKL",
+      "DLB",
+      "DLE",
+      "DLU",
+      "DLW",
+      "DMI",
+      "DOA",
+      "DOL",
+      "DPL",
+      "DSR",
+      "DST",
+      "DSW",
+      "DTR",
+      "DWL",
+      "DWR",
+      "DWW",
+      "DZA",
+      "DZG",
+      "DZL",
+      "EBE",
+      "EBR",
+      "EKU",
+      "ELA",
+      "ELC",
+      "ELE",
+      "ELW",
+      "EOP",
+      "EPA",
+      "EPD",
+      "EPI",
+      "EPJ",
+      "ERA",
+      "ERW",
+      "ESI",
+      "ESK",
+      "ETM",
+      "EWE",
+      "EWI",
+      "EZD",
+      "EZG",
+      "FGW",
+      "FKR",
+      "FMI",
+      "FNW",
+      "FSD",
+      "FSL",
+      "FSU",
+      "FSW",
+      "FWS",
+      "FZA",
+      "FZG",
+      "FZI",
+      "GBY",
+      "GCH",
+      "GCZ",
+      "GDA",
+      "GKA",
+      "GKS",
+      "GKW",
+      "GKY",
+      "GKZ",
+      "GLE",
+      "GMB",
+      "GND",
+      "GPU",
+      "GSL",
+      "GSP",
+      "GST",
+      "GSZ",
+      "GTC",
+      "GWE",
+      "GWO",
+      "IBE",
+      "IBI",
+      "IBL",
+      "IBN",
+      "ICI",
+      "ICN",
+      "ICZ",
+      "IGL",
+      "IJZ",
+      "IKL",
+      "ILU",
+      "IMI",
+      "IMY",
+      "IPI",
+      "IPS",
+      "IRB",
+      "IRC",
+      "IRS",
+      "ITA",
+      "ITN",
+      "ITR",
+      "IWD",
+      "IWZ",
+      "IZA",
+      "IZO",
+      "IZY",
+      "JBA",
+      "JBC",
+      "JBR",
+      "JCH",
+      "JDA",
+      "JGR",
+      "JLI",
+      "JMI",
+      "JMY",
+      "JNS",
+      "JNT",
+      "JOL",
+      "JOS",
+      "JPR",
+      "JRA",
+      "JRK",
+      "JSU",
+      "JTA",
+      "JTT",
+      "JWA",
+      "JWI",
+      "KBA",
+      "KBC",
+      "KBR",
+      "KCH",
+      "KDA",
+      "KGR",
+      "KLI",
+      "KMI",
+      "KMY",
+      "KNS",
+      "KNT",
+      "KOL",
+      "KOS",
+      "KPR",
+      "KRA",
+      "KRK",
+      "KSU",
+      "KTA",
+      "KTT",
+      "KWA",
+      "KWI",
+      "LBI",
+      "LBL",
+      "LCH",
+      "LHR",
+      "LJA",
+      "LKR",
+      "LKS",
+      "LLB",
+      "LLE",
+      "LLU",
+      "LOP",
+      "LPA",
+      "LPU",
+      "LRA",
+      "LRY",
+      "LSW",
+      "LTM",
+      "LUB",
+      "LVB",
+      "LWL",
+      "LZA",
+      "MCH",
+      "MCT",
+      "MGN",
+      "MGO",
+      "MGS",
+      "MJA",
+      "MKA",
+      "MKE",
+      "MKL",
+      "MKN",
+      "MKO",
+      "MKR",
+      "MKS",
+      "MLE",
+      "MMI",
+      "MNT",
+      "MOB",
+      "MOS",
+      "MOT",
+      "MOZ",
+      "MPL",
+      "MRA",
+      "MSE",
+      "MSL",
+      "MSR",
+      "MSZ",
+      "MTU",
+      "MWA",
+      "MWL",
+      "MWR",
+      "MZL",
+      "NBA",
+      "NBR",
+      "NDZ",
+      "NEB",
+      "NEL",
+      "NGI",
+      "NGO",
+      "NIL",
+      "NKE",
+      "NLI",
+      "NMR",
+      "NNI",
+      "NNM",
+      "NOE",
+      "NOL",
+      "NOP",
+      "NOS",
+      "NOT",
+      "NOX",
+      "NOZ",
+      "NPI",
+      "NSZ",
+      "NWE",
+      "OGL",
+      "OKL",
+      "OKR",
+      "ONA",
+      "ONX",
+      "ONY",
+      "OOL",
+      "OPO",
+      "OPR",
+      "OST",
+      "PCH",
+      "PCT",
+      "PGN",
+      "PGO",
+      "PGS",
+      "PJA",
+      "PKA",
+      "PKE",
+      "PKL",
+      "PKN",
+      "PKO",
+      "PKR",
+      "PKS",
+      "PLE",
+      "PMI",
+      "PNT",
+      "POB",
+      "POS",
+      "POT",
+      "POZ",
+      "PPL",
+      "PRA",
+      "PSE",
+      "PSL",
+      "PSR",
+      "PSZ",
+      "PTU",
+      "PWA",
+      "PWL",
+      "PWR",
+      "PZL",
+      "RBI",
+      "RBR",
+      "RDE",
+      "RJA",
+      "RJS",
+      "RKL",
+      "RKR",
+      "RLA",
+      "RLE",
+      "RLS",
+      "RLU",
+      "RMI",
+      "RNI",
+      "RPR",
+      "RPZ",
+      "RRS",
+      "RSA",
+      "RSR",
+      "RST",
+      "RTA",
+      "RZE",
+      "RZR",
+      "RZZ",
+      "SBE",
+      "SBI",
+      "SBL",
+      "SBN",
+      "SCI",
+      "SCN",
+      "SCZ",
+      "SGL",
+      "SJZ",
+      "SKL",
+      "SLU",
+      "SMI",
+      "SMY",
+      "SPI",
+      "SPS",
+      "SRB",
+      "SRC",
+      "SRS",
+      "STA",
+      "STN",
+      "STR",
+      "SWD",
+      "SWZ",
+      "SZA",
+      "SZO",
+      "SZY",
+      "TBU",
+      "TJE",
+      "TKA",
+      "TKC",
+      "TKI",
+      "TKM",
+      "TKN",
+      "TKP",
+      "TLW",
+      "TOP",
+      "TOS",
+      "TPI",
+      "TSA",
+      "TSK",
+      "TST",
+      "TSZ",
+      "VBA",
+      "VBL",
+      "VDZ",
+      "VGL",
+      "VGR",
+      "VJA",
+      "VJE",
+      "VKA",
+      "VKL",
+      "VLB",
+      "VLE",
+      "VLU",
+      "VLW",
+      "VMI",
+      "VOA",
+      "VOL",
+      "VPL",
+      "VSR",
+      "VST",
+      "VSW",
+      "VTR",
+      "VWL",
+      "VWR",
+      "VWW",
+      "VZA",
+      "VZG",
+      "VZL",
+      "WBR",
+      "WCI",
+      "WGM",
+      "WGR",
+      "WGS",
+      "WKZ",
+      "WLI",
+      "WLS",
+      "WMA",
+      "WML",
+      "WND",
+      "WOR",
+      "WOS",
+      "WOT",
+      "WPA",
+      "WPI",
+      "WPL",
+      "WPN",
+      "WPP",
+      "WPR",
+      "WPS",
+      "WPU",
+      "WPW",
+      "WPX",
+      "WPY",
+      "WPZ",
+      "WRA",
+      "WSC",
+      "WSE",
+      "WSI",
+      "WSK",
+      "WSZ",
+      "WWE",
+      "WWL",
+      "WWY",
+      "WZU",
+      "WZW",
+      "WZY",
+      "XBY",
+      "XCH",
+      "XCZ",
+      "XDA",
+      "XKA",
+      "XKS",
+      "XKW",
+      "XKY",
+      "XKZ",
+      "XLE",
+      "XMB",
+      "XND",
+      "XPU",
+      "XSL",
+      "XSP",
+      "XST",
+      "XSZ",
+      "XTC",
+      "XWE",
+      "XWO",
+      "YBI",
+      "YBR",
+      "YDE",
+      "YJA",
+      "YJS",
+      "YKL",
+      "YKR",
+      "YLA",
+      "YLE",
+      "YLS",
+      "YLU",
+      "YMI",
+      "YNI",
+      "YPR",
+      "YPZ",
+      "YRS",
+      "YSA",
+      "YSR",
+      "YST",
+      "YTA",
+      "YZE",
+      "YZR",
+      "YZZ",
+      "ZBI",
+      "ZCH",
+      "ZDR",
+      "ZGL",
+      "ZGR",
+      "ZGY",
+      "ZKA",
+      "ZKL",
+      "ZKO",
+      "ZLO",
+      "ZMY",
+      "ZPL",
+      "ZPY",
+      "ZSD",
+      "ZSL",
+      "ZST",
+      "ZSW",
+      "ZSZ",
+      "ZWA"
+    ],
     "pt-reboque-servicos": [
       "A",
       "AN",
@@ -861,6 +1727,241 @@ export const METADATA: MetadataBundle = {
     ]
   },
   "schemes": [
+    {
+      "schemaVersion": 1,
+      "id": "AT_DIPLOMATIC",
+      "country": "AT",
+      "name": "Diplomaten- und Konsularkennzeichen (Land letter + D/K)",
+      "registrationType": "DIPLOMATIC",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "TABLE",
+          "table": "at-vertretungen"
+        },
+        {
+          "name": "serial",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNNNN",
+            "NNNNL",
+            "NNNLL",
+            "NNLLL",
+            "NLLLL"
+          ],
+          "letters": "ABCDEFGHIJKLMNOPRSTUVWXYZ",
+          "digitBlocks": "NO_LEADING_ZERO"
+        }
+      ],
+      "formats": {
+        "national": "{prefix}-{serial}",
+        "compact": "{prefix}{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "AT-KDV",
+          "section": "§ 26 Abs. 3, 5, 6 Z 1 lit. c; Anlage 5e"
+        },
+        {
+          "id": "AT-KFG",
+          "section": "§ 49 Abs. 4"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "WD 123AB",
+          "GK 1234A",
+          "STD 12ABC"
+        ],
+        "invalid": [
+          "WD 123456",
+          "XD 1234A",
+          "WD 0123A",
+          "WD 123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "AT_STANDARD",
+      "country": "AT",
+      "name": "Amtlich zugewiesenes Kennzeichen (Behördencode + Vormerkzeichen)",
+      "registrationType": "ORDINARY",
+      "validFrom": "1989-01-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "district",
+          "type": "TABLE",
+          "table": "at-behoerden"
+        },
+        {
+          "name": "serial",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNL",
+            "NLL",
+            "NNNL",
+            "NNLL",
+            "NLLL",
+            "NNNNL",
+            "NNNLL",
+            "NNLLL",
+            "NNNNNL",
+            "NNNNLL",
+            "NNNLLL"
+          ],
+          "letters": "ABCDEFGHIJKLMNOPRSTUVWXYZ",
+          "digitBlocks": "NO_LEADING_ZERO"
+        }
+      ],
+      "formats": {
+        "national": "{district}-{serial}",
+        "compact": "{district}{serial}"
+      },
+      "sources": [
+        {
+          "id": "AT-KFG",
+          "section": "§ 48 Abs. 4; § 49 Abs. 4"
+        },
+        {
+          "id": "AT-KDV",
+          "section": "§ 26 Abs. 1, 6, 7; Anlage 5d"
+        },
+        {
+          "id": "AT-KFG-NOV11",
+          "section": "Art. V"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "W 12345A",
+          "KI 234AB",
+          "G 123AB",
+          "SP 401KW",
+          "W 12A",
+          "JU 123A"
+        ],
+        "invalid": [
+          "W 123456A",
+          "X 123A",
+          "W 12Q",
+          "W 0123A",
+          "W 1234",
+          "KI 2345ABC"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "AT_WUNSCHKENNZEICHEN",
+      "country": "AT",
+      "name": "Wunschkennzeichen (KFG § 48a)",
+      "registrationType": "ORDINARY",
+      "validFrom": "1989-01-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "district",
+          "type": "TABLE",
+          "table": "at-behoerden"
+        },
+        {
+          "name": "serial",
+          "type": "PATTERNS",
+          "patterns": [
+            "LLN",
+            "LNN",
+            "LLLN",
+            "LLNN",
+            "LNNN",
+            "LLLLN",
+            "LLLNN",
+            "LLNNN",
+            "LNNNN",
+            "LLLLLN",
+            "LLLLNN",
+            "LLLNNN",
+            "LLNNNN",
+            "LNNNNN"
+          ],
+          "letters": "ABCDEFGHIJKLMNOPRSTUVWXYZ",
+          "digitBlocks": "NO_LEADING_ZERO"
+        }
+      ],
+      "formats": {
+        "national": "{district}-{serial}",
+        "compact": "{district}{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "AT-KFG",
+          "section": "§ 48a; § 49 Abs. 4"
+        },
+        {
+          "id": "AT-KDV",
+          "section": "§ 26 Abs. 6 Z 3-5, Abs. 8; Anlage 5d"
+        },
+        {
+          "id": "AT-KFG-NOV11",
+          "section": "Art. V"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "W ABC123",
+          "KI AB12",
+          "L MAX1",
+          "S TIROL1"
+        ],
+        "invalid": [
+          "W 123ABC",
+          "W QQ12",
+          "W ABC",
+          "W A0123",
+          "W ABCDEF1"
+        ]
+      },
+      "legacySeries": false
+    },
     {
       "schemaVersion": 1,
       "id": "BE_AGRICULTURAL_CURRENT",
@@ -4753,6 +5854,727 @@ export const METADATA: MetadataBundle = {
           "GB-01-B",
           "GA-001-B",
           "GBB-001-B"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "PL_DIPLOMATIC",
+      "country": "PL",
+      "name": "Tablice dyplomatyczne",
+      "registrationType": "DIPLOMATIC",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "voivodeship",
+          "type": "TABLE",
+          "table": "pl-wojewodztwa"
+        },
+        {
+          "name": "serial",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNNNNN"
+          ],
+          "digitBlocks": "NO_ZERO_BLOCK"
+        }
+      ],
+      "formats": {
+        "national": "{voivodeship} {serial}",
+        "compact": "{voivodeship}{serial}"
+      },
+      "visual": {
+        "background": "BLUE",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "PL-ROZP-2024",
+          "section": "§ 27 ust. 10; § 28 ust. 1; § 30 ust. 2 pkt 7"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "W 123456",
+          "T 000001"
+        ],
+        "invalid": [
+          "W 000000",
+          "Q 123456",
+          "W 12345",
+          "W 1234567"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "PL_HISTORIC_2LETTER",
+      "country": "PL",
+      "name": "Tablice zabytkowe (wyróżnik jednoliterowy powiatu)",
+      "registrationType": "HISTORICAL",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "TABLE",
+          "table": "pl-wyrozniki-2"
+        },
+        {
+          "name": "serial",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNL",
+            "NNN"
+          ],
+          "letters": "ACEFGHJKLMNPRSTUVWXY",
+          "digitBlocks": "NO_ZERO_BLOCK"
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {serial}",
+        "compact": "{prefix}{serial}"
+      },
+      "visual": {
+        "background": "YELLOW",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "PL-ROZP-2024",
+          "section": "§ 27 ust. 6-8; § 30 ust. 2 pkt 5 lit. a; Załącznik nr 13"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "WA 123",
+          "KR 12A",
+          "GD 45C"
+        ],
+        "invalid": [
+          "WA 12B",
+          "WA 000",
+          "QA 123",
+          "WA 1A2"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "PL_HISTORIC_3LETTER",
+      "country": "PL",
+      "name": "Tablice zabytkowe (wyróżnik dwuliterowy powiatu)",
+      "registrationType": "HISTORICAL",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "TABLE",
+          "table": "pl-wyrozniki-3"
+        },
+        {
+          "name": "serial",
+          "type": "PATTERNS",
+          "patterns": [
+            "NL",
+            "NN",
+            "LN"
+          ],
+          "letters": "ACEFGHJKLMNPRSTUVWXY",
+          "digitBlocks": "NO_ZERO_BLOCK"
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {serial}",
+        "compact": "{prefix}{serial}"
+      },
+      "visual": {
+        "background": "YELLOW",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "PL-ROZP-2024",
+          "section": "§ 27 ust. 6-8; § 30 ust. 2 pkt 5 lit. b; Załącznik nr 13"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "KRA 1A",
+          "WPR 12",
+          "SBE A1"
+        ],
+        "invalid": [
+          "KRA 00",
+          "KRA AB",
+          "KRA 1B",
+          "XXX 12"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "PL_INDIVIDUAL",
+      "country": "PL",
+      "name": "Tablice indywidualne",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "voivodeship",
+          "type": "TABLE",
+          "table": "pl-wojewodztwa"
+        },
+        {
+          "name": "series",
+          "type": "DIGITS",
+          "length": 1
+        },
+        {
+          "name": "custom",
+          "type": "PATTERNS",
+          "patterns": [
+            "LLL",
+            "LLN",
+            "LNN",
+            "LLLL",
+            "LLLN",
+            "LLNN",
+            "LLLLL",
+            "LLLLN",
+            "LLLNN"
+          ],
+          "letters": "ABCDEFGHIJKLMNOPRSTUVWXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{voivodeship}{series} {custom}",
+        "compact": "{voivodeship}{series}{custom}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "PL-ROZP-2024",
+          "section": "§ 25 pkt 2; § 27 ust. 4; § 30 ust. 2 pkt 4; § 32"
+        },
+        {
+          "id": "PL-ROZP-2025-939",
+          "section": "§ 1 pkt 2-3"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "W0 TIGER",
+          "K1 ABC12",
+          "F5 XYZ",
+          "D3 BOND7"
+        ],
+        "invalid": [
+          "W0 AB",
+          "W0 A1234",
+          "W0 QQQ",
+          "W0 ABCDEF"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "PL_ORDINARY_CAR",
+      "country": "PL",
+      "name": "Tablice zwyczajne samochodowe (wyróżnik jednoliterowy powiatu)",
+      "registrationType": "ORDINARY",
+      "validFrom": "2000-05-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "VAN",
+          "TRUCK",
+          "BUS",
+          "TRAILER_OR_SEMITRAILER",
+          "SPECIAL_VEHICLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "five-character vehicle discriminant (tablice samochodowe, § 30 ust. 2 pkt 1)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "TABLE",
+          "table": "pl-wyrozniki-2"
+        },
+        {
+          "name": "serial",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNNNN",
+            "NNNNL",
+            "NNNLL",
+            "NLNNN",
+            "NLLNN"
+          ],
+          "letters": "ACEFGHJKLMNPRSTUVWXY",
+          "digitBlocks": "NO_ZERO_BLOCK"
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {serial}",
+        "compact": "{prefix}{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "PL-ROZP-2024",
+          "section": "§ 30 ust. 1-2 pkt 1 lit. a; § 31; Załącznik nr 13"
+        },
+        {
+          "id": "PL-ROZP-1999",
+          "section": "§ 49"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "WA 12345",
+          "GD 0001A",
+          "KR 1JC38",
+          "PO 123XY"
+        ],
+        "invalid": [
+          "WA 123456",
+          "QA 12345",
+          "WA 1234B",
+          "WA ABCDE",
+          "XY 12345",
+          "WA 00000"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "PL_ORDINARY_MOTORCYCLE",
+      "country": "PL",
+      "name": "Tablice zwyczajne motocyklowe i motorowerowe (wyróżnik jednoliterowy powiatu)",
+      "registrationType": "ORDINARY",
+      "validFrom": "2000-05-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "MOTORCYCLE",
+          "MOPED_OR_MOTOR_CYCLE",
+          "TRICYCLE",
+          "QUADRICYCLE",
+          "AGRICULTURAL_VEHICLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "four-character vehicle discriminant (tablice motocyklowe/motorowerowe, § 30 ust. 2 pkt 3)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "TABLE",
+          "table": "pl-wyrozniki-2"
+        },
+        {
+          "name": "serial",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNNN",
+            "NNNL",
+            "NNLN",
+            "NLNN",
+            "LNNN",
+            "NNLL",
+            "NLLN",
+            "LLNN"
+          ],
+          "letters": "ACEFGHJKLMNPRSTUVWXY",
+          "digitBlocks": "NO_ZERO_BLOCK"
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {serial}",
+        "compact": "{prefix}{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "PL-ROZP-2024",
+          "section": "§ 30 ust. 1-2 pkt 3 lit. a; § 31; Załącznik nr 13"
+        },
+        {
+          "id": "PL-ROZP-1999",
+          "section": "§ 49"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "WA 1234",
+          "KR 12AC",
+          "GD 1A23",
+          "PO A123"
+        ],
+        "invalid": [
+          "WA 123",
+          "WA B123",
+          "WA 0000",
+          "QA 1234",
+          "WA 12ABC"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "PL_ORDINARY_POWIAT",
+      "country": "PL",
+      "name": "Tablice zwyczajne (wyróżnik dwuliterowy powiatu)",
+      "registrationType": "ORDINARY",
+      "validFrom": "2000-05-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "TABLE",
+          "table": "pl-wyrozniki-3"
+        },
+        {
+          "name": "serial",
+          "type": "PATTERNS",
+          "patterns": [
+            "LNNN",
+            "NNLL",
+            "NLNN",
+            "NNLN",
+            "NLLN",
+            "LLNN",
+            "LNNL",
+            "LNLL",
+            "NNNNN",
+            "NNNNL",
+            "NNNLL"
+          ],
+          "letters": "ACEFGHJKLMNPRSTUVWXY",
+          "digitBlocks": "NO_ZERO_BLOCK"
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {serial}",
+        "compact": "{prefix}{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "PL-ROZP-2024",
+          "section": "§ 30 ust. 1-2 pkt 1 lit. b i pkt 3 lit. b; § 31; Załącznik nr 13"
+        },
+        {
+          "id": "PL-ROZP-1999",
+          "section": "§ 49"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "KRA A123",
+          "WPR 12345",
+          "SBE 1AC1",
+          "WGM 12AC",
+          "KRA A12C"
+        ],
+        "invalid": [
+          "KRA 1234",
+          "WXX 1234",
+          "WPR 0000A",
+          "KRA ABCD"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "PL_PROFESSIONAL",
+      "country": "PL",
+      "name": "Profesjonalne tablice rejestracyjne",
+      "registrationType": "PROFESSIONAL_TEMPORARY",
+      "validFrom": "2019-07-11",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "voivodeship",
+          "type": "TABLE",
+          "table": "pl-wojewodztwa-profesjonalne"
+        },
+        {
+          "name": "powiat",
+          "type": "PATTERNS",
+          "patterns": [
+            "NN"
+          ],
+          "digitBlocks": "NO_ZERO_BLOCK"
+        },
+        {
+          "name": "serial",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNPNN",
+            "NNPNL"
+          ],
+          "letters": "ACEFGHJKLMNPRSTUVWXY"
+        }
+      ],
+      "formats": {
+        "national": "{voivodeship}{powiat} {serial}",
+        "compact": "{voivodeship}{powiat}{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "GREEN"
+      },
+      "sources": [
+        {
+          "id": "PL-PROF",
+          "section": "§ 11; § 13 ust. 1; § 14; Załącznik nr 8"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "W01 23P45",
+          "D30 00P01",
+          "K05 12P3A"
+        ],
+        "invalid": [
+          "W00 12P34",
+          "W01 12A34",
+          "V01 12P34",
+          "W01 12P3B"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "PL_REDUCED",
+      "country": "PL",
+      "name": "Tablice jednorzędowe zmniejszone (zwyczajne, tymczasowe, zabytkowe)",
+      "registrationType": "UNKNOWN",
+      "validFrom": "2018-07-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "voivodeship",
+          "type": "TABLE",
+          "table": "pl-wojewodztwa"
+        },
+        {
+          "name": "serial",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNN",
+            "NNL",
+            "NLN",
+            "LNN",
+            "NLL",
+            "LLN",
+            "LNL"
+          ],
+          "letters": "ACEFGHJKLMNPRSTUVWXY",
+          "digitBlocks": "NO_ZERO_BLOCK"
+        }
+      ],
+      "formats": {
+        "national": "{voivodeship} {serial}",
+        "compact": "{voivodeship}{serial}"
+      },
+      "sources": [
+        {
+          "id": "PL-ROZP-2024",
+          "section": "§ 30 ust. 2 pkt 2; § 31; Załącznik nr 13"
+        },
+        {
+          "id": "PL-ROZP-2017",
+          "section": "§ 57 pkt 2"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "W 123",
+          "K 1AC",
+          "G A1C",
+          "V 12A"
+        ],
+        "invalid": [
+          "W 000",
+          "Q 123",
+          "W 12",
+          "W B12"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "PL_TEMPORARY",
+      "country": "PL",
+      "name": "Tablice tymczasowe",
+      "registrationType": "TEMPORARY_PRIVATE",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "voivodeship",
+          "type": "TABLE",
+          "table": "pl-wojewodztwa"
+        },
+        {
+          "name": "series",
+          "type": "DIGITS",
+          "length": 1
+        },
+        {
+          "name": "serial",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNNN",
+            "NNNL"
+          ],
+          "letters": "ACEFGHJKLMNPRSTUVWXY",
+          "digitBlocks": "NO_ZERO_BLOCK"
+        }
+      ],
+      "formats": {
+        "national": "{voivodeship}{series} {serial}",
+        "compact": "{voivodeship}{series}{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "RED"
+      },
+      "sources": [
+        {
+          "id": "PL-ROZP-2024",
+          "section": "§ 27 ust. 9; § 30 ust. 2 pkt 6; Załącznik nr 13"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "W0 1234",
+          "K5 123A",
+          "Z9 0001"
+        ],
+        "invalid": [
+          "W0 0000",
+          "Q1 1234",
+          "W0 123B",
+          "W0 12345"
         ]
       },
       "legacySeries": false

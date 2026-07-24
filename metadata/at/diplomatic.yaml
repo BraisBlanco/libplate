@@ -1,0 +1,58 @@
+schemaVersion: 1
+id: AT_DIPLOMATIC
+country: AT
+name: Diplomaten- und Konsularkennzeichen (Land letter + D/K)
+registrationType: DIPLOMATIC
+# The DKT plate type is defined by the current KDV Anlage 5e; the
+# introduction date of the D/K composition was not traced to a specific
+# Novelle, so validFrom is omitted.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  level: NOT_INFERABLE
+segments:
+  # Land letter of KDV § 26 Abs. 3 (in Graz: the Anlage 5d code G) followed
+  # by D (diplomatic corps, international organisations) or K (consular
+  # corps) — § 26 Abs. 5. Note "K" covers consular officers, not only career
+  # consuls; libplate maps both D and K to the DIPLOMATIC regime and leaves
+  # finer classification to the caller.
+  - name: prefix
+    type: TABLE
+    table: at-vertretungen
+  # Vormerkzeichen per § 26 Abs. 6 Z 1 lit. c: begins with a digit, may mix
+  # digits and letters in closed blocks; five characters on the DKT plate
+  # (Anlage 5e). Q, Ä, Ö, Ü prohibited (Z 4); leading 0 prohibited (Z 5).
+  - name: serial
+    type: PATTERNS
+    patterns: [NNNNN, NNNNL, NNNLL, NNLLL, NLLLL]
+    letters: ABCDEFGHIJKLMNOPRSTUVWXYZ
+    digitBlocks: NO_LEADING_ZERO
+formats:
+  national: "{prefix}-{serial}"
+  compact: "{prefix}{serial}"
+# White plate, black script, EU band, NO coat of arms (KFG § 49 Abs. 4,
+# Anlage 5e).
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: AT-KDV
+    section: "§ 26 Abs. 3, 5, 6 Z 1 lit. c; Anlage 5e"
+  - id: AT-KFG
+    section: "§ 49 Abs. 4"
+examples:
+  valid:
+    # All-digit serials ("WD 12345") admit a second reading as a
+    # Wunschkennzeichen ("W D1234-5"...) and stay AMBIGUOUS — see the tests.
+    # Mixed serials are unambiguous:
+    - "WD 123AB"
+    - "GK 1234A"
+    - "STD 12ABC"
+  invalid:
+    - "WD 123456"
+    - "XD 1234A"
+    - "WD 0123A"
+    - "WD 123"

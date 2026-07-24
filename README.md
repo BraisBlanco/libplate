@@ -139,6 +139,45 @@ collide with current series abroad (e.g. `XX-99-XX` ≡ the current Portuguese
 `AA-00-AA`). First-issuance dates follow the official RDW series tables
 (earliest category, not cars).
 
+**🇵🇱 Poland**
+
+| Type                          | Example     | Notes                                         |
+| ----------------------------- | ----------- | --------------------------------------------- |
+| Ordinary — cars (2-letter)    | `WA 12345`  | 5-char serial; official discriminant table    |
+| Ordinary — motorcycles/mopeds | `WA 1234`   | 4-char serial; also tractors and L6e/L7e      |
+| Ordinary — powiat (3-letter)  | `KRA A123`  | Car and motorcycle serials share arrangements |
+| Reduced-size                  | `W 123`     | Voivodeship letter only; since 2018-07-01     |
+| Historic (zabytkowe)          | `WA 123`    | Yellow plate; historical-vehicle regime       |
+| Temporary (tymczasowe)        | `W0 1234`   | Red on white; sports variant red on yellow    |
+| Diplomatic                    | `W 123456`  | White on blue; only type without the EU band  |
+| Individual (vanity)           | `W0 TIGER`  | 3-5 chars, at most last two digits            |
+| Professional                  | `W01 23P45` | Green on white; fixed `P` marker; since 2019  |
+
+Polish serials are validated against the exact digit/letter arrangements of
+§ 30 of the 2024 regulation (e.g. `NNNN` never follows a two-letter powiat
+discriminant), the 20-letter authority alphabet (no `B`/`D`/`I`/`O`/`Z`), and
+the full Załącznik 13 prefix table (689 prefixes, including the 2025/2026
+additions). EV/hydrogen vehicles carry the same numbers black-on-green — a
+colour change text cannot detect.
+
+**🇦🇹 Austria**
+
+| Type                  | Example    | Notes                                              |
+| --------------------- | ---------- | -------------------------------------------------- |
+| Standard issue        | `KI 234AB` | Digits then letters; district from KDV Anlage 5d   |
+| Wunschkennzeichen     | `W ABC123` | Letters then digits (mirror of the standard issue) |
+| Diplomatic / consular | `WD 123AB` | Land letter + `D`/`K`; no coat of arms             |
+
+The Austrian district table unions the current Anlage 5d codes with those
+retired by district mergers (`JU`, `KF`, `MZ`, `HB`, `FF`, `RA`, `FB`, `WU`)
+that stay on circulating vehicles. Probefahrt (blue), Überstellung (green),
+temporary (blue) and moped (red) plates share the standard text format and
+differ only in colour, so `AT_STANDARD` carries no visual expectation. Two
+honest ambiguities: an all-digit diplomatic serial written compactly
+(`WD12345`) also reads as the Wunschkennzeichen `W-D12345` (the separators you
+write resolve it), and `ND`/`GD`/`NK`/`SD`/`VK` are both district codes and
+Land+`D`/`K` diplomatic prefixes.
+
 **Not yet modelled**: Spanish state/military bodies; French `W garage` and
 diplomatic series; Portuguese diplomatic/military series and the pre-2013
 moped/motorcycle series; Italian diplomatic (`CD`/`CC`), Polizia Locale `Y`
@@ -146,7 +185,10 @@ series, SMOM and pre-2002 test plates; German seasonal (`Saisonkennzeichen`),
 alternating (`Wechselkennzeichen`), green, Bundeswehr and diplomatic plates;
 Dutch special series (royal `AA`, `CD`, dealer/export plates); Belgian
 personalized plates (free text, up to 8 characters), the royal court and
-`A`/`E`/`P` short national series, and the pre-1973 series.
+`A`/`E`/`P` short national series, and the pre-1973 series; Polish pre-2000
+black plates and military/service series; Austrian all-digit federal/Land
+series (`A`, `B`…`W` government plates), authority-area prefixes (`BP`, `FW`,
+`JW`, `BH`, `PT`, `BD`, `FV`) and the pre-1989 black plates.
 
 ## Install
 

@@ -1,0 +1,36 @@
+{
+  "id": "pl-wojewodztwa",
+  "description": "Polish voivodeship letters (Załącznik nr 13, col. 4), including the second letters (D/V, K/J, W/A, R/Y, G/X, S/I, P/M) that § 31 ust. 3 brings into use after the first letter's capacity is exhausted. Used alone as the prefix of reduced-size (§ 30 ust. 2 pkt 2), temporary (pkt 6), diplomatic (pkt 7) and individual (pkt 4) plates.",
+  "sources": [
+    {
+      "id": "PL-ROZP-2024",
+      "section": "Załącznik nr 13; § 30 ust. 2; § 31 ust. 3"
+    }
+  ],
+  "sourceCheckedAt": "2026-07-24",
+  "values": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "R",
+    "S",
+    "T",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z"
+  ]
+}

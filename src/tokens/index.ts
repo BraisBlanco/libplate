@@ -2,10 +2,11 @@
  * A tiny, non-recursive token grammar for plate segments.
  *
  * Tokens are fixed-length or bounded variable-length (an explicit min/max
- * range). A pattern compiles to a set of fixed-length "expansions" — one per
- * combination of concrete segment lengths — and each expansion is a single
- * anchored regular expression with no quantifier backtracking (no ReDoS) and
- * deterministic extraction by slicing at cumulative offsets.
+ * range, or an explicit list of positional arrangements). A pattern compiles
+ * to a set of fixed-length "expansions" — one per combination of concrete
+ * segment lengths — and each expansion is a single anchored regular
+ * expression with no quantifier backtracking (no ReDoS) and deterministic
+ * extraction by slicing at cumulative offsets.
  *
  * Compiling to expansions instead of variable-length capture groups keeps two
  * guarantees the engine is built on:
@@ -73,7 +74,31 @@ interface TableToken {
   values: string[];
 }
 
-export type Token = LiteralToken | DigitsToken | CharsetToken | LettersToken | TableToken;
+/** Constraint applied to each maximal run of `N` positions in a pattern. */
+export type DigitBlockRule = "FREE" | "NO_LEADING_ZERO" | "NO_ZERO_BLOCK";
+
+interface PatternsToken {
+  kind: "PATTERNS";
+  /**
+   * Positional digit/letter arrangements, e.g. ["NNNNL", "NLNNN"]. In a
+   * pattern `N` is a digit, `L` a letter from `letters`, and any other
+   * character matches itself literally (e.g. the fixed `P` of Polish
+   * professional plates). Patterns of the same length compile into one
+   * fixed-shape alternation, so extraction by slicing still holds.
+   */
+  patterns: string[];
+  /** Characters the `L` positions accept (defaults to the full A-Z alphabet). */
+  letters?: string;
+  /**
+   * `NO_LEADING_ZERO` forbids `0` as the first digit of each digit run;
+   * `NO_ZERO_BLOCK` forbids all-zero runs but allows leading zeros (Polish
+   * serial ranges like 0001-9999). Default: `FREE`.
+   */
+  digitBlocks?: DigitBlockRule;
+}
+
+export type Token =
+  LiteralToken | DigitsToken | CharsetToken | LettersToken | TableToken | PatternsToken;
 
 /**
  * A cross-segment length restriction: the summed lengths of the named
@@ -99,6 +124,8 @@ function tokenLengths(token: Token): number[] {
       return [token.value.length];
     case "TABLE":
       return [...new Set(token.values.map((v) => v.length))].sort((a, b) => a - b);
+    case "PATTERNS":
+      return [...new Set(token.patterns.map((p) => p.length))].sort((a, b) => a - b);
     case "DIGITS":
     case "CHARSET":
     case "LETTERS": {
@@ -128,6 +155,47 @@ function escapeLiteral(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+/** Regex fragment for a run of `count` digits under a digit-block rule. */
+function digitRunRegex(count: number, rule: DigitBlockRule): string {
+  if (count === 1) return rule === "FREE" ? "[0-9]" : "[1-9]";
+  switch (rule) {
+    case "FREE":
+      return `[0-9]{${count}}`;
+    case "NO_LEADING_ZERO":
+      return `[1-9][0-9]{${count - 1}}`;
+    case "NO_ZERO_BLOCK":
+      // Leading zeros are fine (Polish ranges run 0001-9999); only the
+      // all-zero run is excluded. The lookahead is bounded — no backtracking.
+      return `(?!0{${count}})[0-9]{${count}}`;
+  }
+}
+
+/** Regex fragment (no anchors, fixed shape) for one positional pattern. */
+function positionalPatternRegex(pattern: string, token: PatternsToken): string {
+  const letterClass = `[${escapeForClass(token.letters ?? FULL_ALPHABET)}]`;
+  const rule = token.digitBlocks ?? "FREE";
+  let out = "";
+  let i = 0;
+  while (i < pattern.length) {
+    const ch = pattern[i]!;
+    if (ch === "N") {
+      let run = 0;
+      while (pattern[i + run] === "N") run += 1;
+      out += digitRunRegex(run, rule);
+      i += run;
+    } else if (ch === "L") {
+      let run = 0;
+      while (pattern[i + run] === "L") run += 1;
+      out += run === 1 ? letterClass : `${letterClass}{${run}}`;
+      i += run;
+    } else {
+      out += escapeLiteral(ch);
+      i += 1;
+    }
+  }
+  return out;
+}
+
 /** Regex fragment (no anchors) matching this token at one concrete length. */
 function tokenRegexAt(token: Token, length: number): string {
   switch (token.kind) {
@@ -136,6 +204,10 @@ function tokenRegexAt(token: Token, length: number): string {
     case "TABLE": {
       const values = token.values.filter((v) => v.length === length);
       return `(?:${values.map(escapeLiteral).join("|")})`;
+    }
+    case "PATTERNS": {
+      const patterns = token.patterns.filter((p) => p.length === length);
+      return `(?:${patterns.map((p) => positionalPatternRegex(p, token)).join("|")})`;
     }
     case "DIGITS": {
       if (!token.noLeadingZero) return `[0-9]{${length}}`;

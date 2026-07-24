@@ -24,8 +24,10 @@ rears since 2013 — + motorcycles, mopeds, agricultural/operating machines,
 `EE`, targa prova), Germany (standard + `H` Oldtimer + `E` electric), Belgium
 (standard + `O`/`Q`/`T`/`M`/`S`/`G` letter-index categories + `Z`/`Y`/`V`
 commercial + `W`/`X` temporary/export + `CD` diplomatic + two pre-2010
-series), Netherlands (sidecodes 1-12). See `README.md` for the full
-matrix.
+series), Netherlands (sidecodes 1-12), Poland (ordinary car/motorcycle/powiat
+plus reduced, historic, temporary, diplomatic, individual and professional),
+Austria (standard + Wunschkennzeichen + diplomatic/consular). See `README.md`
+for the full matrix.
 
 ## The golden rule: metadata is the source of truth
 
@@ -52,14 +54,21 @@ src/engine/*                  ← normalize · parse · validate · format · de
 src/index.ts                  ← public API
 ```
 
-The token grammar (`src/tokens/`) has five kinds: `LITERAL`, `DIGITS`,
-`CHARSET`, `LETTERS`, `TABLE`. `DIGITS`/`CHARSET`/`LETTERS` take a fixed
-`length` or a bounded `minLength`/`maxLength` range; `DIGITS` also takes
+The token grammar (`src/tokens/`) has six kinds: `LITERAL`, `DIGITS`,
+`CHARSET`, `LETTERS`, `TABLE`, `PATTERNS`. `DIGITS`/`CHARSET`/`LETTERS` take a
+fixed `length` or a bounded `minLength`/`maxLength` range; `DIGITS` also takes
 `noLeadingZero`. `LETTERS` also takes `excluded` (per-position letters removed
 from A-Z) and `excludedValues` (whole-segment blacklist, e.g. `SS`/`WW`,
 compiled to a negative lookahead; fixed-length segments only). `TABLE` matches
 one value from a named set in `metadata/tables/*.json` (e.g. the ~770 German
-district codes, umlauts included). A scheme may add `lengthRules` (a
+district codes, umlauts included). `PATTERNS` matches one of a list of exact
+positional digit/letter arrangements (`N` = digit, `L` = letter from an
+optional `letters` charset, anything else literal — e.g. the Polish
+`[NNNNL, NLNNN, …]` serials or the fixed `P` of `NNPNN`), with a per-scheme
+`digitBlocks` rule (`NO_LEADING_ZERO`, or `NO_ZERO_BLOCK` for ranges like
+0001-9999) applied to each maximal digit run; same-length arrangements
+compile into one fixed-shape alternation, so a `PATTERNS` segment is a single
+component with a single boundary. A scheme may add `lengthRules` (a
 disjunction of "these segments sum to at most N" rules, for regulations like
 the German eight-character limit).
 
@@ -212,5 +221,31 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
   The pre-2010 series omit dates too and are `legacySeries` despite remaining
   valid (plates follow the holder) — same trade-off as the NL sidecodes.
   Personalized, royal court and `A`/`E`/`P` short plates are not modelled.
+
+- **PL sub-ranges and colour variants are not fully carved out.** The
+  professional serial's final two-digit block (01-99) accepts 00 (`digitBlocks`
+  is per-segment and the leading block legitimately starts at 00), and the
+  per-voivodeship powiat-number ranges of Załącznik 8 are documented but not
+  enforced. EV/hydrogen green backgrounds and the red-on-yellow sports
+  temporary variant carry the same numbers, so `visual` reports the default
+  colours. The individual-plate decency rule (§ 32 ust. 3) has no closed list.
+  The three powiat codes of Dz.U. 2026 poz. 891 enter force 2026-08-04; the
+  window is noted in the table but not enforced. Diplomatic digit-group
+  semantics (mission codes, the de-facto `W`) are administrative practice and
+  deliberately absent.
+- **AT capital-city lengths and positional letter rules are not modelled.**
+  Serial-length allocation differs between the Land capitals/Vienna (5-6) and
+  other districts (4-5) but the issuing authority is not inferable, so
+  `AT_STANDARD`/`AT_WUNSCHKENNZEICHEN` accept the 3-6 union. The ban on `O` as
+  the FIRST letter of a standard letter block (KDV § 26 Abs. 6 Z 5) is
+  positional and unmodelled (only `Q` is excluded outright), as is the
+  variable-length Abs. 8 offensive-combination list for Wunschkennzeichen.
+  Probefahrt/Überstellung/temporary/moped/historic plates share the
+  standard-issue text format and differ by colour, so `AT_STANDARD` carries no
+  `visual` and its serial range unions the historic/moped lengths (3-6).
+  All-digit federal/Land series (`A`, Land letters), authority-area prefixes
+  (`BP`, `FW` with its reversed serial, `JW`, `BH`, `PT`, `BD`, `FV`) and
+  pre-1989 black plates are not modelled. `ND`/`GD`/`NK`/`SD`/`VK` are both
+  district codes and Land+`D`/`K` diplomatic prefixes — a genuine ambiguity.
 
 These need grammar or scope work, not a quick patch. Discuss before changing.

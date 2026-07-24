@@ -1,0 +1,45 @@
+schemaVersion: 1
+id: PL_DIPLOMATIC
+country: PL
+name: Tablice dyplomatyczne
+registrationType: DIPLOMATIC
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  level: NOT_INFERABLE
+segments:
+  # The regulation prescribes the voivodeship letter, not specifically W;
+  # missions cluster in Warsaw in practice, but that is not a format rule.
+  - name: voivodeship
+    type: TABLE
+    table: pl-wojewodztwa
+  # § 30 ust. 2 pkt 7: six digits 000001-999999. Any internal meaning of the
+  # digit groups (mission/country codes) is administrative practice, not part
+  # of the regulation, and is not modelled.
+  - name: serial
+    type: PATTERNS
+    patterns: [NNNNNN]
+    digitBlocks: NO_ZERO_BLOCK
+formats:
+  national: "{voivodeship} {serial}"
+  compact: "{voivodeship}{serial}"
+# White characters on blue (§ 27 ust. 10). Diplomatic plates are the only
+# Polish type without the EU band (§ 28 ust. 1).
+visual:
+  background: BLUE
+  foreground: WHITE
+sources:
+  - id: PL-ROZP-2024
+    section: "§ 27 ust. 10; § 28 ust. 1; § 30 ust. 2 pkt 7"
+examples:
+  valid:
+    - "W 123456"
+    - "T 000001"
+  invalid:
+    - "W 000000"
+    - "Q 123456"
+    - "W 12345"
+    - "W 1234567"

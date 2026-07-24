@@ -72,7 +72,7 @@ describe("parse — rejections", () => {
   });
 
   it("reports unsupported countries", () => {
-    const result = parse("1234 BCD", { country: "PL" });
+    const result = parse("1234 BCD", { country: "CZ" });
     expect(result.status).toBe("UNSUPPORTED");
     expect(result.errors[0]?.reason).toBe("UNSUPPORTED_COUNTRY");
   });
@@ -106,9 +106,19 @@ describe("convenience helpers", () => {
   });
 
   it("exposes supported countries, schemes and versions", () => {
-    expect(getSupportedCountries()).toEqual(["BE", "DE", "ES", "FR", "IT", "NL", "PT"]);
+    expect(getSupportedCountries()).toEqual([
+      "AT",
+      "BE",
+      "DE",
+      "ES",
+      "FR",
+      "IT",
+      "NL",
+      "PL",
+      "PT",
+    ]);
     expect(getSupportedSchemes("ES")).toContain("ES_TRAILER_CURRENT");
-    expect(getSupportedSchemes()).toHaveLength(62);
+    expect(getSupportedSchemes()).toHaveLength(75);
     expect(getMetadataVersion()).toMatch(/^\d{4}\.\d{2}\.\d+$/);
   });
 });

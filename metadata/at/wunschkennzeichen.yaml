@@ -1,0 +1,72 @@
+schemaVersion: 1
+id: AT_WUNSCHKENNZEICHEN
+country: AT
+name: Wunschkennzeichen (KFG § 48a)
+registrationType: ORDINARY
+# Introduced with the white-plate system by the 11. KFG-Novelle (BGBl.
+# Nr. 375/1988); plate issuance could be deferred by the Länder until
+# 1990-01-01 at the latest (Art. V Abs. 5).
+validFrom: "1989-01-01"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  level: NOT_INFERABLE
+segments:
+  - name: district
+    type: TABLE
+    table: at-behoerden
+  # Chosen Vormerkzeichen (KDV § 26 Abs. 6 Z 3): mirror image of the standard
+  # issue — begins with a letter, ends with a digit, closed blocks, at least
+  # one letter and one digit, 3-5 characters (3-6 in the Land capitals and
+  # Vienna; the union 3-6 is accepted). Q, Ä, Ö, Ü prohibited (Z 4); leading
+  # 0 in the digit block prohibited (Z 5). The KDV § 26 Abs. 8 list of
+  # combinations deemed offensive (NS codes, "NAZI", "88", "ACAB", "QANON", …,
+  # alone or together with the authority code) applies at assignment; it is
+  # variable-length and context-dependent and is not modelled here.
+  - name: serial
+    type: PATTERNS
+    patterns:
+      - LLN
+      - LNN
+      - LLLN
+      - LLNN
+      - LNNN
+      - LLLLN
+      - LLLNN
+      - LLNNN
+      - LNNNN
+      - LLLLLN
+      - LLLLNN
+      - LLLNNN
+      - LLNNNN
+      - LNNNNN
+    letters: ABCDEFGHIJKLMNOPRSTUVWXYZ
+    digitBlocks: NO_LEADING_ZERO
+formats:
+  national: "{district}-{serial}"
+  compact: "{district}{serial}"
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: AT-KFG
+    section: "§ 48a; § 49 Abs. 4"
+  - id: AT-KDV
+    section: "§ 26 Abs. 6 Z 3-5, Abs. 8; Anlage 5d"
+  - id: AT-KFG-NOV11
+    section: "Art. V"
+examples:
+  valid:
+    - "W ABC123"
+    - "KI AB12"
+    - "L MAX1"
+    - "S TIROL1"
+  invalid:
+    - "W 123ABC"
+    - "W QQ12"
+    - "W ABC"
+    - "W A0123"
+    - "W ABCDEF1"

@@ -170,6 +170,24 @@
               "type": { "const": "TABLE" },
               "table": { "type": "string", "pattern": "^[a-z0-9-]+$" }
             }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "type", "patterns"],
+            "properties": {
+              "name": { "type": "string" },
+              "type": { "const": "PATTERNS" },
+              "patterns": {
+                "type": "array",
+                "minItems": 1,
+                "items": { "type": "string", "pattern": "^[A-Z0-9]+$" }
+              },
+              "letters": { "type": "string", "pattern": "^[A-Z]+$" },
+              "digitBlocks": {
+                "enum": ["FREE", "NO_LEADING_ZERO", "NO_ZERO_BLOCK"]
+              }
+            }
           }
         ]
       }

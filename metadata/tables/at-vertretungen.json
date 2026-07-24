@@ -1,0 +1,33 @@
+{
+  "id": "at-vertretungen",
+  "description": "Austrian diplomatic/consular plate prefixes: the Land letter of KDV § 26 Abs. 3 (B, K, N, O, S, ST, T, V, W) — or, for vehicles based in Graz, the Anlage 5d authority code G (§ 26 Abs. 5) — followed by D (diplomatic corps, international organisations) or K (consular corps). Cross product, 20 values. Several collide with Anlage 5d district codes (ND, GD, NK, SD, VK), a genuine textual ambiguity of the Austrian system.",
+  "sources": [
+    {
+      "id": "AT-KDV",
+      "section": "§ 26 Abs. 3 and 5"
+    }
+  ],
+  "sourceCheckedAt": "2026-07-24",
+  "values": [
+    "BD",
+    "BK",
+    "GD",
+    "GK",
+    "KD",
+    "KK",
+    "ND",
+    "NK",
+    "OD",
+    "OK",
+    "SD",
+    "SK",
+    "STD",
+    "STK",
+    "TD",
+    "TK",
+    "VD",
+    "VK",
+    "WD",
+    "WK"
+  ]
+}

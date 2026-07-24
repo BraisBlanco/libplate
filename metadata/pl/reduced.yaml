@@ -1,0 +1,53 @@
+schemaVersion: 1
+id: PL_REDUCED
+country: PL
+name: Tablice jednorzędowe zmniejszone (zwyczajne, tymczasowe, zabytkowe)
+# § 30 ust. 2 pkt 2 defines ONE serial scheme shared by the reduced-size
+# variants of ordinary, temporary and historic plates, so the registration
+# regime cannot be told from the text — only from the colours (black/white
+# ordinary, red/white temporary, black/yellow historic). `visual` is omitted
+# for the same reason.
+registrationType: UNKNOWN
+# Reduced-size plates entered into force on 2018-07-01 (Dz.U. 2017 poz. 2355,
+# § 57 pkt 2); reduced historic plates joined with Dz.U. 2022 poz. 1847.
+validFrom: "2018-07-01"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Issued for any vehicle whose plate recess is too small for standard
+  # plates (typically imports).
+  level: NOT_INFERABLE
+segments:
+  # The prefix is the voivodeship letter ALONE — no powiat discriminant
+  # (§ 30 ust. 2 pkt 2).
+  - name: voivodeship
+    type: TABLE
+    table: pl-wojewodztwa
+  # Seven permitted 3-character arrangements, in issuing order.
+  - name: serial
+    type: PATTERNS
+    patterns: [NNN, NNL, NLN, LNN, NLL, LLN, LNL]
+    letters: ACEFGHJKLMNPRSTUVWXY
+    digitBlocks: NO_ZERO_BLOCK
+formats:
+  national: "{voivodeship} {serial}"
+  compact: "{voivodeship}{serial}"
+sources:
+  - id: PL-ROZP-2024
+    section: "§ 30 ust. 2 pkt 2; § 31; Załącznik nr 13"
+  - id: PL-ROZP-2017
+    section: "§ 57 pkt 2"
+examples:
+  valid:
+    - "W 123"
+    - "K 1AC"
+    - "G A1C"
+    - "V 12A"
+  invalid:
+    - "W 000"
+    - "Q 123"
+    - "W 12"
+    - "W B12"

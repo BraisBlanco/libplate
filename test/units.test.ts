@@ -67,6 +67,58 @@ describe("tokens — variable lengths and tables", () => {
   });
 });
 
+describe("tokens — PATTERNS", () => {
+  it("merges same-length arrangements into one expansion and splits by length", () => {
+    const compiled = compilePattern([
+      { name: "s", token: { kind: "PATTERNS", patterns: ["NNL", "NLL", "NNNL"] } },
+    ]);
+    // Two distinct lengths -> two expansions; 3-char arrangements share one.
+    expect(compiled.expansions).toHaveLength(2);
+    expect(matchAll("12A", compiled)).toEqual([{ s: "12A" }]);
+    expect(matchAll("1AB", compiled)).toEqual([{ s: "1AB" }]);
+    expect(matchAll("AB1", compiled)).toEqual([]); // letter-first not declared
+    expect(matchAll("123A", compiled)).toEqual([{ s: "123A" }]);
+  });
+
+  it("treats non-N/L pattern characters as literals", () => {
+    const compiled = compilePattern([
+      { name: "s", token: { kind: "PATTERNS", patterns: ["NNPNN"] } },
+    ]);
+    expect(matchAll("12P34", compiled)).toEqual([{ s: "12P34" }]);
+    expect(matchAll("12A34", compiled)).toEqual([]);
+  });
+
+  it("restricts L positions to the declared letter set", () => {
+    const compiled = compilePattern([
+      { name: "s", token: { kind: "PATTERNS", patterns: ["NL"], letters: "ACE" } },
+    ]);
+    expect(matchAll("1A", compiled)).toEqual([{ s: "1A" }]);
+    expect(matchAll("1B", compiled)).toEqual([]);
+  });
+
+  it("applies the digit-block rules per maximal digit run", () => {
+    const noZeroBlock = compilePattern([
+      {
+        name: "s",
+        token: { kind: "PATTERNS", patterns: ["NNNLN"], digitBlocks: "NO_ZERO_BLOCK" },
+      },
+    ]);
+    // Leading zeros are fine; an all-zero run is not — per run, not per char.
+    expect(matchAll("001A1", noZeroBlock)).toEqual([{ s: "001A1" }]);
+    expect(matchAll("000A1", noZeroBlock)).toEqual([]);
+    expect(matchAll("001A0", noZeroBlock)).toEqual([]); // single-digit run = 1-9
+
+    const noLeadingZero = compilePattern([
+      {
+        name: "s",
+        token: { kind: "PATTERNS", patterns: ["NNL"], digitBlocks: "NO_LEADING_ZERO" },
+      },
+    ]);
+    expect(matchAll("10A", noLeadingZero)).toEqual([{ s: "10A" }]);
+    expect(matchAll("01A", noLeadingZero)).toEqual([]);
+  });
+});
+
 describe("metadata — segment conversion", () => {
   it("converts a LETTERS segment with and without exclusions", () => {
     expect(

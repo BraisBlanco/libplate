@@ -1,0 +1,54 @@
+schemaVersion: 1
+id: PL_TEMPORARY
+country: PL
+name: Tablice tymczasowe
+registrationType: TEMPORARY_PRIVATE
+# The letter+digit voivodeship series for temporary plates is defined by the
+# current regulation (Załącznik nr 13, col. 6); its introduction date within
+# the post-2000 system was not traced, so validFrom is omitted. The former
+# test-plate variant ("badawcze", fixed final letter B) was abolished by
+# Dz.U. 2022 poz. 1847.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  level: NOT_INFERABLE
+segments:
+  # Voivodeship letter + one digit (Załącznik nr 13, col. 6, e.g. W0-W9).
+  - name: voivodeship
+    type: TABLE
+    table: pl-wojewodztwa
+  - name: series
+    type: DIGITS
+    length: 1
+  # § 30 ust. 2 pkt 6: four digits 0001-9999; after exhaustion three digits
+  # 001-999 plus a letter.
+  - name: serial
+    type: PATTERNS
+    patterns: [NNNN, NNNL]
+    letters: ACEFGHJKLMNPRSTUVWXY
+    digitBlocks: NO_ZERO_BLOCK
+formats:
+  national: "{voivodeship}{series} {serial}"
+  compact: "{voivodeship}{series}{serial}"
+# Red characters on white (§ 27 ust. 9 pkt 1); since 2024-11-30 a passenger
+# car intended for sports competition may instead carry red on yellow
+# (§ 27 ust. 9 pkt 2) — same number format.
+visual:
+  background: WHITE
+  foreground: RED
+sources:
+  - id: PL-ROZP-2024
+    section: "§ 27 ust. 9; § 30 ust. 2 pkt 6; Załącznik nr 13"
+examples:
+  valid:
+    - "W0 1234"
+    - "K5 123A"
+    - "Z9 0001"
+  invalid:
+    - "W0 0000"
+    - "Q1 1234"
+    - "W0 123B"
+    - "W0 12345"

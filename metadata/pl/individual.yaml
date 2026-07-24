@@ -1,0 +1,66 @@
+schemaVersion: 1
+id: PL_INDIVIDUAL
+country: PL
+name: Tablice indywidualne
+registrationType: ORDINARY
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Individual plates are issued for "pojazdy samochodowe" (§ 25 pkt 2), a
+  # class that includes motorcycles, so the category is not inferable.
+  level: NOT_INFERABLE
+segments:
+  # Voivodeship letter + one digit (Załącznik nr 13, col. 6). Since
+  # 2025-07-30 the owner may pick either voivodeship letter where two exist
+  # (§ 32 ust. 2, Dz.U. 2025 poz. 939).
+  - name: voivodeship
+    type: TABLE
+    table: pl-wojewodztwa
+  - name: series
+    type: DIGITS
+    length: 1
+  # § 30 ust. 2 pkt 4: 3-5 letters of which at most the last two may be
+  # replaced by digits. The owner chooses the text, so the § 31 ust. 1
+  # B/D/I/O/Z exclusion does NOT apply — only the Q-less base set of
+  # § 30 ust. 1. The § 32 ust. 3 decency rule (no offensive words in Polish
+  # or foreign languages) has no closed list and is not modelled.
+  - name: custom
+    type: PATTERNS
+    patterns:
+      - LLL
+      - LLN
+      - LNN
+      - LLLL
+      - LLLN
+      - LLNN
+      - LLLLL
+      - LLLLN
+      - LLLNN
+    letters: ABCDEFGHIJKLMNOPRSTUVWXYZ
+formats:
+  national: "{voivodeship}{series} {custom}"
+  compact: "{voivodeship}{series}{custom}"
+# Black on white; EV/hydrogen vehicles carry the same number black-on-green
+# (§ 27 ust. 4).
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: PL-ROZP-2024
+    section: "§ 25 pkt 2; § 27 ust. 4; § 30 ust. 2 pkt 4; § 32"
+  - id: PL-ROZP-2025-939
+    section: "§ 1 pkt 2-3"
+examples:
+  valid:
+    - "W0 TIGER"
+    - "K1 ABC12"
+    - "F5 XYZ"
+    - "D3 BOND7"
+  invalid:
+    - "W0 AB"
+    - "W0 A1234"
+    - "W0 QQQ"
+    - "W0 ABCDEF"

@@ -1,0 +1,47 @@
+schemaVersion: 1
+id: PL_HISTORIC_2LETTER
+country: PL
+name: Tablice zabytkowe (wyróżnik jednoliterowy powiatu)
+registrationType: HISTORICAL
+# The introduction date of the yellow zabytkowe series within the post-2000
+# system is not stated by the cited texts, so validFrom is omitted.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Historic plates exist in car, motorcycle and moped sizes with the same
+  # serial scheme (§ 27 ust. 6-8).
+  level: NOT_INFERABLE
+segments:
+  - name: prefix
+    type: TABLE
+    table: pl-wyrozniki-2
+  # § 30 ust. 2 pkt 5 lit. a, in issuing order. Reduced-size historic plates
+  # follow the separate § 30 ust. 2 pkt 2 scheme (PL_REDUCED).
+  - name: serial
+    type: PATTERNS
+    patterns: [NNL, NNN]
+    letters: ACEFGHJKLMNPRSTUVWXY
+    digitBlocks: NO_ZERO_BLOCK
+formats:
+  national: "{prefix} {serial}"
+  compact: "{prefix}{serial}"
+# Black on yellow, plus the historic-vehicle symbol (§ 27 ust. 6).
+visual:
+  background: YELLOW
+  foreground: BLACK
+sources:
+  - id: PL-ROZP-2024
+    section: "§ 27 ust. 6-8; § 30 ust. 2 pkt 5 lit. a; Załącznik nr 13"
+examples:
+  valid:
+    - "WA 123"
+    - "KR 12A"
+    - "GD 45C"
+  invalid:
+    - "WA 12B"
+    - "WA 000"
+    - "QA 123"
+    - "WA 1A2"

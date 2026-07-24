@@ -1,0 +1,60 @@
+schemaVersion: 1
+id: PL_PROFESSIONAL
+country: PL
+name: Profesjonalne tablice rejestracyjne
+registrationType: PROFESSIONAL_TEMPORARY
+# Professional registration (dealers, manufacturers, research bodies) exists
+# since 2019-07-11 (Dz.U. 2019 poz. 546; cited here through the 2023
+# consolidated text).
+validFrom: "2019-07-11"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Professional plates exist in car, motorcycle and moped sizes with the
+  # same number format (§ 11).
+  level: NOT_INFERABLE
+segments:
+  # One letter per voivodeship (Załącznik nr 8) — primary letters only, no
+  # second series.
+  - name: voivodeship
+    type: TABLE
+    table: pl-wojewodztwa-profesjonalne
+  # Powiat number 01-99 (§ 14 ust. 2); the per-voivodeship assigned ranges
+  # (e.g. dolnośląskie 01-30) are documented in Załącznik nr 8 but not
+  # enforced here.
+  - name: powiat
+    type: PATTERNS
+    patterns: [NN]
+    digitBlocks: NO_ZERO_BLOCK
+  # Serial with the fixed letter P as its middle character: two digits 00-99,
+  # P, then two digits 01-99 — or, after exhaustion, one digit and one letter
+  # (letters exclude B, D, I, O, Z). The 00 exclusion of the final two-digit
+  # block is a sub-range the pattern grammar does not carve out; digit blocks
+  # are left FREE because the leading block legitimately starts at 00.
+  - name: serial
+    type: PATTERNS
+    patterns: [NNPNN, NNPNL]
+    letters: ACEFGHJKLMNPRSTUVWXY
+formats:
+  national: "{voivodeship}{powiat} {serial}"
+  compact: "{voivodeship}{powiat}{serial}"
+# Green characters on white with the EU band (§ 13).
+visual:
+  background: WHITE
+  foreground: GREEN
+sources:
+  - id: PL-PROF
+    section: "§ 11; § 13 ust. 1; § 14; Załącznik nr 8"
+examples:
+  valid:
+    - "W01 23P45"
+    - "D30 00P01"
+    - "K05 12P3A"
+  invalid:
+    - "W00 12P34"
+    - "W01 12A34"
+    - "V01 12P34"
+    - "W01 12P3B"

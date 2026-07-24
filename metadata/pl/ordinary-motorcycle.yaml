@@ -1,0 +1,60 @@
+schemaVersion: 1
+id: PL_ORDINARY_MOTORCYCLE
+country: PL
+name: Tablice zwyczajne motocyklowe i motorowerowe (wyróżnik jednoliterowy powiatu)
+registrationType: ORDINARY
+validFrom: "2000-05-01"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Motorcycle-size plates also serve mopeds, farm tractors and L6e/L7e light
+  # quadricycles (§ 26); the 4-character serial marks the size class, not one
+  # vehicle category. The expanded pattern list (beyond the first two
+  # arrangements) is in force since 2018-07-01 (Dz.U. 2017 poz. 2355 § 57
+  # pkt 2).
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - MOTORCYCLE
+    - MOPED_OR_MOTOR_CYCLE
+    - TRICYCLE
+    - QUADRICYCLE
+    - AGRICULTURAL_VEHICLE
+  evidence:
+    - type: PATTERN
+      value: "four-character vehicle discriminant (tablice motocyklowe/motorowerowe, § 30 ust. 2 pkt 3)"
+segments:
+  - name: prefix
+    type: TABLE
+    table: pl-wyrozniki-2
+  # § 30 ust. 2 pkt 3 lit. a — eight permitted arrangements, in issuing order.
+  - name: serial
+    type: PATTERNS
+    patterns: [NNNN, NNNL, NNLN, NLNN, LNNN, NNLL, NLLN, LLNN]
+    letters: ACEFGHJKLMNPRSTUVWXY
+    digitBlocks: NO_ZERO_BLOCK
+formats:
+  national: "{prefix} {serial}"
+  compact: "{prefix}{serial}"
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: PL-ROZP-2024
+    section: "§ 30 ust. 1-2 pkt 3 lit. a; § 31; Załącznik nr 13"
+  - id: PL-ROZP-1999
+    section: "§ 49"
+examples:
+  valid:
+    - "WA 1234"
+    - "KR 12AC"
+    - "GD 1A23"
+    - "PO A123"
+  invalid:
+    - "WA 123"
+    - "WA B123"
+    - "WA 0000"
+    - "QA 1234"
+    - "WA 12ABC"

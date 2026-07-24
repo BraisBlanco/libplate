@@ -1,0 +1,41 @@
+schemaVersion: 1
+id: PL_HISTORIC_3LETTER
+country: PL
+name: Tablice zabytkowe (wyróżnik dwuliterowy powiatu)
+registrationType: HISTORICAL
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  level: NOT_INFERABLE
+segments:
+  - name: prefix
+    type: TABLE
+    table: pl-wyrozniki-3
+  # § 30 ust. 2 pkt 5 lit. b, in issuing order.
+  - name: serial
+    type: PATTERNS
+    patterns: [NL, NN, LN]
+    letters: ACEFGHJKLMNPRSTUVWXY
+    digitBlocks: NO_ZERO_BLOCK
+formats:
+  national: "{prefix} {serial}"
+  compact: "{prefix}{serial}"
+visual:
+  background: YELLOW
+  foreground: BLACK
+sources:
+  - id: PL-ROZP-2024
+    section: "§ 27 ust. 6-8; § 30 ust. 2 pkt 5 lit. b; Załącznik nr 13"
+examples:
+  valid:
+    - "KRA 1A"
+    - "WPR 12"
+    - "SBE A1"
+  invalid:
+    - "KRA 00"
+    - "KRA AB"
+    - "KRA 1B"
+    - "XXX 12"

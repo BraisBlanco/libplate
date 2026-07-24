@@ -81,6 +81,9 @@ function lengthChoices(segment, tables) {
   if (segment.type === "TABLE") {
     return new Set((tables[segment.table] ?? []).map((v) => v.length)).size || 1;
   }
+  if (segment.type === "PATTERNS") {
+    return new Set(segment.patterns.map((p) => p.length)).size || 1;
+  }
   if (segment.length !== undefined) return 1;
   return segment.maxLength - segment.minLength + 1;
 }
@@ -106,6 +109,16 @@ function checkSchemeSemantics(rel, scheme, tables, referencedTables) {
             `is ${value.length} chars but the segment length is ${segment.length}`,
         );
         ok = false;
+      }
+    }
+    if (segment.type === "PATTERNS") {
+      const seenPatterns = new Set();
+      for (const pattern of segment.patterns) {
+        if (seenPatterns.has(pattern)) {
+          fail(rel, `segment "${segment.name}": duplicate pattern "${pattern}"`);
+          ok = false;
+        }
+        seenPatterns.add(pattern);
       }
     }
     if (segment.type === "TABLE") {

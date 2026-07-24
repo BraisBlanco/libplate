@@ -1,0 +1,70 @@
+schemaVersion: 1
+id: PL_ORDINARY_POWIAT
+country: PL
+name: Tablice zwyczajne (wyróżnik dwuliterowy powiatu)
+registrationType: ORDINARY
+validFrom: "2000-05-01"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # For two-letter powiat discriminants the car plates use 4- or 5-character
+  # serials (§ 30 ust. 2 pkt 1 lit. b) and the motorcycle/moped plates
+  # 4-character serials (pkt 3 lit. b). Six 4-character arrangements are
+  # shared between both size classes, so the categories genuinely cannot be
+  # told apart from text; the two are merged here to avoid reporting a false
+  # ambiguity. (5-character serials are car-class; LNNL/LNLL are
+  # motorcycle-class — a per-pattern refinement the inference model cannot
+  # express yet.)
+  level: NOT_INFERABLE
+segments:
+  # Voivodeship letter + two-letter powiat discriminant (Załącznik nr 13).
+  - name: prefix
+    type: TABLE
+    table: pl-wyrozniki-3
+  # Union of § 30 ust. 2 pkt 1 lit. b (cars: the first six 4-character
+  # arrangements plus the three 5-character ones) and pkt 3 lit. b
+  # (motorcycles/mopeds: the same six 4-character arrangements plus
+  # LNNL and LNLL). Note NNNN and NNNL are NOT permitted with two-letter
+  # powiat discriminants.
+  - name: serial
+    type: PATTERNS
+    patterns:
+      - LNNN
+      - NNLL
+      - NLNN
+      - NNLN
+      - NLLN
+      - LLNN
+      - LNNL
+      - LNLL
+      - NNNNN
+      - NNNNL
+      - NNNLL
+    letters: ACEFGHJKLMNPRSTUVWXY
+    digitBlocks: NO_ZERO_BLOCK
+formats:
+  national: "{prefix} {serial}"
+  compact: "{prefix}{serial}"
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: PL-ROZP-2024
+    section: "§ 30 ust. 1-2 pkt 1 lit. b i pkt 3 lit. b; § 31; Załącznik nr 13"
+  - id: PL-ROZP-1999
+    section: "§ 49"
+examples:
+  valid:
+    - "KRA A123"
+    - "WPR 12345"
+    - "SBE 1AC1"
+    - "WGM 12AC"
+    - "KRA A12C"
+  invalid:
+    - "KRA 1234"
+    - "WXX 1234"
+    - "WPR 0000A"
+    - "KRA ABCD"

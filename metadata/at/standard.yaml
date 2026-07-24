@@ -1,0 +1,82 @@
+schemaVersion: 1
+id: AT_STANDARD
+country: AT
+name: Amtlich zugewiesenes Kennzeichen (Behördencode + Vormerkzeichen)
+registrationType: ORDINARY
+# The white-plate system (authority code + Land coat of arms + Vormerkzeichen)
+# entered into force on 1989-01-01 (11. KFG-Novelle, BGBl. Nr. 375/1988,
+# Art. V Abs. 4); authorities could issue old-stock plates until 1990-01-31.
+validFrom: "1989-01-01"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # The same composition serves cars, motorcycles, mopeds, trailers and the
+  # Probefahrt/Überstellung/temporary regimes — the plate TYPE is signalled by
+  # colour, not by the text (see the visual note below).
+  level: NOT_INFERABLE
+segments:
+  # 1-2 letter authority code (KDV Anlage 5d), incl. codes retired by district
+  # mergers that remain on circulating vehicles. The Land coat of arms sits
+  # between the code and the serial; in writing it becomes a hyphen
+  # (KDV § 26 Abs. 7).
+  - name: district
+    type: TABLE
+    table: at-behoerden
+  # Standard-issue Vormerkzeichen (KDV § 26 Abs. 6 Z 2): one digit block
+  # followed by one letter block (begins with a digit, ends with a letter,
+  # closed blocks only); at least one digit and 1-3 letters; 0 never leads the
+  # digit block (Z 5). Lengths: ordinary 4-5 (5-6 in the Land capitals and
+  # Vienna), two-line and Probefahrt 4-5 (4-6), Überstellung 4 (4-5),
+  # temporary 4, single-line historic 3 (3-4), moped 3-4 (3-5) — the union
+  # 3-6 is accepted because the issuing authority and plate layout are not
+  # inferable from text. Q, Ä, Ö, Ü are prohibited (Z 4); the ban on O as the
+  # FIRST letter of the block (Z 5) is positional and not modelled.
+  - name: serial
+    type: PATTERNS
+    patterns:
+      - NNL
+      - NLL
+      - NNNL
+      - NNLL
+      - NLLL
+      - NNNNL
+      - NNNLL
+      - NNLLL
+      - NNNNNL
+      - NNNNLL
+      - NNNLLL
+    letters: ABCDEFGHIJKLMNOPRSTUVWXYZ
+    digitBlocks: NO_LEADING_ZERO
+formats:
+  national: "{district}-{serial}"
+  compact: "{district}{serial}"
+# Ordinary plates are black on white with red-white-red edging and the EU
+# band (KFG § 49 Abs. 4). The SAME text format appears white-on-blue
+# (Probefahrt), white-on-green (Überstellung), white-on-blue with a red year
+# stripe (temporary), white-on-red (mopeds) and green-on-white (EV/H2, § 49
+# Abs. 4 Z 5), so no visual expectation is declared.
+sources:
+  - id: AT-KFG
+    section: "§ 48 Abs. 4; § 49 Abs. 4"
+  - id: AT-KDV
+    section: "§ 26 Abs. 1, 6, 7; Anlage 5d"
+  - id: AT-KFG-NOV11
+    section: "Art. V"
+examples:
+  valid:
+    - "W 12345A"
+    - "KI 234AB"
+    - "G 123AB"
+    - "SP 401KW"
+    - "W 12A"
+    - "JU 123A"
+  invalid:
+    - "W 123456A"
+    - "X 123A"
+    - "W 12Q"
+    - "W 0123A"
+    - "W 1234"
+    - "KI 2345ABC"

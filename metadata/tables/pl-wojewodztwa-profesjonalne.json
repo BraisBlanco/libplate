@@ -1,0 +1,29 @@
+{
+  "id": "pl-wojewodztwa-profesjonalne",
+  "description": "Voivodeship letters for Polish professional plates (Załącznik nr 8 to the professional-registration regulation): one letter per voivodeship — the primary letters only, without the ordinary-series second letters. Powiats are identified by numbers 01-99 assigned in the same annex; the per-voivodeship number ranges (e.g. dolnośląskie 01-30) are not enforced here.",
+  "sources": [
+    {
+      "id": "PL-PROF",
+      "section": "§ 14 ust. 2; Załącznik nr 8"
+    }
+  ],
+  "sourceCheckedAt": "2026-07-24",
+  "values": [
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "K",
+    "L",
+    "N",
+    "O",
+    "P",
+    "R",
+    "S",
+    "T",
+    "W",
+    "Z"
+  ]
+}
