@@ -3,7 +3,7 @@
 import type { MetadataBundle } from "../metadata/types.js";
 
 export const METADATA: MetadataBundle = {
-  "metadataVersion": "2026.07.3",
+  "metadataVersion": "2026.07.4",
   "tables": {
     "de-unterscheidungszeichen": [
       "A",
@@ -863,6 +863,638 @@ export const METADATA: MetadataBundle = {
   "schemes": [
     {
       "schemaVersion": 1,
+      "id": "BE_AGRICULTURAL_CURRENT",
+      "country": "BE",
+      "name": "Véhicules agricoles (G-ABC-123)",
+      "registrationType": "ORDINARY",
+      "vehicleInference": {
+        "category": "AGRICULTURAL_VEHICLE",
+        "level": "DETERMINISTIC",
+        "evidence": [
+          {
+            "type": "PREFIX",
+            "value": "G"
+          }
+        ]
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "G"
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 3
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{prefix}-{letters}-{number}",
+        "compact": "{prefix}{letters}{number}"
+      },
+      "visual": {
+        "background": "RED",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "BE-AM-2001",
+          "section": "Art. 9"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "G-ABC-123",
+          "G-LAB-001"
+        ],
+        "invalid": [
+          "G-AB-123",
+          "G-ABC-12",
+          "6-ABC-123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "BE_DEALER_CURRENT",
+      "country": "BE",
+      "name": "Plaque marchand (Z-ABC-123)",
+      "registrationType": "PROFESSIONAL_TEMPORARY",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "Z"
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 3
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{prefix}-{letters}-{number}",
+        "compact": "{prefix}{letters}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "GREEN"
+      },
+      "sources": [
+        {
+          "id": "BE-AM-2001",
+          "section": "Art. 8 (autos); art. 16 (motos)"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "Z-ABC-123",
+          "Z-MAB-001",
+          "Z ABC 123"
+        ],
+        "invalid": [
+          "Z-AB-123",
+          "Z-ABC-12",
+          "2-ABC-123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "BE_DIPLOMATIC_CD",
+      "country": "BE",
+      "name": "Corps diplomatique (CD-AB-123)",
+      "registrationType": "DIPLOMATIC",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "CD"
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{prefix}-{letters}-{number}",
+        "compact": "{prefix}{letters}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "RED"
+      },
+      "sources": [
+        {
+          "id": "BE-AM-2001",
+          "section": "Art. 7 (autos); art. 15 (motos)"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "CD-AB-123",
+          "CD AB 123"
+        ],
+        "invalid": [
+          "CD-123-AB",
+          "CD-AB-12",
+          "CD-ABC-123",
+          "DC-AB-123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "BE_EXPORT",
+      "country": "BE",
+      "name": "Immatriculation export (XA-25-ABC)",
+      "registrationType": "EXPORT",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "X"
+        },
+        {
+          "name": "series",
+          "type": "LETTERS",
+          "length": 1
+        },
+        {
+          "name": "year",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "serial",
+          "type": "LETTERS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{prefix}{series}-{year}-{serial}",
+        "compact": "{prefix}{series}{year}{serial}"
+      },
+      "visual": {
+        "background": "RED",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "BE-AM-2001",
+          "section": "Art. 5 (autos); art. 13 (motos); art. 21 (cyclomoteurs)"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "XA-25-ABC",
+          "XM-26-XYZ"
+        ],
+        "invalid": [
+          "XA-256-ABC",
+          "XA-25-AB",
+          "X-25-ABC"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "BE_MOPED_CURRENT",
+      "country": "BE",
+      "name": "Cyclomoteurs, speed pedelecs et quadricycles légers (S-AAB-123)",
+      "registrationType": "ORDINARY",
+      "vehicleInference": {
+        "possibleCategories": [
+          "MOPED_OR_MOTOR_CYCLE",
+          "QUADRICYCLE"
+        ],
+        "level": "CATEGORY_ONLY",
+        "evidence": [
+          {
+            "type": "PREFIX",
+            "value": "S"
+          }
+        ]
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "S"
+        },
+        {
+          "name": "class",
+          "type": "CHARSET",
+          "length": 1,
+          "characters": "ABPU"
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{prefix}-{class}{letters}-{number}",
+        "compact": "{prefix}{class}{letters}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "RED"
+      },
+      "sources": [
+        {
+          "id": "BE-AM-2001",
+          "section": "Art. 19, § 2"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "S-AAB-123",
+          "S-BCD-001",
+          "S-PAB-123",
+          "S-UAB-123"
+        ],
+        "invalid": [
+          "S-CAB-123",
+          "S-AAB-12",
+          "S-AABC-123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "BE_MOTORCYCLE_CURRENT",
+      "country": "BE",
+      "name": "Motocyclettes (M-ABC-123)",
+      "registrationType": "ORDINARY",
+      "vehicleInference": {
+        "category": "MOTORCYCLE",
+        "level": "DETERMINISTIC",
+        "evidence": [
+          {
+            "type": "PREFIX",
+            "value": "M"
+          }
+        ]
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "M"
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 3
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{prefix}-{letters}-{number}",
+        "compact": "{prefix}{letters}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "RED"
+      },
+      "sources": [
+        {
+          "id": "BE-AM-2001",
+          "section": "Art. 12, § 2"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "M-ABC-123",
+          "M ABC 123"
+        ],
+        "invalid": [
+          "M-AB-123",
+          "M-ABC-1234",
+          "MM-ABC-123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "BE_OLDTIMER_CURRENT",
+      "country": "BE",
+      "name": "Véhicules oldtimer (O-ABC-123)",
+      "registrationType": "HISTORICAL",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "O"
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 3
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{prefix}-{letters}-{number}",
+        "compact": "{prefix}{letters}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "RED"
+      },
+      "sources": [
+        {
+          "id": "BE-AM-2001",
+          "section": "Art. 4, § 2 (autos); art. 12, § 2 (motos)"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "O-ABC-123",
+          "O-MAB-001",
+          "O ABC 123"
+        ],
+        "invalid": [
+          "0-ABC-123",
+          "O-AB-123",
+          "O-ABC-12",
+          "O-ABCD-123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "BE_ORDINARY_1973_2008",
+      "country": "BE",
+      "name": "Série ancienne ABC-123 (1973-2008)",
+      "registrationType": "ORDINARY",
+      "legacySeries": true,
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 3
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{letters}-{number}",
+        "compact": "{letters}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "RED"
+      },
+      "sources": [
+        {
+          "id": "BE-AM-2001",
+          "section": "Art. 4, § 1er (anciens modèles)"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "ABC-123",
+          "ABC 123",
+          "abc-123"
+        ],
+        "invalid": [
+          "AB-123",
+          "ABC-1234",
+          "123-ABC"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "BE_ORDINARY_2008_2010",
+      "country": "BE",
+      "name": "Série ancienne 123-ABC (2008-2010)",
+      "registrationType": "ORDINARY",
+      "legacySeries": true,
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{number}-{letters}",
+        "compact": "{number}{letters}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "RED"
+      },
+      "sources": [
+        {
+          "id": "BE-AM-2001",
+          "section": "Art. 4, § 1er (anciens modèles)"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "123-ABC",
+          "123 ABC"
+        ],
+        "invalid": [
+          "1234-ABC",
+          "12-ABC",
+          "ABC-123"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "BE_PROFESSIONAL_CURRENT",
+      "country": "BE",
+      "name": "Plaque professionnelle (V-ABC-123)",
+      "registrationType": "PROFESSIONAL_TEMPORARY",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "V"
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 3
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{prefix}-{letters}-{number}",
+        "compact": "{prefix}{letters}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "GREEN"
+      },
+      "sources": [
+        {
+          "id": "BE-AM-2001",
+          "section": "Art. 8 (autos); art. 16 (motos)"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "V-ABC-123",
+          "V ABC 123"
+        ],
+        "invalid": [
+          "V-AB-123",
+          "V-ABC-12",
+          "Y-AB-123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
       "id": "BE_STANDARD_CURRENT",
       "country": "BE",
       "name": "Série standard européenne (1-ABC-123)",
@@ -919,6 +1551,267 @@ export const METADATA: MetadataBundle = {
           "1-ABC-12",
           "AB-123-CD",
           "1-ABCD-123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "BE_TAXI_CURRENT",
+      "country": "BE",
+      "name": "Taxis et voitures de location avec chauffeur (T-XAB-123)",
+      "registrationType": "SPECIAL",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "T"
+        },
+        {
+          "name": "usage",
+          "type": "CHARSET",
+          "length": 1,
+          "characters": "LX"
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{prefix}-{usage}{letters}-{number}",
+        "compact": "{prefix}{usage}{letters}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "RED"
+      },
+      "sources": [
+        {
+          "id": "BE-AM-2001",
+          "section": "Art. 4, § 4"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "T-XAB-123",
+          "T-LAB-001",
+          "T XAB 123"
+        ],
+        "invalid": [
+          "T-ABC-123",
+          "T-XA-123",
+          "T-XAB-12"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "BE_TEMPORARY_TRANSIT",
+      "country": "BE",
+      "name": "Immatriculation temporaire de courte durée (WA-25-ABC)",
+      "registrationType": "TEMPORARY_PRIVATE",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "W"
+        },
+        {
+          "name": "series",
+          "type": "LETTERS",
+          "length": 1
+        },
+        {
+          "name": "year",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "serial",
+          "type": "LETTERS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{prefix}{series}-{year}-{serial}",
+        "compact": "{prefix}{series}{year}{serial}"
+      },
+      "visual": {
+        "background": "RED",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "BE-AM-2001",
+          "section": "Art. 5 (autos); art. 13 (motos); art. 21 (cyclomoteurs)"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "WA-25-ABC",
+          "WM-26-XYZ",
+          "WA 25 ABC"
+        ],
+        "invalid": [
+          "WA-256-ABC",
+          "WA-25-AB",
+          "W-25-ABC",
+          "AA-25-ABC"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "BE_TEST_CURRENT",
+      "country": "BE",
+      "name": "Plaque essai (Y-ABC-123)",
+      "registrationType": "PROFESSIONAL_TEMPORARY",
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "Y"
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 3
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{prefix}-{letters}-{number}",
+        "compact": "{prefix}{letters}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "GREEN"
+      },
+      "sources": [
+        {
+          "id": "BE-AM-2001",
+          "section": "Art. 8 (autos); art. 16 (motos)"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "Y-ABC-123",
+          "Y-MAB-001"
+        ],
+        "invalid": [
+          "Y-AB-123",
+          "Y-ABC-12",
+          "V-AB-123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "BE_TRAILER_CURRENT",
+      "country": "BE",
+      "name": "Remorques (Q-ABC-123)",
+      "registrationType": "ORDINARY",
+      "vehicleInference": {
+        "category": "TRAILER_OR_SEMITRAILER",
+        "level": "DETERMINISTIC",
+        "evidence": [
+          {
+            "type": "PREFIX",
+            "value": "Q"
+          }
+        ]
+      },
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "Q"
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 3
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{prefix}-{letters}-{number}",
+        "compact": "{prefix}{letters}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "RED"
+      },
+      "sources": [
+        {
+          "id": "BE-AM-2001",
+          "section": "Art. 4, § 3"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "Q-ABC-123",
+          "Q ABC 123"
+        ],
+        "invalid": [
+          "Q-AB-123",
+          "Q-ABC-1234",
+          "1-ABC-123"
         ]
       },
       "legacySeries": false

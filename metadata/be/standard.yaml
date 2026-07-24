@@ -12,10 +12,13 @@ normalization:
     - " "
     - "-"
 segments:
-  # NOTE: the leading digit is a series indicator (1, then 2 since 2021). Letter
-  # restrictions have evolved and differ between sources, so the full A-Z
-  # alphabet is accepted to avoid rejecting valid plates. First-letter reserved
-  # regimes (CD, G, M/W, …) and the reserved 000 number block are not modelled.
+  # NOTE: the leading digit is a series indicator (1, then 2 since 2021); all
+  # digits are accepted to avoid rejecting future series. Letter restrictions
+  # have evolved and differ between sources, so the full A-Z alphabet is
+  # accepted. Letter-index categories (O, Q, T, M, S, G, Z, Y, V, W, X, CD)
+  # are modelled as separate BE_* schemes; personalized plates, the royal
+  # court and A/E/P short national series, and the reserved 000 number block
+  # are not.
   - name: series
     type: DIGITS
     length: 1

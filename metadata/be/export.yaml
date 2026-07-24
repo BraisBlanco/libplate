@@ -1,0 +1,48 @@
+schemaVersion: 1
+id: BE_EXPORT
+country: BE
+name: Immatriculation export (XA-25-ABC)
+registrationType: EXPORT
+# The exact introduction date of this structure comes from a later amendment
+# to the AM 23-07-2001 and is not pinned yet.
+vehicleInference:
+  # Same series-letter logic as the temporary W plates; not modelled per
+  # value.
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: X
+  - name: series
+    type: LETTERS
+    length: 1
+  # Last two digits of the year in which the plate's validity ends.
+  - name: year
+    type: DIGITS
+    length: 2
+  - name: serial
+    type: LETTERS
+    length: 3
+formats:
+  national: "{prefix}{series}-{year}-{serial}"
+  compact: "{prefix}{series}{year}{serial}"
+visual:
+  # White inscriptions on red (RAL 3020) background.
+  background: RED
+  foreground: WHITE
+sources:
+  - id: BE-AM-2001
+    section: "Art. 5 (autos); art. 13 (motos); art. 21 (cyclomoteurs)"
+examples:
+  valid:
+    - "XA-25-ABC"
+    - "XM-26-XYZ"
+  invalid:
+    - "XA-256-ABC"
+    - "XA-25-AB"
+    - "X-25-ABC"

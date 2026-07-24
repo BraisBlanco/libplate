@@ -22,7 +22,9 @@ Supported today: Spain (ordinary + `R`/`E`/`C`/`H`/`T`/`P`/`S`/`V` + diplomatic
 machines), France (SIV + `WW` provisional), Italy (ordinary — also trailer
 rears since 2013 — + motorcycles, mopeds, agricultural/operating machines,
 `EE`, targa prova), Germany (standard + `H` Oldtimer + `E` electric), Belgium
-(standard), Netherlands (sidecodes 1-12). See `README.md` for the full
+(standard + `O`/`Q`/`T`/`M`/`S`/`G` letter-index categories + `Z`/`Y`/`V`
+commercial + `W`/`X` temporary/export + `CD` diplomatic + two pre-2010
+series), Netherlands (sidecodes 1-12). See `README.md` for the full
 matrix.
 
 ## The golden rule: metadata is the source of truth
@@ -198,8 +200,17 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
   disambiguate between valid splits but never reject a unique one). The
   district table unions assignable codes with revoked-but-still-circulating
   ones; text alone cannot tell which regime a given plate is under.
-- **BE/NL letter rules are simplified.** Belgium accepts full A-Z; the Dutch
-  per-sidecode first-letter allocations and reserved-combination list are not
-  modelled. Documented in the YAML.
+- **BE/NL letter rules are simplified.** Belgium accepts full A-Z in letter
+  groups; the Dutch per-sidecode first-letter allocations and
+  reserved-combination list are not modelled. Documented in the YAML.
+- **BE special-category dates and sub-allocations are not pinned.** The
+  letter-index schemes (O/Q/T/M/S/G/Z/Y/V/W/X/CD) cite the consolidated
+  AM 23-07-2001 but omit `validFrom`: the introduction dates live in
+  successive amendments not yet traced. Within-series allocations (M-initial
+  groups = motorcycles on commercial/oldtimer plates, the temporary plates'
+  second letter, excise-exempt G groups) are documented in comments only.
+  The pre-2010 series omit dates too and are `legacySeries` despite remaining
+  valid (plates follow the holder) — same trade-off as the NL sidecodes.
+  Personalized, royal court and `A`/`E`/`P` short plates are not modelled.
 
 These need grammar or scope work, not a quick patch. Discuss before changing.

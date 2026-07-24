@@ -1,0 +1,50 @@
+schemaVersion: 1
+id: BE_TAXI_CURRENT
+country: BE
+name: Taxis et voitures de location avec chauffeur (T-XAB-123)
+registrationType: SPECIAL
+# The exact introduction date of the T index comes from successive amendments
+# to the AM 23-07-2001 and is not pinned yet.
+vehicleInference:
+  # The plate marks the service regime (X = taxi, L = location avec
+  # chauffeur), not the vehicle category: taxis may be cars or vans.
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: T
+  # First letter of the group: X for licensed taxis, L for hire cars with
+  # driver (limousines).
+  - name: usage
+    type: CHARSET
+    length: 1
+    characters: LX
+  - name: letters
+    type: LETTERS
+    length: 2
+  - name: number
+    type: DIGITS
+    length: 3
+formats:
+  national: "{prefix}-{usage}{letters}-{number}"
+  compact: "{prefix}{usage}{letters}{number}"
+visual:
+  background: WHITE
+  foreground: RED
+sources:
+  - id: BE-AM-2001
+    section: "Art. 4, § 4"
+examples:
+  valid:
+    - "T-XAB-123"
+    - "T-LAB-001"
+    - "T XAB 123"
+  invalid:
+    - "T-ABC-123"
+    - "T-XA-123"
+    - "T-XAB-12"

@@ -1,0 +1,52 @@
+schemaVersion: 1
+id: BE_TEMPORARY_TRANSIT
+country: BE
+name: Immatriculation temporaire de courte durée (WA-25-ABC)
+registrationType: TEMPORARY_PRIVATE
+# The exact introduction date of this structure comes from a later amendment
+# to the AM 23-07-2001 and is not pinned yet.
+vehicleInference:
+  # The second letter encodes the series (autos exclude M, Q and S, which are
+  # used for the motorcycle, trailer and moped temporary series), but the
+  # allocation is not modelled per value.
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: W
+  - name: series
+    type: LETTERS
+    length: 1
+  # The two digits are the last two digits of the year in which the plate's
+  # validity ends; expiry day/month appear on vignettes, not in the text.
+  - name: year
+    type: DIGITS
+    length: 2
+  - name: serial
+    type: LETTERS
+    length: 3
+formats:
+  national: "{prefix}{series}-{year}-{serial}"
+  compact: "{prefix}{series}{year}{serial}"
+visual:
+  # White inscriptions on red (RAL 3020) background.
+  background: RED
+  foreground: WHITE
+sources:
+  - id: BE-AM-2001
+    section: "Art. 5 (autos); art. 13 (motos); art. 21 (cyclomoteurs)"
+examples:
+  valid:
+    - "WA-25-ABC"
+    - "WM-26-XYZ"
+    - "WA 25 ABC"
+  invalid:
+    - "WA-256-ABC"
+    - "WA-25-AB"
+    - "W-25-ABC"
+    - "AA-25-ABC"

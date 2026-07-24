@@ -98,9 +98,28 @@ to resolve the split when present.
 
 **🇧🇪 Belgium**
 
-| Type            | Example     | Notes                    |
-| --------------- | ----------- | ------------------------ |
-| Standard series | `1-ABC-123` | Red on white; since 2010 |
+| Type                           | Example     | Notes                                      |
+| ------------------------------ | ----------- | ------------------------------------------ |
+| Standard series                | `1-ABC-123` | Red on white; since 2010                   |
+| Oldtimer (`O`)                 | `O-ABC-123` | Historical-vehicle regime                  |
+| Trailers (`Q`)                 | `Q-ABC-123` | Deterministic category                     |
+| Taxis / hire with driver (`T`) | `T-XAB-123` | Group starts `X` (taxi) or `L` (hire)      |
+| Motorcycles (`M`)              | `M-ABC-123` | Deterministic category                     |
+| Mopeds / light quads (`S`)     | `S-AAB-123` | Class letter `A`/`B`/`P`/`U`               |
+| Agricultural (`G`)             | `G-ABC-123` | White on red                               |
+| Commercial (`Z`/`Y`/`V`)       | `Z-ABC-123` | Dealer / test / professional; green plates |
+| Temporary short-term (`W`)     | `WA-25-ABC` | White on red; digits = expiry year         |
+| Export (`X`)                   | `XA-25-ABC` | White on red; digits = expiry year         |
+| Diplomatic (`CD`)              | `CD-AB-123` | Red on white                               |
+| Old series (1973-2008)         | `ABC-123`   | Opt-in in detection; still in circulation  |
+| Old series (2008-2010)         | `123-ABC`   | Opt-in in detection; still in circulation  |
+
+Belgian plates follow the **holder**, not the vehicle, so the pre-2010 series
+remain fully valid in circulation. They still stay opt-in in country-less
+detection because their compact shapes collide abroad (`ABC123` also reads as
+a German `A-BC 123`). Compact current-series inputs can collide too
+(`MABC123` is the Belgian motorcycle `M-ABC-123` or the German `MA-BC 123`);
+as always, the separators you wrote decide it or the result is `AMBIGUOUS`.
 
 **🇳🇱 Netherlands**
 
@@ -125,7 +144,9 @@ diplomatic series; Portuguese diplomatic/military series and the pre-2013
 moped/motorcycle series; Italian diplomatic (`CD`/`CC`), Polizia Locale `Y`
 series, SMOM and pre-2002 test plates; German seasonal (`Saisonkennzeichen`),
 alternating (`Wechselkennzeichen`), green, Bundeswehr and diplomatic plates;
-Dutch special series (royal `AA`, `CD`, dealer/export plates).
+Dutch special series (royal `AA`, `CD`, dealer/export plates); Belgian
+personalized plates (free text, up to 8 characters), the royal court and
+`A`/`E`/`P` short national series, and the pre-1973 series.
 
 ## Install
 

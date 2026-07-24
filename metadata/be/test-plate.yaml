@@ -1,0 +1,44 @@
+schemaVersion: 1
+id: BE_TEST_CURRENT
+country: BE
+name: Plaque essai (Y-ABC-123)
+registrationType: PROFESSIONAL_TEMPORARY
+# Commercial plates are renewed yearly. For cars the letter group may not
+# begin with M or S; groups beginning with M are the motorcycle test series
+# (art. 16). That split is not modelled, so the full alphabet is accepted and
+# the vehicle stays non-inferable.
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: Y
+  - name: letters
+    type: LETTERS
+    length: 3
+  - name: number
+    type: DIGITS
+    length: 3
+formats:
+  national: "{prefix}-{letters}-{number}"
+  compact: "{prefix}{letters}{number}"
+visual:
+  # Green mousse (RAL 6005) inscriptions on white.
+  background: WHITE
+  foreground: GREEN
+sources:
+  - id: BE-AM-2001
+    section: "Art. 8 (autos); art. 16 (motos)"
+examples:
+  valid:
+    - "Y-ABC-123"
+    - "Y-MAB-001"
+  invalid:
+    - "Y-AB-123"
+    - "Y-ABC-12"
+    - "V-AB-123"

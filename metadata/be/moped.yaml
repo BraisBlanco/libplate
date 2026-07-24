@@ -1,0 +1,59 @@
+schemaVersion: 1
+id: BE_MOPED_CURRENT
+country: BE
+name: Cyclomoteurs, speed pedelecs et quadricycles légers (S-AAB-123)
+registrationType: ORDINARY
+# The exact introduction date of the S index comes from successive amendments
+# to the AM 23-07-2001 and is not pinned yet (moped registration became
+# mandatory in 2014).
+vehicleInference:
+  # The class letter narrows it: SA/SB = moped class A/B, SP = speed pedelec,
+  # SU = light quadricycle. Extracting a per-value category from a CHARSET
+  # segment is not supported yet, so the union is reported.
+  possibleCategories:
+    - MOPED_OR_MOTOR_CYCLE
+    - QUADRICYCLE
+  level: CATEGORY_ONLY
+  evidence:
+    - type: PREFIX
+      value: S
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: S
+  # Class letter: A (moped class A), B (moped class B), P (speed pedelec),
+  # U (light quadricycle).
+  - name: class
+    type: CHARSET
+    length: 1
+    characters: ABPU
+  - name: letters
+    type: LETTERS
+    length: 2
+  - name: number
+    type: DIGITS
+    length: 3
+formats:
+  national: "{prefix}-{class}{letters}-{number}"
+  compact: "{prefix}{class}{letters}{number}"
+visual:
+  background: WHITE
+  foreground: RED
+sources:
+  - id: BE-AM-2001
+    section: "Art. 19, § 2"
+examples:
+  valid:
+    - "S-AAB-123"
+    - "S-BCD-001"
+    - "S-PAB-123"
+    - "S-UAB-123"
+  invalid:
+    - "S-CAB-123"
+    - "S-AAB-12"
+    - "S-AABC-123"

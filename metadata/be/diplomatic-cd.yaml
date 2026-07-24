@@ -1,0 +1,42 @@
+schemaVersion: 1
+id: BE_DIPLOMATIC_CD
+country: BE
+name: Corps diplomatique (CD-AB-123)
+registrationType: DIPLOMATIC
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: CD
+  # No official public table documents the meaning of the letter pair, so the
+  # full alphabet is accepted (documented limitation).
+  - name: letters
+    type: LETTERS
+    length: 2
+  - name: number
+    type: DIGITS
+    length: 3
+formats:
+  national: "{prefix}-{letters}-{number}"
+  compact: "{prefix}{letters}{number}"
+visual:
+  background: WHITE
+  foreground: RED
+sources:
+  - id: BE-AM-2001
+    section: "Art. 7 (autos); art. 15 (motos)"
+examples:
+  valid:
+    - "CD-AB-123"
+    - "CD AB 123"
+  invalid:
+    - "CD-123-AB"
+    - "CD-AB-12"
+    - "CD-ABC-123"
+    - "DC-AB-123"

@@ -1,0 +1,46 @@
+schemaVersion: 1
+id: BE_TRAILER_CURRENT
+country: BE
+name: Remorques (Q-ABC-123)
+registrationType: ORDINARY
+# The exact introduction date of the Q index comes from successive amendments
+# to the AM 23-07-2001 and is not pinned yet. Before Q, trailers used the
+# ordinary U-initial letter groups of the pre-2010 series.
+vehicleInference:
+  category: TRAILER_OR_SEMITRAILER
+  level: DETERMINISTIC
+  evidence:
+    - type: PREFIX
+      value: Q
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: Q
+  - name: letters
+    type: LETTERS
+    length: 3
+  - name: number
+    type: DIGITS
+    length: 3
+formats:
+  national: "{prefix}-{letters}-{number}"
+  compact: "{prefix}{letters}{number}"
+visual:
+  background: WHITE
+  foreground: RED
+sources:
+  - id: BE-AM-2001
+    section: "Art. 4, § 3"
+examples:
+  valid:
+    - "Q-ABC-123"
+    - "Q ABC 123"
+  invalid:
+    - "Q-AB-123"
+    - "Q-ABC-1234"
+    - "1-ABC-123"

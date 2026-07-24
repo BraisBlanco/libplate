@@ -15,8 +15,8 @@ updated in place. Each source records when it was last checked. Before every
 metadata release, re-verify the sources touched by the changed schemes.
 
 ```
-sourceCheckedAt: 2026-07-23
-metadataVersion:  2026.07.3
+sourceCheckedAt: 2026-07-24
+metadataVersion:  2026.07.4
 ```
 
 ---
@@ -74,9 +74,10 @@ metadataVersion:  2026.07.3
 
 ### Belgium
 
-| ID           | Reference                                                                | Used for                                  | URL                                                                         |
-| ------------ | ------------------------------------------------------------------------ | ----------------------------------------- | --------------------------------------------------------------------------- |
-| `BE-KB-2001` | Arrêté royal du 20 juillet 2001 relatif à l'immatriculation de véhicules | Standard series `1-ABC-123`; red on white | <https://www.ejustice.just.fgov.be/eli/arrete/2001/07/20/2001014153/justel> |
+| ID           | Reference                                                                                     | Used for                                                                                                                                                                                                                                                                          | URL                                                                         |
+| ------------ | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `BE-KB-2001` | Arrêté royal du 20 juillet 2001 relatif à l'immatriculation de véhicules                      | Standard series `1-ABC-123`; red on white                                                                                                                                                                                                                                         | <https://www.ejustice.just.fgov.be/eli/arrete/2001/07/20/2001014153/justel> |
+| `BE-AM-2001` | Arrêté ministériel du 23 juillet 2001 relatif à l'immatriculation de véhicules (consolidated) | Inscription composition per category: ordinary and old models (art. 4), temporary W/X (art. 5, 13, 21), diplomatic `CD` (art. 7, 15), commercial `Z`/`Y`/`V` green plates (art. 8, 16), agricultural `G` (art. 9), motorcycles `M` (art. 12), mopeds `S` + class letter (art. 19) | <https://www.ejustice.just.fgov.be/eli/arrete/2001/07/23/2001014154/justel> |
 
 ### Netherlands
 

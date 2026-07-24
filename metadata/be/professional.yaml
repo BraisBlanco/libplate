@@ -1,0 +1,43 @@
+schemaVersion: 1
+id: BE_PROFESSIONAL_CURRENT
+country: BE
+name: Plaque professionnelle (V-ABC-123)
+registrationType: PROFESSIONAL_TEMPORARY
+# Introduced by a later amendment to the AM 23-07-2001 (the professional
+# plate regime is more recent than marchand/essai); the exact date is not
+# pinned yet. Same structural rules as the other commercial plates.
+vehicleInference:
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: V
+  - name: letters
+    type: LETTERS
+    length: 3
+  - name: number
+    type: DIGITS
+    length: 3
+formats:
+  national: "{prefix}-{letters}-{number}"
+  compact: "{prefix}{letters}{number}"
+visual:
+  # Green mousse (RAL 6005) inscriptions on white.
+  background: WHITE
+  foreground: GREEN
+sources:
+  - id: BE-AM-2001
+    section: "Art. 8 (autos); art. 16 (motos)"
+examples:
+  valid:
+    - "V-ABC-123"
+    - "V ABC 123"
+  invalid:
+    - "V-AB-123"
+    - "V-ABC-12"
+    - "Y-AB-123"

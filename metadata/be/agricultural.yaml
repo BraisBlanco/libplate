@@ -1,0 +1,48 @@
+schemaVersion: 1
+id: BE_AGRICULTURAL_CURRENT
+country: BE
+name: Véhicules agricoles (G-ABC-123)
+registrationType: ORDINARY
+# The exact introduction date of the G index comes from successive amendments
+# to the AM 23-07-2001 and is not pinned yet. Letter-group allocations inside
+# the G series (e.g. groups reserved for excise-exempt fuel users) are not
+# modelled.
+vehicleInference:
+  category: AGRICULTURAL_VEHICLE
+  level: DETERMINISTIC
+  evidence:
+    - type: PREFIX
+      value: G
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: G
+  - name: letters
+    type: LETTERS
+    length: 3
+  - name: number
+    type: DIGITS
+    length: 3
+formats:
+  national: "{prefix}-{letters}-{number}"
+  compact: "{prefix}{letters}{number}"
+visual:
+  # Inverted colors: white inscription on red (RAL 3020) background.
+  background: RED
+  foreground: WHITE
+sources:
+  - id: BE-AM-2001
+    section: "Art. 9"
+examples:
+  valid:
+    - "G-ABC-123"
+    - "G-LAB-001"
+  invalid:
+    - "G-AB-123"
+    - "G-ABC-12"
+    - "6-ABC-123"

@@ -1,0 +1,46 @@
+schemaVersion: 1
+id: BE_OLDTIMER_CURRENT
+country: BE
+name: Véhicules oldtimer (O-ABC-123)
+registrationType: HISTORICAL
+# The exact introduction date of the O index comes from successive amendments
+# to the AM 23-07-2001 (Plan Touwaide rollout) and is not pinned yet.
+vehicleInference:
+  # Any vehicle old enough qualifies (cars, trucks, buses...). Motorcycle
+  # oldtimers also carry the O index with a letter group beginning with M
+  # (art. 12, § 2), but that allocation is not modelled as an inference.
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: O
+  - name: letters
+    type: LETTERS
+    length: 3
+  - name: number
+    type: DIGITS
+    length: 3
+formats:
+  national: "{prefix}-{letters}-{number}"
+  compact: "{prefix}{letters}{number}"
+visual:
+  background: WHITE
+  foreground: RED
+sources:
+  - id: BE-AM-2001
+    section: "Art. 4, § 2 (autos); art. 12, § 2 (motos)"
+examples:
+  valid:
+    - "O-ABC-123"
+    - "O-MAB-001"
+    - "O ABC 123"
+  invalid:
+    - "0-ABC-123"
+    - "O-AB-123"
+    - "O-ABC-12"
+    - "O-ABCD-123"

@@ -1,0 +1,45 @@
+schemaVersion: 1
+id: BE_MOTORCYCLE_CURRENT
+country: BE
+name: Motocyclettes (M-ABC-123)
+registrationType: ORDINARY
+# The exact introduction date of the M index comes from successive amendments
+# to the AM 23-07-2001 and is not pinned yet.
+vehicleInference:
+  category: MOTORCYCLE
+  level: DETERMINISTIC
+  evidence:
+    - type: PREFIX
+      value: M
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: M
+  - name: letters
+    type: LETTERS
+    length: 3
+  - name: number
+    type: DIGITS
+    length: 3
+formats:
+  national: "{prefix}-{letters}-{number}"
+  compact: "{prefix}{letters}{number}"
+visual:
+  background: WHITE
+  foreground: RED
+sources:
+  - id: BE-AM-2001
+    section: "Art. 12, § 2"
+examples:
+  valid:
+    - "M-ABC-123"
+    - "M ABC 123"
+  invalid:
+    - "M-AB-123"
+    - "M-ABC-1234"
+    - "MM-ABC-123"

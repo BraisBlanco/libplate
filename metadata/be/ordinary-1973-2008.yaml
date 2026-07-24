@@ -1,0 +1,49 @@
+schemaVersion: 1
+id: BE_ORDINARY_1973_2008
+country: BE
+name: Série ancienne ABC-123 (1973-2008)
+registrationType: ORDINARY
+# Legacy for detection purposes only: Belgian plates follow the HOLDER, not
+# the vehicle, so these plates remain fully valid in circulation today. They
+# are opt-in in country-less detection because the compact LLLDDD shape
+# collides abroad (e.g. a German A-BC 123 reading). No validFrom/validTo:
+# the issuance window (1973 until the 123-ABC switchover in 2008) is not
+# pinned to exact dates in the consolidated text.
+legacySeries: true
+vehicleInference:
+  # First letters M/W marked motorcycles and U trailers in this series, but
+  # the allocations shifted over time and are not modelled.
+  level: NOT_INFERABLE
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+segments:
+  # I, M, O, Q and W were excluded as first letters for cars until 2000, but
+  # M/W motorcycles and later lots used them; the full alphabet is accepted
+  # (documented limitation).
+  - name: letters
+    type: LETTERS
+    length: 3
+  - name: number
+    type: DIGITS
+    length: 3
+formats:
+  national: "{letters}-{number}"
+  compact: "{letters}{number}"
+visual:
+  background: WHITE
+  foreground: RED
+sources:
+  - id: BE-AM-2001
+    section: "Art. 4, § 1er (anciens modèles)"
+examples:
+  valid:
+    - "ABC-123"
+    - "ABC 123"
+    - "abc-123"
+  invalid:
+    - "AB-123"
+    - "ABC-1234"
+    - "123-ABC"
