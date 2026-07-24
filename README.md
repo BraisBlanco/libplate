@@ -177,21 +177,31 @@ colour change text cannot detect.
 
 **🇦🇹 Austria**
 
-| Type                  | Example    | Notes                                              |
-| --------------------- | ---------- | -------------------------------------------------- |
-| Standard issue        | `KI 234AB` | Digits then letters; district from KDV Anlage 5d   |
-| Wunschkennzeichen     | `W ABC123` | Letters then digits (mirror of the standard issue) |
-| Diplomatic / consular | `WD 123AB` | Land letter + `D`/`K`; no coat of arms             |
+| Type                    | Example    | Notes                                                   |
+| ----------------------- | ---------- | ------------------------------------------------------- |
+| Standard issue          | `KI 234AB` | Digits then letters; district from KDV Anlage 5d        |
+| Wunschkennzeichen       | `W ABC123` | Letters then digits (mirror of the standard issue)      |
+| Diplomatic / consular   | `WD 123AB` | Land letter + `D`/`K`; no coat of arms                  |
+| Federal officeholders   | `A 1`      | Letter `A` + digits only; Bundeswappen (§ 26 Abs. 2)    |
+| Land governments        | `N 4321`   | Land letter + digits only (§ 26 Abs. 3)                 |
+| State / military series | `BH 45678` | `BP`, `FV`, `PT`, `BD`, `BH`, `JW` + digits (Abs. 4)    |
+| Fire brigade            | `FW 45KI`  | `FW` + 2-3 digits + the district's Anlage 5d code (¶ i) |
 
 The Austrian district table unions the current Anlage 5d codes with those
 retired by district mergers (`JU`, `KF`, `MZ`, `HB`, `FF`, `RA`, `FB`, `WU`)
 that stay on circulating vehicles. Probefahrt (blue), Überstellung (green),
 temporary (blue) and moped (red) plates share the standard text format and
-differ only in colour, so `AT_STANDARD` carries no visual expectation. Two
+differ only in colour, so `AT_STANDARD` carries no visual expectation; the red
+plates for foreign trailers carry the towing vehicle's own number (KFG § 49
+Abs. 3), and `Deckkennzeichen`/`Wechselkennzeichen` reuse ordinary formats. The
+all-digit series have no prescribed digit count — § 26 Abs. 6 Z 2 excludes them
+— so they accept 1-6 digits, the ordinary plate's capacity per Anlage 5e. Three
 honest ambiguities: an all-digit diplomatic serial written compactly
 (`WD12345`) also reads as the Wunschkennzeichen `W-D12345` (the separators you
-write resolve it), and `ND`/`GD`/`NK`/`SD`/`VK` are both district codes and
-Land+`D`/`K` diplomatic prefixes.
+write resolve it, as they do for `BP12345` = `B-P12345`), `ND`/`GD`/`NK`/`SD`/
+`VK` are both district codes and Land+`D`/`K` diplomatic prefixes, and `BD` +
+digits is both the Bundesbusdienst series and Burgenland+`D` — unresolvable
+however it is written.
 
 **Not yet modelled**: Spanish state/military bodies; French `W garage` and
 diplomatic series; Portuguese diplomatic/military series and the pre-2013
@@ -201,9 +211,7 @@ alternating (`Wechselkennzeichen`), green, Bundeswehr and diplomatic plates;
 Dutch special series (royal `AA`, `CD`, dealer/export plates); Belgian
 personalized plates (free text, up to 8 characters), the royal court and
 `A`/`E`/`P` short national series, and the pre-1973 series; Polish pre-2000
-black plates and military/service series; Austrian all-digit federal/Land
-series (`A`, `B`…`W` government plates), authority-area prefixes (`BP`, `FW`,
-`JW`, `BH`, `PT`, `BD`, `FV`) and the pre-1989 black plates.
+black plates and military/service series; Austrian pre-1989 black plates.
 
 ## Install
 

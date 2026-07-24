@@ -1,0 +1,60 @@
+schemaVersion: 1
+id: AT_FEUERWEHR
+country: AT
+name: Feuerwehrkennzeichen (FW + Vormerkzeichen mit Behördencode)
+registrationType: STATE_OR_MILITARY
+# Not traced to a specific Novelle, so validFrom is omitted (see AT_BUND_A).
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Fire-brigade vehicles span trucks, vans, cars and special vehicles; the
+  # plate says nothing about which.
+  level: NOT_INFERABLE
+segments:
+  # KDV § 26 Abs. 4 lit. i: FW replaces the authority code on vehicles intended
+  # for the fire brigade. The Feuerwehr-Korpsabzeichen takes the place of the
+  # Land coat of arms (KFG § 49 Abs. 4) and becomes a hyphen in writing
+  # (KDV § 26 Abs. 7).
+  - name: prefix
+    type: LITERAL
+    value: FW
+  # Abs. 6 Z 1 lit. b gives fire-brigade plates their own — reversed —
+  # Vormerkzeichen form: two or three digits followed by one or two letters
+  # that must be the Anlage 5d code of the authority in whose district the
+  # vehicle is registered. 0 may not lead the digit block (Z 5).
+  - name: serial
+    type: DIGITS
+    minLength: 2
+    maxLength: 3
+    noLeadingZero: true
+  - name: district
+    type: TABLE
+    table: at-behoerden
+formats:
+  national: "{prefix}-{serial}{district}"
+  compact: "{prefix}{serial}{district}"
+# White plate, black script, EU band (KFG § 49 Abs. 4 Z 1), with the fire
+# brigade's corps badge in place of the Land coat of arms.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: AT-KDV
+    section: "§ 26 Abs. 4 lit. i, Abs. 6 Z 1 lit. b, Z 5, Abs. 7; Anlage 5d"
+  - id: AT-KFG
+    section: "§ 48 Abs. 4; § 49 Abs. 4"
+examples:
+  valid:
+    - "FW 123W"
+    - "FW 45KI"
+    - "FW 12L"
+  invalid:
+    # One digit, four digits, leading zero, and a letter block that is not an
+    # Anlage 5d authority code.
+    - "FW 1W"
+    - "FW 1234W"
+    - "FW 012W"
+    - "FW 123XY"

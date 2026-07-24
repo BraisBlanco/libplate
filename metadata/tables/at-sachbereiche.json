@@ -1,0 +1,16 @@
+{
+  "id": "at-sachbereiche",
+  "description": "Austrian \"Bezeichnung des sachlichen Bereiches\" prefixes that replace the authority code (KDV 1967 § 26 Abs. 4): BD = Bundesbusdienst omnibuses of the ÖBB and the former Post- und Telegraphenverwaltung (lit. f), BH = Heeresfahrzeuge (lit. g), BP = Bundespolizei (lit. a), FV = Finanzverwaltung (lit. c), JW = Justizwache (lit. h), PT = Post (lit. e). Excluded: lit. i (FW, fire brigade) has a different Vormerkzeichen form and lives in its own scheme, and lit. b and lit. d were repealed by BGBl. II Nr. 275/2007 and BGBl. II Nr. 376/2002. BD collides with the diplomatic prefix B+D of § 26 Abs. 5, a genuine textual ambiguity.",
+  "sources": [
+    {
+      "id": "AT-KDV",
+      "section": "§ 26 Abs. 4"
+    },
+    {
+      "id": "AT-KFG",
+      "section": "§ 48 Abs. 4"
+    }
+  ],
+  "sourceCheckedAt": "2026-07-25",
+  "values": ["BD", "BH", "BP", "FV", "JW", "PT"]
+}

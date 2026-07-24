@@ -28,7 +28,9 @@ rears since 2013 — + motorcycles, mopeds, agricultural/operating machines,
 commercial + `W`/`X` temporary/export + `CD` diplomatic + two pre-2010
 series), Netherlands (sidecodes 1-12), Poland (ordinary car/motorcycle/powiat
 plus reduced, historic, temporary, diplomatic, individual and professional),
-Austria (standard + Wunschkennzeichen + diplomatic/consular). See `README.md`
+Austria (standard + Wunschkennzeichen + diplomatic/consular + the all-digit
+federal `A`, Land-government, `BP`/`FV`/`PT`/`BD`/`BH`/`JW` and `FW`
+fire-brigade series). See `README.md`
 for the full matrix.
 
 ## The golden rule: metadata is the source of truth
@@ -273,9 +275,21 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
   Probefahrt/Überstellung/temporary/moped/historic plates share the
   standard-issue text format and differ by colour, so `AT_STANDARD` carries no
   `visual` and its serial range unions the historic/moped lengths (3-6).
-  All-digit federal/Land series (`A`, Land letters), authority-area prefixes
-  (`BP`, `FW` with its reversed serial, `JW`, `BH`, `PT`, `BD`, `FV`) and
-  pre-1989 black plates are not modelled. `ND`/`GD`/`NK`/`SD`/`VK` are both
-  district codes and Land+`D`/`K` diplomatic prefixes — a genuine ambiguity.
+  Likewise not distinct text formats (verified, don't "add" them): the red
+  plates for foreign trailers (AAT) carry the towing vehicle's own number
+  (KFG § 49 Abs. 3), and `Deckkennzeichen`/`Wechselkennzeichen` (§ 48
+  Abs. 1/2) reuse ordinary formats. The all-digit state series (`A`, Land
+  letters, `BP`/`FV`/`PT`/`BD`/`BH`/`JW`) accept **1-6 digits**: § 26 Abs. 6
+  Z 2's character counts explicitly exclude the Abs. 2-5 vehicles, so the only
+  bound is Anlage 5e's six Vormerkzeichen, and low numbers are real (`A 1`).
+  Their `validFrom` is omitted — the compositions predate the 1989 changeover
+  and no Novelle was traced. The repealed Abs. 4 prefixes (lit. b, BGBl. II
+  Nr. 275/2007; lit. d, BGBl. II Nr. 376/2002) and pre-1989 black plates are
+  not modelled; note the pre-1989 ordinary series had the same shape as
+  `AT_LAND` (Land letter + digits), so that scheme must not be read as
+  evidence about historic plates. `ND`/`GD`/`NK`/`SD`/`VK` are both district
+  codes and Land+`D`/`K` diplomatic prefixes, and `BD` + digits is both the
+  Bundesbusdienst series and Burgenland+`D` — genuine ambiguities that no
+  separator resolves.
 
 These need grammar or scope work, not a quick patch. Discuss before changing.

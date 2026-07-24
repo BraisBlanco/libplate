@@ -28,9 +28,9 @@ describe("Austria — standard-issue plates", () => {
     // Q is prohibited (Abs. 6 Z 4); 0 never leads the digit block (Z 5).
     expect(parse("W 12Q", { country: "AT" }).status).toBe("INVALID");
     expect(parse("W 0123A", { country: "AT" }).status).toBe("INVALID");
-    // Standard serials need at least one trailing letter; all-digit serials
-    // belong to the unmodelled A/Land/authority series.
-    expect(parse("W 1234", { country: "AT" }).status).toBe("INVALID");
+    // Standard serials need at least one trailing letter; an all-digit serial
+    // after a Land letter is the Landesregierung series, not a standard plate.
+    expect(parse("W 1234", { country: "AT" }).scheme?.id).toBe("AT_LAND");
   });
 
   it("rejects authority codes outside Anlage 5d", () => {
@@ -107,6 +107,82 @@ describe("Austria — diplomatic and consular plates", () => {
       ?.map((c) => c.scheme)
       .sort((a, b) => a.localeCompare(b));
     expect(schemes).toEqual(["AT_DIPLOMATIC", "AT_STANDARD"]);
+  });
+});
+
+describe("Austria — state and military series (all-digit Vormerkzeichen)", () => {
+  it("parses the federal A series and the Land letters", () => {
+    const federal = parse("A 1", { country: "AT" });
+    expect(federal.status).toBe("VALID");
+    expect(federal.scheme?.id).toBe("AT_BUND_A");
+    expect(federal.formatted).toBe("A-1");
+
+    const land = parse("N 4321", { country: "AT" });
+    expect(land.scheme?.id).toBe("AT_LAND");
+    expect(land.scheme?.components).toEqual({ prefix: "N", serial: "4321" });
+  });
+
+  it("accepts one to six digits and rejects a leading zero", () => {
+    // No digit count is prescribed for these series (§ 26 Abs. 6 Z 1 lit. a);
+    // the bound is the ordinary plate's six Vormerkzeichen (Anlage 5e).
+    expect(parse("V 999999", { country: "AT" }).status).toBe("VALID");
+    expect(parse("V 1234567", { country: "AT" }).status).toBe("INVALID");
+    expect(parse("A 0", { country: "AT" }).status).toBe("INVALID");
+  });
+
+  it("parses the subject-matter prefixes of § 26 Abs. 4", () => {
+    for (const [plate, prefix] of [
+      ["BH 45678", "BH"],
+      ["BP 12345", "BP"],
+      ["JW 123", "JW"],
+      ["FV 1234", "FV"],
+      ["PT 987", "PT"],
+    ]) {
+      const result = parse(plate as string, { country: "AT" });
+      expect(result.scheme?.id).toBe("AT_SACHLICHER_BEREICH");
+      expect(result.scheme?.components?.["prefix"]).toBe(prefix);
+      expect(result.registration?.type).toBe("STATE_OR_MILITARY");
+    }
+  });
+
+  it("needs the separator to beat the Wunschkennzeichen resegmentation", () => {
+    // BP12345 also splits as the Anlage 5d code B + the chosen serial P12345.
+    const compact = parse("BP12345", { country: "AT" });
+    expect(compact.status).toBe("AMBIGUOUS");
+    const schemes = compact.candidates
+      ?.map((c) => c.scheme)
+      .sort((a, b) => a.localeCompare(b));
+    expect(schemes).toEqual(["AT_SACHLICHER_BEREICH", "AT_WUNSCHKENNZEICHEN"]);
+  });
+
+  it("reports BD as ambiguous with the Burgenland diplomatic prefix", () => {
+    // BD is both the Bundesbusdienst prefix (Abs. 4 lit. f) and B+D (Abs. 5);
+    // both compositions are prefix + digits, so no separator can resolve it.
+    const result = parse("BD 12345", { country: "AT" });
+    expect(result.status).toBe("AMBIGUOUS");
+    expect(result.errors[0]?.reason).toBe("AMBIGUOUS_SCHEME");
+    const schemes = result.candidates
+      ?.map((c) => c.scheme)
+      .sort((a, b) => a.localeCompare(b));
+    expect(schemes).toEqual(["AT_DIPLOMATIC", "AT_SACHLICHER_BEREICH"]);
+  });
+
+  it("parses fire-brigade plates, whose serial ends in the authority code", () => {
+    const result = parse("FW 45KI", { country: "AT" });
+    expect(result.status).toBe("VALID");
+    expect(result.scheme?.id).toBe("AT_FEUERWEHR");
+    expect(result.formatted).toBe("FW-45KI");
+    expect(result.scheme?.components).toEqual({
+      prefix: "FW",
+      serial: "45",
+      district: "KI",
+    });
+  });
+
+  it("requires two or three digits and a real authority code on FW plates", () => {
+    expect(parse("FW 1W", { country: "AT" }).status).toBe("INVALID");
+    expect(parse("FW 1234W", { country: "AT" }).status).toBe("INVALID");
+    expect(parse("FW 123XY", { country: "AT" }).status).toBe("INVALID");
   });
 });
 

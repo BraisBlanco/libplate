@@ -3,7 +3,7 @@
 import type { MetadataBundle } from "../metadata/types.js";
 
 export const METADATA: MetadataBundle = {
-  "metadataVersion": "2026.07.6",
+  "metadataVersion": "2026.07.7",
   "tables": {
     "at-behoerden": [
       "AM",
@@ -112,6 +112,25 @@ export const METADATA: MetadataBundle = {
       "WZ",
       "ZE",
       "ZT"
+    ],
+    "at-laender": [
+      "B",
+      "K",
+      "N",
+      "O",
+      "S",
+      "ST",
+      "T",
+      "V",
+      "W"
+    ],
+    "at-sachbereiche": [
+      "BD",
+      "BH",
+      "BP",
+      "FV",
+      "JW",
+      "PT"
     ],
     "at-vertretungen": [
       "BD",
@@ -1828,6 +1847,68 @@ export const METADATA: MetadataBundle = {
   "schemes": [
     {
       "schemaVersion": 1,
+      "id": "AT_BUND_A",
+      "country": "AT",
+      "name": "Bundeskennzeichen A (Bundespräsident, Bundesregierung, Höchstgerichte)",
+      "registrationType": "STATE_OR_MILITARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "A"
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 6,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{prefix}-{serial}",
+        "compact": "{prefix}{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "AT-KDV",
+          "section": "§ 26 Abs. 2, Abs. 6 Z 1 lit. a, Z 5, Abs. 7; Anlage 5e"
+        },
+        {
+          "id": "AT-KFG",
+          "section": "§ 48 Abs. 4; § 49 Abs. 4"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "A 1",
+          "A 100",
+          "A 12345"
+        ],
+        "invalid": [
+          "A 0",
+          "A 1234567",
+          "A 12A"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
       "id": "AT_DIPLOMATIC",
       "country": "AT",
       "name": "Diplomaten- und Konsularkennzeichen (Land letter + D/K)",
@@ -1891,6 +1972,201 @@ export const METADATA: MetadataBundle = {
           "XD 1234A",
           "WD 0123A",
           "WD 123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "AT_FEUERWEHR",
+      "country": "AT",
+      "name": "Feuerwehrkennzeichen (FW + Vormerkzeichen mit Behördencode)",
+      "registrationType": "STATE_OR_MILITARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "FW"
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 2,
+          "maxLength": 3,
+          "noLeadingZero": true
+        },
+        {
+          "name": "district",
+          "type": "TABLE",
+          "table": "at-behoerden"
+        }
+      ],
+      "formats": {
+        "national": "{prefix}-{serial}{district}",
+        "compact": "{prefix}{serial}{district}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "AT-KDV",
+          "section": "§ 26 Abs. 4 lit. i, Abs. 6 Z 1 lit. b, Z 5, Abs. 7; Anlage 5d"
+        },
+        {
+          "id": "AT-KFG",
+          "section": "§ 48 Abs. 4; § 49 Abs. 4"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "FW 123W",
+          "FW 45KI",
+          "FW 12L"
+        ],
+        "invalid": [
+          "FW 1W",
+          "FW 1234W",
+          "FW 012W",
+          "FW 123XY"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "AT_LAND",
+      "country": "AT",
+      "name": "Landeskennzeichen (Landesregierung, Landtagspräsidenten)",
+      "registrationType": "STATE_OR_MILITARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "TABLE",
+          "table": "at-laender"
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 6,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{prefix}-{serial}",
+        "compact": "{prefix}{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "AT-KDV",
+          "section": "§ 26 Abs. 3, Abs. 6 Z 1 lit. a, Z 5, Abs. 7; Anlage 5e"
+        },
+        {
+          "id": "AT-KFG",
+          "section": "§ 48 Abs. 4; § 49 Abs. 4"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "W 1",
+          "N 4321",
+          "ST 12"
+        ],
+        "invalid": [
+          "W 0123",
+          "W 1234567",
+          "X 12"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "AT_SACHLICHER_BEREICH",
+      "country": "AT",
+      "name": "Kennzeichen mit Bezeichnung des sachlichen Bereiches (BP, FV, PT, BD, BH, JW)",
+      "registrationType": "STATE_OR_MILITARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "TABLE",
+          "table": "at-sachbereiche"
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 6,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{prefix}-{serial}",
+        "compact": "{prefix}{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "AT-KDV",
+          "section": "§ 26 Abs. 4, Abs. 6 Z 1 lit. a, Z 5, Abs. 7; Anlage 5e"
+        },
+        {
+          "id": "AT-KFG",
+          "section": "§ 48 Abs. 4; § 49 Abs. 4"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "BP 12345",
+          "BH 45678",
+          "JW 123",
+          "FV 1234",
+          "PT 987"
+        ],
+        "invalid": [
+          "BP 0123",
+          "BP 1234567",
+          "BP 12A3",
+          "ZW 1234"
         ]
       },
       "legacySeries": false

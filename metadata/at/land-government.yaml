@@ -1,0 +1,59 @@
+schemaVersion: 1
+id: AT_LAND
+country: AT
+name: Landeskennzeichen (Landesregierung, Landtagspräsidenten)
+registrationType: STATE_OR_MILITARY
+# As with AT_BUND_A, the Land letter + all-digit composition is not traced to a
+# specific Novelle, so validFrom is omitted. Note that the pre-1989 ordinary
+# series had the same shape (Land letter + digits, white on black); those
+# plates are not modelled, so a match here says "current Land-government
+# composition", nothing about a historic plate.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  level: NOT_INFERABLE
+segments:
+  # KDV § 26 Abs. 3: the Land letter replaces the authority code on vehicles
+  # intended for the presidents of the Landtage, the members of the
+  # Landesregierungen and the members of the Landesvolksanwaltschaften.
+  - name: prefix
+    type: TABLE
+    table: at-laender
+  # Digits only (Abs. 6 Z 1 lit. a), no leading 0 (Z 5), 1-6 as for AT_BUND_A:
+  # no digit count is prescribed and the ordinary plate holds 6 Vormerkzeichen
+  # (Anlage 5e, GKT).
+  - name: serial
+    type: DIGITS
+    minLength: 1
+    maxLength: 6
+    noLeadingZero: true
+formats:
+  national: "{prefix}-{serial}"
+  compact: "{prefix}{serial}"
+# White plate, black script, EU band, Land coat of arms between letter and
+# serial (KFG § 49 Abs. 4 Z 1); green-on-white for pure-electric and hydrogen
+# vehicles (Z 5).
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: AT-KDV
+    section: "§ 26 Abs. 3, Abs. 6 Z 1 lit. a, Z 5, Abs. 7; Anlage 5e"
+  - id: AT-KFG
+    section: "§ 48 Abs. 4; § 49 Abs. 4"
+examples:
+  valid:
+    - "W 1"
+    - "N 4321"
+    # ST is a Land letter but not an Anlage 5d code; written with its separator
+    # the Land reading wins over the Wunschkennzeichen split S-T12.
+    - "ST 12"
+  invalid:
+    # Leading zero, seven digits, and a letter that is neither a Land letter
+    # nor an authority code.
+    - "W 0123"
+    - "W 1234567"
+    - "X 12"

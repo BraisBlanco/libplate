@@ -1,0 +1,63 @@
+schemaVersion: 1
+id: AT_BUND_A
+country: AT
+name: Bundeskennzeichen A (Bundespräsident, Bundesregierung, Höchstgerichte)
+registrationType: STATE_OR_MILITARY
+# The composition (letter A + an all-digit Vormerkzeichen) is not traced to a
+# specific Novelle — it predates the 1989 white-plate changeover in some form —
+# so validFrom is omitted, as for AT_DIPLOMATIC.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  level: NOT_INFERABLE
+segments:
+  # KDV § 26 Abs. 2: the letter A replaces the authority code on vehicles
+  # intended for the Bundespräsident, the presidents of the Nationalrat and
+  # Bundesrat, the members of the Bundesregierung, the Staatssekretäre, the
+  # members of the Volksanwaltschaft and the presidents/vice-presidents of the
+  # Rechnungshof, Verfassungsgerichtshof, Verwaltungsgerichtshof and Oberster
+  # Gerichtshof. The Bundeswappen replaces the Land coat of arms (KFG § 49
+  # Abs. 4 for the § 40 Abs. 1 lit. a vehicles); in writing it becomes a hyphen
+  # (KDV § 26 Abs. 7).
+  - name: prefix
+    type: LITERAL
+    value: A
+  # Digits only (KDV § 26 Abs. 6 Z 1 lit. a); 0 may not lead the digit block
+  # (Z 5). Neither § 26 nor the KFG fixes a digit count for these series — the
+  # character-count rules of Abs. 6 Z 2 explicitly exclude the Abs. 2 to 5
+  # vehicles — so the bound is the plate model: 6 Vormerkzeichen on the
+  # ordinary plate (Anlage 5e, GKT). Low numbers are real ("A 1" is the
+  # Bundespräsident), hence the 1-6 union.
+  - name: serial
+    type: DIGITS
+    minLength: 1
+    maxLength: 6
+    noLeadingZero: true
+formats:
+  national: "{prefix}-{serial}"
+  compact: "{prefix}{serial}"
+# Ordinary white plate, black script, EU band (KFG § 49 Abs. 4 Z 1), with the
+# Bundeswappen instead of a Land coat of arms. A pure-electric or hydrogen
+# vehicle in these series would carry the green-on-white variant (Z 5).
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: AT-KDV
+    section: "§ 26 Abs. 2, Abs. 6 Z 1 lit. a, Z 5, Abs. 7; Anlage 5e"
+  - id: AT-KFG
+    section: "§ 48 Abs. 4; § 49 Abs. 4"
+examples:
+  valid:
+    - "A 1"
+    - "A 100"
+    - "A 12345"
+  invalid:
+    # Leading zero (Abs. 6 Z 5), seven digits, and a mixed serial (Z 1 lit. a
+    # allows digits only).
+    - "A 0"
+    - "A 1234567"
+    - "A 12A"

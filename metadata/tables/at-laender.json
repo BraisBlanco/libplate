@@ -1,0 +1,12 @@
+{
+  "id": "at-laender",
+  "description": "Austrian Land letters used in place of the authority code on plates for the Landtag presidents, the members of the Landesregierungen and the Landesvolksanwaltschaften (KDV 1967 § 26 Abs. 3). The same nine letters are the base of the diplomatic/consular prefixes of § 26 Abs. 5 (see at-vertretungen). B, K, S and W are also Anlage 5d authority codes, but no ambiguity arises there: authority-code plates carry a Vormerkzeichen ending in a letter, while these carry digits only.",
+  "sources": [
+    {
+      "id": "AT-KDV",
+      "section": "§ 26 Abs. 3"
+    }
+  ],
+  "sourceCheckedAt": "2026-07-25",
+  "values": ["B", "K", "N", "O", "S", "ST", "T", "V", "W"]
+}

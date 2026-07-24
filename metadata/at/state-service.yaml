@@ -1,0 +1,65 @@
+schemaVersion: 1
+id: AT_SACHLICHER_BEREICH
+country: AT
+name: Kennzeichen mit Bezeichnung des sachlichen Bereiches (BP, FV, PT, BD, BH, JW)
+registrationType: STATE_OR_MILITARY
+# Not traced to a specific Novelle (the prefixes are older than the 1989
+# white-plate changeover and lit. b/d were repealed later), so validFrom is
+# omitted.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # BD is reserved for omnibuses in scheduled service, but the scheme unions
+  # six prefixes and the segment value — not the scheme — carries that
+  # evidence, so nothing is inferred.
+  level: NOT_INFERABLE
+segments:
+  # KDV § 26 Abs. 4: the designation of the subject-matter area replaces the
+  # authority code — BP (Bundespolizei, lit. a), FV (Finanzverwaltung, lit. c),
+  # PT (Post, lit. e), BD (Bundesbusdienst omnibuses, lit. f), BH
+  # (Heeresfahrzeuge, lit. g), JW (Justizwache, lit. h). Fire-brigade plates
+  # (lit. i) follow a different Vormerkzeichen form — see AT_FEUERWEHR.
+  - name: prefix
+    type: TABLE
+    table: at-sachbereiche
+  # Digits only (Abs. 6 Z 1 lit. a), no leading 0 (Z 5), 1-6 as for AT_BUND_A.
+  - name: serial
+    type: DIGITS
+    minLength: 1
+    maxLength: 6
+    noLeadingZero: true
+formats:
+  national: "{prefix}-{serial}"
+  compact: "{prefix}{serial}"
+# White plate, black script, EU band (KFG § 49 Abs. 4 Z 1); green-on-white for
+# pure-electric and hydrogen vehicles (Z 5).
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: AT-KDV
+    section: "§ 26 Abs. 4, Abs. 6 Z 1 lit. a, Z 5, Abs. 7; Anlage 5e"
+  - id: AT-KFG
+    section: "§ 48 Abs. 4; § 49 Abs. 4"
+examples:
+  valid:
+    # Written with their separator: compactly, BP12345 / BH45678 / PT987 also
+    # read as the Wunschkennzeichen B-P12345 / B-H45678 / P-T987 and stay
+    # AMBIGUOUS (see the tests). BD is left out of the positive examples: BD
+    # plus digits is also the diplomatic prefix B+D of Abs. 5 and is genuinely
+    # ambiguous however it is written.
+    - "BP 12345"
+    - "BH 45678"
+    - "JW 123"
+    - "FV 1234"
+    - "PT 987"
+  invalid:
+    # Leading zero, seven digits, a mixed serial (digits only, Z 1 lit. a), and
+    # the Zollwache prefix repealed by BGBl. II Nr. 275/2007.
+    - "BP 0123"
+    - "BP 1234567"
+    - "BP 12A3"
+    - "ZW 1234"
