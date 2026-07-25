@@ -1,0 +1,77 @@
+schemaVersion: 1
+id: BG_ORDINARY
+country: BG
+name: Регистрационен номер при постоянна регистрация (буквен код + пореден номер + серия)
+registrationType: ORDINARY
+# validFrom is deliberately omitted: Наредба № I-45 (in force since 2000) states
+# the composition, but the code + four digits + series system was introduced in
+# 1992 and the act that did so was not traced. The two-letter registration code
+# was written into чл. 24 ал. 1 т. 2 by ДВ бр. 110 от 2020 г.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # The same number content serves cars, trucks, trailers, motorcycles and
+  # mopeds; чл. 10 ал. 7 only changes how many plates are fitted (motorcycles,
+  # mopeds and trailers carry a rear plate alone).
+  level: NOT_INFERABLE
+segments:
+  # "Буквен код за регистрация — една или комбинация от две букви" (чл. 24
+  # ал. 1 т. 2). Known limitation: чл. 24 ал. 2 leaves the codes in use to the
+  # National Police (ГДНП) and no official table is published, so the code is
+  # only checked against the alphabet — as with the Spanish diplomatic
+  # prefixes. Only the twelve Cyrillic capitals that coincide graphically with
+  # Latin ones are used (А, В, Е, К, М, Н, О, Р, С, Т, У, Х — enumerated by
+  # чл. 24 ал. 7 for by-request numbers and imposed on the plate face by
+  # БДС 15980); libplate matches their Latin look-alikes A, B, E, K, M, H, O,
+  # P, C, T, Y, X. Cyrillic input is NOT transliterated.
+  - name: code
+    type: CHARSET
+    characters: ABCEHKMOPTXY
+    minLength: 1
+    maxLength: 2
+  # "Пореден номер — четирицифрена комбинация на числата от 0 до 9" (чл. 24
+  # ал. 1 т. 3). Exactly four digits, leading zeros included; the ordinance
+  # sets no range, and чл. 24 ал. 4 shows four identical digits are issuable.
+  # The fixed width is also what makes every compact input uniquely splittable
+  # into code / number / series.
+  - name: number
+    type: DIGITS
+    length: 4
+  # "Серия — една или комбинация от две букви" (чл. 24 ал. 1 т. 4), from the
+  # same twelve letters and likewise determined by ГДНП (чл. 24 ал. 2).
+  - name: series
+    type: CHARSET
+    characters: ABCEHKMOPTXY
+    minLength: 1
+    maxLength: 2
+formats:
+  national: "{code} {number} {series}"
+  compact: "{code}{number}{series}"
+# чл. 23 ал. 2: black graphics on a white retroreflective background. The same
+# number appears in GREEN on vehicles driven by an electric motor alone
+# (чл. 23 ал. 4) and in RED on the third plate (see BG_THIRD_PLATE), so the
+# colours below are the default case.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: BG-NAREDBA-I45
+    section: "чл. 23; чл. 24 ал. 1-2, 7; чл. 26"
+examples:
+  valid:
+    - "CA 1234 AB"
+    - "B 4321 K"
+    - "PB 0001 BM"
+    - "A-1111-X"
+  invalid:
+    # D, F, G, I, J, L, N, Q, R, S, U, V, W and Z are not on Bulgarian plates.
+    - "CD 1234 AB"
+    - "CA 1234 AZ"
+    - "CA 123 AB"
+    - "CA 12345 AB"
+    - "CAB 1234 AB"
+    - "CA 1234 ABC"
+    - "CA 1234"

@@ -1,0 +1,63 @@
+schemaVersion: 1
+id: BG_TRANSIT
+country: BG
+name: Транзитен регистрационен номер за автомобили и ремаркета
+registrationType: TEMPORARY_PRIVATE
+# The "Т"/"Н"/"М" middle letter is the wording of ДВ бр. 30 от 2016 г. (before
+# it, ДВ бр. 45 от 2014 г. as amended by бр. 31 от 2015 г.); the transit regime
+# itself predates the 2000 ordinance, so validFrom is omitted.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # чл. 29 ал. 3 splits transit numbers into this one (cars and trailers) and
+  # the five-digit category-L variant (BG_TRANSIT_L).
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - VAN
+    - TRUCK
+    - BUS
+    - TRAILER_OR_SEMITRAILER
+  evidence:
+    - type: PATTERN
+      value: "six digits split by T, H or M (чл. 29 ал. 3, first sentence)"
+segments:
+  # чл. 29 ал. 3: "шестцифрена комбинация на числата от 0 до 9, симетрично
+  # разделени с буквата «Т», «Н» или «М» в средата" — three digits, the letter,
+  # three digits. Single use. The letters are Cyrillic Т/Н/М, matched here by
+  # their Latin look-alikes T/H/M. No range is prescribed, so 000-999 on both
+  # sides is accepted.
+  #
+  # Issued (чл. 27 ал. 1) for moving unregistered vehicles inside Bulgaria, for
+  # EXPORTING vehicles after their registration ends, and for moving vehicles
+  # whose permanent plate was lost or stolen.
+  - name: serial
+    type: PATTERNS
+    patterns:
+      - NNNTNNN
+      - NNNHNNN
+      - NNNMNNN
+formats:
+  national: "{serial}"
+  compact: "{serial}"
+# чл. 29 ал. 4: black graphics on a white background, with the month and year
+# of validity at the right edge on a red field.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: BG-NAREDBA-I45
+    section: "чл. 27 ал. 1; чл. 29 ал. 3-4"
+examples:
+  valid:
+    - "123 T 456"
+    - "000H000"
+    - "999-M-999"
+  invalid:
+    - "123 B 456"
+    - "12 T 456"
+    - "1234 T 456"
+    - "123 TT 456"

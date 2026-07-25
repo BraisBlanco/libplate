@@ -3338,6 +3338,409 @@ export const METADATA: MetadataBundle = {
     },
     {
       "schemaVersion": 1,
+      "id": "BG_ORDINARY",
+      "country": "BG",
+      "name": "Регистрационен номер при постоянна регистрация (буквен код + пореден номер + серия)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "code",
+          "type": "CHARSET",
+          "characters": "ABCEHKMOPTXY",
+          "minLength": 1,
+          "maxLength": 2
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 4
+        },
+        {
+          "name": "series",
+          "type": "CHARSET",
+          "characters": "ABCEHKMOPTXY",
+          "minLength": 1,
+          "maxLength": 2
+        }
+      ],
+      "formats": {
+        "national": "{code} {number} {series}",
+        "compact": "{code}{number}{series}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "BG-NAREDBA-I45",
+          "section": "чл. 23; чл. 24 ал. 1-2, 7; чл. 26"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "CA 1234 AB",
+          "B 4321 K",
+          "PB 0001 BM",
+          "A-1111-X"
+        ],
+        "invalid": [
+          "CD 1234 AB",
+          "CA 1234 AZ",
+          "CA 123 AB",
+          "CA 12345 AB",
+          "CAB 1234 AB",
+          "CA 1234 ABC",
+          "CA 1234"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "BG_THIRD_PLATE",
+      "country": "BG",
+      "name": "Трета табела с регистрационен номер (за ПС с багажник за товари)",
+      "registrationType": "ORDINARY",
+      "validFrom": "2015-06-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "code",
+          "type": "CHARSET",
+          "characters": "ABCEHKMOPTXY",
+          "minLength": 1,
+          "maxLength": 2
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 5
+        },
+        {
+          "name": "series",
+          "type": "CHARSET",
+          "characters": "ABCEHKMOPTXY",
+          "minLength": 1,
+          "maxLength": 2
+        }
+      ],
+      "formats": {
+        "national": "{code} {number} {series}",
+        "compact": "{code}{number}{series}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "RED"
+      },
+      "sources": [
+        {
+          "id": "BG-NAREDBA-I45",
+          "section": "чл. 10 ал. 9-10; чл. 23 ал. 3"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "CA 51234 AB",
+          "B 14321 K"
+        ],
+        "invalid": [
+          "CA 1234 AB",
+          "CA 512345 AB",
+          "CA 51234 AZ"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "BG_TRADER_TEMPORARY",
+      "country": "BG",
+      "name": "Временен регистрационен номер на търговец за автомобили и ремаркета",
+      "registrationType": "PROFESSIONAL_TEMPORARY",
+      "validFrom": "2015-06-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "VAN",
+          "TRUCK",
+          "BUS",
+          "TRAILER_OR_SEMITRAILER"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "six digits split by B (чл. 30 ал. 2, first sentence)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "serial",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNNBNNN"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{serial}",
+        "compact": "{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "BG-NAREDBA-I45",
+          "section": "чл. 30 ал. 1-2; § 39 ПЗР"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "123 B 456",
+          "000B000"
+        ],
+        "invalid": [
+          "123 T 456",
+          "12 B 456",
+          "1234 B 456"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "BG_TRADER_TEMPORARY_L",
+      "country": "BG",
+      "name": "Временен регистрационен номер на търговец за МПС от категория L",
+      "registrationType": "PROFESSIONAL_TEMPORARY",
+      "validFrom": "2015-06-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "MOTORCYCLE",
+          "MOPED_OR_MOTOR_CYCLE",
+          "TRICYCLE",
+          "QUADRICYCLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "five digits split by B (чл. 30 ал. 2, second sentence)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "serial",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNBNNN",
+            "NNNBNN"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{serial}",
+        "compact": "{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "BG-NAREDBA-I45",
+          "section": "чл. 30 ал. 1-2; § 39 ПЗР"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "12 B 345",
+          "123 B 45"
+        ],
+        "invalid": [
+          "12 M 345",
+          "1 B 345",
+          "1234 B 345"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "BG_TRANSIT",
+      "country": "BG",
+      "name": "Транзитен регистрационен номер за автомобили и ремаркета",
+      "registrationType": "TEMPORARY_PRIVATE",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "VAN",
+          "TRUCK",
+          "BUS",
+          "TRAILER_OR_SEMITRAILER"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "six digits split by T, H or M (чл. 29 ал. 3, first sentence)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "serial",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNNTNNN",
+            "NNNHNNN",
+            "NNNMNNN"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{serial}",
+        "compact": "{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "BG-NAREDBA-I45",
+          "section": "чл. 27 ал. 1; чл. 29 ал. 3-4"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "123 T 456",
+          "000H000",
+          "999-M-999"
+        ],
+        "invalid": [
+          "123 B 456",
+          "12 T 456",
+          "1234 T 456",
+          "123 TT 456"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "BG_TRANSIT_L",
+      "country": "BG",
+      "name": "Транзитен регистрационен номер за МПС от категория L",
+      "registrationType": "TEMPORARY_PRIVATE",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "MOTORCYCLE",
+          "MOPED_OR_MOTOR_CYCLE",
+          "TRICYCLE",
+          "QUADRICYCLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "five digits split by M (чл. 29 ал. 3, second sentence)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "serial",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNMNNN",
+            "NNNMNN"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{serial}",
+        "compact": "{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "BG-NAREDBA-I45",
+          "section": "чл. 27 ал. 1; чл. 29 ал. 3-4"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "12 M 345",
+          "123 M 45",
+          "00M000"
+        ],
+        "invalid": [
+          "12 T 345",
+          "1 M 345",
+          "1234 M 345",
+          "12345"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
       "id": "DE_ELECTRIC",
       "country": "DE",
       "name": "Kennzeichen für elektrisch betriebene Fahrzeuge (E-Kennzeichen)",

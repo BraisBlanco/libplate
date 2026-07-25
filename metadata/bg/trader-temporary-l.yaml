@@ -1,0 +1,49 @@
+schemaVersion: 1
+id: BG_TRADER_TEMPORARY_L
+country: BG
+name: Временен регистрационен номер на търговец за МПС от категория L
+registrationType: PROFESSIONAL_TEMPORARY
+# Same starting date as the six-digit variant (§ 39 ПЗР, ДВ бр. 45 от 2014 г.).
+validFrom: "2015-06-01"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - MOTORCYCLE
+    - MOPED_OR_MOTOR_CYCLE
+    - TRICYCLE
+    - QUADRICYCLE
+  evidence:
+    - type: PATTERN
+      value: "five digits split by B (чл. 30 ал. 2, second sentence)"
+segments:
+  # "петцифрена комбинация на числата от 0 до 9, разделени с буквата «В»" — as
+  # for BG_TRANSIT_L, the ordinance does not say where the letter sits in the
+  # five-digit variant, so both 2+3 and 3+2 arrangements are accepted.
+  - name: serial
+    type: PATTERNS
+    patterns:
+      - NNBNNN
+      - NNNBNN
+formats:
+  national: "{serial}"
+  compact: "{serial}"
+# чл. 30 ал. 2: year of validity at the right edge on a red field.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: BG-NAREDBA-I45
+    section: "чл. 30 ал. 1-2; § 39 ПЗР"
+examples:
+  valid:
+    - "12 B 345"
+    - "123 B 45"
+  invalid:
+    - "12 M 345"
+    - "1 B 345"
+    - "1234 B 345"

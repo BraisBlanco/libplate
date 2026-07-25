@@ -32,7 +32,9 @@ Austria (standard + Wunschkennzeichen + diplomatic/consular + the all-digit
 federal `A`, Land-government, `BP`/`FV`/`PT`/`BD`/`BH`/`JW` and `FW`
 fire-brigade series), Estonia (standard A1 + reduced A3 + motorcycle/moped +
 tractor + veteran + `CD`/`CMD` diplomatic + `PROOV` dealer marks), Romania
-(the ordinary county/Bucharest series). See `README.md` for the full matrix.
+(the ordinary county/Bucharest series), Bulgaria (ordinary + third plate +
+transit and trader temporary numbers, each with its category-L variant). See
+`README.md` for the full matrix.
 
 ## The golden rule: metadata is the source of truth
 
@@ -311,7 +313,6 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
   (§ 7 lg 2) share `L NNN` and are separated only by separator evidence or the
   plate colour. `validFrom` is omitted throughout: the compositions predate the
   2011 regulation and no earlier act was traced.
-
 - **RO digit widths are inferred from the plate's seven-character capacity.**
   HG 1391/2006 art. 23 alin. (1) gives the composition but no digit count, and
   art. 26 alin. (1) of Ordinul MAI 1501/2006 puts the widths in state standard
@@ -327,5 +328,19 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
   numbers (each institution's abbreviation comes from its own unpublished
   order). Art. 24 alin. (3) obscene/authority-like letter combinations have no
   published list.
+- **BG regional codes are charset-checked only.** Наредба № I-45 чл. 24 ал. 2
+  leaves the letter codes and series in use to the National Police, and no
+  official table is published — the same trade-off as the ES diplomatic
+  prefixes. The twelve-letter alphabet is official (чл. 24 ал. 7) and is matched
+  as the Latin look-alikes `A B C E H K M O P T X Y`; Cyrillic input is NOT
+  transliterated (that would need normalization support, and the `normalized`
+  contract is Latin). The by-request six-character numbers (чл. 24 ал. 6-7) are
+  deliberately NOT modelled: their character space strictly contains the
+  ordinary series, so every ordinary plate would come back AMBIGUOUS. Diplomatic,
+  army and police series are absent from the ordinance and are not modelled. The
+  five-digit category-L transit and trader numbers accept both the 2+3 and 3+2
+  splits — the ordinance says "разделени", not "симетрично разделени", for them.
+  EV green (чл. 23 ал. 4) and the third plate's red (ал. 3) are colour variants
+  of the same characters.
 
 These need grammar or scope work, not a quick patch. Discuss before changing.

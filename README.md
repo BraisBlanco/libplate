@@ -245,6 +245,27 @@ inventing a per-county table. The 42 indicatives are validated against the
 ISO 3166-2:RO list (identical to the plate codes). Compact Bucharest plates
 (`B12ABC`) also read as Austrian plates, so write the separators.
 
+**🇧🇬 Bulgaria**
+
+| Type                          | Example       | Notes                                          |
+| ----------------------------- | ------------- | ---------------------------------------------- |
+| Ordinary series               | `CA 1234 AB`  | 1-2 letter code + 4 digits + 1-2 letter series |
+| Third plate (load carriers)   | `CA 51234 AB` | Red characters; one extra digit (чл. 10 ал. 9) |
+| Transit                       | `123 T 456`   | 6 digits split by `T`, `H` or `M`; single use  |
+| Transit — category L          | `12 M 345`    | 5 digits split by `M`                          |
+| Trader temporary              | `123 B 456`   | 6 digits split by `B`; three-year validity     |
+| Trader temporary — category L | `12 B 345`    | 5 digits split by `B`                          |
+
+Bulgarian plates use only the twelve Cyrillic capitals that coincide graphically
+with Latin ones (А, В, Е, К, М, Н, О, Р, С, Т, У, Х — enumerated by чл. 24
+ал. 7); libplate matches their Latin look-alikes `A B C E H K M O P T X Y` and
+does **not** transliterate Cyrillic input. The regional letter codes themselves
+are assigned by the National Police (чл. 24 ал. 2) with no published table, so
+the code is checked against that alphabet only. Battery-electric vehicles carry
+the same number in green (чл. 23 ал. 4). Note that the ordinary shape coincides
+with the Spanish 1971-2000 provincial series whenever every letter is one of the
+twelve (`M-1234-AB`).
+
 **Not yet modelled**: Spanish state/military bodies; French `W garage` and
 diplomatic series; Portuguese diplomatic/military series and the pre-2013
 moped/motorcycle series; Italian diplomatic (`CD`/`CC`), Polizia Locale `Y`
@@ -259,7 +280,9 @@ swallows most other series), racing (A10) and transit (D1/D2) marks, and the
 President's coat-of-arms plate (A12, no characters at all); Romanian diplomatic
 (`CD`/`CO`/`TC`), provisional, `PROBE`, temporary, yellow local-council and
 army/police numbers (the widths and abbreviations live in the unpublished state
-standard or in each institution's own order).
+standard or in each institution's own order); Bulgarian by-request six-character
+numbers (their character space contains the ordinary series), diplomatic,
+army and police series (all outside Наредба № I-45).
 
 ## Install
 

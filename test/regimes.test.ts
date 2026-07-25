@@ -172,10 +172,27 @@ describe("Spain — provincial series", () => {
   });
 
   it("keeps provincial series opt-in in country-less detection", () => {
-    expect(detect("M-1234-AB").status).toBe("INVALID");
-    expect(detect("M-1234-AB", { includeHistorical: true }).scheme?.id).toBe(
+    // Without includeHistorical the provincial series is not considered at all:
+    // "SE-1234-AB" then reads only as the Austrian plate SE (Steyr) 1234AB.
+    const withoutHistorical = detect("SE-1234-AB");
+    expect(withoutHistorical.scheme?.id).not.toBe("ES_PROVINCIAL_1971_2000");
+    expect(withoutHistorical.country).toBe("AT");
+    expect(detect("SE-1234-AB", { includeHistorical: true }).scheme?.id).toBe(
       "ES_PROVINCIAL_1971_2000",
     );
+  });
+
+  it("reports the Bulgarian overlap of the provincial shape", () => {
+    // A province code, four digits and two serial letters also describe a
+    // Bulgarian ordinary plate whenever every letter is one of the twelve
+    // Cyrillic/Latin look-alikes (М 1234 АВ).
+    expect(detect("M-1234-AB").scheme?.id).toBe("BG_ORDINARY");
+    const both = detect("M-1234-AB", { includeHistorical: true });
+    expect(both.status).toBe("AMBIGUOUS");
+    expect(both.errors[0]?.reason).toBe("AMBIGUOUS_COUNTRY");
+    expect(
+      both.candidates?.map((c) => c.country).sort((a, b) => a.localeCompare(b)),
+    ).toEqual(["BG", "ES"]);
   });
 
   it("reports the compact CC overlap with the consular series", () => {

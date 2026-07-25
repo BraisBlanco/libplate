@@ -1,0 +1,54 @@
+schemaVersion: 1
+id: BG_TRANSIT_L
+country: BG
+name: Транзитен регистрационен номер за МПС от категория L
+registrationType: TEMPORARY_PRIVATE
+# Added to чл. 29 ал. 3 by ДВ бр. 45 от 2014 г. (in force 2014-05-30) and
+# re-worded by ДВ бр. 30 от 2016 г.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # чл. 29 ал. 3, second sentence: this variant is reserved for category L
+  # vehicles (mopeds, motorcycles, tricycles and quadricycles).
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - MOTORCYCLE
+    - MOPED_OR_MOTOR_CYCLE
+    - TRICYCLE
+    - QUADRICYCLE
+  evidence:
+    - type: PATTERN
+      value: "five digits split by M (чл. 29 ал. 3, second sentence)"
+segments:
+  # "петцифрена комбинация на числата от 0 до 9, разделени с буквата «М»" —
+  # five digits and the letter М (matched as Latin M). Unlike the six-digit
+  # variant the ordinance does NOT say the split is symmetric, and five digits
+  # cannot be split evenly, so both 2+3 and 3+2 arrangements are accepted.
+  - name: serial
+    type: PATTERNS
+    patterns:
+      - NNMNNN
+      - NNNMNN
+formats:
+  national: "{serial}"
+  compact: "{serial}"
+# чл. 29 ал. 4: black on white, month and year of validity on red at the right.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: BG-NAREDBA-I45
+    section: "чл. 27 ал. 1; чл. 29 ал. 3-4"
+examples:
+  valid:
+    - "12 M 345"
+    - "123 M 45"
+    - "00M000"
+  invalid:
+    - "12 T 345"
+    - "1 M 345"
+    - "1234 M 345"
+    - "12345"

@@ -1,0 +1,54 @@
+schemaVersion: 1
+id: BG_THIRD_PLATE
+country: BG
+name: Трета табела с регистрационен номер (за ПС с багажник за товари)
+registrationType: ORDINARY
+# The third plate was introduced by ДВ бр. 45 от 2014 г., in force 2015-06-01,
+# and re-worded by ДВ бр. 31 от 2015 г. and ДВ бр. 110 от 2020 г.
+validFrom: "2015-06-01"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Issued for a specific vehicle that carries a load rack obscuring the rear
+  # plate; the categories are the same as for the ordinary series.
+  level: NOT_INFERABLE
+segments:
+  # чл. 10 ал. 9: the third plate carries the registered vehicle's own number
+  # with ONE ADDITIONAL DIGIT inserted between the registration code and the
+  # first digit/letter of the serial — i.e. five digits where the ordinary
+  # series has four. Letters as for BG_ORDINARY.
+  - name: code
+    type: CHARSET
+    characters: ABCEHKMOPTXY
+    minLength: 1
+    maxLength: 2
+  - name: number
+    type: DIGITS
+    length: 5
+  - name: series
+    type: CHARSET
+    characters: ABCEHKMOPTXY
+    minLength: 1
+    maxLength: 2
+formats:
+  national: "{code} {number} {series}"
+  compact: "{code}{number}{series}"
+# чл. 23 ал. 3 (ДВ бр. 30 от 2016 г.): RED graphics on a white retroreflective
+# background — the only Bulgarian series written in red.
+visual:
+  background: WHITE
+  foreground: RED
+sources:
+  - id: BG-NAREDBA-I45
+    section: "чл. 10 ал. 9-10; чл. 23 ал. 3"
+examples:
+  valid:
+    - "CA 51234 AB"
+    - "B 14321 K"
+  invalid:
+    - "CA 1234 AB"
+    - "CA 512345 AB"
+    - "CA 51234 AZ"

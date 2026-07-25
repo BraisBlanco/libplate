@@ -1,0 +1,56 @@
+schemaVersion: 1
+id: BG_TRADER_TEMPORARY
+country: BG
+name: Временен регистрационен номер на търговец за автомобили и ремаркета
+registrationType: PROFESSIONAL_TEMPORARY
+# The trader plates of чл. 30 were reshaped by ДВ бр. 45 от 2014 г.; § 39 of the
+# transitional provisions states that the numbers split by the letter "В" are
+# issued from 2015-06-01.
+validFrom: "2015-06-01"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # чл. 30 ал. 2 splits the trader plates into this one (cars and trailers) and
+  # the five-digit category-L variant (BG_TRADER_TEMPORARY_L).
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - VAN
+    - TRUCK
+    - BUS
+    - TRAILER_OR_SEMITRAILER
+  evidence:
+    - type: PATTERN
+      value: "six digits split by B (чл. 30 ал. 2, first sentence)"
+segments:
+  # чл. 30 ал. 2: "шестцифрена комбинация на числата от 0 до 9, симетрично
+  # разделени с буквата «В» в средата" — the Cyrillic В, matched here as Latin
+  # B. Held for three years (чл. 30 ал. 1) by traders whose main business is
+  # importing, producing or selling vehicles, for testing an unregistered
+  # vehicle, moving it to a workshop, between showrooms or to an exhibition.
+  - name: serial
+    type: PATTERNS
+    patterns:
+      - NNNBNNN
+formats:
+  national: "{serial}"
+  compact: "{serial}"
+# чл. 23 ал. 2 with чл. 30 ал. 2: black on white, with the year of validity at
+# the right edge on a red field.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: BG-NAREDBA-I45
+    section: "чл. 30 ал. 1-2; § 39 ПЗР"
+examples:
+  valid:
+    - "123 B 456"
+    - "000B000"
+  invalid:
+    - "123 T 456"
+    - "12 B 456"
+    - "1234 B 456"
