@@ -38,7 +38,8 @@ transit and trader temporary numbers, each with its category-L variant),
 Sweden (the three-letter series in both its digit and 2019 letter-suffix
 arrangements + diplomatic plates), Finland (ordinary + the number-first
 L-class/tractor mark + `CD` and `C` mission plates + export + `KOE` test
-plates), Denmark (the single national series). See `README.md` for the full
+plates), Denmark (the national series + diplomatic, faste prøveskilte and `RF`
+airport plates). See `README.md` for the full
 matrix.
 
 ## The golden rule: metadata is the source of truth
@@ -413,20 +414,38 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
   proof of a car: 16 § 3 mom. lets an L-class museum vehicle use that order and
   Traficom grants special marks in either order, so `FI_ORDINARY` is
   `NOT_INFERABLE`.
-- **DK is one composition and a lot of colour.** § 68, stk. 2 of
-  bekendtgørelse nr. 866 af 19. juni 2023 gives every registered vehicle two
-  Latin letters + one to five digits; diplomatic plates (§ 76) show that same
-  number on blue, and white/yellow/"papegøjeplade" follow registration-tax
-  status set outside the order — so `DK_ORDINARY` asserts no colours at all.
-  § 68, stk. 3 lets the tax administration cut the numbers into series by
-  vehicle kind, but publishes no such division, hence `NOT_INFERABLE`. No
-  letter table is published either, so the full A-Z is accepted. `validFrom` is
-  omitted on purpose: § 72, stk. 3, nr. 4 and § 75 pin the current
-  "retningslinjer" to 1 April 1976, but the two-letter shape is older (the 1958
-  police-district pairs), so a 1976 cut-off would wrongly reject older plates.
-  **Deliberately absent**: prøveskilte and prøvemærker (excluded from § 68,
-  stk. 2, and their composition lives in lov om registrering af køretøjer
-  §§ 7 a-7 h, which does not state one), ønskenummerplader (§ 74, 2-7 free
-  characters) and historic plates (§ 75 — the pre-1976 systems).
+- **DK is one composition cut into series by the tax administration.** The
+  order in force is **bekendtgørelse nr. 663 af 10. juni 2025** (in force
+  2025-07-01; it repealed nr. 866 af 19. juni 2023 by § 115, stk. 2, and was
+  amended by nr. 1826 af 29. december 2025 — §§ 5 and 94 only). Do not cite
+  866; its § 68 survives verbatim in 663, but the "1. april 1976" reference
+  moved from § 72, stk. 3, nr. 4 to **stk. 4**, nr. 4. § 68, stk. 2 gives every
+  registered vehicle two Latin letters + one to five digits, and stk. 3 lets
+  the tax administration divide the numbers into series. **It does publish that
+  division** — Motorstyrelsen's _Oversigt over nummerpladetyper i Danmark_
+  (v2.1, 2026-05-28) gives a `Nummerrække` per plate type — which is what
+  `DK_DIPLOMATIC` (76.000-77.999, blue), `DK_TRADE_PLATE` (10-99, red on white)
+  and `DK_AIRPORT` (`RF` + 4-5 digits, red on yellow) rest on. `DK_ORDINARY`
+  therefore carves those three out (the number is a `PATTERNS` list and `RF` an
+  `excludedValues` entry) so the four schemes stay disjoint; ranges the
+  catalogue leaves unallocated (a single digit, leading-zero forms,
+  98.000-99.999) stay ordinary, because the carve-out only follows positive
+  allocations. The rest of the division is by digit width and each width is
+  shared by two categories (100-999 = large moped **or** tractor, 1.000-9.999 =
+  trailer **or** small moped), so `DK_ORDINARY` stays `NOT_INFERABLE` and
+  asserts no colours — white/yellow/"papegøjeplade" follow registration-tax
+  status set outside the order. No letter table is published, so the full A-Z
+  is accepted. `validFrom` is omitted throughout: § 72, stk. 4, nr. 4 and § 75
+  pin the current "retningslinjer" to 1 April 1976, but the two-letter shape is
+  older (the 1958 police-district pairs), so a 1976 cut-off would wrongly
+  reject older plates. **Deliberately absent**: grænsenummerplader (§ 60 —
+  § 68, stk. 2 does NOT exclude them, yet the catalogue draws them as five
+  digits with no letters; the catalogue disclaims itself as "en grafisk
+  fremstilling", so the conflict is unresolved and no scheme is asserted),
+  prøvemærker (§ 78 — a sticker with a løbenummer of no published width),
+  ønskenummerplader (§ 74, 2-7 free characters — the catalogue says 2-5, and
+  either way the space swallows the other series), historic plates (§ 75 — the
+  pre-1976 systems), the special municipal plates of § 3, stk. 4 and the third
+  plate (it repeats the vehicle's own number).
 
 These need grammar or scope work, not a quick patch. Discuss before changing.

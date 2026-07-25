@@ -14,7 +14,7 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 
 ### Supported countries
 
-**15 countries, 115 schemes.** Each row links to its plate-type table below.
+**15 countries, 118 schemes.** Each row links to its plate-type table below.
 
 | Country                         | Schemes | Coverage                                                                                                   |
 | ------------------------------- | ------: | ---------------------------------------------------------------------------------------------------------- |
@@ -32,7 +32,7 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 | [🇧🇬 Bulgaria](#-bulgaria)       |       6 | Ordinary, third plate, transit and trader temporary numbers, each with its category-L variant              |
 | [🇸🇪 Sweden](#-sweden)           |       3 | Ordinary series, the 2019 letter-suffix format, diplomatic plates                                          |
 | [🇫🇮 Finland](#-finland)         |       6 | Ordinary, L-class/tractor marks, `CD` and `C` mission plates, export, `KOE` test plates                    |
-| [🇩🇰 Denmark](#-denmark)         |       1 | The single national series: two letters + one to five digits                                               |
+| [🇩🇰 Denmark](#-denmark)         |       4 | The national series, diplomatic `76.000-77.999`, faste prøveskilte, `RF` airport plates                    |
 
 Countries not yet modelled, and the series still missing inside those above, are
 listed under [Not yet modelled](#not-yet-modelled).
@@ -355,18 +355,31 @@ mark with the Estonian standard mark (`123 ABC`), so both need a country hint.
 
 #### 🇩🇰 Denmark
 
-| Type            | Example    | Notes                                           |
-| --------------- | ---------- | ----------------------------------------------- |
-| National series | `AB 12345` | Two Latin letters + one to five Arabic numerals |
+| Type                     | Example    | Notes                                                   |
+| ------------------------ | ---------- | ------------------------------------------------------- |
+| National series          | `AB 12345` | Two Latin letters + one to five Arabic numerals         |
+| Diplomatic               | `AB 76123` | Same composition, series `76.000-77.999`; white on blue |
+| Fast prøveskilt          | `AB 42`    | Two letters + `10-99`; red on white, held by a business |
+| Airport (lufthavnsplade) | `RF 12345` | `RF` + four or five digits; red on yellow               |
 
-Denmark has a single number composition (§ 68, stk. 2 of the
-registreringsbekendtgørelse) and everything else is a colour or a plate variant
-on top of it: white, yellow for goods vehicles and the yellow-and-white
-"papegøjeplade" follow the vehicle's registration-tax status, and diplomatic
-plates show the same number on blue (§ 76). libplate therefore reports no
-colours for the Danish series. Note the shape collides with the Italian
-motorcycle series and Polish plates (`WA 12345`), so country-less detection is
-ambiguous there.
+Denmark has one number composition — two Latin letters + one to five digits
+(§ 68, stk. 2 of the registreringsbekendtgørelse) — and § 68, stk. 3 lets the
+tax administration cut it into series. Motorstyrelsen's plate-type catalogue
+publishes that division, which is what makes three of the four schemes above
+tellable apart from the text alone: `10-99` is the prøveskilt series,
+`76.000-77.999` the diplomatic one and `RF` the airport one, so the ordinary
+series leaves those three ranges out. The rest of the division is by digit
+width and shared between categories (`100-999` is a large moped **or** a
+tractor, `1.000-9.999` a trailer **or** a small moped, `10.000-97.999` a car,
+van, lorry, motorcycle or road-approved tractor), so the ordinary series still
+reports no vehicle category.
+
+Colours: white, yellow for goods vehicles and the yellow-and-white
+"papegøjeplade" follow the vehicle's registration-tax status rather than the
+number, so the ordinary series reports none — but the diplomatic (§ 76),
+prøveskilt and airport plates have a colour of their own. Note the ordinary
+shape collides with the Italian motorcycle series and Polish plates
+(`WA 12345`), so country-less detection is ambiguous there.
 
 ### Not yet modelled
 
@@ -391,9 +404,12 @@ army and police series (all outside Наредба № I-45); Swedish saluvagnss
 (2-7 free characters); Finnish transfer marks (siirtomerkki — 1-2 letters + up
 to four digits, a space that contains both the ordinary two-letter series and
 the export plate), customs plates (no published serial width) and Åland, which
-runs its own register; Danish prøveskilte and prøvemærker (their composition is
-set outside the registration order), ønskenummerplader (2-7 free characters)
-and historic plates (the pre-1976 systems).
+runs its own register; Danish grænsenummerplader (Motorstyrelsen draws them as
+five digits with no letters, which contradicts § 68, stk. 2 — the catalogue is
+"en grafisk fremstilling", so the composition is not asserted), prøvemærker (a
+sticker carrying a løbenummer of no published width), ønskenummerplader (2-7
+free characters), historic plates (the pre-1976 systems) and the special
+municipal plates of § 3, stk. 4 (no published composition).
 
 ## Install
 

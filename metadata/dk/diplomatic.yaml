@@ -1,0 +1,73 @@
+schemaVersion: 1
+id: DK_DIPLOMATIC
+country: DK
+name: Diplomatnummerplade (to bogstaver + 76.000-77.999)
+registrationType: DIPLOMATIC
+# validFrom omitted: § 76 states the blue plate without a start date, and the
+# 76.000-77.999 allocation is published by Motorstyrelsen without one either.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 76 covers the vehicles of foreign missions, consular posts, international
+  # organizations and the persons the foreign ministry has granted diplomatic
+  # status. Motorstyrelsen issues the series only as the rectangular
+  # 120 x 504 mm plate (PSTK 65) — the car/van size; there is no motorcycle,
+  # moped, tractor or trailer product in the diplomatic series.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - VAN
+  evidence:
+    - type: PATTERN
+      value: "76.000-77.999 (Motorstyrelsen: rectangular plate only)"
+segments:
+  # The composition is the ordinary one of § 68, stk. 2 — diplomatic plates are
+  # NOT among the exceptions in that provision. What sets them apart in text is
+  # the series: Motorstyrelsen's catalogue gives 76.000-77.999 to the
+  # diplomatic plate and 10.000-75.999 + 78.000-97.999 to every other
+  # five-digit series, so the range is exclusive.
+  #
+  # RF is excluded for the same reason as in DK_ORDINARY: it belongs to the
+  # airport series, whose five-digit range would otherwise overlap this one.
+  - name: letters
+    type: LETTERS
+    length: 2
+    excludedValues:
+      - RF
+  - name: number
+    type: PATTERNS
+    digitBlocks: FREE
+    patterns:
+      - "76NNN"
+      - "77NNN"
+formats:
+  national: "{letters} {number}"
+  compact: "{letters}{number}"
+# § 76, stk. 1: the registration number is shown on a BLUE background;
+# Motorstyrelsen's catalogue gives the characters as white (Blå/hvid/blå).
+# Known limitation: § 76, stk. 2 lets the tax administration dispense with the
+# blue plate and issue a white one instead, so blue is the rule, not a
+# guarantee.
+visual:
+  background: BLUE
+  foreground: WHITE
+sources:
+  - id: DK-BEK-663-2025
+    section: "§ 68, stk. 4, nr. 4; § 76"
+  - id: DK-MOTORST-PLADETYPER
+examples:
+  valid:
+    - "AB 76000"
+    - "AB 77999"
+    - "CD 76123"
+    - "XY-77-000"
+  invalid:
+    - "AB 75999"
+    - "AB 78000"
+    - "AB 7612"
+    - "AB 761234"
+    - "A 76123"
+    - "RF 76123"

@@ -1,0 +1,59 @@
+schemaVersion: 1
+id: DK_TRADE_PLATE
+country: DK
+name: Fast prøveskilt (to bogstaver + to cifre)
+registrationType: PROFESSIONAL_TEMPORARY
+# validFrom omitted: prøveskilte predate the current order, whose § 68, stk. 2
+# only excludes them from the ordinary composition, and the 10-99 series is
+# published by Motorstyrelsen without a date.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # §§ 7 a-7 e of lov om registrering af køretøjer issue a prøveskilt to a
+  # business, not to a vehicle: it is moved between unregistered vehicles for
+  # test drives, transport to inspection and the like. The catalogue stocks the
+  # series in a car size and a motorcycle size, so even the plate says nothing
+  # about what is under it.
+  level: NOT_INFERABLE
+segments:
+  # § 68, stk. 2 excludes prøveskilte from the "two letters + one to five
+  # digits" rule and lov om registrering af køretøjer §§ 7 a-7 e states no
+  # composition. Motorstyrelsen's catalogue supplies it: the plate reads
+  # "AB 00" and the series is 10-99 — two letters and a two-digit number.
+  - name: letters
+    type: LETTERS
+    length: 2
+  - name: number
+    type: DIGITS
+    length: 2
+    noLeadingZero: true
+formats:
+  national: "{letters} {number}"
+  compact: "{letters}{number}"
+# Motorstyrelsen: Hvid/rød/rød — red characters on a white background, the only
+# Danish series written in red apart from the third plate (which repeats the
+# vehicle's own number and is therefore not a scheme of its own).
+visual:
+  background: WHITE
+  foreground: RED
+sources:
+  - id: DK-BEK-663-2025
+    section: "§ 68, stk. 2 og stk. 4, nr. 5; § 77"
+  - id: DK-LOV-179-2023
+    section: "§§ 7 a-7 e"
+  - id: DK-MOTORST-PLADETYPER
+examples:
+  valid:
+    - "AB 10"
+    - "XY 99"
+    - "CD-42"
+  invalid:
+    - "AB 09"
+    - "AB 5"
+    - "AB 123"
+    - "A 12"
+    - "ABC 12"
+    - "AB 1A"

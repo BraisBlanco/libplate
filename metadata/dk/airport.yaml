@@ -1,0 +1,56 @@
+schemaVersion: 1
+id: DK_AIRPORT
+country: DK
+name: Lufthavnsplade (RF + fire til fem cifre)
+registrationType: SPECIAL
+# validFrom omitted: the series appears only in Motorstyrelsen's plate-type
+# catalogue, which gives no start date.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # The catalogue stocks two products in this series: RF10.000-RF99.999 as the
+  # rectangular plate and RF1.000-RF9.999 as the trailer plate, so the width
+  # does carry a hint — but a scheme states one inference, and the wider range
+  # covers everything from cars to ground-handling machinery. Nothing published
+  # says which vehicles the series is granted to, so no category is asserted.
+  level: NOT_INFERABLE
+segments:
+  # Motorstyrelsen's catalogue is the only published source for this series:
+  # "Lufthavnsplader – rektangulær", Nummerrække RF10.000-RF99.999, and
+  # "Lufthavnsplader – påhængsvogn", Nummerrække RF1.000-RF9.999. RF is fixed,
+  # which is why DK_ORDINARY and DK_DIPLOMATIC exclude that letter pair.
+  #
+  # The registreringsbekendtgørelse does not name this plate type at all; the
+  # numbers still fit § 68, stk. 2 (two Latin letters + one to five digits).
+  - name: prefix
+    type: LITERAL
+    value: RF
+  - name: number
+    type: DIGITS
+    minLength: 4
+    maxLength: 5
+    noLeadingZero: true
+formats:
+  national: "RF {number}"
+  compact: "RF{number}"
+# Motorstyrelsen: Gul/rød/rød — red characters on a yellow background.
+visual:
+  background: YELLOW
+  foreground: RED
+sources:
+  - id: DK-MOTORST-PLADETYPER
+examples:
+  valid:
+    - "RF 1000"
+    - "RF 9999"
+    - "RF 10000"
+    - "RF-99999"
+  invalid:
+    - "RF 999"
+    - "RF 0999"
+    - "RF 123456"
+    - "RG 12345"
+    - "RF 1234A"

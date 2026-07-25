@@ -3,7 +3,7 @@
 import type { MetadataBundle } from "../metadata/types.js";
 
 export const METADATA: MetadataBundle = {
-  "metadataVersion": "2026.07.10",
+  "metadataVersion": "2026.07.11",
   "tables": {
     "at-behoerden": [
       "AM",
@@ -4007,10 +4007,240 @@ export const METADATA: MetadataBundle = {
     },
     {
       "schemaVersion": 1,
+      "id": "DK_AIRPORT",
+      "country": "DK",
+      "name": "Lufthavnsplade (RF + fire til fem cifre)",
+      "registrationType": "SPECIAL",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "RF"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 4,
+          "maxLength": 5,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "RF {number}",
+        "compact": "RF{number}"
+      },
+      "visual": {
+        "background": "YELLOW",
+        "foreground": "RED"
+      },
+      "sources": [
+        {
+          "id": "DK-MOTORST-PLADETYPER"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "RF 1000",
+          "RF 9999",
+          "RF 10000",
+          "RF-99999"
+        ],
+        "invalid": [
+          "RF 999",
+          "RF 0999",
+          "RF 123456",
+          "RG 12345",
+          "RF 1234A"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "DK_DIPLOMATIC",
+      "country": "DK",
+      "name": "Diplomatnummerplade (to bogstaver + 76.000-77.999)",
+      "registrationType": "DIPLOMATIC",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "VAN"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "76.000-77.999 (Motorstyrelsen: rectangular plate only)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2,
+          "excludedValues": [
+            "RF"
+          ]
+        },
+        {
+          "name": "number",
+          "type": "PATTERNS",
+          "digitBlocks": "FREE",
+          "patterns": [
+            "76NNN",
+            "77NNN"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{letters} {number}",
+        "compact": "{letters}{number}"
+      },
+      "visual": {
+        "background": "BLUE",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "DK-BEK-663-2025",
+          "section": "§ 68, stk. 4, nr. 4; § 76"
+        },
+        {
+          "id": "DK-MOTORST-PLADETYPER"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "AB 76000",
+          "AB 77999",
+          "CD 76123",
+          "XY-77-000"
+        ],
+        "invalid": [
+          "AB 75999",
+          "AB 78000",
+          "AB 7612",
+          "AB 761234",
+          "A 76123",
+          "RF 76123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
       "id": "DK_ORDINARY",
       "country": "DK",
       "name": "Registreringsnummer (to bogstaver + et til fem cifre)",
       "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2,
+          "excludedValues": [
+            "RF"
+          ]
+        },
+        {
+          "name": "number",
+          "type": "PATTERNS",
+          "digitBlocks": "FREE",
+          "patterns": [
+            "N",
+            "NNN",
+            "NNNN",
+            "0NNNN",
+            "1NNNN",
+            "2NNNN",
+            "3NNNN",
+            "4NNNN",
+            "5NNNN",
+            "6NNNN",
+            "70NNN",
+            "71NNN",
+            "72NNN",
+            "73NNN",
+            "74NNN",
+            "75NNN",
+            "78NNN",
+            "79NNN",
+            "8NNNN",
+            "9NNNN"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{letters} {number}",
+        "compact": "{letters}{number}"
+      },
+      "sources": [
+        {
+          "id": "DK-BEK-663-2025",
+          "section": "§ 67; § 68; § 72, stk. 4, nr. 4; § 76"
+        },
+        {
+          "id": "DK-MOTORST-PLADETYPER"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "AB 12345",
+          "CD 99999",
+          "XY 1",
+          "AA-12-345",
+          "AB 1234",
+          "AB 123"
+        ],
+        "invalid": [
+          "A 12345",
+          "ABC 12345",
+          "AB 123456",
+          "AB",
+          "12 AB",
+          "AB 1234A",
+          "AB 12",
+          "AB 76000",
+          "AB 77999",
+          "RF 12345"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "DK_TRADE_PLATE",
+      "country": "DK",
+      "name": "Fast prøveskilt (to bogstaver + to cifre)",
+      "registrationType": "PROFESSIONAL_TEMPORARY",
       "normalization": {
         "uppercase": true,
         "acceptedSeparators": [
@@ -4030,34 +4260,44 @@ export const METADATA: MetadataBundle = {
         {
           "name": "number",
           "type": "DIGITS",
-          "minLength": 1,
-          "maxLength": 5
+          "length": 2,
+          "noLeadingZero": true
         }
       ],
       "formats": {
         "national": "{letters} {number}",
         "compact": "{letters}{number}"
       },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "RED"
+      },
       "sources": [
         {
-          "id": "DK-BEK-866-2023",
-          "section": "§ 67; § 68; § 72, stk. 3, nr. 4; § 76"
+          "id": "DK-BEK-663-2025",
+          "section": "§ 68, stk. 2 og stk. 4, nr. 5; § 77"
+        },
+        {
+          "id": "DK-LOV-179-2023",
+          "section": "§§ 7 a-7 e"
+        },
+        {
+          "id": "DK-MOTORST-PLADETYPER"
         }
       ],
       "examples": {
         "valid": [
-          "AB 12345",
-          "CD 99999",
-          "XY 1",
-          "AA-12-345"
+          "AB 10",
+          "XY 99",
+          "CD-42"
         ],
         "invalid": [
-          "A 12345",
-          "ABC 12345",
-          "AB 123456",
-          "AB",
-          "12 AB",
-          "AB 1234A"
+          "AB 09",
+          "AB 5",
+          "AB 123",
+          "A 12",
+          "ABC 12",
+          "AB 1A"
         ]
       },
       "legacySeries": false

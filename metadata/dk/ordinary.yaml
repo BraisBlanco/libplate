@@ -3,7 +3,7 @@ id: DK_ORDINARY
 country: DK
 name: Registreringsnummer (to bogstaver + et til fem cifre)
 registrationType: ORDINARY
-# validFrom is deliberately omitted. § 72, stk. 3, nr. 4 of the
+# validFrom is deliberately omitted. § 72, stk. 4, nr. 4 of the
 # registreringsbekendtgørelse refers to "de retningslinjer for udformning af
 # registreringsnumre, der har været gældende siden den 1. april 1976" — the
 # date that also separates historical plates (§ 75) from current ones — but
@@ -17,11 +17,18 @@ normalization:
 vehicleInference:
   # § 68, stk. 2 gives the SAME composition to every registered vehicle: cars,
   # vans, lorries, buses, motorcycles, mopeds, tractors and trailers alike.
+  #
   # § 68, stk. 3 lets the tax administration divide the numbers into series by
-  # vehicle kind or use, but publishes no such division, so the series say
-  # nothing about the vehicle. The plate colour (white, yellow for goods
-  # vehicles, the yellow-and-white "papegøjeplade" for mixed use) follows from
-  # the vehicle's registration-tax status, not from the number.
+  # vehicle kind or use, and Motorstyrelsen's plate-type catalogue does exactly
+  # that — but by DIGIT WIDTH, and the widths are shared:
+  #   100-999      stor knallert (white) or godkendt traktor (white)
+  #   1.000-9.999  trailer/semitrailer (yellow) or lille knallert (yellow)
+  #   10.000-97.999 car, van, lorry, motorcycle or road-approved tractor
+  # A scheme carries ONE inference, so no width-conditional statement can be
+  # made here; splitting the series into three width schemes would still leave
+  # each width shared by two categories. The plate colour (white, yellow for
+  # goods vehicles, the yellow-and-white "papegøjeplade" for mixed use) follows
+  # from the vehicle's registration-tax status, not from the number.
   level: NOT_INFERABLE
 segments:
   # § 68, stk. 2: "et registreringsnummer, der består af to latinske bogstaver
@@ -31,15 +38,48 @@ segments:
   # and Motorstyrelsen publishes no list of the letter pairs in use or
   # withheld, so the full A-Z is accepted. Æ, Ø and Å are not Latin basic and
   # never appear.
+  #
+  # RF is the exception, and the only one: the catalogue reserves RF1.000-
+  # RF9.999 and RF10.000-RF99.999 to the airport series (DK_AIRPORT).
   - name: letters
     type: LETTERS
     length: 2
-  # One to five digits. No range is prescribed and leading zeros are not
-  # excluded by the text.
+    excludedValues:
+      - RF
+  # One to five digits (§ 68, stk. 2), minus the two ranges that Motorstyrelsen
+  # allocates to a different series under § 68, stk. 3:
+  #   10-99          faste prøveskilte      → DK_TRADE_PLATE
+  #   76.000-77.999  diplomatnummerplader   → DK_DIPLOMATIC
+  # Ranges the catalogue leaves unallocated (a single digit, leading-zero
+  # forms, 98.000-99.999) stay here: the text bounds the number at one to five
+  # digits and prescribes no range, so the carve-out is limited to what the
+  # authority has positively assigned elsewhere.
+  #
+  # Hence: 0-9 · 100-999 · 1.000-9.999 · 00.000-75.999 · 78.000-99.999.
   - name: number
-    type: DIGITS
-    minLength: 1
-    maxLength: 5
+    type: PATTERNS
+    digitBlocks: FREE
+    patterns:
+      - "N"
+      - "NNN"
+      - "NNNN"
+      - "0NNNN"
+      - "1NNNN"
+      - "2NNNN"
+      - "3NNNN"
+      - "4NNNN"
+      - "5NNNN"
+      - "6NNNN"
+      - "70NNN"
+      - "71NNN"
+      - "72NNN"
+      - "73NNN"
+      - "74NNN"
+      - "75NNN"
+      - "78NNN"
+      - "79NNN"
+      - "8NNNN"
+      - "9NNNN"
 formats:
   national: "{letters} {number}"
   compact: "{letters}{number}"
@@ -50,14 +90,17 @@ formats:
 # follow the vehicle's tax status, which is set outside this order — so the
 # scheme asserts no colours.
 sources:
-  - id: DK-BEK-866-2023
-    section: "§ 67; § 68; § 72, stk. 3, nr. 4; § 76"
+  - id: DK-BEK-663-2025
+    section: "§ 67; § 68; § 72, stk. 4, nr. 4; § 76"
+  - id: DK-MOTORST-PLADETYPER
 examples:
   valid:
     - "AB 12345"
     - "CD 99999"
     - "XY 1"
     - "AA-12-345"
+    - "AB 1234"
+    - "AB 123"
   invalid:
     - "A 12345"
     - "ABC 12345"
@@ -65,3 +108,10 @@ examples:
     - "AB"
     - "12 AB"
     - "AB 1234A"
+    # 10-99 is the faste prøveskilte series (DK_TRADE_PLATE).
+    - "AB 12"
+    # 76.000-77.999 is the diplomatic series (DK_DIPLOMATIC).
+    - "AB 76000"
+    - "AB 77999"
+    # RF is the airport series (DK_AIRPORT).
+    - "RF 12345"
