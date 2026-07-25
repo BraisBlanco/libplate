@@ -1,0 +1,105 @@
+schemaVersion: 1
+id: RO_ORDINARY
+country: RO
+name: Număr de înmatriculare (indicativ + număr de ordine + trei litere)
+registrationType: ORDINARY
+# validFrom is deliberately omitted: the indicative + order number + three
+# letters system dates from 1992, and the act that introduced it was not traced
+# (the composition is stated today by HG 1391/2006, art. 23).
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Art. 23 alin. (1) assigns the same composition to every autovehicul and
+  # remorcă. Tractors, mopeds, light quadricycles, trolleybuses and trams are
+  # NOT înmatriculate but înregistrate (art. 23 of Ordinul 1501/2006) and carry
+  # the locality-name plates of art. 25 alin. (1), which are not modelled.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - VAN
+    - TRUCK
+    - BUS
+    - TRAILER_OR_SEMITRAILER
+    - SPECIAL_VEHICLE
+  evidence:
+    - type: PATTERN
+      value: "county indicative + order number + three letters (art. 23 alin. (1))"
+segments:
+  # "Indicativul judeţului sau al municipiului Bucureşti" — the 41 two-letter
+  # county codes plus the single-letter "B". Art. 26 alin. (1) of Ordinul MAI
+  # 1501/2006 places the list in a state standard; see the table's note.
+  - name: indicative
+    type: TABLE
+    table: ro-indicative
+  # "Numărul de ordine, format din cifre arabe" (art. 23 alin. (1)). The
+  # regulation fixes no width — art. 26 alin. (1) of Ordinul 1501/2006 leaves
+  # "alcătuirea numerelor de ordine" to the state standard, and alin. (2) lets
+  # the minister change it. Two digits (01-99) are the general case; the
+  # three-digit series (100-999) exists because a plate holds seven characters,
+  # so only the single-letter Bucharest indicative leaves room for a third
+  # digit. That is enforced by the lengthRules below rather than by a
+  # per-indicative table, which no official source provides.
+  - name: number
+    type: PATTERNS
+    patterns:
+      - NN
+      - 1NN
+      - 2NN
+      - 3NN
+      - 4NN
+      - 5NN
+      - 6NN
+      - 7NN
+      - 8NN
+      - 9NN
+    digitBlocks: NO_ZERO_BLOCK
+  # "O combinaţie de trei litere cu caractere latine majuscule" (art. 23
+  # alin. (1)). Known limitation: art. 24 alin. (3) allows the authority to
+  # restrict combinations with an obscene meaning or associable with the names
+  # of public authorities, on written request — there is no published list, and
+  # already-issued restricted numbers stay valid until the vehicle is sold, so
+  # the full alphabet is accepted.
+  - name: letters
+    type: LETTERS
+    length: 3
+# Seven characters per plate (the SR 13078 plate model): "B" + 2-3 digits + 3
+# letters, or a two-letter county code + 2 digits + 3 letters.
+lengthRules:
+  anyOf:
+    - segments: [indicative, number, letters]
+      max: 7
+formats:
+  national: "{indicative} {number} {letters}"
+  compact: "{indicative}{number}{letters}"
+# Art. 20 alin. (2): white retroreflective background with the characters in
+# relief, coloured black, blue or red. Black is the ordinary case; blue is used
+# for the diplomatic series (art. 23 alin. (2), not modelled) and red for
+# provisional numbers.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: RO-REG
+    section: "art. 20 alin. (2); art. 23 alin. (1); art. 24"
+  - id: RO-OMAI-1501
+    section: "art. 26"
+  - id: RO-ISO3166
+examples:
+  valid:
+    - "B 12 ABC"
+    - "B 117 VAY"
+    - "CJ 01 XYZ"
+    - "TM-99-AAA"
+    - "IF 07 ZZZ"
+  invalid:
+    # Three digits with a two-letter indicative would be eight characters.
+    - "CJ 117 VAY"
+    - "XY 12 ABC"
+    - "B 00 ABC"
+    - "B 1 ABC"
+    - "B 1234 ABC"
+    - "B 12 AB"
+    - "B 12 ABCD"

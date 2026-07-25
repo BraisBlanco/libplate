@@ -1842,6 +1842,50 @@ export const METADATA: MetadataBundle = {
       "VI",
       "VR",
       "VS"
+    ],
+    "ro-indicative": [
+      "AB",
+      "AG",
+      "AR",
+      "B",
+      "BC",
+      "BH",
+      "BN",
+      "BR",
+      "BT",
+      "BV",
+      "BZ",
+      "CJ",
+      "CL",
+      "CS",
+      "CT",
+      "CV",
+      "DB",
+      "DJ",
+      "GJ",
+      "GL",
+      "GR",
+      "HD",
+      "HR",
+      "IF",
+      "IL",
+      "IS",
+      "MH",
+      "MM",
+      "MS",
+      "NT",
+      "OT",
+      "PH",
+      "SB",
+      "SJ",
+      "SM",
+      "SV",
+      "TL",
+      "TM",
+      "TR",
+      "VL",
+      "VN",
+      "VS"
     ]
   },
   "schemes": [
@@ -8751,6 +8795,118 @@ export const METADATA: MetadataBundle = {
           "XY 12345",
           "L 8089701",
           "L 034501"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "RO_ORDINARY",
+      "country": "RO",
+      "name": "Număr de înmatriculare (indicativ + număr de ordine + trei litere)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "VAN",
+          "TRUCK",
+          "BUS",
+          "TRAILER_OR_SEMITRAILER",
+          "SPECIAL_VEHICLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "county indicative + order number + three letters (art. 23 alin. (1))"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "indicative",
+          "type": "TABLE",
+          "table": "ro-indicative"
+        },
+        {
+          "name": "number",
+          "type": "PATTERNS",
+          "patterns": [
+            "NN",
+            "1NN",
+            "2NN",
+            "3NN",
+            "4NN",
+            "5NN",
+            "6NN",
+            "7NN",
+            "8NN",
+            "9NN"
+          ],
+          "digitBlocks": "NO_ZERO_BLOCK"
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 3
+        }
+      ],
+      "lengthRules": {
+        "anyOf": [
+          {
+            "segments": [
+              "indicative",
+              "number",
+              "letters"
+            ],
+            "max": 7
+          }
+        ]
+      },
+      "formats": {
+        "national": "{indicative} {number} {letters}",
+        "compact": "{indicative}{number}{letters}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "RO-REG",
+          "section": "art. 20 alin. (2); art. 23 alin. (1); art. 24"
+        },
+        {
+          "id": "RO-OMAI-1501",
+          "section": "art. 26"
+        },
+        {
+          "id": "RO-ISO3166"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "B 12 ABC",
+          "B 117 VAY",
+          "CJ 01 XYZ",
+          "TM-99-AAA",
+          "IF 07 ZZZ"
+        ],
+        "invalid": [
+          "CJ 117 VAY",
+          "XY 12 ABC",
+          "B 00 ABC",
+          "B 1 ABC",
+          "B 1234 ABC",
+          "B 12 AB",
+          "B 12 ABCD"
         ]
       },
       "legacySeries": false

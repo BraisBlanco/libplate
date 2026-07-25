@@ -31,8 +31,8 @@ plus reduced, historic, temporary, diplomatic, individual and professional),
 Austria (standard + Wunschkennzeichen + diplomatic/consular + the all-digit
 federal `A`, Land-government, `BP`/`FV`/`PT`/`BD`/`BH`/`JW` and `FW`
 fire-brigade series), Estonia (standard A1 + reduced A3 + motorcycle/moped +
-tractor + veteran + `CD`/`CMD` diplomatic + `PROOV` dealer marks). See
-`README.md` for the full matrix.
+tractor + veteran + `CD`/`CMD` diplomatic + `PROOV` dealer marks), Romania
+(the ordinary county/Bucharest series). See `README.md` for the full matrix.
 
 ## The golden rule: metadata is the source of truth
 
@@ -311,5 +311,21 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
   (§ 7 lg 2) share `L NNN` and are separated only by separator evidence or the
   plate colour. `validFrom` is omitted throughout: the compositions predate the
   2011 regulation and no earlier act was traced.
+
+- **RO digit widths are inferred from the plate's seven-character capacity.**
+  HG 1391/2006 art. 23 alin. (1) gives the composition but no digit count, and
+  art. 26 alin. (1) of Ordinul MAI 1501/2006 puts the widths in state standard
+  SR 13078, which is not published free of charge. `RO_ORDINARY` therefore uses
+  a `lengthRules` cap of 7 over indicative+number+letters, which yields 2 digits
+  behind a two-letter county code and 2-3 behind Bucharest's `B`. The order
+  numbers are modelled as 01-99 and 100-999 (`NN` plus `1NN`…`9NN`), the second
+  range being the series Bucharest opened in 2010. The indicative table stands
+  on ISO 3166-2:RO, whose Romanian codes ARE the plate indicatives. Deferred for
+  want of official widths: diplomatic `CD`/`CO`/`TC`, provisional, `PROBE` and
+  temporary numbers. Not modellable at all: the yellow local-council plates
+  (art. 25 alin. (1) puts a free-text locality name on them) and MApN/MAI/SRI
+  numbers (each institution's abbreviation comes from its own unpublished
+  order). Art. 24 alin. (3) obscene/authority-like letter combinations have no
+  published list.
 
 These need grammar or scope work, not a quick patch. Discuss before changing.

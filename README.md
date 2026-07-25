@@ -228,6 +228,23 @@ are the default case only. One honest ambiguity: a veteran mark (`M 433`) and a
 letter-first moped mark share one letter + three digits — the separator you
 write resolves it, since the moped's characters sit in a single field.
 
+**🇷🇴 Romania**
+
+| Type            | Example     | Notes                                                     |
+| --------------- | ----------- | --------------------------------------------------------- |
+| Ordinary series | `CJ 01 XYZ` | County indicative + 2 digits + 3 letters                  |
+| Ordinary series | `B 117 VAY` | Bucharest only: 3 digits fit behind a 1-letter indicative |
+
+HG 1391/2006 art. 23 alin. (1) fixes the composition (indicative + order number
+in Arabic digits + three Latin capitals) but not the digit count: art. 26
+alin. (1) of Ordinul MAI 1501/2006 leaves that to a state standard that is not
+published free of charge. libplate therefore caps the whole number at the
+plate's seven characters, which reproduces the real allocation — two digits
+behind a two-letter county code, two or three behind Bucharest's `B` — without
+inventing a per-county table. The 42 indicatives are validated against the
+ISO 3166-2:RO list (identical to the plate codes). Compact Bucharest plates
+(`B12ABC`) also read as Austrian plates, so write the separators.
+
 **Not yet modelled**: Spanish state/military bodies; French `W garage` and
 diplomatic series; Portuguese diplomatic/military series and the pre-2013
 moped/motorcycle series; Italian diplomatic (`CD`/`CC`), Polizia Locale `Y`
@@ -239,7 +256,10 @@ personalized plates (free text, up to 8 characters), the royal court and
 black plates and military/service series; Austrian pre-1989 black plates;
 Estonian special-order marks (type A2, letters then digits — their space
 swallows most other series), racing (A10) and transit (D1/D2) marks, and the
-President's coat-of-arms plate (A12, no characters at all).
+President's coat-of-arms plate (A12, no characters at all); Romanian diplomatic
+(`CD`/`CO`/`TC`), provisional, `PROBE`, temporary, yellow local-council and
+army/police numbers (the widths and abbreviations live in the unpublished state
+standard or in each institution's own order).
 
 ## Install
 
