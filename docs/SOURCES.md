@@ -26,6 +26,15 @@ metadataVersion:  2026.07.8
 
 ### Spain
 
+The consolidated BOE texts are served block by block through the open-data API
+(`https://www.boe.es/datosabiertos/api/legislacion-consolidada/id/{BOE-ID}/texto/bloque/{block}`),
+which is the efficient way to re-verify `ES-RGV`: the diplomatic-regime text is
+block `i-4`, the colour/dimension table is block `cuadro1`. Each block returns
+every version — take the latest `fecha_vigencia`. Note that the RGV deliberately
+fixes no digit widths for the diplomatic series (they come from `ES-DGT-TYPES`),
+and that the Orden de 31 de mayo de 1977 (BOE-A-1977-13514) is _derogada_ and
+adds nothing, so it is deliberately not cited.
+
 | ID               | Reference                                                                                  | Used for                                                                                                                                                                                                                                                                                                     | URL                                                         |
 | ---------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------- |
 | `ES-RGV`         | Real Decreto 2822/1998, _Reglamento General de Vehículos_ (consolidated), esp. Anexo XVIII | Ordinary series (I.A.a); special `E` (I.A.b), trailers `R` (I.A.c), mopeds `C` (I.A.d); diplomatic regime `CD`/`OI`/`CC`/`TA` (I.B.a — structure and colours; digit widths are not fixed by the RGV); historical `H` (I.B.c), tourist `T` (I.B.b), temporary private `P` (I.C.a) and company `S`/`V` (I.C.b) | <https://www.boe.es/buscar/act.php?id=BOE-A-1999-1826>      |
@@ -71,6 +80,14 @@ metadataVersion:  2026.07.8
 | `IT-DPR198-2012` | D.P.R. 28 settembre 2012, n. 198 (in force 2013-02-20)                      | Trailers: rear plate takes the car structure (Appendice XII lett. a); old "Rimorchio" letter b) and EE-trailer letter q) suppressed; applies to trailers registered after   | <https://www.normattiva.it/uri-res/N2Ls?urn:nir:presidente.repubblica:decreto:2012-09-28;198>                 |
 
 ### Germany
+
+The district-code list is **no longer an annex of the FZV**: the FZV of 2011 was
+replaced by the FZV of 20 July 2023, under which the BMV sets the codes per
+§ 9(3) and the consolidated list is the KBA publication. To refresh
+`metadata/tables/de-unterscheidungszeichen.json`, re-download the KBA Faltblatt
+and parse pages 3-11 (codes approved for assignment) plus pages 12-13 (revoked
+codes, still valid until deregistration). The listing is alphabetical with Ä/Ö/Ü
+collated as A/O/U, which doubles as a completeness check.
 
 | ID          | Reference                                                                                              | Used for                                                                                                                                                                                                         | URL                                                                                                                                                |
 | ----------- | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |

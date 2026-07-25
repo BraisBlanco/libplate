@@ -91,20 +91,22 @@ report `AMBIGUOUS_SEGMENTATION` — never an arbitrary regex-engine winner.
 
 ## Repository layout
 
-| Path                                | What                                                                    |
-| ----------------------------------- | ----------------------------------------------------------------------- |
-| `metadata/<CC>/*.yaml`              | Plate schemes, one file per scheme. Source of truth.                    |
-| `metadata/tables/*.json`            | Named value tables referenced by `TABLE` segments (with their sources). |
-| `metadata/version.json`             | `metadataVersion` (versioned independently of the code).                |
-| `schema/plate-metadata.schema.json` | JSON Schema every scheme is validated against.                          |
-| `scripts/build-metadata.mjs`        | Validates YAML → emits `src/generated/metadata.ts`.                     |
-| `src/model/`                        | Public types (the stable contract).                                     |
-| `src/tokens/`                       | Token grammar → anchored regex + extraction.                            |
-| `src/metadata/types.ts`             | Canonical scheme types + segment→token conversion.                      |
-| `src/engine/`                       | Normalization and the API implementation.                               |
-| `src/index.ts`                      | Public entry point.                                                     |
-| `test/`                             | Vitest suites, incl. conformance generated from each scheme's examples. |
-| `docs/SOURCES.md`                   | Registry of legal/regulatory references, keyed by source id.            |
+| Path                                | What                                                                            |
+| ----------------------------------- | ------------------------------------------------------------------------------- |
+| `metadata/<CC>/*.yaml`              | Plate schemes, one file per scheme. Source of truth.                            |
+| `metadata/tables/*.json`            | Named value tables referenced by `TABLE` segments (with their sources).         |
+| `metadata/version.json`             | `metadataVersion` (versioned independently of the code).                        |
+| `schema/plate-metadata.schema.json` | JSON Schema every scheme is validated against.                                  |
+| `scripts/build-metadata.mjs`        | Validates YAML → emits `src/generated/metadata.ts`.                             |
+| `src/model/`                        | Public types (the stable contract).                                             |
+| `src/tokens/`                       | Token grammar → anchored regex + extraction.                                    |
+| `src/metadata/types.ts`             | Canonical scheme types + segment→token conversion.                              |
+| `src/engine/`                       | Normalization and the API implementation.                                       |
+| `src/index.ts`                      | Public entry point.                                                             |
+| `test/`                             | Vitest suites, incl. conformance generated from each scheme's examples.         |
+| `docs/SOURCES.md`                   | Registry of legal/regulatory references, keyed by source id.                    |
+| `docs/DESIGN.md`                    | Evidence hierarchy, deliberate non-goals, designed-but-unbuilt, open questions. |
+| `docs/design/`                      | Historical per-country design notes. An archive, not the spec.                  |
 
 ## Public API (keep it small)
 

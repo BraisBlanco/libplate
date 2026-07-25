@@ -12,9 +12,31 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 **Status:** early but growing. Every scheme cites its legal basis in
 [`docs/SOURCES.md`](docs/SOURCES.md).
 
+### Supported countries
+
+**12 countries, 103 schemes.** Each row links to its plate-type table below.
+
+| Country                         | Schemes | Coverage                                                                                                   |
+| ------------------------------- | ------: | ---------------------------------------------------------------------------------------------------------- |
+| [🇪🇸 Spain](#-spain)             |      15 | Ordinary; `R`/`E`/`C`/`H`/`T`/`P`/`S`/`V` prefixes; diplomatic `CD`/`CC`/`OI`/`TA`; two provincial systems |
+| [🇵🇹 Portugal](#-portugal)       |       8 | Current series + three historical generations; trailers, export, industrial machines                       |
+| [🇫🇷 France](#-france)           |      10 | SIV, `WW`, `W` garage, pre-2015 mopeds, FNI métropole and DOM, diplomatic `CMD`/`CD`/`C`/`K`               |
+| [🇮🇹 Italy](#-italy)             |       7 | Ordinary, motorcycles, mopeds, agricultural and operating machines, `EE`, targa prova                      |
+| [🇩🇪 Germany](#-germany)         |       3 | Standard, Oldtimer `H`, electric `E` — all against the official KBA district table                         |
+| [🇧🇪 Belgium](#-belgium)         |      15 | Standard; `O`/`Q`/`T`/`M`/`S`/`G` letter-index categories; `Z`/`Y`/`V`, `W`/`X`, `CD`; two pre-2010 series |
+| [🇳🇱 Netherlands](#-netherlands) |      12 | Sidecodes 1-12                                                                                             |
+| [🇵🇱 Poland](#-poland)           |      10 | Ordinary car/motorcycle/powiat, reduced, historic, temporary, diplomatic, individual, professional         |
+| [🇦🇹 Austria](#-austria)         |       7 | Standard, Wunschkennzeichen, diplomatic; federal `A`, Land, authority-area and fire-brigade series         |
+| [🇪🇪 Estonia](#-estonia)         |       9 | Standard and reduced, motorcycle, moped, tractor, veteran, `CD`/`CMD`, `PROOV` dealer marks                |
+| [🇷🇴 Romania](#-romania)         |       1 | The ordinary county and Bucharest series                                                                   |
+| [🇧🇬 Bulgaria](#-bulgaria)       |       6 | Ordinary, third plate, transit and trader temporary numbers, each with its category-L variant              |
+
+Countries not yet modelled, and the series still missing inside those above, are
+listed under [Not yet modelled](#not-yet-modelled).
+
 ### Supported plate types
 
-**🇪🇸 Spain**
+#### 🇪🇸 Spain
 
 | Type                           | Example      | Notes                            |
 | ------------------------------ | ------------ | -------------------------------- |
@@ -39,7 +61,7 @@ no official public table of mission/organization prefixes exists. For `OI` and
 `OI 123 45`); libplate uses the separators you wrote as evidence and reports
 `AMBIGUOUS` when they don't decide it.
 
-**🇵🇹 Portugal**
+#### 🇵🇹 Portugal
 
 | Type                          | Example      | Notes                                |
 | ----------------------------- | ------------ | ------------------------------------ |
@@ -57,7 +79,7 @@ digits (`SE 1234`) shares its compact form with the pre-1992 general series
 (`SE-12-34`); libplate resolves it with the separators you wrote or reports
 `AMBIGUOUS`.
 
-**🇫🇷 France**
+#### 🇫🇷 France
 
 | Type                        | Example       | Notes                                       |
 | --------------------------- | ------------- | ------------------------------------------- |
@@ -79,7 +101,7 @@ group over a department-like serial (`100 CD 20`) is a genuine text ambiguity
 and is reported as `AMBIGUOUS`. Transit temporaire / import plates reuse the
 ordinary SIV number on a red plate, so they are not a separate scheme.
 
-**🇮🇹 Italy**
+#### 🇮🇹 Italy
 
 | Type                      | Example      | Notes                                                           |
 | ------------------------- | ------------ | --------------------------------------------------------------- |
@@ -96,7 +118,7 @@ structure; the X-initial lots are administratively reserved for them, but that
 allocation is not a format rule, so text alone cannot separate a trailer from
 a car (`vehicle.inferenceLevel` stays honest about this).
 
-**🇩🇪 Germany**
+#### 🇩🇪 Germany
 
 | Type           | Example     | Notes                                        |
 | -------------- | ----------- | -------------------------------------------- |
@@ -111,7 +133,7 @@ readings (`B-AB 123` Berlin vs `BA-B 123` Bamberg); libplate reports
 `AMBIGUOUS` with all candidates, and uses the separators you wrote as evidence
 to resolve the split when present.
 
-**🇧🇪 Belgium**
+#### 🇧🇪 Belgium
 
 | Type                           | Example     | Notes                                      |
 | ------------------------------ | ----------- | ------------------------------------------ |
@@ -136,7 +158,7 @@ a German `A-BC 123`). Compact current-series inputs can collide too
 (`MABC123` is the Belgian motorcycle `M-ABC-123` or the German `MA-BC 123`);
 as always, the separators you wrote decide it or the result is `AMBIGUOUS`.
 
-**🇳🇱 Netherlands**
+#### 🇳🇱 Netherlands
 
 | Type                      | Example    | Notes                                          |
 | ------------------------- | ---------- | ---------------------------------------------- |
@@ -154,7 +176,7 @@ collide with current series abroad (e.g. `XX-99-XX` ≡ the current Portuguese
 `AA-00-AA`). First-issuance dates follow the official RDW series tables
 (earliest category, not cars).
 
-**🇵🇱 Poland**
+#### 🇵🇱 Poland
 
 | Type                          | Example     | Notes                                         |
 | ----------------------------- | ----------- | --------------------------------------------- |
@@ -175,7 +197,7 @@ the full Załącznik 13 prefix table (689 prefixes, including the 2025/2026
 additions). EV/hydrogen vehicles carry the same numbers black-on-green — a
 colour change text cannot detect.
 
-**🇦🇹 Austria**
+#### 🇦🇹 Austria
 
 | Type                    | Example    | Notes                                                   |
 | ----------------------- | ---------- | ------------------------------------------------------- |
@@ -203,7 +225,7 @@ write resolve it, as they do for `BP12345` = `B-P12345`), `ND`/`GD`/`NK`/`SD`/
 digits is both the Bundesbusdienst series and Burgenland+`D` — unresolvable
 however it is written.
 
-**🇪🇪 Estonia**
+#### 🇪🇪 Estonia
 
 | Type                          | Example      | Notes                                             |
 | ----------------------------- | ------------ | ------------------------------------------------- |
@@ -228,7 +250,7 @@ are the default case only. One honest ambiguity: a veteran mark (`M 433`) and a
 letter-first moped mark share one letter + three digits — the separator you
 write resolves it, since the moped's characters sit in a single field.
 
-**🇷🇴 Romania**
+#### 🇷🇴 Romania
 
 | Type            | Example     | Notes                                                     |
 | --------------- | ----------- | --------------------------------------------------------- |
@@ -245,7 +267,7 @@ inventing a per-county table. The 42 indicatives are validated against the
 ISO 3166-2:RO list (identical to the plate codes). Compact Bucharest plates
 (`B12ABC`) also read as Austrian plates, so write the separators.
 
-**🇧🇬 Bulgaria**
+#### 🇧🇬 Bulgaria
 
 | Type                          | Example       | Notes                                          |
 | ----------------------------- | ------------- | ---------------------------------------------- |
@@ -266,9 +288,10 @@ the same number in green (чл. 23 ал. 4). Note that the ordinary shape coinci
 with the Spanish 1971-2000 provincial series whenever every letter is one of the
 twelve (`M-1234-AB`).
 
-**Not yet modelled**: Spanish state/military bodies; French `W garage` and
-diplomatic series; Portuguese diplomatic/military series and the pre-2013
-moped/motorcycle series; Italian diplomatic (`CD`/`CC`), Polizia Locale `Y`
+### Not yet modelled
+
+Spanish state/military bodies; Portuguese diplomatic/military series and the
+pre-2013 moped/motorcycle series; Italian diplomatic (`CD`/`CC`), Polizia Locale `Y`
 series, SMOM and pre-2002 test plates; German seasonal (`Saisonkennzeichen`),
 alternating (`Wechselkennzeichen`), green, Bundeswehr and diplomatic plates;
 Dutch special series (royal `AA`, `CD`, dealer/export plates); Belgian
@@ -346,6 +369,10 @@ scheme, or the inferences. `validate` / `format` are thin conveniences.
   catalogued in [`docs/SOURCES.md`](docs/SOURCES.md); the stable `scheme.id`
   in a result is the key to look them up (the API itself carries no legal
   citations — that is documentation, not validation output).
+
+[`docs/DESIGN.md`](docs/DESIGN.md) records the reasoning: how competing readings
+are ranked by evidence, what the library deliberately refuses to do, and what is
+still open.
 
 ## Development
 
