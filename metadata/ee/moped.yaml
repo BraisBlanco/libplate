@@ -1,0 +1,56 @@
+schemaVersion: 1
+id: EE_MOPED
+country: EE
+name: Mopeedi ja selle haagise registreerimismärk (tüüp B3)
+registrationType: ORDINARY
+# validFrom omitted, as for the other Estonian series.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Lisa 1: category L only; lisa 3 näidis 13 covers the moped's trailer too.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - MOPED_OR_MOTOR_CYCLE
+    - TRAILER
+  evidence:
+    - type: PATTERN
+      value: "three digits + one letter on a green 177×101 mm plate (mark type B3, lisa 3 näidis 13)"
+segments:
+  # Lisa 3 näidis 13 ("533 F"): three digits and one letter, in a single
+  # combined field (§ 3 lõige 1¹). § 7 lõige 2 lets the letter change position
+  # relative to the digits, so the letter-first arrangement is accepted as well.
+  #
+  # § 6 lõige 4 forbids "W" on B3. Lõiked 2-3 (one "A", one "M", never
+  # together) are automatically satisfied by a single-letter field.
+  - name: serial
+    type: PATTERNS
+    patterns:
+      - NNNL
+      - LNNN
+    letters: ABCDEFGHIJKLMNOPQRSTUVXYZ
+formats:
+  national: "{serial}"
+  compact: "{serial}"
+# Lisa 1: GREEN background, black symbols — the only Estonian series with a
+# green plate body.
+visual:
+  background: GREEN
+  foreground: BLACK
+sources:
+  - id: EE-M49
+    section: "§ 2 lg 1 p 11; § 3 lg 1¹; § 6 lg 4; § 7 lg 2; lisa 1; lisa 3 näidis 13"
+examples:
+  valid:
+    # Digits-first is unique to this scheme; the letter-first arrangement
+    # (e.g. "F 533") is genuinely ambiguous with the veteran series
+    # (EE_HISTORICAL) and resolves only from the plate colour.
+    - "533 F"
+    - "000-A"
+  invalid:
+    - "533 W"
+    - "53 F"
+    - "5333 F"
+    - "533 FG"

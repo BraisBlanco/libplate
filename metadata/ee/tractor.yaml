@@ -1,0 +1,58 @@
+schemaVersion: 1
+id: EE_TRACTOR
+country: EE
+name: Traktorite, liikurmasinate ja nende haagiste registreerimismärk (tüübid E1, E2)
+registrationType: ORDINARY
+# validFrom omitted, as for the other Estonian series.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Lisa 1: categories T (tractors), R (their trailers) and LM (liikurmasin —
+  # self-propelled machine).
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - AGRICULTURAL_VEHICLE
+    - INDUSTRIAL_MACHINE
+    - TRAILER
+  evidence:
+    - type: PATTERN
+      value: "four digits + two letters (mark types E1/E2, lisa 3 näidised 16, 17)"
+segments:
+  # Lisa 3: näidis 16 (type E1, 212×135 mm, two rows) and näidis 17 (type E2,
+  # 520×113 mm) both carry four digits and two letters — "6269 EO" and
+  # "0530 EN". Only the plate body differs, so one scheme covers both.
+  - name: number
+    type: DIGITS
+    length: 4
+  # § 6 lõige 4, general case: "W" may be used once, so "WW" is not issued.
+  # "A" and "M" may each be used twice (lõiked 2-3), which a two-letter field
+  # cannot exceed.
+  - name: letters
+    type: LETTERS
+    length: 2
+    excludedValues:
+      - WW
+formats:
+  national: "{number} {letters}"
+  compact: "{number}{letters}"
+# Lisa 1: white background, black symbols.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: EE-M49
+    section: "§ 2 lg 1 p 14; § 6 lg 2-4; lisa 1; lisa 3 näidised 16, 17"
+examples:
+  valid:
+    - "6269 EO"
+    - "0530 EN"
+    - "0001-AB"
+  invalid:
+    - "6269 WW"
+    - "626 EO"
+    - "62690 EO"
+    - "6269 E"
+    - "EO 6269"

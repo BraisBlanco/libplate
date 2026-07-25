@@ -203,6 +203,31 @@ write resolve it, as they do for `BP12345` = `B-P12345`), `ND`/`GD`/`NK`/`SD`/
 digits is both the Bundesbusdienst series and Burgenland+`D` — unresolvable
 however it is written.
 
+**🇪🇪 Estonia**
+
+| Type                          | Example      | Notes                                             |
+| ----------------------------- | ------------ | ------------------------------------------------- |
+| Standard (A1)                 | `053 EEN`    | 3 digits + 3 letters; categories M, N, O          |
+| Standard reduced-size (A3)    | `17 ELH`     | 2 digits + 3 letters; `W` never used              |
+| Motorcycle / off-road (B1)    | `53 HF`      | Digits may lead or trail (§ 7 lg 2)               |
+| Moped (B3)                    | `533 F`      | Green plate; the letter may change position       |
+| Tractors / machines (E1, E2)  | `6269 EO`    | 4 digits + 2 letters; `WW` not issued             |
+| Veteran vehicles (A9, B2)     | `W 433`      | Black plate; historical-vehicle regime            |
+| Diplomatic staff (A4, A6)     | `CD 2345`    | Blue plate; 3-4 digits (full/reduced size)        |
+| Heads of mission (A5, A7)     | `CMD 234`    | Blue plate; 2-3 digits (full/reduced size)        |
+| Transferable dealer (A8, A11) | `PROOV 1203` | `PROOV` + 4 digits; professional temporary regime |
+
+Character counts come from the official sample drawings of lisa 3 to määrus
+nr 49 — the article text fixes only the fields, the colours and the
+letter-width limits of § 6. Those limits are modelled where they are outright
+bans (`W` on the reduced, motorcycle, moped and veteran-moped plates, `WW` on
+tractor plates); the A1 multiplicity caps (at most two `A`, two `M`, one `W`,
+never all three) are not. A mark issued for a fixed-term registration carries
+the same characters on a **yellow** plate (§ 7 lg 1), so `EE_STANDARD`'s colours
+are the default case only. One honest ambiguity: a veteran mark (`M 433`) and a
+letter-first moped mark share one letter + three digits — the separator you
+write resolves it, since the moped's characters sit in a single field.
+
 **Not yet modelled**: Spanish state/military bodies; French `W garage` and
 diplomatic series; Portuguese diplomatic/military series and the pre-2013
 moped/motorcycle series; Italian diplomatic (`CD`/`CC`), Polizia Locale `Y`
@@ -211,7 +236,10 @@ alternating (`Wechselkennzeichen`), green, Bundeswehr and diplomatic plates;
 Dutch special series (royal `AA`, `CD`, dealer/export plates); Belgian
 personalized plates (free text, up to 8 characters), the royal court and
 `A`/`E`/`P` short national series, and the pre-1973 series; Polish pre-2000
-black plates and military/service series; Austrian pre-1989 black plates.
+black plates and military/service series; Austrian pre-1989 black plates;
+Estonian special-order marks (type A2, letters then digits — their space
+swallows most other series), racing (A10) and transit (D1/D2) marks, and the
+President's coat-of-arms plate (A12, no characters at all).
 
 ## Install
 

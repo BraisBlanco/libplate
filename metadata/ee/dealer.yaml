@@ -1,0 +1,51 @@
+schemaVersion: 1
+id: EE_DEALER
+country: EE
+name: Teisaldatav registreerimismärk (tüübid A8, A11)
+registrationType: PROFESSIONAL_TEMPORARY
+# validFrom omitted: the "PROOV" composition predates määrus nr 49; the reduced
+# two-line variant (type A11) was added on 2014-09-05 (RT I, 02.09.2014, 1) but
+# carries the same characters, so it is not a separate scheme.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Lisa 1: type A8 covers categories M, N, O, T, R, LM and MS, i.e. cars,
+  # trailers, tractors and off-road vehicles alike — nothing is inferable.
+  level: NOT_INFERABLE
+segments:
+  # "PROOV" (= trial). Määrus nr 19 § 17: the mark is issued to the dealers and
+  # manufacturers listed in its lisa 3, to permit limited road use of a vehicle
+  # brought into or built in Estonia; the Transport Administration may also use
+  # it on vehicles under expert examination or testing.
+  - name: prefix
+    type: LITERAL
+    value: PROOV
+  # Lisa 3 näidised 8 and 18 ("PROOV 1203"): four digits.
+  - name: serial
+    type: DIGITS
+    length: 4
+formats:
+  national: "{prefix} {serial}"
+  compact: "{prefix}{serial}"
+# Lisa 1: white background, black symbols.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: EE-M49
+    section: "§ 2 lg 1 p 6, 15; lisa 1; lisa 3 näidised 8, 18"
+  - id: EE-M19
+    section: "§ 17; lisa 3"
+examples:
+  valid:
+    - "PROOV 1203"
+    - "PROOV 0001"
+    - "PROOV-9999"
+  invalid:
+    - "PROOV 123"
+    - "PROOV 12345"
+    - "PROV 1203"
+    - "PROOV 120A"

@@ -1,0 +1,63 @@
+schemaVersion: 1
+id: EE_MOTORCYCLE
+country: EE
+name: Mootorratta ja maastikusõiduki ning nende haagise registreerimismärk (tüüp B1)
+registrationType: ORDINARY
+# validFrom omitted, as for the other Estonian series.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Lisa 1: categories L (two/three-wheelers and quadricycles) and MS
+  # (maastikusõiduk — off-road vehicle), plus their trailers.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - MOTORCYCLE
+    - MOPED_OR_MOTOR_CYCLE
+    - TRICYCLE
+    - QUADRICYCLE
+    - TRAILER
+    - OTHER
+  evidence:
+    - type: PATTERN
+      value: "two digits + two letters on a 177×101 mm plate (mark type B1, lisa 3 näidis 11)"
+segments:
+  # Lisa 3 näidis 11 ("53 HF"): two digits and two letters. § 7 lõige 2 lets the
+  # digits sit either BEFORE or AFTER the letters, so both arrangements are
+  # accepted; because they share one segment, the written form carries no
+  # separator between the two groups.
+  #
+  # § 6 lõige 4 forbids "W" outright on B1. Known limitation: lõiked 2-3 also
+  # allow "A" and "M" only once each and never together (i.e. AA, AM, MA and MM
+  # are not issued); a PATTERNS segment cannot express whole-segment exclusions,
+  # so that restriction is not modelled.
+  - name: serial
+    type: PATTERNS
+    patterns:
+      - NNLL
+      - LLNN
+    letters: ABCDEFGHIJKLMNOPQRSTUVXYZ
+formats:
+  national: "{serial}"
+  compact: "{serial}"
+# Lisa 1: white background, black symbols (yellow for a fixed-term
+# registration, § 7 lõige 1).
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: EE-M49
+    section: "§ 2 lg 1 p 9; § 6 lg 2-4; § 7 lg 2; lisa 1; lisa 3 näidis 11"
+examples:
+  valid:
+    - "53 HF"
+    - "HF 53"
+    - "00-BC"
+  invalid:
+    - "53 WF"
+    - "5 HF"
+    - "530 HF"
+    - "53 HFG"
+    - "5H 3F"

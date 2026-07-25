@@ -3,7 +3,7 @@
 import type { MetadataBundle } from "../metadata/types.js";
 
 export const METADATA: MetadataBundle = {
-  "metadataVersion": "2026.07.7",
+  "metadataVersion": "2026.07.8",
   "tables": {
     "at-behoerden": [
       "AM",
@@ -3554,6 +3554,639 @@ export const METADATA: MetadataBundle = {
           "BIT-XY 1234",
           "B-AB 12345",
           "B-Ä 123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "EE_DEALER",
+      "country": "EE",
+      "name": "Teisaldatav registreerimismärk (tüübid A8, A11)",
+      "registrationType": "PROFESSIONAL_TEMPORARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "PROOV"
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "length": 4
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {serial}",
+        "compact": "{prefix}{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "EE-M49",
+          "section": "§ 2 lg 1 p 6, 15; lisa 1; lisa 3 näidised 8, 18"
+        },
+        {
+          "id": "EE-M19",
+          "section": "§ 17; lisa 3"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "PROOV 1203",
+          "PROOV 0001",
+          "PROOV-9999"
+        ],
+        "invalid": [
+          "PROOV 123",
+          "PROOV 12345",
+          "PROV 1203",
+          "PROOV 120A"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "EE_DIPLOMATIC",
+      "country": "EE",
+      "name": "Välisesinduste diplomaatilise ja administratiiv-tehnilise personali autode registreerimismärk (tüübid A4, A6)",
+      "registrationType": "DIPLOMATIC",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "VAN",
+          "TRUCK",
+          "BUS"
+        ],
+        "evidence": [
+          {
+            "type": "PREFIX",
+            "value": "CD (mark types A4/A6 — foreign missions' diplomatic and administrative-technical staff)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "CD"
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 3,
+          "maxLength": 4
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {serial}",
+        "compact": "{prefix}{serial}"
+      },
+      "visual": {
+        "background": "BLUE",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "EE-M49",
+          "section": "§ 2 lg 1 p 4-5; lisa 1; lisa 3 näidised 4, 6"
+        },
+        {
+          "id": "EE-M19",
+          "section": "§ 14 lg 4"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "CD 2345",
+          "CD 000",
+          "CD-123"
+        ],
+        "invalid": [
+          "CD 12",
+          "CD 12345",
+          "CD 123A",
+          "DC 1234"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "EE_DIPLOMATIC_HEAD",
+      "country": "EE",
+      "name": "Eestis tegutsevate välisesinduste juhtide autode registreerimismärk (tüübid A5, A7)",
+      "registrationType": "DIPLOMATIC",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "VAN"
+        ],
+        "evidence": [
+          {
+            "type": "PREFIX",
+            "value": "CMD (mark types A5/A7 — heads of foreign missions accredited in Estonia)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "CMD"
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 2,
+          "maxLength": 3
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {serial}",
+        "compact": "{prefix}{serial}"
+      },
+      "visual": {
+        "background": "BLUE",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "EE-M49",
+          "section": "§ 2 lg 1 p 4-5; lisa 1; lisa 3 näidised 5, 7"
+        },
+        {
+          "id": "EE-M19",
+          "section": "§ 14 lg 4"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "CMD 234",
+          "CMD 00",
+          "CMD-12"
+        ],
+        "invalid": [
+          "CMD 1",
+          "CMD 1234",
+          "CMD 12A",
+          "CD 234"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "EE_HISTORICAL",
+      "country": "EE",
+      "name": "Vanasõiduki ja selle haagise registreerimismärk (tüübid A9, B2)",
+      "registrationType": "HISTORICAL",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "letter",
+          "type": "LETTERS",
+          "length": 1
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{letter} {number}",
+        "compact": "{letter}{number}"
+      },
+      "visual": {
+        "background": "BLACK",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "EE-M49",
+          "section": "§ 2 lg 1 p 7, 10; § 7 lg 4; lisa 1; lisa 3 näidised 9, 12"
+        },
+        {
+          "id": "EE-M19",
+          "section": "§ 14 lg 3"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "W 433",
+          "W-001"
+        ],
+        "invalid": [
+          "W 43",
+          "W 4333",
+          "WW 433",
+          "433 W"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "EE_MOPED",
+      "country": "EE",
+      "name": "Mopeedi ja selle haagise registreerimismärk (tüüp B3)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "MOPED_OR_MOTOR_CYCLE",
+          "TRAILER"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "three digits + one letter on a green 177×101 mm plate (mark type B3, lisa 3 näidis 13)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "serial",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNNL",
+            "LNNN"
+          ],
+          "letters": "ABCDEFGHIJKLMNOPQRSTUVXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{serial}",
+        "compact": "{serial}"
+      },
+      "visual": {
+        "background": "GREEN",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "EE-M49",
+          "section": "§ 2 lg 1 p 11; § 3 lg 1¹; § 6 lg 4; § 7 lg 2; lisa 1; lisa 3 näidis 13"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "533 F",
+          "000-A"
+        ],
+        "invalid": [
+          "533 W",
+          "53 F",
+          "5333 F",
+          "533 FG"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "EE_MOTORCYCLE",
+      "country": "EE",
+      "name": "Mootorratta ja maastikusõiduki ning nende haagise registreerimismärk (tüüp B1)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "MOTORCYCLE",
+          "MOPED_OR_MOTOR_CYCLE",
+          "TRICYCLE",
+          "QUADRICYCLE",
+          "TRAILER",
+          "OTHER"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "two digits + two letters on a 177×101 mm plate (mark type B1, lisa 3 näidis 11)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "serial",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNLL",
+            "LLNN"
+          ],
+          "letters": "ABCDEFGHIJKLMNOPQRSTUVXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{serial}",
+        "compact": "{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "EE-M49",
+          "section": "§ 2 lg 1 p 9; § 6 lg 2-4; § 7 lg 2; lisa 1; lisa 3 näidis 11"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "53 HF",
+          "HF 53",
+          "00-BC"
+        ],
+        "invalid": [
+          "53 WF",
+          "5 HF",
+          "530 HF",
+          "53 HFG",
+          "5H 3F"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "EE_STANDARD",
+      "country": "EE",
+      "name": "Üldkasutatav autode ja haagiste registreerimismärk (tüüp A1)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "VAN",
+          "TRUCK",
+          "BUS",
+          "TRAILER_OR_SEMITRAILER"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "three digits + three letters (mark type A1, lisa 1 and lisa 3 näidis 1)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{number} {letters}",
+        "compact": "{number}{letters}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "EE-M49",
+          "section": "§ 2 lg 1 p 1; § 3; § 6; lisa 1; lisa 3 näidis 1"
+        },
+        {
+          "id": "EE-M19",
+          "section": "§ 14"
+        },
+        {
+          "id": "EE-LS",
+          "section": "§ 76 lg 13"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "053 EEN",
+          "123 ABC",
+          "000 AAA",
+          "999-ZZZ"
+        ],
+        "invalid": [
+          "12 ABC",
+          "1234 ABC",
+          "053 EE",
+          "053 EENN",
+          "ABC 053"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "EE_STANDARD_REDUCED",
+      "country": "EE",
+      "name": "Üldkasutatav autode ja haagiste registreerimismärk vähendatud mõõtmetega (tüüp A3)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "VAN",
+          "TRUCK",
+          "BUS",
+          "TRAILER_OR_SEMITRAILER"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "two digits + three letters (mark type A3, lisa 3 näidis 3)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 3,
+          "excluded": [
+            "W"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{number} {letters}",
+        "compact": "{number}{letters}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "EE-M49",
+          "section": "§ 2 lg 1 p 3; § 6 lg 2-4; lisa 1; lisa 3 näidis 3"
+        },
+        {
+          "id": "EE-LS",
+          "section": "§ 76 lg 13"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "17 ELH",
+          "01 AAA",
+          "99-XYZ"
+        ],
+        "invalid": [
+          "17 ELW",
+          "17 WLH",
+          "1 ELH",
+          "171 ELH",
+          "17 EL"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "EE_TRACTOR",
+      "country": "EE",
+      "name": "Traktorite, liikurmasinate ja nende haagiste registreerimismärk (tüübid E1, E2)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "AGRICULTURAL_VEHICLE",
+          "INDUSTRIAL_MACHINE",
+          "TRAILER"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "four digits + two letters (mark types E1/E2, lisa 3 näidised 16, 17)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 4
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2,
+          "excludedValues": [
+            "WW"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{number} {letters}",
+        "compact": "{number}{letters}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "EE-M49",
+          "section": "§ 2 lg 1 p 14; § 6 lg 2-4; lisa 1; lisa 3 näidised 16, 17"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "6269 EO",
+          "0530 EN",
+          "0001-AB"
+        ],
+        "invalid": [
+          "6269 WW",
+          "626 EO",
+          "62690 EO",
+          "6269 E",
+          "EO 6269"
         ]
       },
       "legacySeries": false

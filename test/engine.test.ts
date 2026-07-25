@@ -110,6 +110,7 @@ describe("convenience helpers", () => {
       "AT",
       "BE",
       "DE",
+      "EE",
       "ES",
       "FR",
       "IT",
@@ -118,7 +119,7 @@ describe("convenience helpers", () => {
       "PT",
     ]);
     expect(getSupportedSchemes("ES")).toContain("ES_TRAILER_CURRENT");
-    expect(getSupportedSchemes()).toHaveLength(87);
+    expect(getSupportedSchemes()).toHaveLength(96);
     expect(getMetadataVersion()).toMatch(/^\d{4}\.\d{2}\.\d+$/);
   });
 });

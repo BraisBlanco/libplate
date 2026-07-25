@@ -1,0 +1,64 @@
+schemaVersion: 1
+id: EE_STANDARD_REDUCED
+country: EE
+name: Üldkasutatav autode ja haagiste registreerimismärk vähendatud mõõtmetega (tüüp A3)
+registrationType: ORDINARY
+# See EE_STANDARD: validFrom omitted for the same reason.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Lisa 1: categories M, N and O, as for A1 — the difference is the 302×152 mm
+  # plate body (vehicles whose mounting area cannot take a 520 mm plate).
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - VAN
+    - TRUCK
+    - BUS
+    - TRAILER_OR_SEMITRAILER
+  evidence:
+    - type: PATTERN
+      value: "two digits + three letters (mark type A3, lisa 3 näidis 3)"
+segments:
+  # Lisa 3 näidis 3 ("17 ELH"): the reduced plate carries TWO digits, not three
+  # — the numbers field is 74 mm wide against 157 mm on the A1 plate.
+  - name: number
+    type: DIGITS
+    length: 2
+  # § 6 lõige 4: "W" may not be used at all on an A3 mark.
+  #
+  # Known limitation: lõiked 2-3 additionally allow "A" and "M" twice each, but
+  # only once when the two appear together. Those multiplicity limits are not
+  # modelled (see EE_STANDARD).
+  - name: letters
+    type: LETTERS
+    length: 3
+    excluded:
+      - W
+formats:
+  national: "{number} {letters}"
+  compact: "{number}{letters}"
+# Lisa 1: white background, black symbols (yellow for fixed-term registration,
+# § 7 lõige 1 — see EE_STANDARD).
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: EE-M49
+    section: "§ 2 lg 1 p 3; § 6 lg 2-4; lisa 1; lisa 3 näidis 3"
+  - id: EE-LS
+    section: "§ 76 lg 13"
+examples:
+  valid:
+    - "17 ELH"
+    - "01 AAA"
+    - "99-XYZ"
+  invalid:
+    - "17 ELW"
+    - "17 WLH"
+    - "1 ELH"
+    - "171 ELH"
+    - "17 EL"

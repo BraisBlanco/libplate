@@ -1,0 +1,51 @@
+schemaVersion: 1
+id: EE_HISTORICAL
+country: EE
+name: Vanasõiduki ja selle haagise registreerimismärk (tüübid A9, B2)
+registrationType: HISTORICAL
+# validFrom omitted, as for the other Estonian series.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # A9 covers categories M, N, O, T, R and LM; B2 the motorcycle/moped/off-road
+  # side (L, MS). The two types share this composition and differ only in plate
+  # size, so nothing can be inferred from the text.
+  level: NOT_INFERABLE
+segments:
+  # Lisa 3 näidised 9 and 12 ("M 433"): one letter followed by three digits.
+  # A9 accepts "W" (the general § 6 lg 4 case allows it once); B2 does not, but
+  # a single-letter field cannot tell the two apart, so the union is accepted.
+  - name: letter
+    type: LETTERS
+    length: 1
+  - name: number
+    type: DIGITS
+    length: 3
+formats:
+  national: "{letter} {number}"
+  compact: "{letter}{number}"
+# Lisa 1: black background, white symbols. § 7 lg 4: a veteran mark need not
+# carry the EU/EST field.
+visual:
+  background: BLACK
+  foreground: WHITE
+sources:
+  - id: EE-M49
+    section: "§ 2 lg 1 p 7, 10; § 7 lg 4; lisa 1; lisa 3 näidised 9, 12"
+  - id: EE-M19
+    section: "§ 14 lg 3"
+examples:
+  valid:
+    # "W" cannot appear on a moped mark (§ 6 lg 4), so this shape is unique to
+    # the veteran series. Any other letter is genuinely ambiguous with the
+    # letter-first moped arrangement — see EE_MOPED.
+    - "W 433"
+    - "W-001"
+  invalid:
+    - "W 43"
+    - "W 4333"
+    - "WW 433"
+    - "433 W"

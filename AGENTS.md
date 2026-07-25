@@ -30,8 +30,9 @@ series), Netherlands (sidecodes 1-12), Poland (ordinary car/motorcycle/powiat
 plus reduced, historic, temporary, diplomatic, individual and professional),
 Austria (standard + Wunschkennzeichen + diplomatic/consular + the all-digit
 federal `A`, Land-government, `BP`/`FV`/`PT`/`BD`/`BH`/`JW` and `FW`
-fire-brigade series). See `README.md`
-for the full matrix.
+fire-brigade series), Estonia (standard A1 + reduced A3 + motorcycle/moped +
+tractor + veteran + `CD`/`CMD` diplomatic + `PROOV` dealer marks). See
+`README.md` for the full matrix.
 
 ## The golden rule: metadata is the source of truth
 
@@ -291,5 +292,24 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
   codes and Land+`D`/`K` diplomatic prefixes, and `BD` + digits is both the
   Bundesbusdienst series and Burgenland+`D` — genuine ambiguities that no
   separator resolves.
+
+- **EE character counts come from the sample drawings, not the article text.**
+  Määrus nr 49 fixes the FIELDS (§ 3), the colours and categories (lisa 1) and
+  the letter-width limits (§ 6), but the digit/letter counts per mark type are
+  legible only in the lisa 3 drawings (`053 EEN`, `17 ELH`, `CD 2345`,
+  `CMD 234`, `PROOV 1203`, `M 433`, `53 HF`, `533 F`, `6269 EO`). Types that
+  differ only in plate size share one scheme (A4/A6, A5/A7, A8/A11, A9/B2,
+  E1/E2). The § 6 multiplicity caps for A1 (≤2 `A`, ≤2 `M`, ≤1 `W`, never all
+  three) are not modelled — that would need ~80 whole-segment exclusions; the
+  outright bans are (`W` on A3/B1/B2/B3, `WW` on E1/E2). **Deliberately absent,
+  don't "add" them**: type A2 special-order marks (letters then digits, ≤9
+  characters — that space contains the diplomatic, veteran, dealer and
+  motorcycle series, so modelling it would make almost every Estonian plate
+  AMBIGUOUS), A10 racing and D1/D2 transit marks (`LL` + 4 digits is exactly
+  the `CD` diplomatic shape), and A12 (the President's plate carries a coat of
+  arms and NO characters). A veteran mark and a letter-first moped mark
+  (§ 7 lg 2) share `L NNN` and are separated only by separator evidence or the
+  plate colour. `validFrom` is omitted throughout: the compositions predate the
+  2011 regulation and no earlier act was traced.
 
 These need grammar or scope work, not a quick patch. Discuss before changing.

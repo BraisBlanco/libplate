@@ -1,0 +1,58 @@
+schemaVersion: 1
+id: EE_DIPLOMATIC
+country: EE
+name: Välisesinduste diplomaatilise ja administratiiv-tehnilise personali autode registreerimismärk (tüübid A4, A6)
+registrationType: DIPLOMATIC
+# validFrom omitted: the CD composition predates määrus nr 49 and no earlier act
+# fixing it was traced (as for EE_STANDARD).
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Lisa 1: categories M and N.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - VAN
+    - TRUCK
+    - BUS
+  evidence:
+    - type: PREFIX
+      value: "CD (mark types A4/A6 — foreign missions' diplomatic and administrative-technical staff)"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: CD
+  # Lisa 3: näidis 4 (full-size A4) shows four digits, näidis 6 (reduced-size
+  # A6, 302×152 mm) three. Only the plate body differs, so the union is
+  # accepted here. The regulation fixes no digit range and the samples include
+  # "CD 000", so leading zeros are allowed. Estonia publishes no table mapping
+  # the digits to missions — they are not decomposed.
+  - name: serial
+    type: DIGITS
+    minLength: 3
+    maxLength: 4
+formats:
+  national: "{prefix} {serial}"
+  compact: "{prefix}{serial}"
+# Lisa 1: blue background, white symbols.
+visual:
+  background: BLUE
+  foreground: WHITE
+sources:
+  - id: EE-M49
+    section: "§ 2 lg 1 p 4-5; lisa 1; lisa 3 näidised 4, 6"
+  - id: EE-M19
+    section: "§ 14 lg 4"
+examples:
+  valid:
+    - "CD 2345"
+    - "CD 000"
+    - "CD-123"
+  invalid:
+    - "CD 12"
+    - "CD 12345"
+    - "CD 123A"
+    - "DC 1234"

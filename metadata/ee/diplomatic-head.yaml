@@ -1,0 +1,55 @@
+schemaVersion: 1
+id: EE_DIPLOMATIC_HEAD
+country: EE
+name: Eestis tegutsevate välisesinduste juhtide autode registreerimismärk (tüübid A5, A7)
+registrationType: DIPLOMATIC
+# validFrom omitted — see EE_DIPLOMATIC.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Lisa 1: categories M and N.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - VAN
+  evidence:
+    - type: PREFIX
+      value: "CMD (mark types A5/A7 — heads of foreign missions accredited in Estonia)"
+segments:
+  # "CMD" = chef de mission diplomatique; the mark is issued only for the head
+  # of a mission (lisa 3 näidised 5, 7).
+  - name: prefix
+    type: LITERAL
+    value: CMD
+  # Lisa 3: näidis 5 (full-size A5) shows three digits, näidis 7 (reduced-size
+  # A7) two. Union accepted, as for EE_DIPLOMATIC; the A7 sample is "CMD 00",
+  # so leading zeros are allowed.
+  - name: serial
+    type: DIGITS
+    minLength: 2
+    maxLength: 3
+formats:
+  national: "{prefix} {serial}"
+  compact: "{prefix}{serial}"
+# Lisa 1: blue background, white symbols.
+visual:
+  background: BLUE
+  foreground: WHITE
+sources:
+  - id: EE-M49
+    section: "§ 2 lg 1 p 4-5; lisa 1; lisa 3 näidised 5, 7"
+  - id: EE-M19
+    section: "§ 14 lg 4"
+examples:
+  valid:
+    - "CMD 234"
+    - "CMD 00"
+    - "CMD-12"
+  invalid:
+    - "CMD 1"
+    - "CMD 1234"
+    - "CMD 12A"
+    - "CD 234"
