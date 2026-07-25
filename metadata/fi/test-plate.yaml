@@ -1,0 +1,58 @@
+schemaVersion: 1
+id: FI_TEST
+country: FI
+name: Koenumerokilven rekisteritunnus (KOE + kirjain + luku)
+registrationType: PROFESSIONAL_TEMPORARY
+# validFrom omitted: koenumerotodistus and its plate predate asetus 162/2021
+# (the regime is now ajoneuvolaki 116 §), and no earlier act fixing the
+# composition was traced.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # A koenumerotodistus is granted to businesses and authorities for driving
+  # unregistered vehicles (type approval, research, sales, repairs), so the
+  # mark says nothing about the vehicle under it.
+  level: NOT_INFERABLE
+segments:
+  # "Kirjaimet KOE, yksi musta kirjain ja enintään kolminumeroinen musta luku"
+  # (16 § 1 mom. 7 k.).
+  - name: prefix
+    type: LITERAL
+    value: KOE
+  - name: letter
+    type: LETTERS
+    length: 1
+  - name: serial
+    type: DIGITS
+    minLength: 1
+    maxLength: 3
+    noLeadingZero: true
+formats:
+  national: "KOE {letter}-{serial}"
+  compact: "KOE{letter}{serial}"
+# 16 § 1 mom. 7 k.: black characters on a yellow light-reflecting background.
+visual:
+  background: YELLOW
+  foreground: BLACK
+sources:
+  - id: FI-VNA-162-2021
+    section: "16 § 1 mom. 7 k."
+  - id: FI-AJONEUVOLAKI
+    section: "116 §"
+  - id: FI-TRAFICOM-KILVET
+    section: "3.9"
+examples:
+  valid:
+    - "KOE A-123"
+    - "KOE Z-1"
+    - "KOEB99"
+  invalid:
+    - "KOE A-0"
+    - "KOE A-0123"
+    - "KOE A-1234"
+    - "KOE AB-123"
+    - "KOE-123"
+    - "OKE A-123"

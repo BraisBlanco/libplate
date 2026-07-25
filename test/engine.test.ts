@@ -111,17 +111,20 @@ describe("convenience helpers", () => {
       "BE",
       "BG",
       "DE",
+      "DK",
       "EE",
       "ES",
+      "FI",
       "FR",
       "IT",
       "NL",
       "PL",
       "PT",
       "RO",
+      "SE",
     ]);
     expect(getSupportedSchemes("ES")).toContain("ES_TRAILER_CURRENT");
-    expect(getSupportedSchemes()).toHaveLength(105);
+    expect(getSupportedSchemes()).toHaveLength(115);
     expect(getMetadataVersion()).toMatch(/^\d{4}\.\d{2}\.\d+$/);
   });
 });

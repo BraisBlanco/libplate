@@ -130,24 +130,26 @@ describe("Poland — detection and cross-country collisions", () => {
     expect(result.country).toBe("PL");
   });
 
-  it("reports the PL/IT collision on two letters + five digits", () => {
-    // WA 12345 is a Polish car plate and an Italian motorcycle plate.
+  it("reports the PL/IT/DK collision on two letters + five digits", () => {
+    // WA 12345 is a Polish car plate, an Italian motorcycle plate and a
+    // Danish number.
     const result = detect("WA 12345");
     expect(result.status).toBe("AMBIGUOUS");
     const countries = result.candidates
       ?.map((c) => c.country)
       .sort((a, b) => a.localeCompare(b));
-    expect(countries).toEqual(["IT", "PL"]);
+    expect(countries).toEqual(["DK", "IT", "PL"]);
   });
 
   it("reports the PL/DE collision on historic-format plates", () => {
-    // "WA 123" reads as PL zabytkowe (WA 123) or DE (W-A 123); the Austrian
-    // Wunschkennzeichen reading W-A123 is contradicted by the separator.
+    // "WA 123" reads as PL zabytkowe (WA 123), DE (W-A 123), a Danish number
+    // and a Finnish two-letter mark; the Austrian Wunschkennzeichen reading
+    // W-A123 is contradicted by the separator.
     const result = detect("WA 123");
     expect(result.status).toBe("AMBIGUOUS");
     const countries = result.candidates
       ?.map((c) => c.country)
       .sort((a, b) => a.localeCompare(b));
-    expect(countries).toEqual(["DE", "PL"]);
+    expect(countries).toEqual(["DE", "DK", "FI", "PL"]);
   });
 });

@@ -1,0 +1,58 @@
+schemaVersion: 1
+id: FI_EXPORT
+country: FI
+name: Vientirekisteröidyn ajoneuvon rekisteritunnus (kirjain + luku)
+registrationType: EXPORT
+# validFrom omitted: vientirekisteröinti predates asetus 162/2021 (it is
+# carried over from the earlier registration decrees), and no act fixing the
+# composition earlier was traced. The regime itself is ajoneuvolaki 109-111 §.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Export registration is open to any vehicle leaving the country; 16 § 1
+  # mom. 6 k. attaches no category to the mark.
+  level: NOT_INFERABLE
+segments:
+  # "Yksi musta kirjain ja enintään nelinumeroinen musta luku". No table of
+  # letters is published.
+  #
+  # Known collision: with the letter C this is also a well-formed mission
+  # tax-free mark (FI_MISSION_TAXFREE); see the note there.
+  - name: letter
+    type: LETTERS
+    length: 1
+  - name: serial
+    type: DIGITS
+    minLength: 1
+    maxLength: 4
+    noLeadingZero: true
+formats:
+  national: "{letter}-{serial}"
+  compact: "{letter}{serial}"
+# 16 § 1 mom. 6 k.: black characters on a white light-reflecting background,
+# with the month and year the registration ends in white on a red field at the
+# right edge (the expiry text is not part of the mark).
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: FI-VNA-162-2021
+    section: "16 § 1 mom. 6 k.; 19 §"
+  - id: FI-AJONEUVOLAKI
+    section: "109-111 §"
+  - id: FI-TRAFICOM-KILVET
+    section: "3.8"
+examples:
+  valid:
+    - "V-1234"
+    - "A-1"
+    - "Z 987"
+  invalid:
+    - "V-0"
+    - "V-0123"
+    - "V-12345"
+    - "VV-1234"
+    - "1234-V"

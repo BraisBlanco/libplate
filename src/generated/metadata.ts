@@ -3,7 +3,7 @@
 import type { MetadataBundle } from "../metadata/types.js";
 
 export const METADATA: MetadataBundle = {
-  "metadataVersion": "2026.07.9",
+  "metadataVersion": "2026.07.10",
   "tables": {
     "at-behoerden": [
       "AM",
@@ -4007,6 +4007,63 @@ export const METADATA: MetadataBundle = {
     },
     {
       "schemaVersion": 1,
+      "id": "DK_ORDINARY",
+      "country": "DK",
+      "name": "Registreringsnummer (to bogstaver + et til fem cifre)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 5
+        }
+      ],
+      "formats": {
+        "national": "{letters} {number}",
+        "compact": "{letters}{number}"
+      },
+      "sources": [
+        {
+          "id": "DK-BEK-866-2023",
+          "section": "§ 67; § 68; § 72, stk. 3, nr. 4; § 76"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "AB 12345",
+          "CD 99999",
+          "XY 1",
+          "AA-12-345"
+        ],
+        "invalid": [
+          "A 12345",
+          "ABC 12345",
+          "AB 123456",
+          "AB",
+          "12 AB",
+          "AB 1234A"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
       "id": "EE_DEALER",
       "country": "EE",
       "name": "Teisaldatav registreerimismärk (tüübid A8, A11)",
@@ -5620,6 +5677,447 @@ export const METADATA: MetadataBundle = {
           "R 123 BCD",
           "R 1234 AEI",
           "1234 BCD"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "FI_DIPLOMATIC",
+      "country": "FI",
+      "name": "Diplomaattisen edustuston ja diplomaattisen edustajan ajoneuvon rekisteritunnus (CD)",
+      "registrationType": "DIPLOMATIC",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "VAN"
+        ],
+        "evidence": [
+          {
+            "type": "PREFIX",
+            "value": "CD (16 § 1 mom. 4 k. — foreign missions and diplomatic agents)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "CD"
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 4,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "CD-{serial}",
+        "compact": "CD{serial}"
+      },
+      "visual": {
+        "background": "BLUE",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "FI-VNA-162-2021",
+          "section": "16 § 1 mom. 4 k."
+        },
+        {
+          "id": "FI-TRAFICOM-KILVET",
+          "section": "3.7"
+        },
+        {
+          "id": "FI-TRAFICOM-ERITYISTUNNUS"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "CD-1234",
+          "CD-1",
+          "CD 999"
+        ],
+        "invalid": [
+          "CD-0",
+          "CD-0123",
+          "CD-12345",
+          "CD-12A",
+          "DC-1234"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "FI_EXPORT",
+      "country": "FI",
+      "name": "Vientirekisteröidyn ajoneuvon rekisteritunnus (kirjain + luku)",
+      "registrationType": "EXPORT",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "letter",
+          "type": "LETTERS",
+          "length": 1
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 4,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{letter}-{serial}",
+        "compact": "{letter}{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "FI-VNA-162-2021",
+          "section": "16 § 1 mom. 6 k.; 19 §"
+        },
+        {
+          "id": "FI-AJONEUVOLAKI",
+          "section": "109-111 §"
+        },
+        {
+          "id": "FI-TRAFICOM-KILVET",
+          "section": "3.8"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "V-1234",
+          "A-1",
+          "Z 987"
+        ],
+        "invalid": [
+          "V-0",
+          "V-0123",
+          "V-12345",
+          "VV-1234",
+          "1234-V"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "FI_L_CLASS_TRACTOR",
+      "country": "FI",
+      "name": "L-luokan ajoneuvon, traktorin, moottorityökoneen ja moottorikelkan rekisteritunnus (luku + kirjaimet)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "MOTORCYCLE",
+          "MOPED_OR_MOTOR_CYCLE",
+          "TRICYCLE",
+          "QUADRICYCLE",
+          "AGRICULTURAL_VEHICLE",
+          "INDUSTRIAL_MACHINE",
+          "SPECIAL_VEHICLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "number before the letters (16 § 1 mom. 2-3 k.)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 3,
+          "noLeadingZero": true
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "minLength": 1,
+          "maxLength": 3
+        }
+      ],
+      "formats": {
+        "national": "{number}-{letters}",
+        "compact": "{number}{letters}"
+      },
+      "sources": [
+        {
+          "id": "FI-VNA-162-2021",
+          "section": "16 § 1 mom. 2-3 k.; 16 § 3 mom."
+        },
+        {
+          "id": "FI-TRAFICOM-KILVET",
+          "section": "3.3-3.6"
+        },
+        {
+          "id": "FI-TRAFICOM-ERITYISTUNNUS"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "123-ABC",
+          "1-AB",
+          "99-A",
+          "500 XY"
+        ],
+        "invalid": [
+          "0-ABC",
+          "012-ABC",
+          "1234-ABC",
+          "123-ABCD",
+          "123",
+          "ABC-123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "FI_MISSION_TAXFREE",
+      "country": "FI",
+      "name": "Edustuston ja sen henkilökunnan muun tulli- ja verovapaan ajoneuvon rekisteritunnus (C)",
+      "registrationType": "DIPLOMATIC_STAFF",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "C"
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 5,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "C-{serial}",
+        "compact": "C{serial}"
+      },
+      "visual": {
+        "background": "BLUE",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "FI-VNA-162-2021",
+          "section": "16 § 1 mom. 4 k."
+        },
+        {
+          "id": "FI-TRAFICOM-KILVET",
+          "section": "3.7"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "C-12345",
+          "C-99999"
+        ],
+        "invalid": [
+          "C-0",
+          "C-012345",
+          "C-123456",
+          "C-1234A",
+          "CC-12345"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "FI_ORDINARY",
+      "country": "FI",
+      "name": "Auton ja perävaunun rekisteritunnus (kirjaimet + luku)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "minLength": 2,
+          "maxLength": 3,
+          "excludedValues": [
+            "CD"
+          ]
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 3,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{letters}-{number}",
+        "compact": "{letters}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "FI-VNA-162-2021",
+          "section": "16 § 1 mom. 1 k.; 16 § 2-3 mom.; 17 §"
+        },
+        {
+          "id": "FI-AJONEUVOLAKI",
+          "section": "99 §"
+        },
+        {
+          "id": "FI-TRAFICOM-KILVET",
+          "section": "3.1-3.2"
+        },
+        {
+          "id": "FI-TRAFICOM-ERITYISTUNNUS"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "ABC-123",
+          "AB-1",
+          "XYZ-99",
+          "ZZ 999"
+        ],
+        "invalid": [
+          "CD-123",
+          "A-123",
+          "ABCD-123",
+          "ABC-0",
+          "ABC-012",
+          "ABC-1234",
+          "123-ABC"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "FI_TEST",
+      "country": "FI",
+      "name": "Koenumerokilven rekisteritunnus (KOE + kirjain + luku)",
+      "registrationType": "PROFESSIONAL_TEMPORARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "KOE"
+        },
+        {
+          "name": "letter",
+          "type": "LETTERS",
+          "length": 1
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 3,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "KOE {letter}-{serial}",
+        "compact": "KOE{letter}{serial}"
+      },
+      "visual": {
+        "background": "YELLOW",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "FI-VNA-162-2021",
+          "section": "16 § 1 mom. 7 k."
+        },
+        {
+          "id": "FI-AJONEUVOLAKI",
+          "section": "116 §"
+        },
+        {
+          "id": "FI-TRAFICOM-KILVET",
+          "section": "3.9"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "KOE A-123",
+          "KOE Z-1",
+          "KOEB99"
+        ],
+        "invalid": [
+          "KOE A-0",
+          "KOE A-0123",
+          "KOE A-1234",
+          "KOE AB-123",
+          "KOE-123",
+          "OKE A-123"
         ]
       },
       "legacySeries": false
@@ -9496,6 +9994,225 @@ export const METADATA: MetadataBundle = {
           "XY 12345",
           "B",
           "B 12 ABC"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SE_DIPLOMATIC",
+      "country": "SE",
+      "name": "Skylt för beskickningsfordon (landskod + löpnummer + kategorikod)",
+      "registrationType": "DIPLOMATIC",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "mission",
+          "type": "LETTERS",
+          "length": 2
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "length": 3
+        },
+        {
+          "name": "category",
+          "type": "LETTERS",
+          "length": 1
+        }
+      ],
+      "formats": {
+        "national": "{mission} {serial} {category}",
+        "compact": "{mission}{serial}{category}"
+      },
+      "visual": {
+        "background": "BLUE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "SE-TSFS-2015-63",
+          "section": "12 kap. 1 a §, 2-3 §§"
+        },
+        {
+          "id": "SE-FORORDNING-2019-383",
+          "section": "11 kap."
+        }
+      ],
+      "examples": {
+        "valid": [
+          "AB 123 C",
+          "XY 001 D",
+          "CD-500-A"
+        ],
+        "invalid": [
+          "A 123 C",
+          "ABC 123 C",
+          "AB 12 C",
+          "AB 1234 C",
+          "AB 123 CD",
+          "AB 123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SE_ORDINARY",
+      "country": "SE",
+      "name": "Registreringsnummer med tre bokstäver och tre siffror",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 3,
+          "excluded": [
+            "I",
+            "Q",
+            "V"
+          ]
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{letters} {number}",
+        "compact": "{letters}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "SE-TSFS-2015-63",
+          "section": "6 kap. 2-4 §§"
+        },
+        {
+          "id": "SE-FORORDNING-2019-383",
+          "section": "3 kap. 1 §"
+        },
+        {
+          "id": "SE-TS-REGNR"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "ABC 123",
+          "MLB 902",
+          "AAA 001",
+          "XYZ-999"
+        ],
+        "invalid": [
+          "AIC 123",
+          "ABQ 123",
+          "ABV 123",
+          "AB 123",
+          "ABCD 123",
+          "ABC 12",
+          "ABC 1234",
+          "123 ABC"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SE_ORDINARY_LETTER_SUFFIX",
+      "country": "SE",
+      "name": "Registreringsnummer med tre bokstäver, två siffror och en bokstav",
+      "registrationType": "ORDINARY",
+      "validFrom": "2019-01-16",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 3,
+          "excluded": [
+            "I",
+            "Q",
+            "V"
+          ]
+        },
+        {
+          "name": "serial",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNL"
+          ],
+          "letters": "ABCDEFGHJKLMNPRSTUWXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{letters} {serial}",
+        "compact": "{letters}{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "SE-TSFS-2015-63",
+          "section": "6 kap. 4 §"
+        },
+        {
+          "id": "SE-FORORDNING-2019-383",
+          "section": "3 kap. 1 §"
+        },
+        {
+          "id": "SE-TS-REGNR"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "ABC 12A",
+          "XYZ 99Z",
+          "AAA-00B"
+        ],
+        "invalid": [
+          "ABC 12O",
+          "ABC 12I",
+          "ABC 12Q",
+          "ABC 12V",
+          "AIC 12A",
+          "ABC 1AA",
+          "ABC 123A",
+          "AB 12A"
         ]
       },
       "legacySeries": false

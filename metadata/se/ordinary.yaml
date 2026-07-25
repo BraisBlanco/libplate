@@ -1,0 +1,80 @@
+schemaVersion: 1
+id: SE_ORDINARY
+country: SE
+name: Registreringsnummer med tre bokstäver och tre siffror
+registrationType: ORDINARY
+# validFrom is deliberately omitted: three letters + three digits is the series
+# Sweden has issued since the 1973 changeover to a nationwide, non-geographic
+# system, and the act that introduced it was not traced. The composition is
+# stated today by 6 kap. 4 § TSFS 2015:63 and 3 kap. 1 § of förordningen
+# (2019:383) om fordons registrering och användning.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 6 kap. 3 § hands the same composition to bil, motorredskap, terrängvagn,
+  # släpfordon, traktor, motorcykel, moped klass I and terrängskoter — only the
+  # plate SIZE differs (one-row 520/300 mm, two-row 170x150 mm, the adhesive
+  # 260x70 mm strip for snowmobiles). The regime is not inferable either: taxi
+  # plates (6 kap. 7 §, black on yellow), temporary registration (11 §, white
+  # on red plus a validity date), provisional plates (15 §, black on yellow)
+  # and competition plates (19-20 §, black on orange) all carry a number formed
+  # under 6 kap. 4 §.
+  level: NOT_INFERABLE
+segments:
+  # 6 kap. 4 §: "tre bokstäver till vänster och tre siffror till höger" on a
+  # one-row plate; on a two-row plate the same characters with the letters
+  # above the digits.
+  #
+  # Known limitation: no regulation fixes the alphabet. Transportstyrelsen
+  # states that I, Q, V, Å, Ä and Ö are not used at all (they are confusable
+  # with J, O, U/W and are outside the Latin basic alphabet); that is
+  # authority practice, at the same evidence level as the French SIV letter
+  # exclusions, and it is what is modelled here. The agency's list of refused
+  # three-letter combinations (offensive words and the like) is not published
+  # as a regulation and is NOT modelled.
+  - name: letters
+    type: LETTERS
+    length: 3
+    excluded:
+      - I
+      - Q
+      - V
+  # Three digits. The regulation sets no range and assignment is sequential
+  # within a letter group, so 000-999 is accepted.
+  - name: number
+    type: DIGITS
+    length: 3
+formats:
+  national: "{letters} {number}"
+  compact: "{letters}{number}"
+# 6 kap. 4 §, third paragraph: black letters and digits on a white
+# light-reflecting background, with a black frame. See the vehicleInference
+# note for the yellow/red/orange variants that carry the same number.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: SE-TSFS-2015-63
+    section: "6 kap. 2-4 §§"
+  - id: SE-FORORDNING-2019-383
+    section: "3 kap. 1 §"
+  - id: SE-TS-REGNR
+examples:
+  valid:
+    - "ABC 123"
+    - "MLB 902"
+    - "AAA 001"
+    - "XYZ-999"
+  invalid:
+    # I, Q and V never appear on a Swedish plate.
+    - "AIC 123"
+    - "ABQ 123"
+    - "ABV 123"
+    - "AB 123"
+    - "ABCD 123"
+    - "ABC 12"
+    - "ABC 1234"
+    - "123 ABC"

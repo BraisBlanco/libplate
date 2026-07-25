@@ -17,6 +17,21 @@ describe("tokens — LETTERS", () => {
     expect(expansion.regex.test("IO12")).toBe(false); // excluded letters
     expect(extractComponents("AB12", expansion)).toEqual({ a: "AB", b: "12" });
   });
+
+  it("applies an excluded value only to the expansion of its own length", () => {
+    // The Finnish ordinary mark: 2-3 letters, but "CD" belongs to diplomatic
+    // vehicles. A longer group that merely starts with CD is unaffected.
+    const compiled = compilePattern([
+      {
+        name: "letters",
+        token: { kind: "LETTERS", length: { min: 2, max: 3 }, excludedValues: ["CD"] },
+      },
+      { name: "number", token: { kind: "DIGITS", length: 2, noLeadingZero: true } },
+    ]);
+    expect(matchAll("CD12", compiled)).toEqual([]);
+    expect(matchAll("CDE12", compiled)).toEqual([{ letters: "CDE", number: "12" }]);
+    expect(matchAll("AB12", compiled)).toEqual([{ letters: "AB", number: "12" }]);
+  });
 });
 
 describe("tokens — variable lengths and tables", () => {

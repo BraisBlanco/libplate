@@ -99,14 +99,17 @@ function checkSchemeSemantics(rel, scheme, tables, referencedTables) {
       ok = false;
     }
     for (const value of segment.excludedValues ?? []) {
-      if (segment.length === undefined) {
-        fail(rel, `segment "${segment.name}": excludedValues needs a fixed length`);
-        ok = false;
-      } else if (value.length !== segment.length) {
+      // A value is applied to the expansion whose length it equals, so it must
+      // be a length the segment can actually take: the fixed length, or one
+      // inside the declared range (Finnish "CD" over a 2-3 letter group).
+      const min = segment.length ?? segment.minLength;
+      const max = segment.length ?? segment.maxLength;
+      if (value.length < min || value.length > max) {
+        const bounds = min === max ? `${min}` : `${min}-${max}`;
         fail(
           rel,
           `segment "${segment.name}" excludedValues entry "${value}" ` +
-            `is ${value.length} chars but the segment length is ${segment.length}`,
+            `is ${value.length} chars but the segment length is ${bounds}`,
         );
         ok = false;
       }

@@ -1,0 +1,67 @@
+schemaVersion: 1
+id: SE_ORDINARY_LETTER_SUFFIX
+country: SE
+name: Registreringsnummer med tre bokstäver, två siffror och en bokstav
+registrationType: ORDINARY
+# The second arrangement of 6 kap. 4 § (added by TSFS 2019:53) exists because
+# the three-letter + three-digit space was running out: letting the last
+# character be a letter takes the series from about 12 to about 38 million
+# combinations. Transportstyrelsen issued the first plate of this format on
+# 2019-01-16.
+validFrom: "2019-01-16"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # As for SE_ORDINARY: the composition is shared by every vehicle kind and by
+  # the taxi, temporary, provisional and competition plates.
+  level: NOT_INFERABLE
+segments:
+  # 6 kap. 4 §: "tre bokstäver till vänster och två siffror och en bokstav
+  # till höger". Same alphabet as SE_ORDINARY.
+  - name: letters
+    type: LETTERS
+    length: 3
+    excluded:
+      - I
+      - Q
+      - V
+  # Two digits and a closing letter. The closing letter additionally excludes
+  # O: Transportstyrelsen does not use it as the LAST character because it is
+  # read as the digit zero. (In SE_ORDINARY the last character is a digit, so
+  # the rule has nothing to bite on there.)
+  - name: serial
+    type: PATTERNS
+    patterns:
+      - NNL
+    letters: ABCDEFGHJKLMNPRSTUWXYZ
+formats:
+  national: "{letters} {serial}"
+  compact: "{letters}{serial}"
+# 6 kap. 4 §, third paragraph.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: SE-TSFS-2015-63
+    section: "6 kap. 4 §"
+  - id: SE-FORORDNING-2019-383
+    section: "3 kap. 1 §"
+  - id: SE-TS-REGNR
+examples:
+  valid:
+    - "ABC 12A"
+    - "XYZ 99Z"
+    - "AAA-00B"
+  invalid:
+    # O is not used as the last character.
+    - "ABC 12O"
+    - "ABC 12I"
+    - "ABC 12Q"
+    - "ABC 12V"
+    - "AIC 12A"
+    - "ABC 1AA"
+    - "ABC 123A"
+    - "AB 12A"

@@ -1,0 +1,79 @@
+schemaVersion: 1
+id: FI_L_CLASS_TRACTOR
+country: FI
+name: L-luokan ajoneuvon, traktorin, moottorityökoneen ja moottorikelkan rekisteritunnus (luku + kirjaimet)
+registrationType: ORDINARY
+# validFrom omitted for the same reason as FI_ORDINARY: the number-first order
+# predates valtioneuvoston asetus ajoneuvoista (162/2021).
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 16 § 1 mom. 2 k. gives the number-first order to L-class vehicles
+  # (motorcycles, mopeds, tricycles, quadricycles), 3 k. to snowmobiles, heavy
+  # snowmobiles, tractors and motor work machines. Cars, buses and trailers
+  # are excluded — they take the letters-first order (FI_ORDINARY).
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - MOTORCYCLE
+    - MOPED_OR_MOTOR_CYCLE
+    - TRICYCLE
+    - QUADRICYCLE
+    - AGRICULTURAL_VEHICLE
+    - INDUSTRIAL_MACHINE
+    - SPECIAL_VEHICLE
+  evidence:
+    - type: PATTERN
+      value: "number before the letters (16 § 1 mom. 2-3 k.)"
+segments:
+  # "Musta, enintään kolminumeroinen luku" — as in FI_ORDINARY, a number, so
+  # no leading zero and never 0 alone.
+  - name: number
+    type: DIGITS
+    minLength: 1
+    maxLength: 3
+    noLeadingZero: true
+  # The L-class mark has "kaksi tai kolme mustaa kirjainta" (2 k.) and the
+  # tractor/work-machine/snowmobile mark "enintään kolme mustaa kirjainta"
+  # (3 k.), i.e. one to three. The two are deliberately ONE scheme: the
+  # machinery space (1-3 letters) strictly contains the L-class space (2-3),
+  # so modelling them separately would make every L-class mark AMBIGUOUS. They
+  # differ only in the plate colour, which is not part of the text.
+  #
+  # Known limitation: Traficom states that W and Q are restricted on moped and
+  # snowmobile marks, without publishing the rule, so the full alphabet is
+  # accepted here.
+  - name: letters
+    type: LETTERS
+    minLength: 1
+    maxLength: 3
+formats:
+  # The one-row tractor plate carries a hyphen between the fields (Traficom
+  # regulation 3.6); the two-row motorcycle and moped plates must not.
+  national: "{number}-{letters}"
+  compact: "{number}{letters}"
+# No visual: the L-class mark is black on white (16 § 1 mom. 2 k.) and the
+# tractor, work-machine and snowmobile mark black on YELLOW (3 k.). One scheme
+# spans both, so it asserts neither. An L-class museum vehicle may also carry
+# the mark white on black (16 § 3 mom.).
+sources:
+  - id: FI-VNA-162-2021
+    section: "16 § 1 mom. 2-3 k.; 16 § 3 mom."
+  - id: FI-TRAFICOM-KILVET
+    section: "3.3-3.6"
+  - id: FI-TRAFICOM-ERITYISTUNNUS
+examples:
+  valid:
+    - "123-ABC"
+    - "1-AB"
+    - "99-A"
+    - "500 XY"
+  invalid:
+    - "0-ABC"
+    - "012-ABC"
+    - "1234-ABC"
+    - "123-ABCD"
+    - "123"
+    - "ABC-123"

@@ -1,0 +1,60 @@
+schemaVersion: 1
+id: FI_DIPLOMATIC
+country: FI
+name: Diplomaattisen edustuston ja diplomaattisen edustajan ajoneuvon rekisteritunnus (CD)
+registrationType: DIPLOMATIC
+# validFrom omitted: the CD composition predates asetus 162/2021, whose 16 § 1
+# mom. 4 k. states it today.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 16 § 1 mom. 4 k. covers the official cars ("virka-auto") of foreign
+  # missions and of sent consuls, and the vehicles of diplomatic agents, sent
+  # consuls and persons of equivalent standing.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - VAN
+  evidence:
+    - type: PREFIX
+      value: "CD (16 § 1 mom. 4 k. — foreign missions and diplomatic agents)"
+segments:
+  - name: prefix
+    type: LITERAL
+    value: CD
+  # "Ulkoministeriön määräämä enintään nelinumeroinen valkoinen luku" — a
+  # number of at most four digits set by the Ministry for Foreign Affairs.
+  # Finland publishes no table mapping the digits to missions, so they are not
+  # decomposed; as a number, it carries no leading zero.
+  - name: serial
+    type: DIGITS
+    minLength: 1
+    maxLength: 4
+    noLeadingZero: true
+formats:
+  national: "CD-{serial}"
+  compact: "CD{serial}"
+# 16 § 1 mom. 4 k.: white characters on a blue light-reflecting background.
+visual:
+  background: BLUE
+  foreground: WHITE
+sources:
+  - id: FI-VNA-162-2021
+    section: "16 § 1 mom. 4 k."
+  - id: FI-TRAFICOM-KILVET
+    section: "3.7"
+  - id: FI-TRAFICOM-ERITYISTUNNUS
+examples:
+  valid:
+    - "CD-1234"
+    - "CD-1"
+    - "CD 999"
+  invalid:
+    - "CD-0"
+    - "CD-0123"
+    - "CD-12345"
+    - "CD-12A"
+    - "DC-1234"

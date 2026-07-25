@@ -34,8 +34,12 @@ fire-brigade series), Estonia (standard A1 + reduced A3 + motorcycle/moped +
 tractor + veteran + `CD`/`CMD` diplomatic + `PROOV` dealer marks), Romania
 (the ordinary county/Bucharest series + provisional and `PROBE` numbers),
 Bulgaria (ordinary + third plate +
-transit and trader temporary numbers, each with its category-L variant). See
-`README.md` for the full matrix.
+transit and trader temporary numbers, each with its category-L variant),
+Sweden (the three-letter series in both its digit and 2019 letter-suffix
+arrangements + diplomatic plates), Finland (ordinary + the number-first
+L-class/tractor mark + `CD` and `C` mission plates + export + `KOE` test
+plates), Denmark (the single national series). See `README.md` for the full
+matrix.
 
 ## The golden rule: metadata is the source of truth
 
@@ -67,7 +71,9 @@ The token grammar (`src/tokens/`) has six kinds: `LITERAL`, `DIGITS`,
 fixed `length` or a bounded `minLength`/`maxLength` range; `DIGITS` also takes
 `noLeadingZero`. `LETTERS` also takes `excluded` (per-position letters removed
 from A-Z) and `excludedValues` (whole-segment blacklist, e.g. `SS`/`WW`,
-compiled to a negative lookahead; fixed-length segments only). `TABLE` matches
+compiled to a negative lookahead; each value applies to the expansion whose
+length it equals, so `CD` on a 2-3 letter segment rejects the Finnish
+diplomatic `CD` without touching `CDE`). `TABLE` matches
 one value from a named set in `metadata/tables/*.json` (e.g. the ~770 German
 district codes, umlauts included). `PATTERNS` matches one of a list of exact
 positional digit/letter arrangements (`N` = digit, `L` = letter from an
@@ -365,5 +371,62 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
   splits — the ordinance says "разделени", not "симетрично разделени", for them.
   EV green (чл. 23 ал. 4) and the third plate's red (ал. 3) are colour variants
   of the same characters.
+
+- **SE alphabets are authority practice, not regulation.** 6 kap. 4 § TSFS
+  2015:63 prescribes only "tre bokstäver" and the digits; that `I`, `Q`, `V`,
+  `Å`, `Ä` and `Ö` are never used, and `O` never as the last character, comes
+  from Transportstyrelsen's own announcement — the same evidence level as the
+  French SIV exclusions. The agency's list of refused three-letter combinations
+  is not published as a regulation and is not modelled. **Deliberately absent,
+  don't "add" them**: saluvagnsskyltar (16-18 §§ say the designation has "sex
+  tecken" plus a vehicle-kind letter `B`/`M`/`T`/`TM`/`S`/`LS`, but no text
+  says WHICH six characters) and personal plates (12 kap. 9 §, 2-7 free
+  characters — their space swallows every other Swedish series). Taxi (yellow),
+  temporary (white on red + a validity date and a `B` for 20 § vehicles),
+  provisional (yellow) and competition (orange) plates all carry a number
+  formed under 6 kap. 4 § — colour variants, not schemes, which is also why
+  `SE_ORDINARY` reports `NOT_INFERABLE`. The diplomatic country and category
+  codes are assigned by Utrikesdepartementet with no published table, so both
+  are charset-checked only (as with the ES diplomatic prefixes). `SE_ORDINARY`
+  omits `validFrom` (the 1973 changeover was not traced); the letter-suffix
+  scheme carries 2019-01-16, the date Transportstyrelsen issued the first one.
+- **FI marks are "numbers", and two series genuinely collide.** 16 § of VNA
+  162/2021 says "enintään kolminumeroinen luku" — a NUMBER — and Traficom
+  states zero may neither open the digit part nor stand alone, so every
+  Finnish digit segment is `noLeadingZero`. `FI_L_CLASS_TRACTOR` merges 16 § 1
+  mom. 2 k. (L-class, white, 2-3 letters) with 3 k. (tractors, work machines,
+  snowmobiles, yellow, 1-3 letters) into one scheme with no `visual`: the
+  machinery space strictly contains the L-class one, so separate schemes would
+  make every L-class mark AMBIGUOUS. The `CD` exclusion on `FI_ORDINARY` rests
+  on Traficom's statement that the combination is diplomatic-only. What is NOT
+  resolvable: `C` + up to four digits is both a mission tax-free mark and an
+  export mark (the plates differ by colour and the export plate's red expiry
+  field), and that input is reported AMBIGUOUS. **Deliberately absent**:
+  transfer marks (siirtomerkki, 20 § — 1-2 letters + up to four digits, whose
+  space contains both the two-letter ordinary series and the whole export
+  series), customs plates (8 k. gives a letter + a "järjestysnumero" + `FIN`
+  with no published width), the President's coat-of-arms plate (no characters),
+  taxi plates (ajoneuvolaki 99 § requires distinguishable plates since
+  2026-06-14 but no decree gives their content yet) and Åland, which keeps its
+  own register (ajoneuvolaki 129-130 §) and whose marks start with `Å` —
+  outside the Latin-basic `normalized` contract. Letters-first marks are not
+  proof of a car: 16 § 3 mom. lets an L-class museum vehicle use that order and
+  Traficom grants special marks in either order, so `FI_ORDINARY` is
+  `NOT_INFERABLE`.
+- **DK is one composition and a lot of colour.** § 68, stk. 2 of
+  bekendtgørelse nr. 866 af 19. juni 2023 gives every registered vehicle two
+  Latin letters + one to five digits; diplomatic plates (§ 76) show that same
+  number on blue, and white/yellow/"papegøjeplade" follow registration-tax
+  status set outside the order — so `DK_ORDINARY` asserts no colours at all.
+  § 68, stk. 3 lets the tax administration cut the numbers into series by
+  vehicle kind, but publishes no such division, hence `NOT_INFERABLE`. No
+  letter table is published either, so the full A-Z is accepted. `validFrom` is
+  omitted on purpose: § 72, stk. 3, nr. 4 and § 75 pin the current
+  "retningslinjer" to 1 April 1976, but the two-letter shape is older (the 1958
+  police-district pairs), so a 1976 cut-off would wrongly reject older plates.
+  **Deliberately absent**: prøveskilte and prøvemærker (excluded from § 68,
+  stk. 2, and their composition lives in lov om registrering af køretøjer
+  §§ 7 a-7 h, which does not state one), ønskenummerplader (§ 74, 2-7 free
+  characters) and historic plates (§ 75 — the pre-1976 systems).
 
 These need grammar or scope work, not a quick patch. Discuss before changing.

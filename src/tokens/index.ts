@@ -57,9 +57,10 @@ interface LettersToken {
   excluded?: string[];
   /**
    * Whole-segment values this token must NOT equal, e.g. ["SS", "WW"] for the
-   * French SIV. Only allowed on fixed-length tokens; each value must be
-   * exactly `length` characters long. Compiled to a negative lookahead, so
-   * per-character rules (`excluded`) still apply.
+   * French SIV. Each value must be a length the token can take, and applies to
+   * the expansion of exactly that length — so ["CD"] on a 2-3 letter token
+   * rejects the Finnish diplomatic "CD" without touching "CDE". Compiled to a
+   * negative lookahead, so per-character rules (`excluded`) still apply.
    */
   excludedValues?: string[];
 }
@@ -224,6 +225,20 @@ function positionalPatternRegex(pattern: string, token: PatternsToken): string {
   return out;
 }
 
+/**
+ * Regex fragment for a character-class token (CHARSET/LETTERS) at one concrete
+ * length, including the negative lookahead for whole-segment exclusions. Only
+ * values of THIS expansion's length can equal the segment, so the lookahead
+ * always lines up with the characters the class then consumes.
+ */
+function classTokenRegexAt(token: CharsetToken | LettersToken, length: number): string {
+  const charClass = `[${escapeForClass(tokenCharacters(token))}]{${length}}`;
+  if (token.kind === "CHARSET" || !token.excludedValues?.length) return charClass;
+  const values = token.excludedValues.filter((v) => v.length === length);
+  if (values.length === 0) return charClass;
+  return `(?!(?:${values.map(escapeLiteral).join("|")}))${charClass}`;
+}
+
 /** Regex fragment (no anchors) matching this token at one concrete length. */
 function tokenRegexAt(token: Token, length: number): string {
   switch (token.kind) {
@@ -242,15 +257,8 @@ function tokenRegexAt(token: Token, length: number): string {
       return length === 1 ? "[1-9]" : `[1-9][0-9]{${length - 1}}`;
     }
     case "CHARSET":
-    case "LETTERS": {
-      const charClass = `[${escapeForClass(tokenCharacters(token))}]{${length}}`;
-      if (token.kind === "CHARSET" || !token.excludedValues?.length) return charClass;
-      // Reject exact segment values (e.g. SS, WW) with a negative lookahead.
-      // excludedValues is restricted to fixed-length tokens, so every value
-      // lines up with the characters the class then consumes.
-      const alternation = token.excludedValues.map(escapeLiteral).join("|");
-      return `(?!(?:${alternation}))${charClass}`;
-    }
+    case "LETTERS":
+      return classTokenRegexAt(token, length);
   }
 }
 

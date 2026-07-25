@@ -14,7 +14,7 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 
 ### Supported countries
 
-**12 countries, 105 schemes.** Each row links to its plate-type table below.
+**15 countries, 115 schemes.** Each row links to its plate-type table below.
 
 | Country                         | Schemes | Coverage                                                                                                   |
 | ------------------------------- | ------: | ---------------------------------------------------------------------------------------------------------- |
@@ -30,6 +30,9 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 | [🇪🇪 Estonia](#-estonia)         |       9 | Standard and reduced, motorcycle, moped, tractor, veteran, `CD`/`CMD`, `PROOV` dealer marks                |
 | [🇷🇴 Romania](#-romania)         |       3 | The ordinary county and Bucharest series; provisional and `PROBE` numbers                                  |
 | [🇧🇬 Bulgaria](#-bulgaria)       |       6 | Ordinary, third plate, transit and trader temporary numbers, each with its category-L variant              |
+| [🇸🇪 Sweden](#-sweden)           |       3 | Ordinary series, the 2019 letter-suffix format, diplomatic plates                                          |
+| [🇫🇮 Finland](#-finland)         |       6 | Ordinary, L-class/tractor marks, `CD` and `C` mission plates, export, `KOE` test plates                    |
+| [🇩🇰 Denmark](#-denmark)         |       1 | The single national series: two letters + one to five digits                                               |
 
 Countries not yet modelled, and the series still missing inside those above, are
 listed under [Not yet modelled](#not-yet-modelled).
@@ -312,6 +315,59 @@ the same number in green (чл. 23 ал. 4). Note that the ordinary shape coinci
 with the Spanish 1971-2000 provincial series whenever every letter is one of the
 twelve (`M-1234-AB`).
 
+#### 🇸🇪 Sweden
+
+| Type                      | Example    | Notes                                          |
+| ------------------------- | ---------- | ---------------------------------------------- |
+| Ordinary series           | `ABC 123`  | Three letters + three digits                   |
+| Letter-suffix (from 2019) | `ABC 12A`  | Last character a letter; never `O`             |
+| Diplomatic                | `AB 123 C` | Black on light blue; country + serial + status |
+
+Swedish plates never carry `I`, `Q`, `V`, `Å`, `Ä` or `Ö`, and `O` is not used
+as the last character (Transportstyrelsen practice, not regulation). The same
+number is issued to cars, motorcycles, mopeds, trailers, tractors and
+snowmobiles alike — only the plate size changes — and the taxi (yellow),
+temporary (white on red), provisional (yellow) and competition (orange) plates
+carry a number formed under the same rule, so neither the vehicle nor the
+regime follows from the text. Three letters + three digits is also a Finnish
+ordinary mark, a German plate and an Italian operating-machine number, so
+`ABC 123` needs a country hint; the letter-suffix form (`ABC 12A`) is uniquely
+Swedish.
+
+#### 🇫🇮 Finland
+
+| Type                         | Example     | Notes                                             |
+| ---------------------------- | ----------- | ------------------------------------------------- |
+| Ordinary (cars, trailers)    | `ABC-123`   | 2-3 letters + a number of at most 3 digits        |
+| L-class, tractors, machinery | `123-ABC`   | Number first; white (L) or yellow (machinery)     |
+| Diplomatic (`CD`)            | `CD-1234`   | White on blue; number set by the foreign ministry |
+| Mission tax-free (`C`)       | `C-12345`   | White on blue; up to five digits                  |
+| Export                       | `V-1234`    | One letter + up to 4 digits; red expiry field     |
+| Test plates (`KOE`)          | `KOE A-123` | Black on yellow                                   |
+
+The number part is a _number_: no leading zero, and never `0` alone. `CD` is
+reserved for diplomatic vehicles, so it is excluded from the ordinary series
+(but `CDE-123` is an ordinary mark). A `C` + up to four digits input is
+genuinely ambiguous between a mission plate and an export plate — the two are
+told apart by colour, which is not part of the text. Across borders, the
+ordinary mark shares its shape with the Swedish series and the number-first
+mark with the Estonian standard mark (`123 ABC`), so both need a country hint.
+
+#### 🇩🇰 Denmark
+
+| Type            | Example    | Notes                                           |
+| --------------- | ---------- | ----------------------------------------------- |
+| National series | `AB 12345` | Two Latin letters + one to five Arabic numerals |
+
+Denmark has a single number composition (§ 68, stk. 2 of the
+registreringsbekendtgørelse) and everything else is a colour or a plate variant
+on top of it: white, yellow for goods vehicles and the yellow-and-white
+"papegøjeplade" follow the vehicle's registration-tax status, and diplomatic
+plates show the same number on blue (§ 76). libplate therefore reports no
+colours for the Danish series. Note the shape collides with the Italian
+motorcycle series and Polish plates (`WA 12345`), so country-less detection is
+ambiguous there.
+
 ### Not yet modelled
 
 Spanish state/military bodies; Portuguese diplomatic/military series and the
@@ -330,7 +386,14 @@ standard SR 13078 is not published), the yellow locality plates (specified since
 2024 by anexa nr. 6-7 of Ordinul MAI 181/2024, so modellable, just not modelled)
 and army/police numbers (each institution's own order); Bulgarian by-request six-character
 numbers (their character space contains the ordinary series), diplomatic,
-army and police series (all outside Наредба № I-45).
+army and police series (all outside Наредба № I-45); Swedish saluvagnsskyltar
+(the regulation says "six characters" without saying which) and personal plates
+(2-7 free characters); Finnish transfer marks (siirtomerkki — 1-2 letters + up
+to four digits, a space that contains both the ordinary two-letter series and
+the export plate), customs plates (no published serial width) and Åland, which
+runs its own register; Danish prøveskilte and prøvemærker (their composition is
+set outside the registration order), ønskenummerplader (2-7 free characters)
+and historic plates (the pre-1976 systems).
 
 ## Install
 

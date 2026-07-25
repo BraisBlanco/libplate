@@ -124,16 +124,17 @@ describe("Spain — diplomatic regime (CD/CC/OI/TA)", () => {
     expect(result.formatted).toBe("OI 12 34");
   });
 
-  it("detects CD + 4 digits as ambiguous between ES, DE and EE", () => {
-    // Compact CD1245 also reads as the German plate C-D 1245 (C = Chemnitz)
-    // and as an Estonian A4 diplomatic mark (CD + four digits).
+  it("detects CD + 4 digits as ambiguous between ES, DE, DK, EE and FI", () => {
+    // Compact CD1245 also reads as the German plate C-D 1245 (C = Chemnitz),
+    // an Estonian A4 diplomatic mark, a Danish number (two letters + four
+    // digits) and a Finnish CD mark.
     const result = detect("CD1245");
     expect(result.status).toBe("AMBIGUOUS");
     expect(result.errors[0]?.reason).toBe("AMBIGUOUS_COUNTRY");
     const countries = result.candidates
       ?.map((c) => c.country)
       .sort((a, b) => a.localeCompare(b));
-    expect(countries).toEqual(["DE", "EE", "ES"]);
+    expect(countries).toEqual(["DE", "DK", "EE", "ES", "FI"]);
   });
 
   it("detects the 7-character and TA forms as uniquely Spanish", () => {
@@ -214,13 +215,19 @@ describe("Portugal — historical series", () => {
   });
 
   it("excludes historical series from country-less detection by default", () => {
-    // "AA-00-00" only matches the pre-1992 historical series, which is opt-in.
-    expect(detect("AA-00-00").status).toBe("INVALID");
+    // Of the Portuguese series, "AA-00-00" only matches the pre-1992 one,
+    // which is opt-in — so the current-series reading left is the Danish
+    // number, and no Portuguese candidate appears.
+    const result = detect("AA-00-00");
+    expect(result.status).toBe("VALID");
+    expect(result.country).toBe("DK");
   });
 
   it("includes historical series when explicitly requested", () => {
     // With legacy series opted in, XX-99-99 is shared with Dutch sidecode 1,
-    // so country-less detection reports both candidates.
+    // so country-less detection reports both candidates. The Danish reading
+    // (two letters + four digits) is contradicted by the second separator,
+    // which would fall inside its digit group.
     const result = detect("AA-00-00", { includeHistorical: true });
     expect(result.status).toBe("AMBIGUOUS");
     const countries = result.candidates?.map((c) => c.country).sort();

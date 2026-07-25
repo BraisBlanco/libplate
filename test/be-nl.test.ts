@@ -67,9 +67,14 @@ describe("Netherlands", () => {
   });
 
   it("keeps legacy sidecodes opt-in in country-less detection", () => {
-    // Sidecode 1 is legacy: invisible without the flag…
-    expect(detect("ND-00-01").status).toBe("INVALID");
-    // …and with it, XX-99-99 collides with the Portuguese pre-1992 series.
+    // Sidecode 1 is legacy: invisible without the flag, which leaves the
+    // Danish reading (two letters + up to five digits) as the only one…
+    const current = detect("ND-00-01");
+    expect(current.status).toBe("VALID");
+    expect(current.country).toBe("DK");
+    // …and with the flag, XX-99-99 collides with the Portuguese pre-1992
+    // series. The Danish reading drops out here: the second separator falls
+    // inside its digit group, which contradicts that segmentation.
     const result = detect("ND-00-01", { includeHistorical: true });
     expect(result.status).toBe("AMBIGUOUS");
     const countries = result.candidates?.map((c) => c.country).sort();

@@ -1,0 +1,55 @@
+schemaVersion: 1
+id: FI_MISSION_TAXFREE
+country: FI
+name: Edustuston ja sen henkilökunnan muun tulli- ja verovapaan ajoneuvon rekisteritunnus (C)
+registrationType: DIPLOMATIC_STAFF
+# validFrom omitted, as for FI_DIPLOMATIC.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Second sentence of 16 § 1 mom. 4 k.: the OTHER duty- and tax-free vehicles
+  # of missions and of members of their staff — the residual category next to
+  # the CD series, with no vehicle class attached to it.
+  level: NOT_INFERABLE
+segments:
+  - name: prefix
+    type: LITERAL
+    value: C
+  # "Kirjain C ja ulkoministeriön määräämä enintään viisinumeroinen valkoinen
+  # luku" — one to five digits, again a number, so no leading zero.
+  #
+  # Known collision: a mark of C + up to four digits is also a well-formed
+  # export mark (FI_EXPORT is one letter + up to four digits), and nothing in
+  # the text separates them — the export plate is told apart by its red expiry
+  # field, the mission plate by its blue background. Those inputs are reported
+  # AMBIGUOUS rather than guessed.
+  - name: serial
+    type: DIGITS
+    minLength: 1
+    maxLength: 5
+    noLeadingZero: true
+formats:
+  national: "C-{serial}"
+  compact: "C{serial}"
+# 16 § 1 mom. 4 k.: white characters on a blue light-reflecting background.
+visual:
+  background: BLUE
+  foreground: WHITE
+sources:
+  - id: FI-VNA-162-2021
+    section: "16 § 1 mom. 4 k."
+  - id: FI-TRAFICOM-KILVET
+    section: "3.7"
+examples:
+  valid:
+    - "C-12345"
+    - "C-99999"
+  invalid:
+    - "C-0"
+    - "C-012345"
+    - "C-123456"
+    - "C-1234A"
+    - "CC-12345"

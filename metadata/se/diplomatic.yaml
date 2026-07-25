@@ -1,0 +1,68 @@
+schemaVersion: 1
+id: SE_DIPLOMATIC
+country: SE
+name: Skylt för beskickningsfordon (landskod + löpnummer + kategorikod)
+registrationType: DIPLOMATIC
+# validFrom is deliberately omitted: the six-character diplomatic composition
+# predates the föreskrifter that state it today. 12 kap. 3 § was last reworded
+# by TSFS 2025:33, which also added the definitions of landskod and
+# kategorikod in 12 kap. 1 a §; earlier wordings describe the same three
+# fields, and no act introducing them was traced.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 11 kap. of förordningen (2019:383) ties these plates to the holder's tax
+  # and immunity status, not to a vehicle category.
+  level: NOT_INFERABLE
+segments:
+  # 12 kap. 3 § 1: "en landskod (två bokstäver) som utvisar vilken beskickning
+  # ägaren eller brukaren av fordonet tillhör".
+  #
+  # Known limitation: the codes are assigned by Utrikesdepartementet (11 kap.
+  # 2 § of förordningen 2019:383 leaves the character composition to the
+  # ministry) and no official table is published, so the code is checked
+  # against the alphabet only — the same trade-off as the Spanish diplomatic
+  # prefixes and the Bulgarian regional codes. The I/Q/V exclusion of the
+  # ordinary series is an ordinary-plate practice and is NOT assumed here.
+  - name: mission
+    type: LETTERS
+    length: 2
+  # 12 kap. 3 § 2: "ett löpnummer (tre siffror) inom respektive landskod". No
+  # range is prescribed, so 000-999 is accepted.
+  - name: serial
+    type: DIGITS
+    length: 3
+  # 12 kap. 3 § 3: "en kategorikod (en bokstav) som utvisar ägarens eller
+  # brukarens ställning". The statuses and their letters are likewise set by
+  # Utrikesdepartementet with no published table.
+  - name: category
+    type: LETTERS
+    length: 1
+formats:
+  national: "{mission} {serial} {category}"
+  compact: "{mission}{serial}{category}"
+# 12 kap. 2 §: black characters on a light-blue light-reflecting background,
+# with a black frame.
+visual:
+  background: BLUE
+  foreground: BLACK
+sources:
+  - id: SE-TSFS-2015-63
+    section: "12 kap. 1 a §, 2-3 §§"
+  - id: SE-FORORDNING-2019-383
+    section: "11 kap."
+examples:
+  valid:
+    - "AB 123 C"
+    - "XY 001 D"
+    - "CD-500-A"
+  invalid:
+    - "A 123 C"
+    - "ABC 123 C"
+    - "AB 12 C"
+    - "AB 1234 C"
+    - "AB 123 CD"
+    - "AB 123"

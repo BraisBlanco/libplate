@@ -1,0 +1,67 @@
+schemaVersion: 1
+id: DK_ORDINARY
+country: DK
+name: Registreringsnummer (to bogstaver + et til fem cifre)
+registrationType: ORDINARY
+# validFrom is deliberately omitted. § 72, stk. 3, nr. 4 of the
+# registreringsbekendtgørelse refers to "de retningslinjer for udformning af
+# registreringsnumre, der har været gældende siden den 1. april 1976" — the
+# date that also separates historical plates (§ 75) from current ones — but
+# two letters followed by digits is older than that (the police-district
+# letter pairs of 1958 have the same shape), so no start date is asserted.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 68, stk. 2 gives the SAME composition to every registered vehicle: cars,
+  # vans, lorries, buses, motorcycles, mopeds, tractors and trailers alike.
+  # § 68, stk. 3 lets the tax administration divide the numbers into series by
+  # vehicle kind or use, but publishes no such division, so the series say
+  # nothing about the vehicle. The plate colour (white, yellow for goods
+  # vehicles, the yellow-and-white "papegøjeplade" for mixed use) follows from
+  # the vehicle's registration-tax status, not from the number.
+  level: NOT_INFERABLE
+segments:
+  # § 68, stk. 2: "et registreringsnummer, der består af to latinske bogstaver
+  # efterfulgt af et til fem arabiske tal".
+  #
+  # Known limitation: the bekendtgørelse names no alphabet beyond "latinske",
+  # and Motorstyrelsen publishes no list of the letter pairs in use or
+  # withheld, so the full A-Z is accepted. Æ, Ø and Å are not Latin basic and
+  # never appear.
+  - name: letters
+    type: LETTERS
+    length: 2
+  # One to five digits. No range is prescribed and leading zeros are not
+  # excluded by the text.
+  - name: number
+    type: DIGITS
+    minLength: 1
+    maxLength: 5
+formats:
+  national: "{letters} {number}"
+  compact: "{letters}{number}"
+# No visual: the registreringsbekendtgørelse prescribes a background colour
+# only for diplomatic plates (§ 76: the same registration number on a BLUE
+# background, with a white-background dispensation in stk. 2). White, yellow
+# and the yellow/white "papegøjeplade" all carry a § 68, stk. 2 number and
+# follow the vehicle's tax status, which is set outside this order — so the
+# scheme asserts no colours.
+sources:
+  - id: DK-BEK-866-2023
+    section: "§ 67; § 68; § 72, stk. 3, nr. 4; § 76"
+examples:
+  valid:
+    - "AB 12345"
+    - "CD 99999"
+    - "XY 1"
+    - "AA-12-345"
+  invalid:
+    - "A 12345"
+    - "ABC 12345"
+    - "AB 123456"
+    - "AB"
+    - "12 AB"
+    - "AB 1234A"

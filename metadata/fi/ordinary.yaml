@@ -1,0 +1,84 @@
+schemaVersion: 1
+id: FI_ORDINARY
+country: FI
+name: Auton ja perävaunun rekisteritunnus (kirjaimet + luku)
+registrationType: ORDINARY
+# validFrom is deliberately omitted: letters followed by a number is the
+# composition Finland has used since long before valtioneuvoston asetus
+# ajoneuvoista (162/2021) restated it in its 16 §, and the earlier acts
+# (asetus ajoneuvojen rekisteröinnistä 1598/1995, 893/2007) carried the same
+# wording. Two-letter marks are the older series and stay in circulation.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 16 § 1 momentti 1 kohta assigns this order (letters, then number) to
+  # "auto ja perävaunu". It is NOT decisive, though: 16 § 3 momentti lets an
+  # L-class museum vehicle carry a mark in the same order (white on black),
+  # and Traficom grants special marks (erityistunnus, 17 §) to motorcycles and
+  # mopeds "toisinpäin" — either order. Text alone therefore does not settle
+  # the category.
+  level: NOT_INFERABLE
+segments:
+  # "Kaksi tai kolme mustaa kirjainta" (16 § 1 mom. 1 k.).
+  #
+  # Known limitation: the decree fixes no alphabet. Å, Ä and Ö are outside the
+  # Latin basic alphabet and never appear; Traficom states that W and Q are
+  # restricted on moped and snowmobile marks, which is a per-series practice
+  # and is not modelled. The one reservation that IS modelled is CD: Traficom
+  # states the combination belongs to diplomatic vehicles alone, and 16 § 1
+  # mom. 4 k. gives it to them, so it is excluded here — otherwise every
+  # Finnish diplomatic plate with up to three digits would come back
+  # AMBIGUOUS. Three-letter groups that merely begin with CD (CDE) are
+  # unaffected.
+  - name: letters
+    type: LETTERS
+    minLength: 2
+    maxLength: 3
+    excludedValues:
+      - CD
+  # "Enintään kolminumeroinen luku" — a NUMBER of at most three digits, so
+  # 1-999. Traficom states it explicitly for the marks it grants on request:
+  # "nolla ei voi olla numero-osan alussa eikä ainoana numerona".
+  - name: number
+    type: DIGITS
+    minLength: 1
+    maxLength: 3
+    noLeadingZero: true
+formats:
+  # A one-row plate must carry a hyphen between the letters and the digits
+  # (Traficom regulation, 3.1); the two-row car plate must not.
+  national: "{letters}-{number}"
+  compact: "{letters}{number}"
+# 16 § 1 mom. 1 k.: black characters on a white light-reflecting background.
+# The same mark appears white on black on request for a vehicle first taken
+# into use before 1972 or previously so equipped (16 § 2 mom.) and for museum
+# vehicles (16 § 3 mom.) — colour variants of the same characters.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: FI-VNA-162-2021
+    section: "16 § 1 mom. 1 k.; 16 § 2-3 mom.; 17 §"
+  - id: FI-AJONEUVOLAKI
+    section: "99 §"
+  - id: FI-TRAFICOM-KILVET
+    section: "3.1-3.2"
+  - id: FI-TRAFICOM-ERITYISTUNNUS
+examples:
+  valid:
+    - "ABC-123"
+    - "AB-1"
+    - "XYZ-99"
+    - "ZZ 999"
+  invalid:
+    # CD is reserved for diplomatic vehicles.
+    - "CD-123"
+    - "A-123"
+    - "ABCD-123"
+    - "ABC-0"
+    - "ABC-012"
+    - "ABC-1234"
+    - "123-ABC"
