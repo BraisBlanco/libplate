@@ -327,6 +327,181 @@ const result = parse("R-1234-BCD", { country: "ES" });
 // result.vehicle.inferenceLevel    -> "DETERMINISTIC"
 ```
 
+### The result
+
+`parse` returns a `PlateValidationResult` and does not throw on input it cannot
+parse: every outcome, rejection included, is a value in `status`. This is the
+full result for `parse("R-1234-BCD", { country: "ES" })`:
+
+```json
+{
+  "status": "VALID",
+  "input": { "raw": "R-1234-BCD", "compact": "R1234BCD" },
+  "country": "ES",
+  "normalized": "R1234BCD",
+  "formatted": "R 1234 BCD",
+  "scheme": {
+    "id": "ES_TRAILER_CURRENT",
+    "country": "ES",
+    "name": "Remolques y semirremolques",
+    "validFrom": "1999-07-26",
+    "components": { "prefix": "R", "serial": "1234", "series": "BCD" }
+  },
+  "registration": {
+    "type": "ORDINARY",
+    "temporary": false,
+    "diplomatic": false,
+    "historical": null
+  },
+  "vehicle": {
+    "category": "TRAILER_OR_SEMITRAILER",
+    "inferenceLevel": "DETERMINISTIC",
+    "evidence": [{ "type": "PREFIX", "value": "R" }]
+  },
+  "visual": { "background": "RED", "foreground": "BLACK" },
+  "warnings": [],
+  "errors": [],
+  "versions": { "library": "0.1.0", "metadata": "2026.07.8" }
+}
+```
+
+| Field           | Present when                             | What it holds                                                                                |
+| --------------- | ---------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `status`        | always                                   | The outcome. Branch on this first.                                                           |
+| `input.raw`     | always                                   | Exactly the string you passed, untouched.                                                    |
+| `input.compact` | always                                   | Uppercased, accepted separators and whitespace removed — the form actually matched.          |
+| `country`       | once the input clears the basic checks   | The `country` option echoed back, or the country resolved by `detect`.                       |
+| `normalized`    | once a scheme or candidate was found     | The same string as `input.compact`, surfaced at the top level for convenience.               |
+| `formatted`     | `VALID`                                  | National formatting from the matched scheme (`R 1234 BCD`, `B-AB 123`, `1-ABC-123`).         |
+| `scheme`        | `VALID`                                  | `id`, `country`, human `name`, `validFrom`/`validTo`, and `components` per named segment.    |
+| `candidates`    | `AMBIGUOUS`                              | Every surviving reading — country, scheme, formatting and components. Never pre-ranked.      |
+| `registration`  | `VALID`                                  | The **regime** (`type`, `temporary`, `diplomatic`, `historical`) — not the vehicle category. |
+| `vehicle`       | `VALID`                                  | `category` / `possibleCategories`, plus `inferenceLevel` and the `evidence` behind it.       |
+| `visual`        | `VALID`, when the scheme prescribes them | Background and foreground colours **as prescribed by the regulation** — never checked.       |
+| `warnings`      | always                                   | Reserved. No code path populates it yet, so it is always `[]`.                               |
+| `errors`        | always                                   | Empty on `VALID`; otherwise one entry per reason, each with a stable code and a message.     |
+| `versions`      | always                                   | `library` and `metadata` versions — the metadata version moves independently.                |
+
+`scheme.id` is the stable key to look the legal basis up in
+[`docs/SOURCES.md`](docs/SOURCES.md); the result itself carries no citations.
+
+#### Status values
+
+| Status        | Meaning                                                                     |
+| ------------- | --------------------------------------------------------------------------- |
+| `VALID`       | Matches exactly one scheme with exactly one segmentation.                   |
+| `INVALID`     | Empty, too long, illegal characters, or matching no known scheme.           |
+| `AMBIGUOUS`   | More than one reading survives. `candidates` lists them; nothing is picked. |
+| `UNSUPPORTED` | The requested country is not modelled — which is not the same as invalid.   |
+| `POSSIBLE`    | Declared in the type, reserved for OCR-tolerant parsing. Not emitted today. |
+
+Treating anything that is not `VALID` as an error will reject correct plates:
+`AMBIGUOUS` means the text is fine but underdetermined, and `UNSUPPORTED` says
+nothing about the plate at all.
+
+#### Reason codes
+
+Branch on `errors[].reason`, never on `message` — the codes are contract, the
+messages are not. Emitted today:
+
+`EMPTY_INPUT` · `TOO_LONG` (over 64 characters) · `INVALID_CHARACTERS` ·
+`INVALID_STRUCTURE` · `AMBIGUOUS_COUNTRY` · `AMBIGUOUS_SCHEME` ·
+`AMBIGUOUS_SEGMENTATION` · `UNSUPPORTED_COUNTRY`
+
+Also declared, but not produced by any current code path: `VALID`, `TOO_SHORT`,
+`INVALID_LENGTH`, `INVALID_PREFIX`, `INVALID_SEQUENCE`,
+`OUTSIDE_VALIDITY_PERIOD`, `UNSUPPORTED_SCHEME`, `VISUAL_EVIDENCE_REQUIRED`,
+`REGISTRY_CHECK_REQUIRED`. They are reserved for finer diagnostics; a `switch`
+over them is safe but the extra arms are unreachable for now. In particular, a
+plate excluded by `referenceDate` currently reports `INVALID_STRUCTURE`, not
+`OUTSIDE_VALIDITY_PERIOD` — the scheme is filtered out before matching.
+
+#### The other three shapes
+
+An input that matches nothing keeps only the diagnosis:
+
+```json
+// parse("R 123 BCD", { country: "ES" })  — three digits, not four
+{
+  "status": "INVALID",
+  "country": "ES",
+  "errors": [
+    {
+      "reason": "INVALID_STRUCTURE",
+      "message": "Input does not match any known plate scheme."
+    }
+  ]
+}
+```
+
+An ambiguous input replaces `scheme` with `candidates` — here one scheme with
+two legal splits of the same text:
+
+```json
+// parse("BAB123", { country: "DE" })
+{
+  "status": "AMBIGUOUS",
+  "normalized": "BAB123",
+  "candidates": [
+    {
+      "country": "DE",
+      "scheme": "DE_STANDARD",
+      "formatted": "B-AB 123",
+      "components": { "district": "B", "letters": "AB", "number": "123" }
+    },
+    {
+      "country": "DE",
+      "scheme": "DE_STANDARD",
+      "formatted": "BA-B 123",
+      "components": { "district": "BA", "letters": "B", "number": "123" }
+    }
+  ],
+  "errors": [{ "reason": "AMBIGUOUS_SEGMENTATION", "message": "…" }]
+}
+```
+
+Writing the separators resolves it: `B-AB 123` is Berlin, `BA-B 123` is
+Bamberg. Without a country hint the same mechanism reports
+`AMBIGUOUS_COUNTRY` instead — `detect("AA-123-AA")` returns the French
+`FR_SIV_CURRENT` and the Italian `IT_CURRENT` as candidates.
+
+An unmodelled country is reported as such, not as a rejection:
+
+```json
+// parse("ABC123", { country: "GB" })
+{
+  "status": "UNSUPPORTED",
+  "country": "GB",
+  "errors": [
+    { "reason": "UNSUPPORTED_COUNTRY", "message": "Country \"GB\" is not supported." }
+  ]
+}
+```
+
+#### Reading the inferences
+
+`registration` is the administrative regime, `vehicle` is the category, and the
+two are independent: a `WW` French plate is deterministically temporary and
+tells you nothing about the vehicle.
+
+- **`registration.historical` is `null` when text cannot decide it** — which is
+  most of the time. `null` means "unknown", not `false`. Spanish Group A
+  historical vehicles keep their ordinary plate and carry only a badge.
+- **`vehicle.inferenceLevel` qualifies every category**, and must be read
+  before the category is shown to anyone:
+
+| Level                      | Meaning                                                               |
+| -------------------------- | --------------------------------------------------------------------- |
+| `DETERMINISTIC`            | The format guarantees it (Spanish `R` is a trailer).                  |
+| `CATEGORY_ONLY`            | A broad class, no subtype (Spanish `E` is _some_ special vehicle).    |
+| `VISUAL_EVIDENCE_REQUIRED` | The text is compatible with several categories; the plate shows more. |
+| `REGISTRY_REQUIRED`        | Only the registry knows (any French SIV number).                      |
+| `NOT_INFERABLE`            | The scheme encodes nothing about the vehicle.                         |
+
+- **`visual` is an expectation, not a check.** It reports the colours the
+  regulation prescribes for the matched scheme. libplate never sees a plate, so
+  it cannot compare them with anything.
+
 ### Detecting without a country hint
 
 ```ts
