@@ -121,7 +121,7 @@ describe("convenience helpers", () => {
       "RO",
     ]);
     expect(getSupportedSchemes("ES")).toContain("ES_TRAILER_CURRENT");
-    expect(getSupportedSchemes()).toHaveLength(103);
+    expect(getSupportedSchemes()).toHaveLength(105);
     expect(getMetadataVersion()).toMatch(/^\d{4}\.\d{2}\.\d+$/);
   });
 });

@@ -1,0 +1,93 @@
+schemaVersion: 1
+id: RO_PROVISIONAL
+country: RO
+name: Număr provizoriu (autorizare provizorie pentru circulaţie)
+# TEMPORARY_PRIVATE is the generic pre-registration regime: art. 15 alin. (1) of
+# Ordinul MAI 181/2024 authorizes provisional circulation of an UNREGISTERED
+# vehicle until it is registered, whoever the owner is (art. 16 alin. (1) lit. d
+# contemplates a persoană juridică too — TEMPORARY_COMPANY is reserved for the
+# dealer-style regimes such as the Spanish "V" series).
+registrationType: TEMPORARY_PRIVATE
+# validFrom omitted, as for RO_ORDINARY: the composition is stated by
+# HG 1391/2006 art. 23 alin. (4) but provisional authorization long predates it
+# and the act that first fixed the composition was not traced.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Art. 15 alin. (1) of Ordinul MAI 181/2024: "autovehiculelor şi a remorcilor
+  # neînmatriculate" — exactly the set that RO_ORDINARY covers, so the same
+  # categories are possible and nothing narrows them.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - MOTORCYCLE
+    - VAN
+    - TRUCK
+    - BUS
+    - TRAILER_OR_SEMITRAILER
+    - SPECIAL_VEHICLE
+  evidence:
+    - type: PATTERN
+      value: "county indicative + order number, no letter group (art. 23 alin. (4))"
+segments:
+  # Same indicative as the ordinary series — "indicativul judeţului sau al
+  # municipiului Bucureşti" (art. 23 alin. (4)).
+  - name: indicative
+    type: TABLE
+    table: ro-indicative
+  # "Numărul de ordine" and nothing else: the provisional number is the ordinary
+  # composition MINUS the three-letter group, which is what makes it a distinct
+  # scheme rather than a colour variant.
+  #
+  # Known limitation: no published text gives the digit count. Art. 26 alin. (1)
+  # of Ordinul MAI 181/2024 puts "alcătuirea numerelor de ordine" for the
+  # provisional plates in the state standard (SR 13078), which is not published
+  # free of charge, and alin. (2) lets the minister change it. The bound used
+  # here is the same structural argument that bounds RO_ORDINARY — the plate
+  # holds seven characters, indicative included — so a two-letter county code
+  # leaves five digits and Bucharest's "B" leaves six. Leading zeros are NOT
+  # excluded: nothing forbids them and the circulating plates show them.
+  - name: number
+    type: DIGITS
+    minLength: 1
+    maxLength: 6
+lengthRules:
+  anyOf:
+    - segments: [indicative, number]
+      max: 7
+formats:
+  national: "{indicative} {number}"
+  compact: "{indicative}{number}"
+# visual is deliberately omitted. Art. 20 alin. (2) fixes the white background
+# and the black/blue/red character colours for plates "cu numărul de
+# înmatriculare"; a provisional plate is not one of those (Ordinul MAI 181/2024
+# art. 26 alin. (1) lists "plăcuţele cu număr de înmatriculare, provizoriu sau
+# pentru probe" as three separate things and sends their colours to the state
+# standard). The red-on-white plate everyone calls "numere roşii" is therefore
+# real but not officially documented in a free source, so libplate reports no
+# colours rather than asserting them.
+sources:
+  - id: RO-REG
+    section: "art. 23 alin. (4), alin. (6)"
+  - id: RO-OMAI-181
+    section: "art. 15; art. 16; art. 26"
+  - id: RO-ISO3166
+examples:
+  valid:
+    - "B 123456"
+    - "B 012345"
+    - "CJ 12345"
+    - "TM-01234"
+    - "IF 7"
+  invalid:
+    # Seven digits behind "B", six behind a two-letter code: both exceed the
+    # plate's seven characters.
+    - "B 1234567"
+    - "CJ 123456"
+    - "XY 12345"
+    - "B"
+    # A letter group makes it an ordinary number, not a provisional one.
+    - "B 12 ABC"

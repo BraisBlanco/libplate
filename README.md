@@ -14,7 +14,7 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 
 ### Supported countries
 
-**12 countries, 103 schemes.** Each row links to its plate-type table below.
+**12 countries, 105 schemes.** Each row links to its plate-type table below.
 
 | Country                         | Schemes | Coverage                                                                                                   |
 | ------------------------------- | ------: | ---------------------------------------------------------------------------------------------------------- |
@@ -28,7 +28,7 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 | [🇵🇱 Poland](#-poland)           |      10 | Ordinary car/motorcycle/powiat, reduced, historic, temporary, diplomatic, individual, professional         |
 | [🇦🇹 Austria](#-austria)         |       7 | Standard, Wunschkennzeichen, diplomatic; federal `A`, Land, authority-area and fire-brigade series         |
 | [🇪🇪 Estonia](#-estonia)         |       9 | Standard and reduced, motorcycle, moped, tractor, veteran, `CD`/`CMD`, `PROOV` dealer marks                |
-| [🇷🇴 Romania](#-romania)         |       1 | The ordinary county and Bucharest series                                                                   |
+| [🇷🇴 Romania](#-romania)         |       3 | The ordinary county and Bucharest series; provisional and `PROBE` numbers                                  |
 | [🇧🇬 Bulgaria](#-bulgaria)       |       6 | Ordinary, third plate, transit and trader temporary numbers, each with its category-L variant              |
 
 Countries not yet modelled, and the series still missing inside those above, are
@@ -252,20 +252,44 @@ write resolves it, since the moped's characters sit in a single field.
 
 #### 🇷🇴 Romania
 
-| Type            | Example     | Notes                                                     |
-| --------------- | ----------- | --------------------------------------------------------- |
-| Ordinary series | `CJ 01 XYZ` | County indicative + 2 digits + 3 letters                  |
-| Ordinary series | `B 117 VAY` | Bucharest only: 3 digits fit behind a 1-letter indicative |
+| Type                | Example      | Notes                                                     |
+| ------------------- | ------------ | --------------------------------------------------------- |
+| Ordinary series     | `CJ 01 XYZ`  | County indicative + 2 digits + 3 letters                  |
+| Ordinary series     | `B 117 VAY`  | Bucharest only: 3 digits fit behind a 1-letter indicative |
+| Provisional         | `B 012345`   | Indicative + order number, no letter group                |
+| Probe (dealer/test) | `B 12 PROBE` | Indicative + order number + the `PROBE` inscription       |
 
 HG 1391/2006 art. 23 alin. (1) fixes the composition (indicative + order number
 in Arabic digits + three Latin capitals) but not the digit count: art. 26
-alin. (1) of Ordinul MAI 1501/2006 leaves that to a state standard that is not
-published free of charge. libplate therefore caps the whole number at the
-plate's seven characters, which reproduces the real allocation — two digits
-behind a two-letter county code, two or three behind Bucharest's `B` — without
-inventing a per-county table. The 42 indicatives are validated against the
-ISO 3166-2:RO list (identical to the plate codes). Compact Bucharest plates
-(`B12ABC`) also read as Austrian plates, so write the separators.
+alin. (1) of Ordinul MAI 181/2024 — which replaced Ordinul MAI 1501/2006 —
+leaves that to a state standard that is not published free of charge. libplate
+therefore caps the whole number at the plate's seven characters, which
+reproduces the real allocation — two digits behind a two-letter county code, two
+or three behind Bucharest's `B` — without inventing a per-county table. The 42
+indicatives are validated against the ISO 3166-2:RO list (identical to the plate
+codes). Compact Bucharest plates (`B12ABC`) also read as Austrian plates, so
+write the separators.
+
+The provisional number (art. 23 alin. (4)) and the probe number (alin. (5)) are
+the same indicative plus an order number, the second one followed by the word
+`PROBE`. Their digit widths are unpublished for the same reason, so both are
+bounded by the same seven characters: up to six digits behind `B`, up to five
+behind a two-letter code, leading zeros included since the circulating red
+plates use them. That makes the provisional series wide, and a provisional
+number without separators (or with them) can read as an Austrian, German,
+Italian or Polish plate — pass `{ country: "RO" }` when you know the origin.
+`PROBE` carries no such risk. Neither scheme reports colours: art. 26 alin. (1)
+of the order sends the colours of provisional and probe plates to the same
+unpublished standard, so the familiar red-on-white is real but not officially
+documented.
+
+Still absent, and why: diplomatic `CD`/`CO`/`TC` and temporary numbers (art. 23
+alin. (2)-(3)) — composition without widths, and guessing them would make every
+Spanish `CD` plate ambiguous; the yellow locality plates — now specified by
+anexa nr. 6 of Ordinul 181/2024 as county indicative + numeric locality code
+(anexa nr. 7) + order number, so they are modellable but not modelled yet; and
+MApN/MAI/SRI/SPP numbers, whose abbreviations come from each institution's own
+unpublished order (art. 30 alin. (3)-(4)).
 
 #### 🇧🇬 Bulgaria
 
@@ -301,9 +325,10 @@ black plates and military/service series; Austrian pre-1989 black plates;
 Estonian special-order marks (type A2, letters then digits — their space
 swallows most other series), racing (A10) and transit (D1/D2) marks, and the
 President's coat-of-arms plate (A12, no characters at all); Romanian diplomatic
-(`CD`/`CO`/`TC`), provisional, `PROBE`, temporary, yellow local-council and
-army/police numbers (the widths and abbreviations live in the unpublished state
-standard or in each institution's own order); Bulgarian by-request six-character
+(`CD`/`CO`/`TC`) and temporary numbers (composition without widths — the state
+standard SR 13078 is not published), the yellow locality plates (specified since
+2024 by anexa nr. 6-7 of Ordinul MAI 181/2024, so modellable, just not modelled)
+and army/police numbers (each institution's own order); Bulgarian by-request six-character
 numbers (their character space contains the ordinary series), diplomatic,
 army and police series (all outside Наредба № I-45).
 

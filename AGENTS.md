@@ -32,7 +32,8 @@ Austria (standard + Wunschkennzeichen + diplomatic/consular + the all-digit
 federal `A`, Land-government, `BP`/`FV`/`PT`/`BD`/`BH`/`JW` and `FW`
 fire-brigade series), Estonia (standard A1 + reduced A3 + motorcycle/moped +
 tractor + veteran + `CD`/`CMD` diplomatic + `PROOV` dealer marks), Romania
-(the ordinary county/Bucharest series), Bulgaria (ordinary + third plate +
+(the ordinary county/Bucharest series + provisional and `PROBE` numbers),
+Bulgaria (ordinary + third plate +
 transit and trader temporary numbers, each with its category-L variant). See
 `README.md` for the full matrix.
 
@@ -317,19 +318,39 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
   2011 regulation and no earlier act was traced.
 - **RO digit widths are inferred from the plate's seven-character capacity.**
   HG 1391/2006 art. 23 alin. (1) gives the composition but no digit count, and
-  art. 26 alin. (1) of Ordinul MAI 1501/2006 puts the widths in state standard
-  SR 13078, which is not published free of charge. `RO_ORDINARY` therefore uses
-  a `lengthRules` cap of 7 over indicative+number+letters, which yields 2 digits
-  behind a two-letter county code and 2-3 behind Bucharest's `B`. The order
-  numbers are modelled as 01-99 and 100-999 (`NN` plus `1NN`…`9NN`), the second
-  range being the series Bucharest opened in 2010. The indicative table stands
-  on ISO 3166-2:RO, whose Romanian codes ARE the plate indicatives. Deferred for
-  want of official widths: diplomatic `CD`/`CO`/`TC`, provisional, `PROBE` and
-  temporary numbers. Not modellable at all: the yellow local-council plates
-  (art. 25 alin. (1) puts a free-text locality name on them) and MApN/MAI/SRI
-  numbers (each institution's abbreviation comes from its own unpublished
-  order). Art. 24 alin. (3) obscene/authority-like letter combinations have no
-  published list.
+  art. 26 alin. (1) of **Ordinul MAI 181/2024** (MO 1141 bis/15.11.2024, which
+  repealed Ordinul MAI 1501/2006 by its art. 53 — do not cite the old order)
+  puts the widths in state standard SR 13078, which is not published free of
+  charge. `RO_ORDINARY` therefore uses a `lengthRules` cap of 7 over
+  indicative+number+letters, which yields 2 digits behind a two-letter county
+  code and 2-3 behind Bucharest's `B`. The order numbers are modelled as 01-99
+  and 100-999 (`NN` plus `1NN`…`9NN`), the second range being the series
+  Bucharest opened in 2010. The indicative table stands on ISO 3166-2:RO, whose
+  Romanian codes ARE the plate indicatives. `RO_PROVISIONAL` (art. 23 alin. (4))
+  and `RO_PROBE` (alin. (5)) apply the same 7-character cap to indicative +
+  order number, so they accept 1-6 digits behind `B` and 1-5 behind a county
+  code, leading zeros included — deliberately wide, because no text bounds them
+  further. The cost is borne by `detect`: a provisional number collides with
+  `AT_LAND`/`AT_BUND_*`, a German district + letter + digits, an Italian
+  motorcycle mark and Polish series, so it resolves only with a `country` hint.
+  `RO_PROBE` is anchored by its literal and collides with nothing. Neither
+  carries `visual`: art. 26 alin. (1) sends provisional/probe colours to the
+  same unpublished standard, so the red-on-white "numere roşii" is real but
+  undocumented officially — do not assert it. Still deferred for want of
+  official widths: diplomatic `CD`/`CO`/`TC` and temporary numbers; pinning the
+  diplomatic width at 4 digits would make every Spanish `CD` plate AMBIGUOUS,
+  and the practice figure (6 digits, first three a mission code) has only
+  wiki/blog backing. **Now modellable but not modelled**: the yellow locality
+  plates — anexa nr. 6 of Ordinul 181/2024 replaced the free-text locality name
+  of HG 1391/2006 art. 25 alin. (1) with county indicative + a NUMERIC locality
+  code + order number, and its anexa nr. 7 is the official code list (~3,200
+  localities, per-county numbering, Bucharest sectors 11-16); modelling it needs
+  a paired county+locality table, and pre-2024 plates keep their old content
+  until deregistration (art. 51 alin. (2)). Not modellable: MApN/MAI/SRI/SPP
+  numbers (art. 30 alin. (3)-(4) — each institution's own unpublished order).
+  Art. 24 alin. (3) obscene/authority-like letter combinations have no published
+  list. Green plates for zero-CO2 vehicles (Ordinul comun 676/44/443/2022, since
+  2022-06-27) are a colour variant of the ordinary number, not a scheme.
 - **BG regional codes are charset-checked only.** Наредба № I-45 чл. 24 ал. 2
   leaves the letter codes and series in use to the National Police, and no
   official table is published — the same trade-off as the ES diplomatic

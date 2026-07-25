@@ -14,11 +14,17 @@ normalization:
 vehicleInference:
   # Art. 23 alin. (1) assigns the same composition to every autovehicul and
   # remorcă. Tractors, mopeds, light quadricycles, trolleybuses and trams are
-  # NOT înmatriculate but înregistrate (art. 23 of Ordinul 1501/2006) and carry
-  # the locality-name plates of art. 25 alin. (1), which are not modelled.
+  # NOT înmatriculate but înregistrate (art. 29 of Ordinul MAI 181/2024) and
+  # carry the yellow locality plates, whose content is now anexa nr. 6 of that
+  # order — county indicative + a numeric locality code from its anexa nr. 7 +
+  # an order number — and which are not modelled yet.
+  # Motorcycles ARE înmatriculate — art. 26 alin. (1) of the Regulament tells the
+  # owner to fix the plate "la motocicletă ... numai la partea din spate" — so
+  # they belong in the category union; mopeds do not (they are înregistrate).
   level: CATEGORY_ONLY
   possibleCategories:
     - PASSENGER_CAR
+    - MOTORCYCLE
     - VAN
     - TRUCK
     - BUS
@@ -30,12 +36,12 @@ vehicleInference:
 segments:
   # "Indicativul judeţului sau al municipiului Bucureşti" — the 41 two-letter
   # county codes plus the single-letter "B". Art. 26 alin. (1) of Ordinul MAI
-  # 1501/2006 places the list in a state standard; see the table's note.
+  # 181/2024 places the list in a state standard; see the table's note.
   - name: indicative
     type: TABLE
     table: ro-indicative
   # "Numărul de ordine, format din cifre arabe" (art. 23 alin. (1)). The
-  # regulation fixes no width — art. 26 alin. (1) of Ordinul 1501/2006 leaves
+  # regulation fixes no width — art. 26 alin. (1) of Ordinul MAI 181/2024 leaves
   # "alcătuirea numerelor de ordine" to the state standard, and alin. (2) lets
   # the minister change it. Two digits (01-99) are the general case; the
   # three-digit series (100-999) exists because a plate holds seven characters,
@@ -77,14 +83,18 @@ formats:
 # Art. 20 alin. (2): white retroreflective background with the characters in
 # relief, coloured black, blue or red. Black is the ordinary case; blue is used
 # for the diplomatic series (art. 23 alin. (2), not modelled) and red for
-# provisional numbers.
+# provisional numbers (RO_PROVISIONAL, which reports no colours because that
+# assignment is not in a freely published text). Since 2022-06-27 a zero-CO2
+# vehicle may carry the SAME number in green on white, on the owner's request
+# (Ordinul comun MMAP/MAI/MTI nr. 676/44/443/2022, issued under art. 20
+# alin. (2) as then amended) — a colour variant, not a separate number.
 visual:
   background: WHITE
   foreground: BLACK
 sources:
   - id: RO-REG
     section: "art. 20 alin. (2); art. 23 alin. (1); art. 24"
-  - id: RO-OMAI-1501
+  - id: RO-OMAI-181
     section: "art. 26"
   - id: RO-ISO3166
 examples:

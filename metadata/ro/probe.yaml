@@ -1,0 +1,83 @@
+schemaVersion: 1
+id: RO_PROBE
+country: RO
+name: Număr pentru probe (înmatriculare pentru probe)
+# Art. 19 alin. (1)-(2) of Ordinul MAI 181/2024: issued to legal persons that
+# manufacture, assemble, body, modify or test vehicles (and to defence/public-
+# order institutions), and to vehicle traders proving they hold at least five
+# vehicles per authorization; the authorization lasts one year.
+registrationType: PROFESSIONAL_TEMPORARY
+# validFrom omitted for the same reason as RO_ORDINARY and RO_PROVISIONAL.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Art. 19 alin. (1): vehicles under type-approval testing, incomplete vehicles
+  # moving to the bodybuilder, and vehicles offered for customer test drives —
+  # the whole RO_ORDINARY set again, nothing narrower.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - MOTORCYCLE
+    - VAN
+    - TRUCK
+    - BUS
+    - TRAILER_OR_SEMITRAILER
+    - SPECIAL_VEHICLE
+  evidence:
+    - type: PATTERN
+      value: 'county indicative + order number + the inscription "PROBE" (art. 23 alin. (5))'
+segments:
+  # Art. 23 alin. (5): "un număr compus din indicativul judeţului sau al
+  # municipiului Bucureşti, numărul de ordine şi înscrisul «PROBE»" — the three
+  # elements in that order.
+  - name: indicative
+    type: TABLE
+    table: ro-indicative
+  # Same unpublished-width situation as RO_PROVISIONAL (art. 26 alin. (1) of
+  # Ordinul MAI 181/2024 covers "plăcuţele cu număr ... pentru probe" too), and the
+  # same structural bound: the seven characters of the number field. The alin.
+  # (5) wording keeps the "înscris PROBE" separate from the "număr de ordine",
+  # so the word is not counted against that capacity.
+  - name: number
+    type: DIGITS
+    minLength: 1
+    maxLength: 6
+  # The inscription itself. It is what makes this scheme unambiguous — no other
+  # modelled series in any country carries it.
+  - name: inscription
+    type: LITERAL
+    value: PROBE
+lengthRules:
+  anyOf:
+    - segments: [indicative, number]
+      max: 7
+formats:
+  national: "{indicative} {number} {inscription}"
+  compact: "{indicative}{number}{inscription}"
+# visual omitted for the same reason as RO_PROVISIONAL: Ordinul MAI 181/2024
+# art. 26 alin. (1) sends the colours of the "plăcuţe cu număr ... pentru probe"
+# to the unpublished state standard, and art. 20 alin. (2) of the Regulament
+# covers only plates "cu numărul de înmatriculare".
+sources:
+  - id: RO-REG
+    section: "art. 23 alin. (5), alin. (6)"
+  - id: RO-OMAI-181
+    section: "art. 19; art. 20; art. 21; art. 26"
+  - id: RO-ISO3166
+examples:
+  valid:
+    - "B 12 PROBE"
+    - "B 123456 PROBE"
+    - "CJ 1 PROBE"
+    - "TM-12345-PROBE"
+  invalid:
+    - "B 1234567 PROBE"
+    - "CJ 123456 PROBE"
+    - "XY 12 PROBE"
+    - "B 12 PROBA"
+    - "B PROBE"
+    # The inscription follows the number (art. 23 alin. (5) order).
+    - "B PROBE 12"

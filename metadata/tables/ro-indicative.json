@@ -1,6 +1,6 @@
 {
   "id": "ro-indicative",
-  "description": "Romanian registration indicatives — the 41 county (judeţ) codes plus 'B' for the municipality of Bucharest. HG 1391/2006 art. 23 alin. (1) makes the indicative the first element of every registration number but does not list the codes: art. 26 alin. (1) of Ordinul MAI 1501/2006 puts them in a state standard (SR 13078), which is not published free of charge. The codes are the same as the ISO 3166-2:RO subdivision codes, which ISO derived from the vehicle registration indicatives — that public list is the reference used here.",
+  "description": "Romanian registration indicatives — the 41 county (judeţ) codes plus 'B' for the municipality of Bucharest. HG 1391/2006 art. 23 alin. (1) makes the indicative the first element of every registration number but does not list the codes: art. 26 alin. (1) of Ordinul MAI 181/2024 (which repealed Ordinul MAI 1501/2006) puts them in a state standard (SR 13078), which is not published free of charge. The codes are the same as the ISO 3166-2:RO subdivision codes, which ISO derived from the vehicle registration indicatives — that public list is the reference used here.",
   "sources": [
     {
       "id": "RO-ISO3166"
@@ -10,7 +10,7 @@
       "section": "art. 23 alin. (1)"
     },
     {
-      "id": "RO-OMAI-1501",
+      "id": "RO-OMAI-181",
       "section": "art. 26 alin. (1)"
     }
   ],

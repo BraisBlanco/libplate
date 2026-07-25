@@ -3,7 +3,7 @@
 import type { MetadataBundle } from "../metadata/types.js";
 
 export const METADATA: MetadataBundle = {
-  "metadataVersion": "2026.07.8",
+  "metadataVersion": "2026.07.9",
   "tables": {
     "at-behoerden": [
       "AM",
@@ -9219,6 +9219,7 @@ export const METADATA: MetadataBundle = {
         "level": "CATEGORY_ONLY",
         "possibleCategories": [
           "PASSENGER_CAR",
+          "MOTORCYCLE",
           "VAN",
           "TRUCK",
           "BUS",
@@ -9287,7 +9288,7 @@ export const METADATA: MetadataBundle = {
           "section": "art. 20 alin. (2); art. 23 alin. (1); art. 24"
         },
         {
-          "id": "RO-OMAI-1501",
+          "id": "RO-OMAI-181",
           "section": "art. 26"
         },
         {
@@ -9310,6 +9311,191 @@ export const METADATA: MetadataBundle = {
           "B 1234 ABC",
           "B 12 AB",
           "B 12 ABCD"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "RO_PROBE",
+      "country": "RO",
+      "name": "Număr pentru probe (înmatriculare pentru probe)",
+      "registrationType": "PROFESSIONAL_TEMPORARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "MOTORCYCLE",
+          "VAN",
+          "TRUCK",
+          "BUS",
+          "TRAILER_OR_SEMITRAILER",
+          "SPECIAL_VEHICLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "county indicative + order number + the inscription \"PROBE\" (art. 23 alin. (5))"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "indicative",
+          "type": "TABLE",
+          "table": "ro-indicative"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 6
+        },
+        {
+          "name": "inscription",
+          "type": "LITERAL",
+          "value": "PROBE"
+        }
+      ],
+      "lengthRules": {
+        "anyOf": [
+          {
+            "segments": [
+              "indicative",
+              "number"
+            ],
+            "max": 7
+          }
+        ]
+      },
+      "formats": {
+        "national": "{indicative} {number} {inscription}",
+        "compact": "{indicative}{number}{inscription}"
+      },
+      "sources": [
+        {
+          "id": "RO-REG",
+          "section": "art. 23 alin. (5), alin. (6)"
+        },
+        {
+          "id": "RO-OMAI-181",
+          "section": "art. 19; art. 20; art. 21; art. 26"
+        },
+        {
+          "id": "RO-ISO3166"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "B 12 PROBE",
+          "B 123456 PROBE",
+          "CJ 1 PROBE",
+          "TM-12345-PROBE"
+        ],
+        "invalid": [
+          "B 1234567 PROBE",
+          "CJ 123456 PROBE",
+          "XY 12 PROBE",
+          "B 12 PROBA",
+          "B PROBE",
+          "B PROBE 12"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "RO_PROVISIONAL",
+      "country": "RO",
+      "name": "Număr provizoriu (autorizare provizorie pentru circulaţie)",
+      "registrationType": "TEMPORARY_PRIVATE",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "MOTORCYCLE",
+          "VAN",
+          "TRUCK",
+          "BUS",
+          "TRAILER_OR_SEMITRAILER",
+          "SPECIAL_VEHICLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "county indicative + order number, no letter group (art. 23 alin. (4))"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "indicative",
+          "type": "TABLE",
+          "table": "ro-indicative"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 6
+        }
+      ],
+      "lengthRules": {
+        "anyOf": [
+          {
+            "segments": [
+              "indicative",
+              "number"
+            ],
+            "max": 7
+          }
+        ]
+      },
+      "formats": {
+        "national": "{indicative} {number}",
+        "compact": "{indicative}{number}"
+      },
+      "sources": [
+        {
+          "id": "RO-REG",
+          "section": "art. 23 alin. (4), alin. (6)"
+        },
+        {
+          "id": "RO-OMAI-181",
+          "section": "art. 15; art. 16; art. 26"
+        },
+        {
+          "id": "RO-ISO3166"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "B 123456",
+          "B 012345",
+          "CJ 12345",
+          "TM-01234",
+          "IF 7"
+        ],
+        "invalid": [
+          "B 1234567",
+          "CJ 123456",
+          "XY 12345",
+          "B",
+          "B 12 ABC"
         ]
       },
       "legacySeries": false
