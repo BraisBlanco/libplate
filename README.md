@@ -14,7 +14,7 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 
 ### Supported countries
 
-**15 countries, 118 schemes.** Each row links to its plate-type table below.
+**18 countries, 142 schemes.** Each row links to its plate-type table below.
 
 | Country                         | Schemes | Coverage                                                                                                   |
 | ------------------------------- | ------: | ---------------------------------------------------------------------------------------------------------- |
@@ -33,6 +33,9 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 | [🇸🇪 Sweden](#-sweden)           |       3 | Ordinary series, the 2019 letter-suffix format, diplomatic plates                                          |
 | [🇫🇮 Finland](#-finland)         |       6 | Ordinary, L-class/tractor marks, `CD` and `C` mission plates, export, `KOE` test plates                    |
 | [🇩🇰 Denmark](#-denmark)         |       4 | The national series, diplomatic `76.000-77.999`, faste prøveskilte, `RF` airport plates                    |
+| [🇨🇿 Czechia](#-czechia)         |       9 | The standard 5-8 character mark, `CD`/`XX`/`XS`/`HC`, `EL` electric, historic `V`, sports `R`, test `F`    |
+| [🇸🇮 Slovenia](#-slovenia)       |       6 | The four ordinary arrangements behind an area code, `MV` historic, `PR` test plates                        |
+| [🇭🇺 Hungary](#-hungary)         |       9 | The 2022 four-letter series and the 1990 three-letter one; `CD`, `OT`, `TX`, state bodies, `I` temporary   |
 
 Countries not yet modelled, and the series still missing inside those above, are
 listed under [Not yet modelled](#not-yet-modelled).
@@ -381,6 +384,92 @@ prøveskilt and airport plates have a colour of their own. Note the ordinary
 shape collides with the Italian motorcycle series and Polish plates
 (`WA 12345`), so country-less detection is ambiguous there.
 
+#### 🇨🇿 Czechia
+
+| Type                        | Example     | Notes                                         |
+| --------------------------- | ----------- | --------------------------------------------- |
+| Standard mark               | `1A2 3456`  | Any 5-8 characters; covers marks on request   |
+| Diplomatic (`CD`)           | `12345 CD`  | Letters at positions 6-7; blue on white       |
+| Administrative staff (`XX`) | `12345 XX`  | Same shape, limited privileges                |
+| Service staff (`XS`)        | `12345 XS`  | Same shape, service personnel                 |
+| Honorary consul (`HC`)      | `123 HC 45` | Letters at positions 4-5 instead              |
+| Electric / hydrogen (`EL`)  | `EL 12345`  | `EL` + 3-5 characters; no trailers            |
+| Historical vehicles         | `01-V-1234` | Registration-place code + `V`; green on white |
+| Sports vehicles             | `01-R-1234` | Registration-place code + `R`; green on white |
+| Test operation (`F`)        | `F 1234`    | Five characters from `F`; green on white      |
+
+Czechia is the one country here whose **ordinary series has no structure in
+law**. § 24 odst. 2 of vyhláška 343/2014 Sb. says a standard mark is "at least 5
+and at most 8" capital Latin letters and Arabic numerals with at least one of
+each, § 27 odst. 3 restricts the letters to the twenty-two that have a glyph
+(no `G`, `O`, `Q`, `W`), and that is all: the familiar `1A2 3456` arrangement,
+and the position of the kraj code letter inside it, appear in no official text.
+libplate therefore models the mark as written — which makes it a very wide
+space, so `CZ_ORDINARY` is kept **out of country-less `detect()`** (it is
+`legacySeries`-flagged, like the Dutch sidecodes) and is reached with
+`country: "CZ"` or `includeHistorical: true`. It also covers the marks on
+request of § 25, which may be all letters or all digits and are not separable
+from the serial series in text.
+
+The consequence inside Czechia: every anchored series above also reads as a
+standard mark, so `parse("123CD", { country: "CZ" })` is `AMBIGUOUS` and names
+both readings. Separators resolve it, because the standard mark's only boundary
+is the inspection-sticker gap after the third character (§ 27 odst. 2): a
+separator anywhere else contradicts that reading and leaves the anchored one —
+`12345 CD` is diplomatic and nothing else, and `01-V-1234` is historical, while
+plain `01V 1234` (whose gap falls exactly where the standard mark's does) stays
+`AMBIGUOUS`. That is why the two rows above are written with hyphens.
+
+#### 🇸🇮 Slovenia
+
+| Type                             | Example     | Notes                                               |
+| -------------------------------- | ----------- | --------------------------------------------------- |
+| Ordinary — 2 digits first        | `LJ 12-ABC` | Area code + `NN` + two or three letters             |
+| Ordinary — 3 digits first        | `CE 123-AB` | Area code + `NNN` + one or two letters              |
+| Ordinary — letters first         | `MB AB-123` | Area code + two or three letters + two-three digits |
+| Ordinary — digit, letters, digit | `GO 1-ABC2` | The two mixed arrangements of article 30(3)-(4)     |
+| Historic (`MV`)                  | `MV 12-ABC` | White on light blue                                 |
+| Test plate (`PR`)                | `PR 12-ABC` | `PR` on a red field in place of the area code       |
+
+Article 30 of the Slovenian registration regulation enumerates its nine
+permitted digit/letter arrangements exhaustively — four digits alone, or four
+digits and a letter, is **not** a Slovenian mark — and article 28(1) puts a
+hyphen after the first run of letters or digits. Because libplate reads
+separator placement as evidence, the ordinary series is one scheme per run
+split: that keeps the official spelling from contradicting its own
+segmentation, which would otherwise let a German reading of `MS AB-123` win
+outright. The eleven area designations come from Priloga IV. The `O` is never
+used (article 30(2)) and `Q`, `W`, `X` and `Y` are not in the Slovenian
+alphabet, though a _chosen_ mark may use them — chosen marks are not modelled.
+Not modelled either: the ban on `I` next to `1`, `B` next to `8` and `G` next
+to `6`, which is an adjacency rule across the letter/digit boundary.
+
+#### 🇭🇺 Hungary
+
+| Type                        | Example      | Notes                                           |
+| --------------------------- | ------------ | ----------------------------------------------- |
+| Current series (2022)       | `MM PT-761`  | Two vowels **or** two consonants, then `LL-NNN` |
+| Series until 2022           | `ABC-123`    | Three letters + three digits; still valid       |
+| Diplomatic (`CD`)           | `CD 123-456` | Six digits; white on light blue                 |
+| Temporary diplomatic (`CD`) | `CD 1234`    | Four digits; white plate                        |
+| Museum vehicles (`OT`)      | `OT AB-123`  | `OT` + two letters + three digits               |
+| Museum vehicles until 2022  | `OT 12-345`  | `OT` + four or five digits                      |
+| Taxi (`TX`)                 | `TX AB-123`  | Black on yellow                                 |
+| State bodies                | `HA 12-345`  | `BA`/`HA`/`MA`/`NA`/`RA` + `NN-NNN`             |
+| Temporary (`I`)             | `I 12-AB`    | `I` + two or three digits + two letters         |
+
+The 2022 format is the interesting one: § 53 (6) of 326/2011. (XII. 28.) Korm.
+rendelet requires the first pair to be **two vowels or two consonants** — never
+mixed — and excludes the seven Hungarian digraphs (`cs`, `gy`, `ly`, `ny`, `sz`,
+`ty`, `zs`), so `AA BB-123` and `EI KL-001` are marks and `AB CD-123` is not.
+The 458 permitted opening pairs are that rule enumerated; `TX` is withheld from
+them because the taxi plate of annex 13/A takes exactly the remaining shape.
+The pre-2022 three-letter series is still on the road but shares its shape with
+the Swedish series, so it is `legacySeries`-flagged for country-less detection.
+The year field of the temporary plates and the coat of arms are separate fields,
+not characters. Individually produced plates (3-6 letters + 1-4 digits, seven
+characters together) are not modelled: their space contains the current series.
+
 ### Not yet modelled
 
 Spanish state/military bodies; Portuguese diplomatic/military series and the
@@ -409,7 +498,22 @@ five digits with no letters, which contradicts § 68, stk. 2 — the catalogue i
 "en grafisk fremstilling", so the composition is not asserted), prøvemærker (a
 sticker carrying a løbenummer of no published width), ønskenummerplader (2-7
 free characters), historic plates (the pre-1976 systems) and the special
-municipal plates of § 3, stk. 4 (no published composition).
+municipal plates of § 3, stk. 4 (no published composition); Czech special marks
+for handling operation and for the drive from the place of sale to the place of
+registration (§ 26 odst. 2-3 — a kraj code letter followed by 4-6 free
+characters, a space that contains the whole `EL` series), the pre-2025
+diplomatic arrangement with the letter pair at positions 4-5 (surrendered by
+2026-12-31), and the export mark (a standard number plus a red validity field);
+Slovenian diplomatic and consular plates (`CMD`/`CD`/`CC`/`M` + a country code
+set by the agency + a vehicle number, **with no widths in the text**), chosen
+parts of the mark (3-6 characters), export plates (the same characters in black
+on yellow) and military/police vehicles (prescribed by separate ministerial
+regulations); Hungarian individually produced plates (3-6 letters + 1-4 digits
+— their space contains the current series), the 2004-era `R`/`H`/`RR`/`C`/`X`
+special series and `Z`/`P`/`E`/`V`/`M`/`SP` temporary letters (no longer
+issuable since 2022-07-01), four-wheeled moped plates and the slow-vehicle,
+environment-friendly and bike-carrier plates (colour variants of a number formed
+the same way).
 
 ## Install
 

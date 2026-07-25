@@ -1,0 +1,101 @@
+schemaVersion: 1
+id: CZ_ORDINARY
+country: CZ
+name: Standardní registrační značka (5-8 znaků)
+registrationType: ORDINARY
+# Flagged legacySeries although this is the CURRENT series, for the reason the
+# engine's filter exists: § 24 odst. 2 gives the standard mark no structure
+# beyond "at least 5 and at most 8 characters, always with at least one letter
+# and one digit", so its space contains most European plates of that length.
+# Keeping it opt-in for country-less detect() leaves every other country's
+# detection intact; parse(x, { country: "CZ" }) is unaffected by the flag.
+# Same trade-off as the Dutch sidecodes, one step wider.
+legacySeries: true
+# validFrom is deliberately omitted: vyhláška 343/2014 Sb. (in force 2015-01-01)
+# states the composition, but the 5-8 character regime is older — § 24 odst. 1
+# still carries the rule for re-arranging marks whose character count does not
+# match this vyhláška, i.e. marks issued under its predecessors, and no earlier
+# act fixing the range was traced.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 23 assigns the same standard mark to road motor vehicles, trailers and
+  # (in a yellow-plate variant, see visual) tractors and self-propelled
+  # machines. Nothing in the characters distinguishes them.
+  level: NOT_INFERABLE
+segments:
+  # § 24 odst. 2: "Jednotlivé znaky registrační značky jsou provedeny nejméně 5
+  # a nejvíce 8 velkými písmeny latinské abecedy a arabskými číslicemi."
+  # The two segments below are the plate's own grouping, not two allocation
+  # fields: § 27 odst. 2 leaves the gap for the technical-inspection sticker
+  # between the third and fourth character of a one-line mark, which is why
+  # Czech marks are written 3 + rest.
+  #
+  # Letters come from the twenty-two of § 27 odst. 3 (A B C D E F H I J K L M N
+  # P R S T U V X Y Z): G, O, Q and W are absent there and have no glyph in
+  # příloha č. 16, so they cannot appear on a plate at all.
+  #
+  # Known limitations, both deliberate:
+  #  * The § 24 odst. 2 rule that a mark carries at least one letter AND at
+  #    least one digit is NOT enforced. The grammar has no "must contain" rule,
+  #    and enforcing it would reject registrační značky na přání (§ 25 + § 7b
+  #    odst. 1 of zákon 56/2001 Sb.), which are 8 characters (7 for motorcycles,
+  #    5 for mopeds) chosen freely from letters *or* digits — real plates that
+  #    may be all letters or all digits. This scheme therefore covers the
+  #    standard series and the marks on request together; they are not
+  #    separable in text, and modelling them apart would make every Czech plate
+  #    AMBIGUOUS.
+  #  * Where the kraj code letter sits is not modelled, because no official text
+  #    places it. § 27 odst. 3 speaks of letters added "za kód kraje nebo za
+  #    první povinný znak" and § 28 (with the ministry's "Kódy krajů" page)
+  #    enumerates the fourteen letters A S U L K H E P C J B M T Z by which
+  #    plates are procured, so a standard mark does carry one of them — but
+  #    neither the vyhláška nor the ministry's plate-type catalogue says in
+  #    which position, and since 2015 a mark also survives a move to another
+  #    kraj.
+  - name: series
+    type: CHARSET
+    length: 3
+    characters: 0123456789ABCDEFHIJKLMNPRSTUVXYZ
+  - name: serial
+    type: CHARSET
+    minLength: 2
+    maxLength: 5
+    characters: 0123456789ABCDEFHIJKLMNPRSTUVXYZ
+formats:
+  national: "{series} {serial}"
+  compact: "{series}{serial}"
+# § 29 odst. 2 písm. a): white retroreflective background, black characters,
+# EU band on the left. The same mark appears black on YELLOW on tractors (other
+# than those over 3 500 kg and 80 km/h) and their trailers or self-propelled
+# machines (písm. b), and on a white plate with a red validity field when the
+# vehicle is exported (§ 24 odst. 4, § 29 odst. 2 písm. d) — colour variants of
+# the same characters, which is also why the export mark is not a scheme here.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: CZ-ZAKON-56
+    section: "§ 7 odst. 3, 6; § 7b odst. 1-2"
+  - id: CZ-VYHL-343
+    section: "§ 23; § 24 odst. 1-2, 4; § 25; § 27 odst. 2-4; § 28; § 29 odst. 2"
+  - id: CZ-MD-KODY
+examples:
+  valid:
+    - "1A2 3456"
+    - "5AB 1234"
+    - "AB1 2345"
+    - "1A2 34"
+    - "9Z9 99999"
+  invalid:
+    # Four characters is below the § 24 odst. 2 minimum, nine above its maximum.
+    - "1A23"
+    - "1A2 345678"
+    # G, O, Q and W have no glyph in příloha č. 16.
+    - "1G2 3456"
+    - "1O2 3456"
+    - "1Q2 3456"
+    - "1W2 3456"

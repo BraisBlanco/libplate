@@ -124,17 +124,18 @@ describe("Spain — diplomatic regime (CD/CC/OI/TA)", () => {
     expect(result.formatted).toBe("OI 12 34");
   });
 
-  it("detects CD + 4 digits as ambiguous between ES, DE, DK, EE and FI", () => {
+  it("detects CD + 4 digits as ambiguous between ES, DE, DK, EE, FI and HU", () => {
     // Compact CD1245 also reads as the German plate C-D 1245 (C = Chemnitz),
     // an Estonian A4 diplomatic mark, a Danish number (two letters + four
-    // digits) and a Finnish CD mark.
+    // digits), a Finnish CD mark and a Hungarian temporary diplomatic mark
+    // (CD + four digits, annex 14/A point 3).
     const result = detect("CD1245");
     expect(result.status).toBe("AMBIGUOUS");
     expect(result.errors[0]?.reason).toBe("AMBIGUOUS_COUNTRY");
     const countries = result.candidates
       ?.map((c) => c.country)
       .sort((a, b) => a.localeCompare(b));
-    expect(countries).toEqual(["DE", "DK", "EE", "ES", "FI"]);
+    expect(countries).toEqual(["DE", "DK", "EE", "ES", "FI", "HU"]);
   });
 
   it("detects the 7-character and TA forms as uniquely Spanish", () => {

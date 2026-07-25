@@ -1,0 +1,60 @@
+schemaVersion: 1
+id: HU_TAXI
+country: HU
+name: TX betűjelű különleges rendszámtábla (TX + két betűjel + három számjegy)
+registrationType: SPECIAL
+validFrom: "2022-07-01"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 63 (1) d) and annex 13/A point 3: the plate is issued to a vehicle
+  # performing the road passenger transport service defined by the government
+  # decree on carriage of passengers by car for a fee — a passenger car.
+  level: CATEGORY_ONLY
+  category: PASSENGER_CAR
+  evidence:
+    - type: PREFIX
+      value: "TX (13/A. melléklet 3. pont)"
+segments:
+  # Annex 13/A point 3: "TX betűjeleket követő címer után két betűjelet,
+  # kötőjelet és három számjegyet tartalmaz", digits 001-999 (point 6), yellow
+  # background. An environment-friendly taxi carries the same characters on the
+  # light-green plate of point 9.
+  #
+  # The TX pair is deliberately withheld from the ordinary series' opening pairs
+  # (see metadata/tables/hu-kezdo-betupar.json), because this plate's remaining
+  # characters are shaped exactly like an ordinary mark.
+  - name: prefix
+    type: LITERAL
+    value: TX
+  - name: letters
+    type: LETTERS
+    length: 2
+  - name: number
+    type: PATTERNS
+    patterns:
+      - NNN
+    digitBlocks: NO_ZERO_BLOCK
+formats:
+  national: "{prefix} {letters}-{number}"
+  compact: "{prefix}{letters}{number}"
+# Annex 13/A point 3: yellow background, black characters and border.
+visual:
+  background: YELLOW
+  foreground: BLACK
+sources:
+  - id: HU-KORM-326
+    section: "63. § (1) d); 13/A. melléklet 3., 6., 9., 11. pont"
+examples:
+  valid:
+    - "TX AB-123"
+    - "TX KL-001"
+    - "TXAB123"
+  invalid:
+    - "TX AB-000"
+    - "TX ABC-123"
+    - "TX AB-12"
+    - "XT AB-123"

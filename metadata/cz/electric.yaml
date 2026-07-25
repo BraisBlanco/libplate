@@ -1,0 +1,75 @@
+schemaVersion: 1
+id: CZ_ELECTRIC
+country: CZ
+name: Registrační značka elektrického vozidla (EL)
+registrationType: ORDINARY
+# § 25a was inserted into the vyhláška together with § 7b odst. 6 of zákon
+# 56/2001 Sb.; the EL series has been issuable since 2016-01-01.
+validFrom: "2016-01-01"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 7b odst. 6 of the law grants the mark to a road vehicle fuelled by
+  # electricity or hydrogen alone, or in combination with another fuel at no
+  # more than 50 g CO2/km. That excludes trailers (they carry no fuel) but says
+  # nothing finer: § 25a odst. 1 varies only the width (5 characters for
+  # automobiles, 4 for motorcycles — 5 on the 520 x 110 mm plate — and 3 for
+  # mopeds with pedals), and this scheme spans that union.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - VAN
+    - TRUCK
+    - BUS
+    - MOTORCYCLE
+    - MOPED_OR_MOTOR_CYCLE
+  evidence:
+    - type: PREFIX
+      value: "EL (§ 25a odst. 1)"
+segments:
+  # § 25a odst. 1: "složena z velkých písmen „EL“ a z dalších arabských číslic
+  # nebo velkých písmen latinské abecedy, kterých je u automobilů 5, u
+  # motocyklů 4, vyjma rozměru tabulky 520 x 110 mm, kde jich je 5, a u mopedů
+  # se šlapadly, kde jsou 3." Letters come from the § 27 odst. 3 repertoire.
+  #
+  # Known collision: an EL mark is also a well-formed standard mark
+  # (CZ_ORDINARY, any 5-8 characters), so these inputs come back AMBIGUOUS
+  # unless the caller is only interested in one of the two readings. § 7b
+  # odst. 2 písm. a) forbids issuing a mark *on request* that is confusable
+  # with an electric-vehicle mark, but says nothing about the serial series.
+  - name: prefix
+    type: LITERAL
+    value: EL
+  - name: serial
+    type: CHARSET
+    minLength: 3
+    maxLength: 5
+    characters: 0123456789ABCDEFHIJKLMNPRSTUVXYZ
+formats:
+  national: "{prefix} {serial}"
+  compact: "{prefix}{serial}"
+# § 25a odst. 2: the plate matches the standard one in dimensions, character
+# layout and colours — black on white with the EU band.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: CZ-ZAKON-56
+    section: "§ 7b odst. 2 písm. a), odst. 6-7"
+  - id: CZ-VYHL-343
+    section: "§ 23 písm. c); § 25a; § 27 odst. 3-4"
+examples:
+  valid:
+    - "EL 12345"
+    - "EL 1234"
+    - "EL 123"
+    - "EL 12A45"
+  invalid:
+    - "EL 12"
+    - "EL 123456"
+    - "EL 12O45"
+    - "LE 12345"
+    - "E 12345"

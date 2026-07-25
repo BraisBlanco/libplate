@@ -1,0 +1,74 @@
+schemaVersion: 1
+id: SI_HISTORIC
+country: SI
+name: Registrska tablica za starodobna vozila (MV + 4-5 znakov)
+registrationType: HISTORICAL
+# validFrom omitted: the "MV" plate for starodobna vozila was already in the
+# 2004/2006 Pravilnik o registrskih tablicah, and its introduction was not
+# traced. Article 57 of the pravilnik in application lets the owner of a vehicle
+# classified as starodobno before 2018-10-19 swap the old plates for these at
+# any time, so both are on the road.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # A starodobno vozilo (article 40 with articles 3 and 61 of ZMV-1) can be a
+  # car, a motorcycle, a bus or a truck; the characters say only that the
+  # vehicle holds that status.
+  level: NOT_INFERABLE
+segments:
+  # Article 40(1): the plate carries the EU field, then the designation for
+  # historic vehicles "MV" and the municipal coat of arms, then "registrska
+  # oznaka, ki jo sestavlja običajna štiri- ali petmestna kombinacija črk in
+  # številk" — the ordinary four- or five-character combination of article 30,
+  # which may also be a chosen one. "MV" replaces the area designation, which is
+  # what keeps this scheme disjoint from the ordinary ones.
+  #
+  # Unlike the ordinary series (four schemes split by the run the article 28(1)
+  # hyphen follows, see SI_ORDINARY_NN_LL), the mark stays a single segment here:
+  # the "MV" literal anchors the scheme, so no other reading competes with it and
+  # the hyphen's position carries no evidential work. The cost is that `national`
+  # writes the mark as one group.
+  - name: kind
+    type: LITERAL
+    value: MV
+  - name: mark
+    type: PATTERNS
+    patterns:
+      - NNNLL
+      - LLNNN
+      - NNLLL
+      - LLLNN
+      - NLLLN
+      - NNLL
+      - LLNN
+      - NNNL
+      - NLLN
+    letters: ABCDEFGHIJKLMNPRSTUVZ
+    digitBlocks: FREE
+formats:
+  national: "{kind} {mark}"
+  compact: "{kind}{mark}"
+# Article 40(2): notwithstanding article 28(1), the background is LIGHT BLUE and
+# the "MV" designation, the mark and the border are white.
+visual:
+  background: BLUE
+  foreground: WHITE
+sources:
+  - id: SI-ZMV-1
+    section: "61. člen; 89. člen (3) 8."
+  - id: SI-PRAVILNIK-REG
+    section: "30. člen; 40. člen; 57. člen"
+examples:
+  valid:
+    - "MV 12-ABC"
+    - "MV AB-123"
+    - "MV 12-AB"
+  invalid:
+    - "MV 12-34"
+    - "MV 1234A"
+    - "MV 12-ABO"
+    - "MV 12-ABCD"
+    - "LJ 12-ABC"

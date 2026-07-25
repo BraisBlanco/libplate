@@ -1,0 +1,58 @@
+schemaVersion: 1
+id: HU_TEMPORARY_CD
+country: HU
+name: CD betűjelű ideiglenes rendszámtábla (CD + négy számjegy)
+registrationType: DIPLOMATIC
+# validFrom omitted: annex 14 point 1 (2004) and annex 14/A point 3 (2022) give
+# the temporary CD plate the same two letters and four digits, so one scheme
+# spans both.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 63/A (3): issued to the missions and staff of § 63 (1) a) for a vehicle
+  # that is not yet, or no longer, permanently registered here.
+  level: NOT_INFERABLE
+# Note on registrationType: this IS a temporary plate (ideiglenes rendszámtábla),
+# but `registrationType` is one-dimensional and the holder regime is the more
+# informative half, so it reports DIPLOMATIC — which also means
+# `registration.temporary` reads false. The four-digit width and the white face
+# are what separate it from the permanent six-digit CD plate.
+segments:
+  # Annex 14/A point 3: "a CD betűjeleket követő címer után négy folyamatos
+  # számjegyet és évente változó színű mezőben a kiadás évének utolsó két
+  # számjegyét tartalmazza. A folyamatos számjegyek 0001-9999-ig terjednek."
+  # The year field is separate from the mark and is not modelled. The permanent
+  # diplomatic plate (HU_DIPLOMATIC) carries six digits, so the two are disjoint.
+  - name: prefix
+    type: LITERAL
+    value: CD
+  - name: number
+    type: PATTERNS
+    patterns:
+      - NNNN
+    digitBlocks: NO_ZERO_BLOCK
+formats:
+  national: "{prefix} {number}"
+  compact: "{prefix}{number}"
+# Annex 14/A point 3: white background, black characters and border — unlike the
+# light-blue permanent CD plate.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: HU-KORM-326
+    section: "63/A. § (3); 14. melléklet 1. pont; 14/A. melléklet A 3.-4. pont"
+examples:
+  valid:
+    - "CD 1234"
+    - "CD 0001"
+    - "CD9999"
+  invalid:
+    - "CD 0000"
+    - "CD 123"
+    - "CD 12345"
+    - "CD 123-456"
+    - "DC 1234"

@@ -1,0 +1,70 @@
+schemaVersion: 1
+id: CZ_DIPLOMATIC
+country: CZ
+name: Registrační značka diplomatická (CD)
+registrationType: DIPLOMATIC
+# The Ministry of Foreign Affairs' diplomatic-protocol handbook governs the
+# regime "od 1. července 2025" and is what fixes the position of the letters
+# (see the segments). Plates assigned before 2025-01-01 must be handed back by
+# 2026-12-31 and may not be driven from 2027-01-01; that older arrangement,
+# drawn with the letter pair at positions 4-5 in the ministry's plate-type
+# catalogue, is deliberately not modelled — see AGENTS.md.
+validFrom: "2025-07-01"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 24 odst. 3 gives a digit count per vehicle kind (5 for automobiles, 4 for
+  # motorcycles, 3 for mopeds with pedals), so the width does carry vehicle
+  # information; the Diplomatic Protocol will in practice only confirm ordinary
+  # two-track passenger cars for registration, but the vyhláška admits the
+  # other two, so the union is reported.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - MOTORCYCLE
+    - MOPED_OR_MOTOR_CYCLE
+  evidence:
+    - type: PREFIX
+      value: "CD (§ 24 odst. 3)"
+segments:
+  # § 24 odst. 3: the mark is composed of the capital letters "CD", "XX", "XS"
+  # or "HC" and of 5 arabic digits for automobiles, 4 for motorcycles and 3 for
+  # mopeds with pedals. The vyhláška does not say where the letters go; the MZV
+  # handbook does — "na šesté a sedmé pozici jsou uvedena písmena „CD“" — which
+  # for the 5-digit automobile mark puts them last. Leading zeros are kept:
+  # nothing bounds the digit groups, and the mission/serial semantics of the
+  # digits are not published.
+  - name: number
+    type: DIGITS
+    minLength: 3
+    maxLength: 5
+  - name: status
+    type: LITERAL
+    value: CD
+formats:
+  national: "{number} {status}"
+  compact: "{number}{status}"
+# § 29 odst. 2 písm. c): white background, BLUE characters, EU band.
+visual:
+  background: WHITE
+  foreground: BLUE
+sources:
+  - id: CZ-VYHL-343
+    section: "§ 23 písm. a) bod 3; § 24 odst. 3; § 29 odst. 2 písm. c)"
+  - id: CZ-MZV-DIPL
+    section: "1.1"
+examples:
+  valid:
+    - "12345 CD"
+    - "00123 CD"
+    - "1234 CD"
+    - "123CD"
+  invalid:
+    - "12 CD"
+    - "123456 CD"
+    - "CD 12345"
+    - "12345 CC"
+    - "1234A CD"

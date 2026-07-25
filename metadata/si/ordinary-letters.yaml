@@ -1,0 +1,63 @@
+schemaVersion: 1
+id: SI_ORDINARY_LL_NN
+country: SI
+name: Registrska oznaka — dve ali tri črke in dve ali tri številke (AB-123, ABC-12)
+registrationType: ORDINARY
+# One of the four Slovenian ordinary schemes; see SI_ORDINARY_NN_LL for why the
+# series is split by the run the article 28(1) hyphen follows.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  level: NOT_INFERABLE
+segments:
+  - name: area
+    type: TABLE
+    table: si-obmocja
+  # Article 30(3)-(4): "črka, črka, številka, številka, številka", "črka, črka,
+  # črka, številka, številka" and "črka, črka, številka, številka". The
+  # lengthRules cap keeps the fourth combination the ranges would otherwise
+  # admit (three letters over three digits, six characters) out: article 30(1)
+  # allows at most five characters.
+  - name: letters
+    type: LETTERS
+    minLength: 2
+    maxLength: 3
+    excluded:
+      - O
+      - Q
+      - W
+      - X
+      - Y
+  - name: number
+    type: DIGITS
+    minLength: 2
+    maxLength: 3
+lengthRules:
+  anyOf:
+    - segments: [letters, number]
+      max: 5
+formats:
+  national: "{area} {letters}-{number}"
+  compact: "{area}{letters}{number}"
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: SI-ZMV-1
+    section: "33.-35. člen; 61. člen; 89. člen (3) 8."
+  - id: SI-PRAVILNIK-REG
+    section: "27.-30. člen; Priloga IV"
+examples:
+  valid:
+    - "MB AB-123"
+    - "KP ABC-12"
+    - "SG AB-12"
+  invalid:
+    - "XY AB-123"
+    - "LJ ABC-123"
+    - "LJ A-123"
+    - "LJ AB-1"
+    - "LJ ABO-12"

@@ -1,0 +1,54 @@
+schemaVersion: 1
+id: CZ_DIPLOMATIC_SERVICE
+country: CZ
+name: Registrační značka cizinecká — služební personál (XS)
+registrationType: DIPLOMATIC_STAFF
+# See CZ_DIPLOMATIC: the position of the letter pair comes from the MZV
+# diplomatic-protocol handbook in force since 2025-07-01.
+validFrom: "2025-07-01"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - MOTORCYCLE
+    - MOPED_OR_MOTOR_CYCLE
+  evidence:
+    - type: PREFIX
+      value: "XS (§ 24 odst. 3)"
+segments:
+  # § 24 odst. 3, letters "XS": the service staff of a diplomatic mission or
+  # consulate and the staff of an international organization. Same digit widths
+  # and same trailing position as the CD and XX series.
+  - name: number
+    type: DIGITS
+    minLength: 3
+    maxLength: 5
+  - name: status
+    type: LITERAL
+    value: XS
+formats:
+  national: "{number} {status}"
+  compact: "{number}{status}"
+visual:
+  background: WHITE
+  foreground: BLUE
+sources:
+  - id: CZ-VYHL-343
+    section: "§ 23 písm. a) bod 3; § 24 odst. 3; § 29 odst. 2 písm. c) bod 3"
+  - id: CZ-MZV-DIPL
+    section: "1.1"
+examples:
+  valid:
+    - "12345 XS"
+    - "1234 XS"
+    - "123XS"
+  invalid:
+    - "12 XS"
+    - "123456 XS"
+    - "XS 12345"
+    - "12345 XX"

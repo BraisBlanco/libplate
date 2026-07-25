@@ -1,0 +1,66 @@
+schemaVersion: 1
+id: CZ_HONORARY_CONSUL
+country: CZ
+name: Registrační značka cizinecká — honorární konzul (HC)
+registrationType: CONSULAR
+# See CZ_DIPLOMATIC: the letter positions come from the MZV diplomatic-protocol
+# handbook in force since 2025-07-01.
+validFrom: "2025-07-01"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Unlike the CD/XX/XS series this one is only modelled in its 5-digit
+  # automobile shape (see the segments), so the width says "automobile" — but
+  # the vyhláška attaches no category to the characters themselves, and an
+  # honorary consul's car is an ordinary passenger car.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+  evidence:
+    - type: PATTERN
+      value: "HC at positions 4-5 over five digits (§ 24 odst. 3)"
+segments:
+  # § 24 odst. 3 puts the honorary-consul mark on the same footing as CD/XX/XS
+  # — letters plus 5 digits for automobiles — but the MZV handbook places this
+  # pair differently: "na čtvrté a páté pozici jsou vedena písmena „HC“". Three
+  # digits, then HC, then the remaining two digits.
+  #
+  # Only the automobile shape is modelled. § 24 odst. 3 also admits 4 digits
+  # (motorcycles) and 3 (mopeds with pedals), but the handbook fixes the pair at
+  # positions 4-5 for the 5-digit mark alone, and the Diplomatic Protocol does
+  # not confirm single-track vehicles for registration at all, so where the pair
+  # would sit on a shorter mark is not documented and is not guessed here.
+  - name: prefix
+    type: DIGITS
+    length: 3
+  - name: status
+    type: LITERAL
+    value: HC
+  - name: serial
+    type: DIGITS
+    length: 2
+formats:
+  national: "{prefix} {status} {serial}"
+  compact: "{prefix}{status}{serial}"
+visual:
+  background: WHITE
+  foreground: BLUE
+sources:
+  - id: CZ-VYHL-343
+    section: "§ 23 písm. a) bod 3; § 24 odst. 3; § 29 odst. 2 písm. c) bod 4"
+  - id: CZ-MZV-DIPL
+    section: "1.1"
+examples:
+  valid:
+    - "123 HC 45"
+    - "001 HC 00"
+    - "123HC45"
+  invalid:
+    - "12 HC 45"
+    - "1234 HC 5"
+    - "123 HC 456"
+    - "12345 HC"
+    - "123 CD 45"

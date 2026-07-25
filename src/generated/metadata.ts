@@ -3,7 +3,7 @@
 import type { MetadataBundle } from "../metadata/types.js";
 
 export const METADATA: MetadataBundle = {
-  "metadataVersion": "2026.07.11",
+  "metadataVersion": "2026.07.12",
   "tables": {
     "at-behoerden": [
       "AM",
@@ -153,6 +153,22 @@ export const METADATA: MetadataBundle = {
       "VK",
       "WD",
       "WK"
+    ],
+    "cz-registracni-mista": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14"
     ],
     "de-unterscheidungszeichen": [
       "A",
@@ -1082,6 +1098,466 @@ export const METADATA: MetadataBundle = {
       "94",
       "95"
     ],
+    "hu-kezdo-betupar": [
+      "AA",
+      "AE",
+      "AI",
+      "AO",
+      "AU",
+      "BB",
+      "BC",
+      "BD",
+      "BF",
+      "BG",
+      "BH",
+      "BJ",
+      "BK",
+      "BL",
+      "BM",
+      "BN",
+      "BP",
+      "BQ",
+      "BR",
+      "BS",
+      "BT",
+      "BV",
+      "BW",
+      "BX",
+      "BY",
+      "BZ",
+      "CB",
+      "CC",
+      "CD",
+      "CF",
+      "CG",
+      "CH",
+      "CJ",
+      "CK",
+      "CL",
+      "CM",
+      "CN",
+      "CP",
+      "CQ",
+      "CR",
+      "CT",
+      "CV",
+      "CW",
+      "CX",
+      "CY",
+      "CZ",
+      "DB",
+      "DC",
+      "DD",
+      "DF",
+      "DG",
+      "DH",
+      "DJ",
+      "DK",
+      "DL",
+      "DM",
+      "DN",
+      "DP",
+      "DQ",
+      "DR",
+      "DS",
+      "DT",
+      "DV",
+      "DW",
+      "DX",
+      "DY",
+      "DZ",
+      "EA",
+      "EE",
+      "EI",
+      "EO",
+      "EU",
+      "FB",
+      "FC",
+      "FD",
+      "FF",
+      "FG",
+      "FH",
+      "FJ",
+      "FK",
+      "FL",
+      "FM",
+      "FN",
+      "FP",
+      "FQ",
+      "FR",
+      "FS",
+      "FT",
+      "FV",
+      "FW",
+      "FX",
+      "FY",
+      "FZ",
+      "GB",
+      "GC",
+      "GD",
+      "GF",
+      "GG",
+      "GH",
+      "GJ",
+      "GK",
+      "GL",
+      "GM",
+      "GN",
+      "GP",
+      "GQ",
+      "GR",
+      "GS",
+      "GT",
+      "GV",
+      "GW",
+      "GX",
+      "GZ",
+      "HB",
+      "HC",
+      "HD",
+      "HF",
+      "HG",
+      "HH",
+      "HJ",
+      "HK",
+      "HL",
+      "HM",
+      "HN",
+      "HP",
+      "HQ",
+      "HR",
+      "HS",
+      "HT",
+      "HV",
+      "HW",
+      "HX",
+      "HY",
+      "HZ",
+      "IA",
+      "IE",
+      "II",
+      "IO",
+      "IU",
+      "JB",
+      "JC",
+      "JD",
+      "JF",
+      "JG",
+      "JH",
+      "JJ",
+      "JK",
+      "JL",
+      "JM",
+      "JN",
+      "JP",
+      "JQ",
+      "JR",
+      "JS",
+      "JT",
+      "JV",
+      "JW",
+      "JX",
+      "JY",
+      "JZ",
+      "KB",
+      "KC",
+      "KD",
+      "KF",
+      "KG",
+      "KH",
+      "KJ",
+      "KK",
+      "KL",
+      "KM",
+      "KN",
+      "KP",
+      "KQ",
+      "KR",
+      "KS",
+      "KT",
+      "KV",
+      "KW",
+      "KX",
+      "KY",
+      "KZ",
+      "LB",
+      "LC",
+      "LD",
+      "LF",
+      "LG",
+      "LH",
+      "LJ",
+      "LK",
+      "LL",
+      "LM",
+      "LN",
+      "LP",
+      "LQ",
+      "LR",
+      "LS",
+      "LT",
+      "LV",
+      "LW",
+      "LX",
+      "LZ",
+      "MB",
+      "MC",
+      "MD",
+      "MF",
+      "MG",
+      "MH",
+      "MJ",
+      "MK",
+      "ML",
+      "MM",
+      "MN",
+      "MP",
+      "MQ",
+      "MR",
+      "MS",
+      "MT",
+      "MV",
+      "MW",
+      "MX",
+      "MY",
+      "MZ",
+      "NB",
+      "NC",
+      "ND",
+      "NF",
+      "NG",
+      "NH",
+      "NJ",
+      "NK",
+      "NL",
+      "NM",
+      "NN",
+      "NP",
+      "NQ",
+      "NR",
+      "NS",
+      "NT",
+      "NV",
+      "NW",
+      "NX",
+      "NZ",
+      "OA",
+      "OE",
+      "OI",
+      "OO",
+      "OU",
+      "PB",
+      "PC",
+      "PD",
+      "PF",
+      "PG",
+      "PH",
+      "PJ",
+      "PK",
+      "PL",
+      "PM",
+      "PN",
+      "PP",
+      "PQ",
+      "PR",
+      "PS",
+      "PT",
+      "PV",
+      "PW",
+      "PX",
+      "PY",
+      "PZ",
+      "QB",
+      "QC",
+      "QD",
+      "QF",
+      "QG",
+      "QH",
+      "QJ",
+      "QK",
+      "QL",
+      "QM",
+      "QN",
+      "QP",
+      "QQ",
+      "QR",
+      "QS",
+      "QT",
+      "QV",
+      "QW",
+      "QX",
+      "QY",
+      "QZ",
+      "RB",
+      "RC",
+      "RD",
+      "RF",
+      "RG",
+      "RH",
+      "RJ",
+      "RK",
+      "RL",
+      "RM",
+      "RN",
+      "RP",
+      "RQ",
+      "RR",
+      "RS",
+      "RT",
+      "RV",
+      "RW",
+      "RX",
+      "RY",
+      "RZ",
+      "SB",
+      "SC",
+      "SD",
+      "SF",
+      "SG",
+      "SH",
+      "SJ",
+      "SK",
+      "SL",
+      "SM",
+      "SN",
+      "SP",
+      "SQ",
+      "SR",
+      "SS",
+      "ST",
+      "SV",
+      "SW",
+      "SX",
+      "SY",
+      "TB",
+      "TC",
+      "TD",
+      "TF",
+      "TG",
+      "TH",
+      "TJ",
+      "TK",
+      "TL",
+      "TM",
+      "TN",
+      "TP",
+      "TQ",
+      "TR",
+      "TS",
+      "TT",
+      "TV",
+      "TW",
+      "TZ",
+      "UA",
+      "UE",
+      "UI",
+      "UO",
+      "UU",
+      "VB",
+      "VC",
+      "VD",
+      "VF",
+      "VG",
+      "VH",
+      "VJ",
+      "VK",
+      "VL",
+      "VM",
+      "VN",
+      "VP",
+      "VQ",
+      "VR",
+      "VS",
+      "VT",
+      "VV",
+      "VW",
+      "VX",
+      "VY",
+      "VZ",
+      "WB",
+      "WC",
+      "WD",
+      "WF",
+      "WG",
+      "WH",
+      "WJ",
+      "WK",
+      "WL",
+      "WM",
+      "WN",
+      "WP",
+      "WQ",
+      "WR",
+      "WS",
+      "WT",
+      "WV",
+      "WW",
+      "WX",
+      "WY",
+      "WZ",
+      "XB",
+      "XC",
+      "XD",
+      "XF",
+      "XG",
+      "XH",
+      "XJ",
+      "XK",
+      "XL",
+      "XM",
+      "XN",
+      "XP",
+      "XQ",
+      "XR",
+      "XS",
+      "XT",
+      "XV",
+      "XW",
+      "XX",
+      "XY",
+      "XZ",
+      "YB",
+      "YC",
+      "YD",
+      "YF",
+      "YG",
+      "YH",
+      "YJ",
+      "YK",
+      "YL",
+      "YM",
+      "YN",
+      "YP",
+      "YQ",
+      "YR",
+      "YS",
+      "YT",
+      "YV",
+      "YW",
+      "YX",
+      "YY",
+      "YZ",
+      "ZB",
+      "ZC",
+      "ZD",
+      "ZF",
+      "ZG",
+      "ZH",
+      "ZJ",
+      "ZK",
+      "ZL",
+      "ZM",
+      "ZN",
+      "ZP",
+      "ZQ",
+      "ZR",
+      "ZT",
+      "ZV",
+      "ZW",
+      "ZX",
+      "ZY",
+      "ZZ"
+    ],
     "pl-wojewodztwa-profesjonalne": [
       "B",
       "C",
@@ -1886,6 +2362,19 @@ export const METADATA: MetadataBundle = {
       "VL",
       "VN",
       "VS"
+    ],
+    "si-obmocja": [
+      "CE",
+      "GO",
+      "KK",
+      "KP",
+      "KR",
+      "LJ",
+      "MB",
+      "MS",
+      "NM",
+      "PO",
+      "SG"
     ]
   },
   "schemes": [
@@ -3735,6 +4224,671 @@ export const METADATA: MetadataBundle = {
           "1 M 345",
           "1234 M 345",
           "12345"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "CZ_DIPLOMATIC",
+      "country": "CZ",
+      "name": "Registrační značka diplomatická (CD)",
+      "registrationType": "DIPLOMATIC",
+      "validFrom": "2025-07-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "MOTORCYCLE",
+          "MOPED_OR_MOTOR_CYCLE"
+        ],
+        "evidence": [
+          {
+            "type": "PREFIX",
+            "value": "CD (§ 24 odst. 3)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 3,
+          "maxLength": 5
+        },
+        {
+          "name": "status",
+          "type": "LITERAL",
+          "value": "CD"
+        }
+      ],
+      "formats": {
+        "national": "{number} {status}",
+        "compact": "{number}{status}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLUE"
+      },
+      "sources": [
+        {
+          "id": "CZ-VYHL-343",
+          "section": "§ 23 písm. a) bod 3; § 24 odst. 3; § 29 odst. 2 písm. c)"
+        },
+        {
+          "id": "CZ-MZV-DIPL",
+          "section": "1.1"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "12345 CD",
+          "00123 CD",
+          "1234 CD",
+          "123CD"
+        ],
+        "invalid": [
+          "12 CD",
+          "123456 CD",
+          "CD 12345",
+          "12345 CC",
+          "1234A CD"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "CZ_DIPLOMATIC_ADMIN",
+      "country": "CZ",
+      "name": "Registrační značka cizinecká — administrativně-technický personál (XX)",
+      "registrationType": "DIPLOMATIC_STAFF",
+      "validFrom": "2025-07-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "MOTORCYCLE",
+          "MOPED_OR_MOTOR_CYCLE"
+        ],
+        "evidence": [
+          {
+            "type": "PREFIX",
+            "value": "XX (§ 24 odst. 3)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 3,
+          "maxLength": 5
+        },
+        {
+          "name": "status",
+          "type": "LITERAL",
+          "value": "XX"
+        }
+      ],
+      "formats": {
+        "national": "{number} {status}",
+        "compact": "{number}{status}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLUE"
+      },
+      "sources": [
+        {
+          "id": "CZ-VYHL-343",
+          "section": "§ 23 písm. a) bod 3; § 24 odst. 3; § 29 odst. 2 písm. c) bod 2"
+        },
+        {
+          "id": "CZ-MZV-DIPL",
+          "section": "1.1"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "12345 XX",
+          "00001 XX",
+          "1234 XX",
+          "123XX"
+        ],
+        "invalid": [
+          "12 XX",
+          "123456 XX",
+          "XX 12345",
+          "12345 XS"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "CZ_DIPLOMATIC_SERVICE",
+      "country": "CZ",
+      "name": "Registrační značka cizinecká — služební personál (XS)",
+      "registrationType": "DIPLOMATIC_STAFF",
+      "validFrom": "2025-07-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "MOTORCYCLE",
+          "MOPED_OR_MOTOR_CYCLE"
+        ],
+        "evidence": [
+          {
+            "type": "PREFIX",
+            "value": "XS (§ 24 odst. 3)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 3,
+          "maxLength": 5
+        },
+        {
+          "name": "status",
+          "type": "LITERAL",
+          "value": "XS"
+        }
+      ],
+      "formats": {
+        "national": "{number} {status}",
+        "compact": "{number}{status}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLUE"
+      },
+      "sources": [
+        {
+          "id": "CZ-VYHL-343",
+          "section": "§ 23 písm. a) bod 3; § 24 odst. 3; § 29 odst. 2 písm. c) bod 3"
+        },
+        {
+          "id": "CZ-MZV-DIPL",
+          "section": "1.1"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "12345 XS",
+          "1234 XS",
+          "123XS"
+        ],
+        "invalid": [
+          "12 XS",
+          "123456 XS",
+          "XS 12345",
+          "12345 XX"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "CZ_ELECTRIC",
+      "country": "CZ",
+      "name": "Registrační značka elektrického vozidla (EL)",
+      "registrationType": "ORDINARY",
+      "validFrom": "2016-01-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "VAN",
+          "TRUCK",
+          "BUS",
+          "MOTORCYCLE",
+          "MOPED_OR_MOTOR_CYCLE"
+        ],
+        "evidence": [
+          {
+            "type": "PREFIX",
+            "value": "EL (§ 25a odst. 1)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "EL"
+        },
+        {
+          "name": "serial",
+          "type": "CHARSET",
+          "minLength": 3,
+          "maxLength": 5,
+          "characters": "0123456789ABCDEFHIJKLMNPRSTUVXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {serial}",
+        "compact": "{prefix}{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "CZ-ZAKON-56",
+          "section": "§ 7b odst. 2 písm. a), odst. 6-7"
+        },
+        {
+          "id": "CZ-VYHL-343",
+          "section": "§ 23 písm. c); § 25a; § 27 odst. 3-4"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "EL 12345",
+          "EL 1234",
+          "EL 123",
+          "EL 12A45"
+        ],
+        "invalid": [
+          "EL 12",
+          "EL 123456",
+          "EL 12O45",
+          "LE 12345",
+          "E 12345"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "CZ_HISTORIC",
+      "country": "CZ",
+      "name": "Registrační značka pro historická vozidla (kód registračního místa + V)",
+      "registrationType": "HISTORICAL",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "MOTORCYCLE",
+          "MOPED_OR_MOTOR_CYCLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "registration-place code + V (§ 26 odst. 1)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "place",
+          "type": "TABLE",
+          "table": "cz-registracni-mista"
+        },
+        {
+          "name": "kind",
+          "type": "LITERAL",
+          "value": "V"
+        },
+        {
+          "name": "serial",
+          "type": "CHARSET",
+          "minLength": 2,
+          "maxLength": 4,
+          "characters": "0123456789ABCDEFHIJKLMNPRSTUVXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{place}{kind} {serial}",
+        "compact": "{place}{kind}{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "GREEN"
+      },
+      "sources": [
+        {
+          "id": "CZ-VYHL-343",
+          "section": "§ 23 písm. d) bod 4; § 26 odst. 1, 6; § 27 odst. 3-4; § 29 odst. 2 písm. e)"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "01V 1234",
+          "14V 123",
+          "02V 12",
+          "05V 12AB"
+        ],
+        "invalid": [
+          "15V 1234",
+          "01X 1234",
+          "01V 1",
+          "01V 12345",
+          "1V 1234"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "CZ_HONORARY_CONSUL",
+      "country": "CZ",
+      "name": "Registrační značka cizinecká — honorární konzul (HC)",
+      "registrationType": "CONSULAR",
+      "validFrom": "2025-07-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "HC at positions 4-5 over five digits (§ 24 odst. 3)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "DIGITS",
+          "length": 3
+        },
+        {
+          "name": "status",
+          "type": "LITERAL",
+          "value": "HC"
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "length": 2
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {status} {serial}",
+        "compact": "{prefix}{status}{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLUE"
+      },
+      "sources": [
+        {
+          "id": "CZ-VYHL-343",
+          "section": "§ 23 písm. a) bod 3; § 24 odst. 3; § 29 odst. 2 písm. c) bod 4"
+        },
+        {
+          "id": "CZ-MZV-DIPL",
+          "section": "1.1"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "123 HC 45",
+          "001 HC 00",
+          "123HC45"
+        ],
+        "invalid": [
+          "12 HC 45",
+          "1234 HC 5",
+          "123 HC 456",
+          "12345 HC",
+          "123 CD 45"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "CZ_ORDINARY",
+      "country": "CZ",
+      "name": "Standardní registrační značka (5-8 znaků)",
+      "registrationType": "ORDINARY",
+      "legacySeries": true,
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "series",
+          "type": "CHARSET",
+          "length": 3,
+          "characters": "0123456789ABCDEFHIJKLMNPRSTUVXYZ"
+        },
+        {
+          "name": "serial",
+          "type": "CHARSET",
+          "minLength": 2,
+          "maxLength": 5,
+          "characters": "0123456789ABCDEFHIJKLMNPRSTUVXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{series} {serial}",
+        "compact": "{series}{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "CZ-ZAKON-56",
+          "section": "§ 7 odst. 3, 6; § 7b odst. 1-2"
+        },
+        {
+          "id": "CZ-VYHL-343",
+          "section": "§ 23; § 24 odst. 1-2, 4; § 25; § 27 odst. 2-4; § 28; § 29 odst. 2"
+        },
+        {
+          "id": "CZ-MD-KODY"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "1A2 3456",
+          "5AB 1234",
+          "AB1 2345",
+          "1A2 34",
+          "9Z9 99999"
+        ],
+        "invalid": [
+          "1A23",
+          "1A2 345678",
+          "1G2 3456",
+          "1O2 3456",
+          "1Q2 3456",
+          "1W2 3456"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "CZ_SPORT",
+      "country": "CZ",
+      "name": "Registrační značka pro sportovní vozidla (kód registračního místa + R)",
+      "registrationType": "SPECIAL",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "MOTORCYCLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "registration-place code + R (§ 26 odst. 5)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "place",
+          "type": "TABLE",
+          "table": "cz-registracni-mista"
+        },
+        {
+          "name": "kind",
+          "type": "LITERAL",
+          "value": "R"
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "minLength": 3,
+          "maxLength": 4
+        }
+      ],
+      "formats": {
+        "national": "{place}{kind} {serial}",
+        "compact": "{place}{kind}{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "GREEN"
+      },
+      "sources": [
+        {
+          "id": "CZ-ZAKON-56",
+          "section": "§ 38c odst. 6"
+        },
+        {
+          "id": "CZ-VYHL-343",
+          "section": "§ 23 písm. d) bod 5; § 26 odst. 5-6; § 29 odst. 2 písm. i)"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "01R 1234",
+          "12R 123"
+        ],
+        "invalid": [
+          "15R 1234",
+          "01R 12",
+          "01R 12345",
+          "01R 12AB",
+          "01V 1234"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "CZ_TEST",
+      "country": "CZ",
+      "name": "Zvláštní registrační značka pro zkušební provoz (F + 4 znaky)",
+      "registrationType": "PROFESSIONAL_TEMPORARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "F"
+        },
+        {
+          "name": "serial",
+          "type": "CHARSET",
+          "length": 4,
+          "characters": "0123456789ABCDEFHIJKLMNPRSTUVXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {serial}",
+        "compact": "{prefix}{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "GREEN"
+      },
+      "sources": [
+        {
+          "id": "CZ-VYHL-343",
+          "section": "§ 23 písm. d) bod 3; § 26 odst. 4; § 27 odst. 3-4; § 29 odst. 2 písm. h)"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "F 1234",
+          "F 12AB",
+          "F1A2B"
+        ],
+        "invalid": [
+          "F 123",
+          "F 12345",
+          "F 12O4",
+          "G 1234"
         ]
       },
       "legacySeries": false
@@ -7133,6 +8287,597 @@ export const METADATA: MetadataBundle = {
     },
     {
       "schemaVersion": 1,
+      "id": "HU_DIPLOMATIC",
+      "country": "HU",
+      "name": "CD betűjelű különleges rendszámtábla (CD + hat számjegy)",
+      "registrationType": "DIPLOMATIC",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "CD"
+        },
+        {
+          "name": "mission",
+          "type": "DIGITS",
+          "length": 3
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {mission}-{serial}",
+        "compact": "{prefix}{mission}{serial}"
+      },
+      "visual": {
+        "background": "BLUE",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "HU-KORM-326",
+          "section": "63. § (1) a); 13. melléklet 1., 9. pont; 13/A. melléklet 1., 5., 8. pont"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "CD 123-456",
+          "CD 000-001",
+          "CD123456"
+        ],
+        "invalid": [
+          "CD 12-345",
+          "CD 1234-567",
+          "CD 123-45",
+          "CD 1234",
+          "DC 123-456"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "HU_MUSEUM",
+      "country": "HU",
+      "name": "OT betűjelű különleges rendszámtábla (OT + két betűjel + három számjegy)",
+      "registrationType": "HISTORICAL",
+      "validFrom": "2022-07-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "OT"
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2
+        },
+        {
+          "name": "number",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNN"
+          ],
+          "digitBlocks": "NO_ZERO_BLOCK"
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {letters}-{number}",
+        "compact": "{prefix}{letters}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "HU-KORM-326",
+          "section": "63. § (1) f), (5); 13/A. melléklet 2., 6., 11. pont"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "OT AB-123",
+          "OT ZZ-001",
+          "OTAB123"
+        ],
+        "invalid": [
+          "OT AB-000",
+          "OT A-123",
+          "OT ABC-123",
+          "OT AB-12",
+          "TO AB-123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "HU_MUSEUM_2004",
+      "country": "HU",
+      "name": "OT betűjelű különleges rendszámtábla (OT + négy vagy öt számjegy)",
+      "registrationType": "HISTORICAL",
+      "legacySeries": true,
+      "validFrom": "2004-05-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "OT"
+        },
+        {
+          "name": "number",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNNN",
+            "NNNNN"
+          ],
+          "digitBlocks": "NO_ZERO_BLOCK"
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {number}",
+        "compact": "{prefix}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "HU-KORM-326",
+          "section": "54. § (2), (7); 13. melléklet 3., 3.1., 9a. pont; 13/A. melléklet 2. pont"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "OT 12-34",
+          "OT 12-345",
+          "OT1234"
+        ],
+        "invalid": [
+          "OT 00-00",
+          "OT 123",
+          "OT 123456",
+          "OT AB-123"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "HU_ORDINARY",
+      "country": "HU",
+      "name": "Sorozatban előállított állandó rendszámtábla (négy betűjel + három számjegy)",
+      "registrationType": "ORDINARY",
+      "validFrom": "2022-07-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "opening",
+          "type": "TABLE",
+          "table": "hu-kezdo-betupar"
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2
+        },
+        {
+          "name": "number",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNN"
+          ],
+          "digitBlocks": "NO_ZERO_BLOCK"
+        }
+      ],
+      "formats": {
+        "national": "{opening} {letters}-{number}",
+        "compact": "{opening}{letters}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "HU-KORM-326",
+          "section": "53. § (2)-(6); 54. § (2), (7); 11/A. melléklet"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "AA BB-123",
+          "EI KL-001",
+          "MM PT-761",
+          "AABB123"
+        ],
+        "invalid": [
+          "AB CD-123",
+          "SZ AB-123",
+          "GY AB-123",
+          "AA BB-000",
+          "AA BB-12",
+          "AA B-123",
+          "AAA BB-123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "HU_ORDINARY_2004",
+      "country": "HU",
+      "name": "Sorozatban előállított állandó rendszámtábla (három betűjel + három számjegy)",
+      "registrationType": "ORDINARY",
+      "legacySeries": true,
+      "validFrom": "1990-08-06",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 3
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{letters}-{number}",
+        "compact": "{letters}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "HU-KORM-326",
+          "section": "53. § (2) a)-b), (5); 54. § (7); 55. §; 11. melléklet; 13. melléklet"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "ABC-123",
+          "XYZ-000",
+          "FKM 987"
+        ],
+        "invalid": [
+          "AB-123",
+          "ABCD-123",
+          "ABC-12",
+          "ABC-1234",
+          "A1C-123"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "HU_STATE",
+      "country": "HU",
+      "name": "Állami szervek különleges rendszámtáblája (BA/HA/MA/NA/RA + öt számjegy)",
+      "registrationType": "STATE_OR_MILITARY",
+      "validFrom": "2022-07-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "body",
+          "type": "CHARSET",
+          "length": 1,
+          "characters": "BHMNR"
+        },
+        {
+          "name": "suffix",
+          "type": "LITERAL",
+          "value": "A"
+        },
+        {
+          "name": "group",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "serial",
+          "type": "DIGITS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{body}{suffix} {group}-{serial}",
+        "compact": "{body}{suffix}{group}{serial}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "HU-KORM-326",
+          "section": "63. § (9)-(10); 13/A. melléklet 4., 7., 9., 11. pont"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "HA 12-345",
+          "RA 00-001",
+          "MA 99-999",
+          "NA12345",
+          "BA 01-234"
+        ],
+        "invalid": [
+          "CA 12-345",
+          "HB 12-345",
+          "HA 12-34",
+          "HA 12-3456",
+          "HA AB-345"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "HU_TAXI",
+      "country": "HU",
+      "name": "TX betűjelű különleges rendszámtábla (TX + két betűjel + három számjegy)",
+      "registrationType": "SPECIAL",
+      "validFrom": "2022-07-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "category": "PASSENGER_CAR",
+        "evidence": [
+          {
+            "type": "PREFIX",
+            "value": "TX (13/A. melléklet 3. pont)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "TX"
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2
+        },
+        {
+          "name": "number",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNN"
+          ],
+          "digitBlocks": "NO_ZERO_BLOCK"
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {letters}-{number}",
+        "compact": "{prefix}{letters}{number}"
+      },
+      "visual": {
+        "background": "YELLOW",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "HU-KORM-326",
+          "section": "63. § (1) d); 13/A. melléklet 3., 6., 9., 11. pont"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "TX AB-123",
+          "TX KL-001",
+          "TXAB123"
+        ],
+        "invalid": [
+          "TX AB-000",
+          "TX ABC-123",
+          "TX AB-12",
+          "XT AB-123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "HU_TEMPORARY_CD",
+      "country": "HU",
+      "name": "CD betűjelű ideiglenes rendszámtábla (CD + négy számjegy)",
+      "registrationType": "DIPLOMATIC",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "CD"
+        },
+        {
+          "name": "number",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNNN"
+          ],
+          "digitBlocks": "NO_ZERO_BLOCK"
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {number}",
+        "compact": "{prefix}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "HU-KORM-326",
+          "section": "63/A. § (3); 14. melléklet 1. pont; 14/A. melléklet A 3.-4. pont"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "CD 1234",
+          "CD 0001",
+          "CD9999"
+        ],
+        "invalid": [
+          "CD 0000",
+          "CD 123",
+          "CD 12345",
+          "CD 123-456",
+          "DC 1234"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "HU_TEMPORARY_I",
+      "country": "HU",
+      "name": "I betűjelű ideiglenes rendszámtábla (I + számjegyek + két betűjel)",
+      "registrationType": "TEMPORARY_PRIVATE",
+      "validFrom": "2022-07-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "I"
+        },
+        {
+          "name": "number",
+          "type": "PATTERNS",
+          "patterns": [
+            "NN",
+            "NNN"
+          ],
+          "digitBlocks": "NO_ZERO_BLOCK"
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "length": 2
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {number}-{letters}",
+        "compact": "{prefix}{number}{letters}"
+      },
+      "sources": [
+        {
+          "id": "HU-KORM-326",
+          "section": "54. § (7); 63/A. § (1)-(2); 14/A. melléklet A 1.-2., 4. pont, B"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "I 12-AB",
+          "I 123-SP",
+          "I01XY"
+        ],
+        "invalid": [
+          "I 00-AB",
+          "I 000-AB",
+          "I 1234-AB",
+          "I 12-ABC",
+          "I 12-A"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
       "id": "IT_AGRICULTURAL",
       "country": "IT",
       "name": "Targa macchine agricole (AA 123 A)",
@@ -10453,6 +12198,464 @@ export const METADATA: MetadataBundle = {
           "ABC 1AA",
           "ABC 123A",
           "AB 12A"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SI_HISTORIC",
+      "country": "SI",
+      "name": "Registrska tablica za starodobna vozila (MV + 4-5 znakov)",
+      "registrationType": "HISTORICAL",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "kind",
+          "type": "LITERAL",
+          "value": "MV"
+        },
+        {
+          "name": "mark",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNNLL",
+            "LLNNN",
+            "NNLLL",
+            "LLLNN",
+            "NLLLN",
+            "NNLL",
+            "LLNN",
+            "NNNL",
+            "NLLN"
+          ],
+          "letters": "ABCDEFGHIJKLMNPRSTUVZ",
+          "digitBlocks": "FREE"
+        }
+      ],
+      "formats": {
+        "national": "{kind} {mark}",
+        "compact": "{kind}{mark}"
+      },
+      "visual": {
+        "background": "BLUE",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "SI-ZMV-1",
+          "section": "61. člen; 89. člen (3) 8."
+        },
+        {
+          "id": "SI-PRAVILNIK-REG",
+          "section": "30. člen; 40. člen; 57. člen"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "MV 12-ABC",
+          "MV AB-123",
+          "MV 12-AB"
+        ],
+        "invalid": [
+          "MV 12-34",
+          "MV 1234A",
+          "MV 12-ABO",
+          "MV 12-ABCD",
+          "LJ 12-ABC"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SI_ORDINARY_LL_NN",
+      "country": "SI",
+      "name": "Registrska oznaka — dve ali tri črke in dve ali tri številke (AB-123, ABC-12)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "area",
+          "type": "TABLE",
+          "table": "si-obmocja"
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "minLength": 2,
+          "maxLength": 3,
+          "excluded": [
+            "O",
+            "Q",
+            "W",
+            "X",
+            "Y"
+          ]
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 2,
+          "maxLength": 3
+        }
+      ],
+      "lengthRules": {
+        "anyOf": [
+          {
+            "segments": [
+              "letters",
+              "number"
+            ],
+            "max": 5
+          }
+        ]
+      },
+      "formats": {
+        "national": "{area} {letters}-{number}",
+        "compact": "{area}{letters}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "SI-ZMV-1",
+          "section": "33.-35. člen; 61. člen; 89. člen (3) 8."
+        },
+        {
+          "id": "SI-PRAVILNIK-REG",
+          "section": "27.-30. člen; Priloga IV"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "MB AB-123",
+          "KP ABC-12",
+          "SG AB-12"
+        ],
+        "invalid": [
+          "XY AB-123",
+          "LJ ABC-123",
+          "LJ A-123",
+          "LJ AB-1",
+          "LJ ABO-12"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SI_ORDINARY_N_LLN",
+      "country": "SI",
+      "name": "Registrska oznaka — številka, črke in končna številka (1-ABC2, 1-AB2)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "area",
+          "type": "TABLE",
+          "table": "si-obmocja"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 1
+        },
+        {
+          "name": "tail",
+          "type": "PATTERNS",
+          "patterns": [
+            "LLLN",
+            "LLN"
+          ],
+          "letters": "ABCDEFGHIJKLMNPRSTUVZ",
+          "digitBlocks": "FREE"
+        }
+      ],
+      "formats": {
+        "national": "{area} {number}-{tail}",
+        "compact": "{area}{number}{tail}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "SI-ZMV-1",
+          "section": "33.-35. člen; 61. člen; 89. člen (3) 8."
+        },
+        {
+          "id": "SI-PRAVILNIK-REG",
+          "section": "27.-30. člen; Priloga IV"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "GO 1-ABC2",
+          "KK 1-AB2",
+          "LJ 0-ZZ0"
+        ],
+        "invalid": [
+          "XY 1-ABC2",
+          "LJ 1-ABCD2",
+          "LJ 1-A2",
+          "LJ 1-ABO2",
+          "LJ 1-ABC"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SI_ORDINARY_NN_LL",
+      "country": "SI",
+      "name": "Registrska oznaka — dve številki in dve ali tri črke (12-AB, 12-ABC)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "area",
+          "type": "TABLE",
+          "table": "si-obmocja"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "minLength": 2,
+          "maxLength": 3,
+          "excluded": [
+            "O",
+            "Q",
+            "W",
+            "X",
+            "Y"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{area} {number}-{letters}",
+        "compact": "{area}{number}{letters}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "SI-ZMV-1",
+          "section": "33.-35. člen; 61. člen; 89. člen (3) 8."
+        },
+        {
+          "id": "SI-PRAVILNIK-REG",
+          "section": "27.-30. člen; Priloga IV"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "LJ 12-ABC",
+          "NM 12-AB",
+          "CE 00-AA"
+        ],
+        "invalid": [
+          "XY 12-ABC",
+          "LJ 12-A",
+          "LJ 12-ABCD",
+          "LJ 12-ABO",
+          "LJ 12-ABQ",
+          "LJ 123-AB"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SI_ORDINARY_NNN_L",
+      "country": "SI",
+      "name": "Registrska oznaka — tri številke in ena ali dve črki (123-A, 123-AB)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "area",
+          "type": "TABLE",
+          "table": "si-obmocja"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        },
+        {
+          "name": "letters",
+          "type": "LETTERS",
+          "minLength": 1,
+          "maxLength": 2,
+          "excluded": [
+            "O",
+            "Q",
+            "W",
+            "X",
+            "Y"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{area} {number}-{letters}",
+        "compact": "{area}{number}{letters}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "SI-ZMV-1",
+          "section": "33.-35. člen; 61. člen; 89. člen (3) 8."
+        },
+        {
+          "id": "SI-PRAVILNIK-REG",
+          "section": "27.-30. člen; Priloga IV"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "CE 123-AB",
+          "PO 123-A",
+          "LJ 000-Z"
+        ],
+        "invalid": [
+          "XY 123-AB",
+          "LJ 123-ABC",
+          "LJ 1234-A",
+          "LJ 123-O",
+          "LJ 12-AB"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SI_TEST",
+      "country": "SI",
+      "name": "Preskusna tablica (PR + 4-5 znakov)",
+      "registrationType": "PROFESSIONAL_TEMPORARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "kind",
+          "type": "LITERAL",
+          "value": "PR"
+        },
+        {
+          "name": "mark",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNNLL",
+            "LLNNN",
+            "NNLLL",
+            "LLLNN",
+            "NLLLN",
+            "NNLL",
+            "LLNN",
+            "NNNL",
+            "NLLN"
+          ],
+          "letters": "ABCDEFGHIJKLMNPRSTUVZ",
+          "digitBlocks": "FREE"
+        }
+      ],
+      "formats": {
+        "national": "{kind} {mark}",
+        "compact": "{kind}{mark}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "SI-ZMV-1",
+          "section": "37. člen; 61. člen; 89. člen (3) 8."
+        },
+        {
+          "id": "SI-PRAVILNIK-REG",
+          "section": "30. člen; 41. člen"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "PR 12-ABC",
+          "PR AB-123",
+          "PR 12-AB"
+        ],
+        "invalid": [
+          "PR 12-34",
+          "PR 1234A",
+          "PR 12-ABQ",
+          "PR 12-ABCD",
+          "MV 12-ABC"
         ]
       },
       "legacySeries": false

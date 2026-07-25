@@ -1,0 +1,57 @@
+schemaVersion: 1
+id: SI_ORDINARY_N_LLN
+country: SI
+name: Registrska oznaka — številka, črke in končna številka (1-ABC2, 1-AB2)
+registrationType: ORDINARY
+# One of the four Slovenian ordinary schemes; see SI_ORDINARY_NN_LL for why the
+# series is split by the run the article 28(1) hyphen follows. Here the first run
+# is a single digit, so the hyphen falls after one character and the rest of the
+# mark mixes letters and a closing digit — which is why the tail is a PATTERNS
+# segment rather than two typed ones.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  level: NOT_INFERABLE
+segments:
+  - name: area
+    type: TABLE
+    table: si-obmocja
+  - name: number
+    type: DIGITS
+    length: 1
+  # Article 30(3): "številka, črka, črka, črka, številka"; article 30(4):
+  # "številka, črka, črka, številka". Letters exclude O and the four letters the
+  # Slovenian alphabet does not have (Q, W, X, Y); digits are unbounded, so a
+  # zero is accepted anywhere.
+  - name: tail
+    type: PATTERNS
+    patterns:
+      - LLLN
+      - LLN
+    letters: ABCDEFGHIJKLMNPRSTUVZ
+    digitBlocks: FREE
+formats:
+  national: "{area} {number}-{tail}"
+  compact: "{area}{number}{tail}"
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: SI-ZMV-1
+    section: "33.-35. člen; 61. člen; 89. člen (3) 8."
+  - id: SI-PRAVILNIK-REG
+    section: "27.-30. člen; Priloga IV"
+examples:
+  valid:
+    - "GO 1-ABC2"
+    - "KK 1-AB2"
+    - "LJ 0-ZZ0"
+  invalid:
+    - "XY 1-ABC2"
+    - "LJ 1-ABCD2"
+    - "LJ 1-A2"
+    - "LJ 1-ABO2"
+    - "LJ 1-ABC"

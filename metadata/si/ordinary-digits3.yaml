@@ -1,0 +1,55 @@
+schemaVersion: 1
+id: SI_ORDINARY_NNN_L
+country: SI
+name: Registrska oznaka — tri številke in ena ali dve črki (123-A, 123-AB)
+registrationType: ORDINARY
+# One of the four Slovenian ordinary schemes; see SI_ORDINARY_NN_LL for why the
+# series is split by the run the article 28(1) hyphen follows.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  level: NOT_INFERABLE
+segments:
+  - name: area
+    type: TABLE
+    table: si-obmocja
+  # Article 30(3)-(4): "številka, številka, številka, črka, črka" and "številka,
+  # številka, številka, črka".
+  - name: number
+    type: DIGITS
+    length: 3
+  - name: letters
+    type: LETTERS
+    minLength: 1
+    maxLength: 2
+    excluded:
+      - O
+      - Q
+      - W
+      - X
+      - Y
+formats:
+  national: "{area} {number}-{letters}"
+  compact: "{area}{number}{letters}"
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: SI-ZMV-1
+    section: "33.-35. člen; 61. člen; 89. člen (3) 8."
+  - id: SI-PRAVILNIK-REG
+    section: "27.-30. člen; Priloga IV"
+examples:
+  valid:
+    - "CE 123-AB"
+    - "PO 123-A"
+    - "LJ 000-Z"
+  invalid:
+    - "XY 123-AB"
+    - "LJ 123-ABC"
+    - "LJ 1234-A"
+    - "LJ 123-O"
+    - "LJ 12-AB"

@@ -1,0 +1,68 @@
+schemaVersion: 1
+id: CZ_HISTORIC
+country: CZ
+name: Registrační značka pro historická vozidla (kód registračního místa + V)
+registrationType: HISTORICAL
+# validFrom omitted: the two-digit place code + "V" composition predates
+# vyhláška 343/2014 Sb. (it ran under vyhláška 243/2001 Sb. as well) and no
+# earlier act fixing it was traced.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 26 odst. 1 varies the width by vehicle kind: 4 characters for historical
+  # automobiles, 3 for motorcycles, 2 for mopeds with pedals. The scheme spans
+  # the union, so only "a historical vehicle" is certain.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - MOTORCYCLE
+    - MOPED_OR_MOTOR_CYCLE
+  evidence:
+    - type: PATTERN
+      value: "registration-place code + V (§ 26 odst. 1)"
+segments:
+  # § 26 odst. 1: "začíná vždy dvoumístným číselným znakem arabských číslic
+  # registračního místa, které zajišťuje registraci historických vozidel na
+  # správním území kraje, a velkým písmenem „V“, za nímž se u historických
+  # automobilů umísťují 4, u historických motocyklů 3 a u historických mopedů
+  # se šlapadly 2 arabské číslice nebo písmena latinské abecedy."
+  # The place codes are the fourteen of § 26 odst. 6.
+  - name: place
+    type: TABLE
+    table: cz-registracni-mista
+  - name: kind
+    type: LITERAL
+    value: V
+  - name: serial
+    type: CHARSET
+    minLength: 2
+    maxLength: 4
+    characters: 0123456789ABCDEFHIJKLMNPRSTUVXYZ
+formats:
+  national: "{place}{kind} {serial}"
+  compact: "{place}{kind}{serial}"
+# § 29 odst. 2 písm. e): white background, GREEN characters, EU band. A
+# historical vehicle needs a průkaz historického vozidla (§ 23 písm. d) bod 4),
+# which is a document, not something the characters prove.
+visual:
+  background: WHITE
+  foreground: GREEN
+sources:
+  - id: CZ-VYHL-343
+    section: "§ 23 písm. d) bod 4; § 26 odst. 1, 6; § 27 odst. 3-4; § 29 odst. 2 písm. e)"
+examples:
+  valid:
+    - "01V 1234"
+    - "14V 123"
+    - "02V 12"
+    - "05V 12AB"
+  invalid:
+    # 15 is not a registration place; the letter must be V; the serial runs 2-4.
+    - "15V 1234"
+    - "01X 1234"
+    - "01V 1"
+    - "01V 12345"
+    - "1V 1234"

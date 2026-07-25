@@ -1,0 +1,61 @@
+schemaVersion: 1
+id: HU_TEMPORARY_I
+country: HU
+name: I betűjelű ideiglenes rendszámtábla (I + számjegyek + két betűjel)
+registrationType: TEMPORARY_PRIVATE
+# Annex 14/A describes the temporary plates introduced on 2022-07-01, and
+# § 63/A is the section that issues them; § 54 (7) makes this the only temporary
+# series issuable from that date.
+validFrom: "2022-07-01"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 63/A (2) lists eighteen cases: self-propelled work machines, vehicles with
+  # no registration document or plate, replacement of a damaged, lost or stolen
+  # plate, third-country imports, vehicles taken abroad, agricultural machines,
+  # race vehicles and more. Nothing about the vehicle follows from the mark.
+  level: NOT_INFERABLE
+segments:
+  # Annex 14/A point 1: "az I betűjelet követő címer után két folyamatos
+  # számjegyet és két betűjelet", digits 01-99, with the last two digits of the
+  # year of issue in a separately coloured field. Point 2 (for the cases of
+  # § 63/A (2) 6. and 12.) gives "három számjegyet, kötőjelet és két betűjelet",
+  # digits 001-999, in red characters. Part B (since 2025-02-01) narrows the
+  # letters of the 12. case to SP, SO, SR and ST as stock is used up — a subset
+  # of what is accepted here.
+  #
+  # The year field is a separate field, not part of the mark, so it is not
+  # modelled; the two variants differ in character colour (black and red), so
+  # this scheme asserts no `visual`.
+  - name: prefix
+    type: LITERAL
+    value: I
+  - name: number
+    type: PATTERNS
+    patterns:
+      - NN
+      - NNN
+    digitBlocks: NO_ZERO_BLOCK
+  - name: letters
+    type: LETTERS
+    length: 2
+formats:
+  national: "{prefix} {number}-{letters}"
+  compact: "{prefix}{number}{letters}"
+sources:
+  - id: HU-KORM-326
+    section: "54. § (7); 63/A. § (1)-(2); 14/A. melléklet A 1.-2., 4. pont, B"
+examples:
+  valid:
+    - "I 12-AB"
+    - "I 123-SP"
+    - "I01XY"
+  invalid:
+    - "I 00-AB"
+    - "I 000-AB"
+    - "I 1234-AB"
+    - "I 12-ABC"
+    - "I 12-A"

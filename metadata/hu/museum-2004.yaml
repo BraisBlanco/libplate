@@ -1,0 +1,55 @@
+schemaVersion: 1
+id: HU_MUSEUM_2004
+country: HU
+name: OT betűjelű különleges rendszámtábla (OT + négy vagy öt számjegy)
+registrationType: HISTORICAL
+# Legacy for detection purposes only: § 54 (7) stops issuing the 2004-era
+# special plates on 2022-07-01, but annex 13/A point 2 keeps describing the
+# OT plates issued under § 54 (2) in this shape, so they remain on the road.
+legacySeries: true
+# § 53 (2) b) ba): the EU-field plates issued after 2004-05-01, which is what
+# annex 13 describes.
+validFrom: "2004-05-01"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  level: NOT_INFERABLE
+segments:
+  # Annex 13 point 3: "két betűjelet és kötőjellel elválasztott két-két
+  # (összesen 4) számjegyet tartalmaz"; point 3.1 adds the five-digit variant
+  # "két betűjelet, két számjegyet és kötőjelet követően három (összesen 5)
+  # számjegyet". Point 9a bounds the digits of points 3-8 at 1-9999, so a run of
+  # zeros alone is not issued. The hyphen position differs between the two
+  # variants, so `national` writes the digits as one group.
+  - name: prefix
+    type: LITERAL
+    value: OT
+  - name: number
+    type: PATTERNS
+    patterns:
+      - NNNN
+      - NNNNN
+    digitBlocks: NO_ZERO_BLOCK
+formats:
+  national: "{prefix} {number}"
+  compact: "{prefix}{number}"
+# Annex 13 point 3: white background, black characters and border.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: HU-KORM-326
+    section: "54. § (2), (7); 13. melléklet 3., 3.1., 9a. pont; 13/A. melléklet 2. pont"
+examples:
+  valid:
+    - "OT 12-34"
+    - "OT 12-345"
+    - "OT1234"
+  invalid:
+    - "OT 00-00"
+    - "OT 123"
+    - "OT 123456"
+    - "OT AB-123"

@@ -1,0 +1,27 @@
+{
+  "id": "cz-registracni-mista",
+  "description": "Two-digit codes of the registration places that register historical and sports vehicles for the administrative territory of a kraj, enumerated by § 26 odst. 6 of vyhláška č. 343/2014 Sb.: 01 Praha, 02 Jihomoravský, 03 Jihočeský, 04 Pardubický, 05 Královéhradecký, 06 Vysočina, 07 Karlovarský, 08 Liberecký, 09 Olomoucký, 10 Plzeňský, 11 Středočeský, 12 Moravskoslezský, 13 Ústecký, 14 Zlínský. They open every CZ_HISTORIC and CZ_SPORT mark (§ 26 odst. 1 and 5) and are numbered independently of the kraj letters of § 28.",
+  "sources": [
+    {
+      "id": "CZ-VYHL-343",
+      "section": "§ 26 odst. 1, 5-6"
+    }
+  ],
+  "sourceCheckedAt": "2026-07-26",
+  "values": [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14"
+  ]
+}

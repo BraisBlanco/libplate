@@ -1,0 +1,69 @@
+schemaVersion: 1
+id: HU_STATE
+country: HU
+name: Állami szervek különleges rendszámtáblája (BA/HA/MA/NA/RA + öt számjegy)
+registrationType: STATE_OR_MILITARY
+validFrom: "2022-07-01"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 63 (9): the Hungarian Defence Forces (HA), the police (RA), the National
+  # Ambulance Service (MA), the tax and customs administration (NA) and the
+  # prison service (BA) fit these plates to their own vehicles, which span cars,
+  # vans, trucks and buses. § 63 (10) adds that an RA plate may only go on a
+  # service vehicle whose exterior shows that character — a visual condition,
+  # not a textual one.
+  level: NOT_INFERABLE
+segments:
+  # Annex 13/A point 4: "a BA, HA, MA, NA és RA betűjelű különleges rendszámtábla
+  # ... a kezdő két betűjelet követő címer után két számjegyet, kötőjelet és
+  # három számjegyet tartalmaz". The five prefixes share their second letter, so
+  # the first character is matched against the five bodies' initials rather than
+  # spelt out as five schemes. All five are mixed vowel/consonant pairs, so none
+  # can open an ordinary mark under § 53 (6).
+  #
+  # Known limitation: point 7 puts the range at 00 001-99 999, i.e. the five
+  # digits read as one non-zero number, but the two groups are modelled
+  # separately so that `national` can place the hyphen, so "HA 00-000" is
+  # accepted.
+  - name: body
+    type: CHARSET
+    length: 1
+    characters: BHMNR
+  - name: suffix
+    type: LITERAL
+    value: A
+  - name: group
+    type: DIGITS
+    length: 2
+  - name: serial
+    type: DIGITS
+    length: 3
+formats:
+  national: "{body}{suffix} {group}-{serial}"
+  compact: "{body}{suffix}{group}{serial}"
+# Annex 13/A point 4: white background, black characters and border. An
+# environment-friendly vehicle of these bodies carries the light-green plate of
+# point 9 with the same characters.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: HU-KORM-326
+    section: "63. § (9)-(10); 13/A. melléklet 4., 7., 9., 11. pont"
+examples:
+  valid:
+    - "HA 12-345"
+    - "RA 00-001"
+    - "MA 99-999"
+    - "NA12345"
+    - "BA 01-234"
+  invalid:
+    - "CA 12-345"
+    - "HB 12-345"
+    - "HA 12-34"
+    - "HA 12-3456"
+    - "HA AB-345"

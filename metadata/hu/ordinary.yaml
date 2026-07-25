@@ -1,0 +1,71 @@
+schemaVersion: 1
+id: HU_ORDINARY
+country: HU
+name: Sorozatban előállított állandó rendszámtábla (négy betűjel + három számjegy)
+registrationType: ORDINARY
+# § 53 (2) c) ca): the format "introduced on 1 July 2022", and § 54 (7): from
+# that date only this format may be issued.
+validFrom: "2022-07-01"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 53 (4): a serial plate is issued to any vehicle whose different use does
+  # not call for another plate, so the characters carry no category. Slow
+  # vehicles (white plate, RED characters) and environment-friendly vehicles
+  # (light-green plate) carry a mark formed the same way — colour variants, not
+  # separate content (annex 13 point 10, annex 13/A point 9).
+  level: NOT_INFERABLE
+segments:
+  # § 53 (6): the plate "a latin abc szerinti két magánhangzóból vagy két
+  # mássalhangzóból - kivéve a cs, gy, ly, ny, sz, ty, zs betűkombinációkat -,
+  # az ezt követő címer után két betűjelből, kötőjelből és három számjegyből
+  # áll". The opening pair is therefore constrained (see the table, which
+  # enumerates that rule), the following two letters are not, accented vowels
+  # are excluded everywhere, and the digits run 001-999.
+  #
+  # This scheme also covers the "egyénileg kiválasztott" (individually selected)
+  # plates of § 53 (3) b): § 53 (6) gives them the same format, and only the
+  # choosing differs.
+  - name: opening
+    type: TABLE
+    table: hu-kezdo-betupar
+  - name: letters
+    type: LETTERS
+    length: 2
+  # 001-999: leading zeros are part of the number, all-zero is not issued.
+  - name: number
+    type: PATTERNS
+    patterns:
+      - NNN
+    digitBlocks: NO_ZERO_BLOCK
+formats:
+  national: "{opening} {letters}-{number}"
+  compact: "{opening}{letters}{number}"
+# Annex 11/A: white background, black characters, the EU field with twelve
+# yellow stars and a white H on the left, and the coat of arms of Hungary
+# between the opening pair and the remaining characters.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: HU-KORM-326
+    section: "53. § (2)-(6); 54. § (2), (7); 11/A. melléklet"
+examples:
+  valid:
+    - "AA BB-123"
+    - "EI KL-001"
+    - "MM PT-761"
+    - "AABB123"
+  invalid:
+    # Mixed vowel/consonant opening pair, and one of the seven digraphs.
+    - "AB CD-123"
+    - "SZ AB-123"
+    - "GY AB-123"
+    # 000 is outside 001-999; the shape is fixed at 4 letters + 3 digits.
+    - "AA BB-000"
+    - "AA BB-12"
+    - "AA B-123"
+    - "AAA BB-123"

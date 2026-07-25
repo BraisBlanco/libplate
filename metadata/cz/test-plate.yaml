@@ -1,0 +1,49 @@
+schemaVersion: 1
+id: CZ_TEST
+country: CZ
+name: Zvláštní registrační značka pro zkušební provoz (F + 4 znaky)
+registrationType: PROFESSIONAL_TEMPORARY
+# validFrom omitted: the "F" test-operation series predates vyhláška 343/2014
+# Sb. and the act that first fixed the composition was not traced.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # A zkušební-provoz plate is granted for driving vehicles under test, so the
+  # mark says nothing about what carries it.
+  level: NOT_INFERABLE
+segments:
+  # § 26 odst. 4: "se skládá z 5 znaků a začíná vždy písmenem „F“, ostatní znaky
+  # jsou vyjádřeny arabskými číslicemi nebo písmeny latinské abecedy." Letters
+  # come from the § 27 odst. 3 repertoire. "F" is not one of the fourteen kraj
+  # code letters, which is what keeps this series apart from the kraj-letter
+  # special marks of § 26 odst. 2-3 (deliberately not modelled, see AGENTS.md).
+  - name: prefix
+    type: LITERAL
+    value: F
+  - name: serial
+    type: CHARSET
+    length: 4
+    characters: 0123456789ABCDEFHIJKLMNPRSTUVXYZ
+formats:
+  national: "{prefix} {serial}"
+  compact: "{prefix}{serial}"
+# § 29 odst. 2 písm. h): white background, GREEN characters, EU band.
+visual:
+  background: WHITE
+  foreground: GREEN
+sources:
+  - id: CZ-VYHL-343
+    section: "§ 23 písm. d) bod 3; § 26 odst. 4; § 27 odst. 3-4; § 29 odst. 2 písm. h)"
+examples:
+  valid:
+    - "F 1234"
+    - "F 12AB"
+    - "F1A2B"
+  invalid:
+    - "F 123"
+    - "F 12345"
+    - "F 12O4"
+    - "G 1234"

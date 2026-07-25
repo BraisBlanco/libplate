@@ -1,0 +1,55 @@
+schemaVersion: 1
+id: HU_MUSEUM
+country: HU
+name: OT betűjelű különleges rendszámtábla (OT + két betűjel + három számjegy)
+registrationType: HISTORICAL
+# Annex 13/A describes the special plates introduced on 2022-07-01.
+validFrom: "2022-07-01"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 63 (1) f) and § 63 (5): the plate is issued for a muzeális jellegű jármű on
+  # a certificate from the designated appraisal body. Any category can hold that
+  # status, so only "a museum vehicle" is certain.
+  level: NOT_INFERABLE
+segments:
+  # Annex 13/A point 2: "az OT betűjeleket követő címer után két betűjelet,
+  # kötőjelet és három számjegyet tartalmaz", digits 001-999 (point 6). Accented
+  # vowels are barred at letter positions (point 11). The OT pair is a mixed
+  # vowel/consonant pair, so it can never open an ordinary mark under § 53 (6) —
+  # which is what keeps this scheme disjoint from HU_ORDINARY.
+  - name: prefix
+    type: LITERAL
+    value: OT
+  - name: letters
+    type: LETTERS
+    length: 2
+  - name: number
+    type: PATTERNS
+    patterns:
+      - NNN
+    digitBlocks: NO_ZERO_BLOCK
+formats:
+  national: "{prefix} {letters}-{number}"
+  compact: "{prefix}{letters}{number}"
+# Annex 13/A point 2: white background, black characters and border.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: HU-KORM-326
+    section: "63. § (1) f), (5); 13/A. melléklet 2., 6., 11. pont"
+examples:
+  valid:
+    - "OT AB-123"
+    - "OT ZZ-001"
+    - "OTAB123"
+  invalid:
+    - "OT AB-000"
+    - "OT A-123"
+    - "OT ABC-123"
+    - "OT AB-12"
+    - "TO AB-123"

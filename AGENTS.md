@@ -39,8 +39,13 @@ Sweden (the three-letter series in both its digit and 2019 letter-suffix
 arrangements + diplomatic plates), Finland (ordinary + the number-first
 L-class/tractor mark + `CD` and `C` mission plates + export + `KOE` test
 plates), Denmark (the national series + diplomatic, faste prøveskilte and `RF`
-airport plates). See `README.md` for the full
-matrix.
+airport plates), Czechia (the structureless 5-8 character standard mark +
+`CD`/`XX`/`XS`/`HC` + `EL` electric + historic `V` + sports `R` + test `F`),
+Slovenia (the four ordinary arrangements behind an area code + `MV` historic +
+`PR` test plates), Hungary (the 2022 four-letter series + the pre-2022
+three-letter one + `CD` permanent and temporary + `OT` museum + `TX` taxi +
+the `BA`/`HA`/`MA`/`NA`/`RA` state bodies + `I` temporary). See `README.md` for
+the full matrix.
 
 ## The golden rule: metadata is the source of truth
 
@@ -447,5 +452,83 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
   either way the space swallows the other series), historic plates (§ 75 — the
   pre-1976 systems), the special municipal plates of § 3, stk. 4 and the third
   plate (it repeats the vehicle's own number).
+
+- **CZ has no regulated ordinary structure, and that shapes everything else.**
+  § 24 odst. 2 of vyhláška 343/2014 Sb. gives the standard mark only a character
+  count — "nejméně 5 a nejvíce 8" capital Latin letters and Arabic numerals,
+  always at least one letter and one digit — and § 27 odst. 3 limits letters to
+  the twenty-two with a glyph in příloha č. 16 (no `G`, `O`, `Q`, `W`). The
+  `1A2 3456` arrangement and the position of the kraj code letter are in **no**
+  official text: § 27 odst. 3 only presupposes a kraj code, § 28 and the
+  ministry's "Kódy krajů" page list the fourteen letters, and the ministry's own
+  plate-type drawing fills the mark as `A00 0000`, which no issued plate matches.
+  Wikipedia's `9A9 9999` is exactly the kind of source `docs/DESIGN.md` bars.
+  Three consequences, all deliberate: (1) `CZ_ORDINARY` is modelled as written
+  and is therefore `legacySeries`-flagged — not because it is legacy but because
+  a free 5-8 character space would make most European plates AMBIGUOUS in
+  country-less `detect()`; with a `country` hint it behaves normally. (2) It also
+  covers the marks on request of § 25 / § 7b odst. 1 (8, 7 or 5 freely chosen
+  characters, letters **or** digits), so the § 24 odst. 2 "at least one letter and
+  one digit" rule is NOT enforced — enforcing it would reject real all-digit
+  plates. (3) Every anchored Czech series sits inside that space, so those inputs
+  are AMBIGUOUS unless the caller's separators contradict the standard 3 + rest
+  grouping (`12345 CD` resolves, `123CD` does not). `test/conformance.test.ts`
+  tolerates exactly this shape of ambiguity: a valid example may come back
+  AMBIGUOUS if every competing candidate is a `legacySeries` scheme.
+  **Deliberately absent**: the § 26 odst. 2-3 special marks for handling
+  operation (kraj letter + 4-5 characters) and for the drive from the place of
+  sale (kraj letter + 6 characters) — free-form spaces that contain the whole
+  `EL` series, since `E` is the Pardubický letter, and would make every electric
+  mark ambiguous against a non-legacy scheme; the export mark (§ 24 odst. 4 adds
+  only a red validity field to a standard number); and the pre-2025 diplomatic
+  arrangement (the MD catalogue draws the pair at positions 4-5, the MZV handbook
+  fixes 6-7 since 2025-07-01, and the old plates must be surrendered by
+  2026-12-31). `CZ_HONORARY_CONSUL` models only the 5-digit automobile shape: the
+  handbook places `HC` at positions 4-5 for that one, and where it would sit on
+  the 4- or 3-digit marks of § 24 odst. 3 is undocumented.
+- **SI is split by where the hyphen falls, not by category.** Article 30(3)-(4)
+  of the Pravilnik o registraciji enumerates nine digit/letter arrangements
+  exhaustively (four digits alone is not one of them), and article 28(1) puts a
+  hyphen "za prvim delom zaporedja črk ali številk". Since separator placement is
+  evidence, a single `mark` token would be contradicted by the plate's own
+  official spelling and would drop out of country-less detection — `MS AB-123`
+  would come back German alone. Hence four ordinary schemes (`NN`+letters,
+  `NNN`+letters, letters+digits, digit+letters+digit) whose boundaries match the
+  hyphen; `SI_HISTORIC` and `SI_TEST` keep a single `PATTERNS` mark because their
+  `MV`/`PR` literals anchor them and no other reading competes. The regulation
+  formally **ceased to be valid on 2018-01-06** and continues to apply under
+  article 89(3) point 8 of ZMV-1 — cite both. Not modelled: the article 30(2) ban
+  on `I` next to `1`, `B` next to `8` and `G` next to `6` (adjacency across a
+  segment boundary, which the grammar cannot express); the chosen part of the mark
+  (article 32 — 3-6 characters, one optional hyphen, `X`/`Y`/`W` and a conditional
+  `O`, a space that contains the ordinary marks); diplomatic plates (article 39
+  gives the activity code, an agency-assigned country number and a vehicle number
+  but **no widths** — the RO precedent, do not invent them); export plates (same
+  characters, yellow face); and defence/police vehicles, which article 61(2)-(3)
+  sends to separate ministerial regulations.
+- **HU's opening pair is a rule enumerated, and one pair is withheld.** § 53 (6)
+  of 326/2011. (XII. 28.) Korm. rendelet opens the 2022 mark with two vowels
+  **or** two consonants of the Latin alphabet, minus `cs`, `gy`, `ly`, `ny`, `sz`,
+  `ty`, `zs`; `metadata/tables/hu-kezdo-betupar.json` is that rule expanded (25
+  vowel pairs + 434 consonant pairs), with `Y` treated as a consonant — which is
+  what makes the explicit `gy`/`ly`/`ny`/`ty` exclusions meaningful. `TX` is
+  withheld from the list because the taxi plate of annex 13/A point 3 takes
+  exactly the remaining shape, so keeping it would make every taxi plate
+  AMBIGUOUS; that narrowing is an inference from the reservation, not an explicit
+  prohibition, and it is the only one applied (`CD` stays, its diplomatic plate
+  being six digits). The pre-2022 three-letter series is still valid but shares
+  its shape with `SE_ORDINARY`, so it is `legacySeries`-flagged. `HU_DIPLOMATIC`
+  and `HU_STATE` model their two digit groups separately so `national` can place
+  the official hyphen, which costs the all-zero exclusion of their stated ranges
+  (`CD 000-000`, `HA 00-000` are accepted). `HU_TEMPORARY_CD` reports
+  `DIPLOMATIC` — `registrationType` is one-dimensional and the holder regime is
+  the more informative half, so `registration.temporary` reads false for it.
+  **Deliberately absent**: individually produced plates (§ 55 — 3-6 letters + 1-4
+  digits, seven characters together, a space that contains the current series);
+  the 2004-era `R`/`H`/`RR`/`C`/`X` special series and the `Z`/`P`/`E`/`V`/`M`/`SP`
+  temporary letters (§ 54 (7) stopped issuing them on 2022-07-01 and pre-2022
+  temporary plates are valid only until expiry); four-wheeled moped plates; and
+  the slow-vehicle (red), environment-friendly (light green), taxi-legacy (yellow)
+  and bike-carrier (grey) plates, which repeat a number formed the same way.
 
 These need grammar or scope work, not a quick patch. Discuss before changing.

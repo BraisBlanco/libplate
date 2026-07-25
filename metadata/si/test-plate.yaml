@@ -1,0 +1,65 @@
+schemaVersion: 1
+id: SI_TEST
+country: SI
+name: Preskusna tablica (PR + 4-5 znakov)
+registrationType: PROFESSIONAL_TEMPORARY
+# validFrom omitted: preskusne tablice predate the pravilnik in application and
+# the act that first fixed their content was not traced.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Article 37 of ZMV-1: test plates cover unregistered but technically sound
+  # vehicles being moved for a dealer, taken on test drives by prospective
+  # buyers, or tested. Nothing about the vehicle follows from the mark.
+  level: NOT_INFERABLE
+segments:
+  # Article 41(2): "za oznako registracijskega območja napis »PR« (preskušnja)
+  # črne barve na rdečem polju in registrska oznaka vozila" — "PR" takes the
+  # place of the area designation, followed by a mark formed under article 30.
+  # As with SI_HISTORIC, the "PR" literal anchors the scheme, so the mark stays a
+  # single segment instead of being split by run the way the ordinary series is.
+  - name: kind
+    type: LITERAL
+    value: PR
+  - name: mark
+    type: PATTERNS
+    patterns:
+      - NNNLL
+      - LLNNN
+      - NNLLL
+      - LLLNN
+      - NLLLN
+      - NNLL
+      - LLNN
+      - NNNL
+      - NLLN
+    letters: ABCDEFGHIJKLMNPRSTUVZ
+    digitBlocks: FREE
+formats:
+  national: "{kind} {mark}"
+  compact: "{kind}{mark}"
+# Article 41(2): white plate, black characters; the "PR" itself sits on a red
+# field. `visual` describes the mark's own colours, so the red field — like the
+# yellow expiry sticker of an export plate — is not reported.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: SI-ZMV-1
+    section: "37. člen; 61. člen; 89. člen (3) 8."
+  - id: SI-PRAVILNIK-REG
+    section: "30. člen; 41. člen"
+examples:
+  valid:
+    - "PR 12-ABC"
+    - "PR AB-123"
+    - "PR 12-AB"
+  invalid:
+    - "PR 12-34"
+    - "PR 1234A"
+    - "PR 12-ABQ"
+    - "PR 12-ABCD"
+    - "MV 12-ABC"

@@ -1,0 +1,12 @@
+{
+  "id": "si-obmocja",
+  "description": "Designations of the eleven Slovenian registration areas (registracijska območja). Article 29(1) of the Pravilnik o registraciji motornih in priklopnih vozil names the areas — Celje, Koper, Kranj, Krško, Ljubljana, Maribor, Murska Sobota, Nova Gorica, Novo mesto, Postojna, Slovenj Gradec — and article 29(2) puts their designations in Priloga IV, which is the official list reproduced here: CE, KP, KR, KK, LJ, MB, MS, GO, NM, PO, SG. The designation opens every ordinary and export plate; historic plates carry 'MV' and test plates 'PR' in its place (arts. 40-41), so those two values are deliberately absent from this table.",
+  "sources": [
+    {
+      "id": "SI-PRAVILNIK-REG",
+      "section": "29. člen; Priloga IV"
+    }
+  ],
+  "sourceCheckedAt": "2026-07-26",
+  "values": ["CE", "GO", "KK", "KP", "KR", "LJ", "MB", "MS", "NM", "PO", "SG"]
+}

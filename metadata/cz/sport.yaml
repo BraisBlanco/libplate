@@ -1,0 +1,59 @@
+schemaVersion: 1
+id: CZ_SPORT
+country: CZ
+name: Registrační značka pro sportovní vozidla (kód registračního místa + R)
+registrationType: SPECIAL
+# validFrom omitted: § 26 odst. 5 rests on § 38c of zákon 56/2001 Sb. (sports
+# vehicles), and the act that first fixed this composition was not traced.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 26 odst. 5 gives 4 digits to sports automobiles and 3 to sports
+  # motorcycles, so the union is those two.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - MOTORCYCLE
+  evidence:
+    - type: PATTERN
+      value: "registration-place code + R (§ 26 odst. 5)"
+segments:
+  # § 26 odst. 5: place code (§ 26 odst. 6) + "R", then 4 arabic digits for
+  # sports automobiles and 3 for sports motorcycles. Unlike the historical
+  # series, the text allows digits only — no letters.
+  - name: place
+    type: TABLE
+    table: cz-registracni-mista
+  - name: kind
+    type: LITERAL
+    value: R
+  - name: serial
+    type: DIGITS
+    minLength: 3
+    maxLength: 4
+formats:
+  national: "{place}{kind} {serial}"
+  compact: "{place}{kind}{serial}"
+# § 29 odst. 2 písm. i): white background, GREEN characters, EU band (absent on
+# the 80 x 110 mm plate of a sports motorcycle, § 29 odst. 9 písm. d).
+visual:
+  background: WHITE
+  foreground: GREEN
+sources:
+  - id: CZ-ZAKON-56
+    section: "§ 38c odst. 6"
+  - id: CZ-VYHL-343
+    section: "§ 23 písm. d) bod 5; § 26 odst. 5-6; § 29 odst. 2 písm. i)"
+examples:
+  valid:
+    - "01R 1234"
+    - "12R 123"
+  invalid:
+    - "15R 1234"
+    - "01R 12"
+    - "01R 12345"
+    - "01R 12AB"
+    - "01V 1234"

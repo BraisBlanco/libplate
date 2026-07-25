@@ -1,0 +1,86 @@
+schemaVersion: 1
+id: SI_ORDINARY_NN_LL
+country: SI
+name: Registrska oznaka — dve številki in dve ali tri črke (12-AB, 12-ABC)
+registrationType: ORDINARY
+# Why the Slovenian ordinary series is four schemes and not one: article 28(1)
+# puts a hyphen "za prvim delom zaporedja črk ali številk" — after the first run
+# of letters or digits — so the official rendering carries a separator INSIDE the
+# mark. libplate treats separator placement as evidence, so a mark modelled as a
+# single token would be contradicted by its own official spelling and would drop
+# out of country-less detection: "MS AB-123" would come back as German alone.
+# One scheme per run split (digits-first with a two- or three-digit run,
+# letters-first, and the digit-letters-digit arrangements) puts the boundary
+# where the hyphen belongs. Between them these four schemes admit exactly the
+# nine arrangements of article 30(3)-(4) and nothing else.
+#
+# validFrom is deliberately omitted: the arrangement predates the pravilnik in
+# application today and the act that first fixed it was not traced.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Article 27(1) gives every registered vehicle the same content; article 33 of
+  # ZMV-1 only varies the number of plates. Mopeds up to 4 kW and 25 km/h carry
+  # these characters in RED (article 28(2), added by Uradni list RS 9/17), and
+  # export plates carry them in black on yellow (article 38) — colour variants.
+  level: NOT_INFERABLE
+segments:
+  # Article 29(2) with Priloga IV: the area designation, then the municipal coat
+  # of arms, then the mark.
+  - name: area
+    type: TABLE
+    table: si-obmocja
+  # Article 30(3)-(4), the arrangements "številka, številka, črka, črka, črka"
+  # and "številka, številka, črka, črka". Nothing in the pravilnik bounds the
+  # digits, so all-zero runs are accepted.
+  - name: number
+    type: DIGITS
+    length: 2
+  # Article 30(2): the Slovenian alphabet without Č, Š and Ž, and without O
+  # ("Črka »O« se ne sme uporabiti"). Q, W, X and Y are not in that alphabet at
+  # all; article 32(3) lets a *chosen* part of the mark use X, Y, W and a
+  # conditional O, and chosen marks are deliberately not modelled (see
+  # AGENTS.md).
+  #
+  # Known limitation: article 30(2) also bans, "v neposredni povezavi", the
+  # letter I next to the digit 1, B next to 8 and G next to 6. That is a
+  # cross-segment adjacency rule the grammar cannot express, so "LJ 18-BC" is
+  # accepted here.
+  - name: letters
+    type: LETTERS
+    minLength: 2
+    maxLength: 3
+    excluded:
+      - O
+      - Q
+      - W
+      - X
+      - Y
+formats:
+  national: "{area} {number}-{letters}"
+  compact: "{area}{number}{letters}"
+# Article 28(1): white background, black area designation and mark, blue EU
+# field, green border line.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: SI-ZMV-1
+    section: "33.-35. člen; 61. člen; 89. člen (3) 8."
+  - id: SI-PRAVILNIK-REG
+    section: "27.-30. člen; Priloga IV"
+examples:
+  valid:
+    - "LJ 12-ABC"
+    - "NM 12-AB"
+    - "CE 00-AA"
+  invalid:
+    - "XY 12-ABC"
+    - "LJ 12-A"
+    - "LJ 12-ABCD"
+    - "LJ 12-ABO"
+    - "LJ 12-ABQ"
+    - "LJ 123-AB"

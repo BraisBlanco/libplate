@@ -1,0 +1,62 @@
+schemaVersion: 1
+id: HU_ORDINARY_2004
+country: HU
+name: Sorozatban előállított állandó rendszámtábla (három betűjel + három számjegy)
+registrationType: ORDINARY
+# Legacy for detection purposes only: § 54 (7) stops issuing this series on
+# 2022-07-01, but plates already on vehicles stay valid (§ 55 governs their
+# replacement, and no provision withdraws them), so they are still on the road.
+# Its shape — three letters over three digits — is also the Swedish ordinary
+# series and reads as a German district code followed by letters and digits, so
+# keeping it opt-in in country-less detection avoids blanket HU/SE/DE ambiguity.
+legacySeries: true
+# § 53 (2) a): plates issued after 1990-08-06 carry the national colours and the
+# H mark; (2) b) ba) replaced that band with the EU field for plates issued after
+# 2004-05-01. Both arrangements carry the same three letters and three digits
+# (§ 53 (5)), so they are one scheme dated from the earlier change.
+validFrom: "1990-08-06"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # As with the current series, the same content served every category; the taxi
+  # (yellow), slow-vehicle (red characters), environment-friendly (light green)
+  # and bike-carrier (grey) plates of annex 13 repeat these three letters and
+  # three digits in another colour.
+  level: NOT_INFERABLE
+segments:
+  # § 53 (5): "a sorozatban előállított állandó rendszámtábla három betűjelet és
+  # három számjegyet tartalmaz." The decree fixes no letter repertoire beyond the
+  # ban on accented vowels (annex 13 point 11 for the special plates, § 53 (6)
+  # for the current series), and no range for the digits — unlike the current
+  # series, where 001-999 is stated — so the full alphabet and 000-999 are
+  # accepted here.
+  - name: letters
+    type: LETTERS
+    length: 3
+  - name: number
+    type: DIGITS
+    length: 3
+formats:
+  national: "{letters}-{number}"
+  compact: "{letters}{number}"
+# § 53 (2) b) ba) with annex 11: white background, black characters, EU field.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: HU-KORM-326
+    section: "53. § (2) a)-b), (5); 54. § (7); 55. §; 11. melléklet; 13. melléklet"
+examples:
+  valid:
+    - "ABC-123"
+    - "XYZ-000"
+    - "FKM 987"
+  invalid:
+    - "AB-123"
+    - "ABCD-123"
+    - "ABC-12"
+    - "ABC-1234"
+    - "A1C-123"

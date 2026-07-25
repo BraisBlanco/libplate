@@ -1,0 +1,60 @@
+schemaVersion: 1
+id: HU_DIPLOMATIC
+country: HU
+name: CD betűjelű különleges rendszámtábla (CD + hat számjegy)
+registrationType: DIPLOMATIC
+# validFrom omitted: annex 13 (the special plates "introduced in 2004") and
+# annex 13/A (those "introduced on 1 July 2022") describe the CD plate in the
+# same terms — two letters and two groups of three digits — so one scheme spans
+# both, and the series is older than either annex.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 63 (1) a): the plate goes to diplomatic and professional consular missions,
+  # international organizations, their Hungarian branches and their non-Hungarian
+  # members and family members. Annex 13/A point 8 only rules out the C plate
+  # type. Nothing narrows the vehicle.
+  level: NOT_INFERABLE
+segments:
+  # Annex 13 point 1 and annex 13/A point 1: "a CD betűjeleket és kötőjellel
+  # elválasztott három-három (összesen hat) számjegyet tartalmaz", light blue
+  # background, white characters. The 2022 plate places the coat of arms after
+  # the letters; that is not a character.
+  #
+  # Known limitation: the range is 000-001 to 999-999 (annex 13/A point 5;
+  # annex 13 point 9 gives 1-999999 for the same plate), i.e. the six digits read
+  # as one number that is never zero. Since the two groups are modelled
+  # separately so that `national` can place the hyphen, "CD 000-000" is accepted.
+  - name: prefix
+    type: LITERAL
+    value: CD
+  - name: mission
+    type: DIGITS
+    length: 3
+  - name: serial
+    type: DIGITS
+    length: 3
+formats:
+  national: "{prefix} {mission}-{serial}"
+  compact: "{prefix}{mission}{serial}"
+# Annex 13/A point 1: light blue background, white characters and border.
+visual:
+  background: BLUE
+  foreground: WHITE
+sources:
+  - id: HU-KORM-326
+    section: "63. § (1) a); 13. melléklet 1., 9. pont; 13/A. melléklet 1., 5., 8. pont"
+examples:
+  valid:
+    - "CD 123-456"
+    - "CD 000-001"
+    - "CD123456"
+  invalid:
+    - "CD 12-345"
+    - "CD 1234-567"
+    - "CD 123-45"
+    - "CD 1234"
+    - "DC 123-456"
