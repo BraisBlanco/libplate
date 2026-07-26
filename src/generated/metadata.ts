@@ -3,7 +3,7 @@
 import type { MetadataBundle } from "../metadata/types.js";
 
 export const METADATA: MetadataBundle = {
-  "metadataVersion": "2026.07.14",
+  "metadataVersion": "2026.07.15",
   "tables": {
     "at-behoerden": [
       "AM",
@@ -12120,6 +12120,579 @@ export const METADATA: MetadataBundle = {
     },
     {
       "schemaVersion": 1,
+      "id": "NO_DIPLOMATIC",
+      "country": "NO",
+      "name": "Kjennemerke for ambassadekjøretøy — CD-serien (CD 12345)",
+      "registrationType": "DIPLOMATIC",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "corps",
+          "type": "LITERAL",
+          "value": "CD"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 4,
+          "maxLength": 5,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{corps} {number}",
+        "compact": "{corps}{number}"
+      },
+      "visual": {
+        "background": "BLUE",
+        "foreground": "YELLOW"
+      },
+      "sources": [
+        {
+          "id": "NO-BRUKSFORSKRIFT",
+          "section": "§ 2-10 (1); § 2-11 (3) d); § 2a-2 (1)"
+        },
+        {
+          "id": "NO-SVV-SKILTSERIER"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "CD 12345",
+          "CD-1234",
+          "CD99999"
+        ],
+        "invalid": [
+          "CD 123",
+          "CD 123456",
+          "CD 01234",
+          "CC 12345"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "NO_ELECTRIC",
+      "country": "NO",
+      "name": "Kjennemerke for elektriskdrevet kjøretøy — E-serien (EL 12345)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "fuel",
+          "type": "LITERAL",
+          "value": "E"
+        },
+        {
+          "name": "fuelSeries",
+          "type": "CHARSET",
+          "length": 1,
+          "characters": "ABCDEFHJKLNPRUV"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 4,
+          "maxLength": 5,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{fuel}{fuelSeries} {number}",
+        "compact": "{fuel}{fuelSeries}{number}"
+      },
+      "sources": [
+        {
+          "id": "NO-BRUKSFORSKRIFT",
+          "section": "§ 2-9; § 2-11 (1)-(2)"
+        },
+        {
+          "id": "NO-SVV-SKILTSERIER"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "EL 12345",
+          "EK-1234",
+          "EV99999",
+          "EA 10000"
+        ],
+        "invalid": [
+          "ES 12345",
+          "EL 123",
+          "EL 123456",
+          "EL 01234",
+          "E 12345"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "NO_GAS",
+      "country": "NO",
+      "name": "Kjennemerke for gassdrevet kjøretøy — GA-serien (GA 12345)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "fuel",
+          "type": "LITERAL",
+          "value": "GA"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 4,
+          "maxLength": 5,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{fuel} {number}",
+        "compact": "{fuel}{number}"
+      },
+      "sources": [
+        {
+          "id": "NO-BRUKSFORSKRIFT",
+          "section": "§ 2-9; § 2-11 (1)-(2)"
+        },
+        {
+          "id": "NO-SVV-SKILTSERIER"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "GA 12345",
+          "GA-1234"
+        ],
+        "invalid": [
+          "GA 123",
+          "GA 123456",
+          "GA 0123",
+          "GB 12345"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "NO_HYDROGEN",
+      "country": "NO",
+      "name": "Kjennemerke for hydrogendrevet kjøretøy — HY-serien (HY 12345)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "fuel",
+          "type": "LITERAL",
+          "value": "HY"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 4,
+          "maxLength": 5,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{fuel} {number}",
+        "compact": "{fuel}{number}"
+      },
+      "sources": [
+        {
+          "id": "NO-BRUKSFORSKRIFT",
+          "section": "§ 2-9; § 2-11 (1)-(2)"
+        },
+        {
+          "id": "NO-SVV-SKILTSERIER"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "HY 12345",
+          "HY-1234"
+        ],
+        "invalid": [
+          "HY 123",
+          "HY 123456",
+          "HY 01234",
+          "HZ 12345"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "NO_ORDINARY",
+      "country": "NO",
+      "name": "Kjennemerke for bil og lastebil — to bokstaver og fem siffer (AB 12345)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "VAN",
+          "TRUCK",
+          "BUS"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "five-digit number series 10000-99999 (Statens vegvesen, Skiltserier)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "series",
+          "type": "LETTERS",
+          "length": 2,
+          "excludedValues": [
+            "CD",
+            "EA",
+            "EB",
+            "EC",
+            "ED",
+            "EE",
+            "EF",
+            "EH",
+            "EJ",
+            "EK",
+            "EL",
+            "EN",
+            "EP",
+            "ER",
+            "EU",
+            "EV",
+            "GA",
+            "HY"
+          ]
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 5,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{series} {number}",
+        "compact": "{series}{number}"
+      },
+      "sources": [
+        {
+          "id": "NO-BRUKSFORSKRIFT",
+          "section": "§ 2-9; § 2-11; § 2-17; § 2-18"
+        },
+        {
+          "id": "NO-KJORETOYFORSKRIFTEN",
+          "section": "§ 39-1 nr. 1; § 39-10; § 39-11"
+        },
+        {
+          "id": "NO-SVV-SKILTSERIER"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "AB 12345",
+          "DA-10000",
+          "ZZ 99999",
+          "SN12345"
+        ],
+        "invalid": [
+          "A 12345",
+          "ABC 12345",
+          "AB 1234",
+          "AB 123456",
+          "AB 01234",
+          "EL 12345",
+          "CD 12345",
+          "GA 12345"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "NO_ORDINARY_OTHER",
+      "country": "NO",
+      "name": "Kjennemerke for andre kjøretøy — to bokstaver og fire siffer (AB 1234)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "MOTORCYCLE",
+          "MOPED_OR_MOTOR_CYCLE",
+          "TRAILER_OR_SEMITRAILER",
+          "AGRICULTURAL_VEHICLE",
+          "SPECIAL_VEHICLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "four-digit number series 1000-9999 (Statens vegvesen, Skiltserier)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "series",
+          "type": "LETTERS",
+          "length": 2,
+          "excludedValues": [
+            "CD",
+            "EA",
+            "EB",
+            "EC",
+            "ED",
+            "EE",
+            "EF",
+            "EH",
+            "EJ",
+            "EK",
+            "EL",
+            "EN",
+            "EP",
+            "ER",
+            "EU",
+            "EV",
+            "GA",
+            "HY"
+          ]
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 4,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{series} {number}",
+        "compact": "{series}{number}"
+      },
+      "sources": [
+        {
+          "id": "NO-BRUKSFORSKRIFT",
+          "section": "§ 2-9; § 2-11; § 2-17; § 2-18"
+        },
+        {
+          "id": "NO-KJORETOYFORSKRIFTEN",
+          "section": "§ 39-11 nr. 2-5"
+        },
+        {
+          "id": "NO-SVV-SKILTSERIER"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "AB 1234",
+          "SN-1000",
+          "ZZ 9999",
+          "TF1234"
+        ],
+        "invalid": [
+          "AB 123",
+          "AB 12345",
+          "AB 0123",
+          "A 1234",
+          "EL 1234",
+          "HY 1234"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "NO_PRE_1971_DIGITS",
+      "country": "NO",
+      "name": "Kjennemerke for registreringsordning før 1. april 1971 — seks tall i par (12-34-56)",
+      "registrationType": "HISTORICAL",
+      "legacySeries": true,
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE",
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "pre-1971 registration order, issuable only to a 30-year-old vehicle (§ 2-15)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "first",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "second",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "third",
+          "type": "DIGITS",
+          "length": 2
+        }
+      ],
+      "formats": {
+        "national": "{first}-{second}-{third}",
+        "compact": "{first}{second}{third}"
+      },
+      "sources": [
+        {
+          "id": "NO-BRUKSFORSKRIFT",
+          "section": "§ 2-15; § 2-16"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "12-34-56",
+          "00-00-01",
+          "123456"
+        ],
+        "invalid": [
+          "12-34-5",
+          "12-34-567",
+          "1A-34-56"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "NO_PRE_1971_LETTER",
+      "country": "NO",
+      "name": "Kjennemerke for registreringsordning før 1. april 1971 — fylkesbokstav og tall (A-1234)",
+      "registrationType": "HISTORICAL",
+      "legacySeries": true,
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE",
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "pre-1971 registration order, issuable only to a 30-year-old vehicle (§ 2-15)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "fylke",
+          "type": "LETTERS",
+          "length": 1,
+          "excluded": [
+            "J",
+            "M",
+            "N",
+            "P",
+            "Q"
+          ]
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 3,
+          "maxLength": 6
+        }
+      ],
+      "formats": {
+        "national": "{fylke}-{number}",
+        "compact": "{fylke}{number}"
+      },
+      "sources": [
+        {
+          "id": "NO-BRUKSFORSKRIFT",
+          "section": "§ 2-15; § 2-16"
+        },
+        {
+          "id": "NO-KJORETOYFORSKRIFTEN",
+          "section": "§ 39-1 nr. 2"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "A-1234",
+          "Z-123",
+          "L-123456",
+          "C 007"
+        ],
+        "invalid": [
+          "J-1234",
+          "M-1234",
+          "A-12",
+          "A-1234567",
+          "AB-1234"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
       "id": "PL_DIPLOMATIC",
       "country": "PL",
       "name": "Tablice dyplomatyczne",
@@ -14359,6 +14932,981 @@ export const METADATA: MetadataBundle = {
           "PR 12-ABQ",
           "PR 12-ABCD",
           "MV 12-ABC"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SK_ARMED_FORCES",
+      "country": "SK",
+      "name": "Osobitné evidenčné číslo ozbrojených síl — dvojica číslic a päť číslic (12 34567)",
+      "registrationType": "STATE_OR_MILITARY",
+      "legacySeries": true,
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "branch",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 5
+        }
+      ],
+      "formats": {
+        "national": "{branch}-{number}",
+        "compact": "{branch}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "SK-ZCP",
+          "section": "§ 126 ods. 1-3 písm. b), ods. 4, ods. 6"
+        },
+        {
+          "id": "SK-VYHL-9",
+          "section": "§ 35 ods. 8, 10"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "12-34567",
+          "00 00000",
+          "9999999"
+        ],
+        "invalid": [
+          "12-3456",
+          "12-345678",
+          "12-3456A",
+          "AB-34567"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SK_CONSULAR",
+      "country": "SK",
+      "name": "Evidenčné číslo konzulárneho úradu — CC a päť číslic (CC 12345)",
+      "registrationType": "CONSULAR",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "corps",
+          "type": "LITERAL",
+          "value": "CC"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 5
+        }
+      ],
+      "formats": {
+        "national": "{corps} {number}",
+        "compact": "{corps}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "SK-ZCP",
+          "section": "§ 123 ods. 7; § 125 ods. 2, 5"
+        },
+        {
+          "id": "SK-VYHL-9",
+          "section": "§ 35 ods. 8, 10; § 37; príloha č. 18"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "CC 12345",
+          "CC-00000"
+        ],
+        "invalid": [
+          "CC 1234",
+          "CC 123456",
+          "CD 12345"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SK_DIPLOMATIC",
+      "country": "SK",
+      "name": "Evidenčné číslo diplomatickej misie — CD a päť číslic (CD 12345)",
+      "registrationType": "DIPLOMATIC",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "corps",
+          "type": "LITERAL",
+          "value": "CD"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 5
+        }
+      ],
+      "formats": {
+        "national": "{corps} {number}",
+        "compact": "{corps}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "SK-ZCP",
+          "section": "§ 123 ods. 7; § 125 ods. 1, 5"
+        },
+        {
+          "id": "SK-VYHL-9",
+          "section": "§ 35 ods. 8, 10; § 37; príloha č. 18"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "CD 12345",
+          "CD-00000",
+          "CD99999"
+        ],
+        "invalid": [
+          "CD 1234",
+          "CD 123456",
+          "CC 12345",
+          "CD 123AB"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SK_DIPLOMATIC_STAFF",
+      "country": "SK",
+      "name": "Evidenčné číslo administratívneho a technického personálu — ZZ a päť číslic (ZZ 12345)",
+      "registrationType": "DIPLOMATIC_STAFF",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "corps",
+          "type": "LITERAL",
+          "value": "ZZ"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 5
+        }
+      ],
+      "formats": {
+        "national": "{corps} {number}",
+        "compact": "{corps}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "SK-ZCP",
+          "section": "§ 125 ods. 3, 5"
+        },
+        {
+          "id": "SK-VYHL-9",
+          "section": "§ 35 ods. 8, 10"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "ZZ 12345",
+          "ZZ-99999"
+        ],
+        "invalid": [
+          "ZZ 1234",
+          "ZZ 123456",
+          "ZZ 123AB"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SK_ELECTRIC",
+      "country": "SK",
+      "name": "Evidenčné číslo elektrického a vodíkového vozidla (EL/EV 586QX)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "fuel",
+          "type": "LITERAL",
+          "value": "E"
+        },
+        {
+          "name": "fuelKind",
+          "type": "CHARSET",
+          "length": 1,
+          "characters": "LV"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        },
+        {
+          "name": "seriesTail",
+          "type": "LETTERS",
+          "length": 1,
+          "excluded": [
+            "Y"
+          ]
+        },
+        {
+          "name": "seriesTailSecond",
+          "type": "LETTERS",
+          "length": 1
+        }
+      ],
+      "formats": {
+        "national": "{fuel}{fuelKind} {number}{seriesTail}{seriesTailSecond}",
+        "compact": "{fuel}{fuelKind}{number}{seriesTail}{seriesTailSecond}"
+      },
+      "visual": {
+        "background": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "SK-ZCP",
+          "section": "§ 123 ods. 16, 18; § 124 ods. 1"
+        },
+        {
+          "id": "SK-VYHL-9",
+          "section": "§ 35 ods. 6-7, 10; príloha č. 17"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "EL 586QX",
+          "EV 536MK",
+          "EL-000AA",
+          "EV999ZZ"
+        ],
+        "invalid": [
+          "EK 586QX",
+          "EL 58QX",
+          "EL 5860QX",
+          "EL 586Q",
+          "EL 586YX",
+          "AA 586QX"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SK_HONORARY_CONSUL",
+      "country": "SK",
+      "name": "Evidenčné číslo honorárneho konzulárneho úradníka — CH a päť číslic (CH 12345)",
+      "registrationType": "CONSULAR",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "corps",
+          "type": "LITERAL",
+          "value": "CH"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 5
+        }
+      ],
+      "formats": {
+        "national": "{corps} {number}",
+        "compact": "{corps}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "SK-ZCP",
+          "section": "§ 125 ods. 4, 5"
+        },
+        {
+          "id": "SK-VYHL-9",
+          "section": "§ 35 ods. 8, 10"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "CH 12345",
+          "CH-00001"
+        ],
+        "invalid": [
+          "CH 1234",
+          "CH 123456",
+          "CD 12345"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SK_ORDINARY",
+      "country": "SK",
+      "name": "Evidenčné číslo — dvojica písmen, tri číslice a dvojica písmen (AA 203SO)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "series",
+          "type": "LETTERS",
+          "length": 2,
+          "excludedValues": [
+            "EL",
+            "EV"
+          ]
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        },
+        {
+          "name": "seriesTail",
+          "type": "LETTERS",
+          "length": 1,
+          "excluded": [
+            "Y"
+          ]
+        },
+        {
+          "name": "seriesTailSecond",
+          "type": "LETTERS",
+          "length": 1
+        }
+      ],
+      "formats": {
+        "national": "{series} {number}{seriesTail}{seriesTailSecond}",
+        "compact": "{series}{number}{seriesTail}{seriesTailSecond}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "SK-ZCP",
+          "section": "§ 123 ods. 1-2, 18; § 124 ods. 1"
+        },
+        {
+          "id": "SK-VYHL-9",
+          "section": "§ 35 ods. 1-3, 8-10; príloha č. 17"
+        },
+        {
+          "id": "SK-NOVELA-128",
+          "section": "Čl. I body 31-32"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "AA 203SO",
+          "BA-123AB",
+          "ZZ 999ZZ",
+          "AA000AA"
+        ],
+        "invalid": [
+          "A 123AB",
+          "AAA 123AB",
+          "AA 12AB",
+          "AA 1234AB",
+          "AA 123A",
+          "AA 123ABC",
+          "AA 123YA",
+          "EL 586QX",
+          "EV 536MK"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SK_POLICE",
+      "country": "SK",
+      "name": "Osobitné evidenčné číslo Policajného zboru — P a päť číslic (P 12345, PZ 12345)",
+      "registrationType": "STATE_OR_MILITARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "force",
+          "type": "LITERAL",
+          "value": "P"
+        },
+        {
+          "name": "number",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNNNN",
+            "LNNNNN"
+          ],
+          "digitBlocks": "FREE"
+        }
+      ],
+      "formats": {
+        "national": "{force} {number}",
+        "compact": "{force}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "SK-ZCP",
+          "section": "§ 126 ods. 1-3 písm. a), ods. 5, ods. 7"
+        },
+        {
+          "id": "SK-VYHL-9",
+          "section": "§ 35 ods. 8, 10"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "P 12345",
+          "P-00000",
+          "PZ 12345",
+          "PA99999"
+        ],
+        "invalid": [
+          "P 1234",
+          "P 123456",
+          "PZZ 12345",
+          "P 1234A"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SK_SPECIAL_C",
+      "country": "SK",
+      "name": "Zvláštne evidenčné číslo obsahujúce písmeno C (C 12345)",
+      "registrationType": "TEMPORARY_PRIVATE",
+      "legacySeries": true,
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "kind",
+          "type": "LITERAL",
+          "value": "C"
+        },
+        {
+          "name": "number",
+          "type": "CHARSET",
+          "length": 5,
+          "characters": "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{kind} {number}",
+        "compact": "{kind}{number}"
+      },
+      "sources": [
+        {
+          "id": "SK-ZCP",
+          "section": "§ 123 ods. 3; § 127 ods. 1 písm. a), ods. 2-3; § 130 ods. 1"
+        },
+        {
+          "id": "SK-VYHL-9",
+          "section": "§ 35 ods. 5, 8"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "C 12345",
+          "C-0000A",
+          "CABCDE"
+        ],
+        "invalid": [
+          "C 1234",
+          "C 123456",
+          "F 12345",
+          "C 1234-"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SK_SPECIAL_F",
+      "country": "SK",
+      "name": "Zvláštne evidenčné číslo obsahujúce písmeno F — vozidlo s obmedzenou prevádzkou (F 12345)",
+      "registrationType": "SPECIAL",
+      "legacySeries": true,
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "kind",
+          "type": "LITERAL",
+          "value": "F"
+        },
+        {
+          "name": "number",
+          "type": "CHARSET",
+          "length": 5,
+          "characters": "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{kind} {number}",
+        "compact": "{kind}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "SK-ZCP",
+          "section": "§ 127 ods. 1 písm. b), ods. 2, ods. 4, ods. 9 písm. a)"
+        },
+        {
+          "id": "SK-VYHL-9",
+          "section": "§ 35 ods. 5, 8, 10"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "F 12345",
+          "F-A1B2C"
+        ],
+        "invalid": [
+          "F 1234",
+          "F 123456",
+          "C 12345"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SK_SPECIAL_H",
+      "country": "SK",
+      "name": "Zvláštne evidenčné číslo obsahujúce písmeno H — historické vozidlo (H 12345)",
+      "registrationType": "HISTORICAL",
+      "legacySeries": true,
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "kind",
+          "type": "LITERAL",
+          "value": "H"
+        },
+        {
+          "name": "number",
+          "type": "CHARSET",
+          "length": 5,
+          "characters": "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{kind} {number}",
+        "compact": "{kind}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "SK-ZCP",
+          "section": "§ 127 ods. 1 písm. c), ods. 2, ods. 5, ods. 9 písm. b); § 130 ods. 1"
+        },
+        {
+          "id": "SK-VYHL-9",
+          "section": "§ 35 ods. 5, 8, 10"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "H 12345",
+          "H-ABC12"
+        ],
+        "invalid": [
+          "H 1234",
+          "H 123456",
+          "S 12345"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SK_SPECIAL_M",
+      "country": "SK",
+      "name": "Zvláštne evidenčné číslo obsahujúce písmeno M — výrobca, zástupca a predajca (M 12345)",
+      "registrationType": "PROFESSIONAL_TEMPORARY",
+      "legacySeries": true,
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "kind",
+          "type": "LITERAL",
+          "value": "M"
+        },
+        {
+          "name": "number",
+          "type": "CHARSET",
+          "length": 5,
+          "characters": "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{kind} {number}",
+        "compact": "{kind}{number}"
+      },
+      "sources": [
+        {
+          "id": "SK-ZCP",
+          "section": "§ 123 ods. 3; § 127 ods. 1 písm. d), ods. 2, ods. 6, ods. 9 písm. c); § 130"
+        },
+        {
+          "id": "SK-VYHL-9",
+          "section": "§ 35 ods. 5, 8"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "M 12345",
+          "M-00001"
+        ],
+        "invalid": [
+          "M 1234",
+          "M 123456",
+          "V 12345"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SK_SPECIAL_S",
+      "country": "SK",
+      "name": "Zvláštne evidenčné číslo obsahujúce písmeno S — športové vozidlo (S 12345)",
+      "registrationType": "SPECIAL",
+      "legacySeries": true,
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "kind",
+          "type": "LITERAL",
+          "value": "S"
+        },
+        {
+          "name": "number",
+          "type": "CHARSET",
+          "length": 5,
+          "characters": "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{kind} {number}",
+        "compact": "{kind}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "SK-ZCP",
+          "section": "§ 127 ods. 1 písm. e), ods. 2, ods. 7, ods. 9 písm. d); § 130 ods. 1"
+        },
+        {
+          "id": "SK-VYHL-9",
+          "section": "§ 35 ods. 5, 8, 10"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "S 12345",
+          "S-12AB3"
+        ],
+        "invalid": [
+          "S 1234",
+          "S 123456",
+          "H 12345"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SK_SPECIAL_V",
+      "country": "SK",
+      "name": "Zvláštne evidenčné číslo obsahujúce písmeno V — vývoz zo Slovenskej republiky (V 12345)",
+      "registrationType": "EXPORT",
+      "legacySeries": true,
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "kind",
+          "type": "LITERAL",
+          "value": "V"
+        },
+        {
+          "name": "number",
+          "type": "CHARSET",
+          "length": 5,
+          "characters": "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        }
+      ],
+      "formats": {
+        "national": "{kind} {number}",
+        "compact": "{kind}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "SK-ZCP",
+          "section": "§ 119; § 127 ods. 1 písm. f), ods. 2, ods. 8"
+        },
+        {
+          "id": "SK-VYHL-9",
+          "section": "§ 35 ods. 5, 8, 10"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "V 12345",
+          "V-9Z8Y7"
+        ],
+        "invalid": [
+          "V 1234",
+          "V 123456",
+          "M 12345"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "SK_TRAILER",
+      "country": "SK",
+      "name": "Evidenčné číslo prípojného vozidla — Y na začiatku druhej dvojice písmen (AA 123YB)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "TRAILER_OR_SEMITRAILER",
+          "AGRICULTURAL_VEHICLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "Y as the first letter after the state emblem (§ 35 ods. 3 vyhlášky)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "series",
+          "type": "LETTERS",
+          "length": 2,
+          "excludedValues": [
+            "EL",
+            "EV"
+          ]
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        },
+        {
+          "name": "towed",
+          "type": "LITERAL",
+          "value": "Y"
+        },
+        {
+          "name": "seriesTail",
+          "type": "LETTERS",
+          "length": 1
+        }
+      ],
+      "formats": {
+        "national": "{series} {number}{towed}{seriesTail}",
+        "compact": "{series}{number}{towed}{seriesTail}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "SK-ZCP",
+          "section": "§ 124 ods. 1"
+        },
+        {
+          "id": "SK-VYHL-9",
+          "section": "§ 35 ods. 1 písm. a), ods. 2-4, ods. 10"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "AA 123YB",
+          "BA-456YA",
+          "ZZ 000YZ"
+        ],
+        "invalid": [
+          "AA 123AB",
+          "AA 123Y",
+          "AA 123YAB",
+          "AA 12YB",
+          "EL 123YB"
         ]
       },
       "legacySeries": false

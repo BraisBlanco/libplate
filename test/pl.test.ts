@@ -138,7 +138,7 @@ describe("Poland — detection and cross-country collisions", () => {
     const countries = result.candidates
       ?.map((c) => c.country)
       .sort((a, b) => a.localeCompare(b));
-    expect(countries).toEqual(["DK", "IT", "PL"]);
+    expect(countries).toEqual(["DK", "IT", "NO", "PL"]);
   });
 
   it("reports the PL/DE collision on historic-format plates", () => {

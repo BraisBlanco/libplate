@@ -1,0 +1,42 @@
+schemaVersion: 1
+id: NO_GAS
+country: NO
+name: Kjennemerke for gassdrevet kjøretøy — GA-serien (GA 12345)
+registrationType: ORDINARY
+# validFrom omitted — see NO_ELECTRIC.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # NOT_INFERABLE for the reason given in NO_ELECTRIC: the scheme unions both
+  # number series, so it fixes the drivetrain and not the category.
+  level: NOT_INFERABLE
+segments:
+  # Statens vegvesen, Skiltserier: "Gassdrevet kjøretøy — GA".
+  - name: fuel
+    type: LITERAL
+    value: GA
+  - name: number
+    type: DIGITS
+    minLength: 4
+    maxLength: 5
+    noLeadingZero: true
+formats:
+  national: "{fuel} {number}"
+  compact: "{fuel}{number}"
+# No visual asserted — see NO_ORDINARY.
+sources:
+  - id: NO-BRUKSFORSKRIFT
+    section: "§ 2-9; § 2-11 (1)-(2)"
+  - id: NO-SVV-SKILTSERIER
+examples:
+  valid:
+    - "GA 12345"
+    - "GA-1234"
+  invalid:
+    - "GA 123"
+    - "GA 123456"
+    - "GA 0123"
+    - "GB 12345"

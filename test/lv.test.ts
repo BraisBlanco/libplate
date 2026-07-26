@@ -147,7 +147,7 @@ describe("Latvia — country-less detection", () => {
     expect(result.status).toBe("AMBIGUOUS");
     expect(
       result.candidates?.map((c) => c.country).sort((a, b) => a.localeCompare(b)),
-    ).toEqual(["DE", "DK", "LV", "PL", "RO"]);
+    ).toEqual(["DE", "DK", "LV", "NO", "PL", "RO"]);
   });
 
   it("collides with the Lithuanian ordinary series on IZM", () => {

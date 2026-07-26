@@ -126,14 +126,16 @@ describe("convenience helpers", () => {
       "LT",
       "LV",
       "NL",
+      "NO",
       "PL",
       "PT",
       "RO",
       "SE",
       "SI",
+      "SK",
     ]);
     expect(getSupportedSchemes("ES")).toContain("ES_TRAILER_CURRENT");
-    expect(getSupportedSchemes()).toHaveLength(164);
+    expect(getSupportedSchemes()).toHaveLength(187);
     expect(getMetadataVersion()).toMatch(/^\d{4}\.\d{2}\.\d+$/);
   });
 });

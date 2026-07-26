@@ -150,6 +150,6 @@ describe("Greece — country-less detection", () => {
     expect(result.status).toBe("AMBIGUOUS");
     expect(
       result.candidates?.map((c) => c.country).sort((a, b) => a.localeCompare(b)),
-    ).toEqual(["GR", "PL", "PT"]);
+    ).toEqual(["GR", "PL", "PT", "SK"]);
   });
 });

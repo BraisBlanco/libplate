@@ -1,0 +1,47 @@
+schemaVersion: 1
+id: SK_SPECIAL_V
+country: SK
+name: Zvláštne evidenčné číslo obsahujúce písmeno V — vývoz zo Slovenskej republiky (V 12345)
+registrationType: EXPORT
+# legacySeries: see SK_SPECIAL_C for the shared reason.
+legacySeries: true
+# validFrom omitted — see SK_SPECIAL_C.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 127 ods. 8: any vehicle designated for individual export takes it.
+  level: NOT_INFERABLE
+segments:
+  # § 127 ods. 2, as for the C series.
+  - name: kind
+    type: LITERAL
+    value: V
+  - name: number
+    type: CHARSET
+    length: 5
+    characters: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ
+formats:
+  national: "{kind} {number}"
+  compact: "{kind}{number}"
+# § 35 ods. 10 of the vyhláška. The validity period marked on the plate — at
+# most to the end of the month following issue (§ 127 ods. 8) — is not part of
+# the number.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: SK-ZCP
+    section: "§ 119; § 127 ods. 1 písm. f), ods. 2, ods. 8"
+  - id: SK-VYHL-9
+    section: "§ 35 ods. 5, 8, 10"
+examples:
+  valid:
+    - "V 12345"
+    - "V-9Z8Y7"
+  invalid:
+    - "V 1234"
+    - "V 123456"
+    - "M 12345"

@@ -14,7 +14,7 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 
 ### Supported countries
 
-**21 countries, 164 schemes.** Each row links to its plate-type table below.
+**23 countries, 187 schemes.** Each row links to its plate-type table below.
 
 | Country                         | Schemes | Coverage                                                                                                                  |
 | ------------------------------- | ------: | ------------------------------------------------------------------------------------------------------------------------- |
@@ -39,6 +39,8 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 | [🇱🇹 Lithuania](#-lithuania)     |      13 | A composition per vehicle category — cars, trailers, motorcycles, mopeds; `E`, `T`, `H`, export, diplomatic, quadricycles |
 | [🇬🇷 Greece](#-greece)           |       4 | Cars Ι.Χ./Δ.Χ., motorcycles, and both trailer series — the `Ρ` public-use one and the 2019 `Τ` one                        |
 | [🇱🇻 Latvia](#-latvia)           |       5 | The two general-use series (mechanical vehicles, trailers/mopeds), diplomatic `C`/`CC`/`CD`, trade, `IZM` test            |
+| [🇸🇰 Slovakia](#-slovakia)       |      15 | Ordinary, the `Y` trailer block, `EL`/`EV` electric, `CD`/`CC`/`ZZ`/`CH`, police and army, six zvláštne series            |
+| [🇳🇴 Norway](#-norway)           |       8 | The five-digit car/lorry and four-digit series, `EL`/`GA`/`HY` fuel series, `CD`, the pre-1971 order                      |
 
 Countries not yet modelled, and the series still missing inside those above, are
 listed under [Not yet modelled](#not-yet-modelled).
@@ -599,6 +601,83 @@ no digit count and no symbol total, and inventing one is not on. Individual
 plates (2-8 symbols, optionally with a space) are absent for the usual reason —
 that space contains every other series.
 
+#### 🇸🇰 Slovakia
+
+| Type                            | Example    | Notes                                                   |
+| ------------------------------- | ---------- | ------------------------------------------------------- |
+| Ordinary                        | `AA 203SO` | Opening pair is a sequence, not a district, since 2023  |
+| Trailers and agricultural (`Y`) | `AA 123YB` | `Y` opens the pair after the emblem — category evidence |
+| Electric / hydrogen             | `EL 586QX` | `EL` or `EV`; characters may be green                   |
+| Diplomatic missions (`CD`)      | `CD 12345` | Five digits; `CD` badge on the right of the plate       |
+| Consular offices (`CC`)         | `CC 12345` | Five digits                                             |
+| Diplomatic staff (`ZZ`)         | `ZZ 12345` | Administrative and technical staff, non-nationals       |
+| Honorary consuls (`CH`)         | `CH 12345` | Five digits                                             |
+| Police / interior ministry      | `P 12345`  | An optional second letter may follow the `P`            |
+| Armed forces                    | `12-34567` | Two digits + five; emblem or hyphen between             |
+| Individual approval (`C`)       | `C 12345`  | Temporary; validity marked on the plate                 |
+| Restricted operation (`F`)      | `F 12345`  | Up to ten years                                         |
+| Historic vehicles (`H`)         | `H 12345`  | FIVA papers, up to five years                           |
+| Manufacturers/dealers (`M`)     | `M 12345`  | Professional temporary                                  |
+| Sports vehicles (`S`)           | `S 12345`  | FIA/FIM papers, up to five years                        |
+| Export (`V`)                    | `V 12345`  | Valid to the end of the following month                 |
+
+Slovakia is the country where **a district table stopped existing**. Until 2022,
+§ 124 ods. 1 of zákon č. 8/2009 Z. z. read that "the first pair of letters
+designates the okres in which the vehicle is registered"; zákon č. 128/2021 Z. z.
+struck that sentence with effect from 1 January 2023, the new sequence started at
+`AA 001AA`, and the number now follows the vehicle for life. Both generations are
+on the road with the same shape, so one scheme covers both and nothing constrains
+the opening pair.
+
+What the Slovak texts _do_ encode is the towed vehicle. § 35 ods. 3 of vyhláška
+č. 9/2009 Z. z. gives every category O and R vehicle the letter `Y` in the first
+position of the pair after the state emblem — so `AA 123YB` is a trailer or a
+semitrailer, with the one caveat that ods. 4 lets a tractor take the same letter
+in justified cases. That block is withheld from the ordinary series, exactly as
+`EL` and `EV` are withheld for the electric and hydrogen plate of ods. 7.
+
+The six zvláštne series (`C`, `F`, `H`, `M`, `S`, `V`) put the letter on the first
+row and "five digits, letters or a combination" on the second. Modelled as
+written, that is one letter over 36⁵ combinations, so all six are opt-in in
+country-less detection — a compacted German `M-AB 123` would otherwise read as a
+Slovak dealer plate. So is the armed-forces number, which is seven bare digits.
+
+#### 🇳🇴 Norway
+
+| Type                     | Example    | Notes                                           |
+| ------------------------ | ---------- | ----------------------------------------------- |
+| Cars and lorries         | `AB 12345` | Number series 10000-99999                       |
+| All other vehicles       | `AB 1234`  | 1000-9999 — motorcycles, tractors, **trailers** |
+| Electric vehicles        | `EL 12345` | `EL EK EV EB EC ED EE EF EH EJ EN EP ER EA EU`  |
+| Gas vehicles             | `GA 12345` | Single reserved pair                            |
+| Hydrogen vehicles        | `HY 12345` | Single reserved pair                            |
+| Embassy vehicles (`CD`)  | `CD 12345` | **Yellow on blue**, the one fixed colour        |
+| Pre-1971 — county letter | `A-1234`   | Legacy; 30-year-old vehicles only               |
+| Pre-1971 — six digits    | `12-34-56` | Legacy; digits in pairs                         |
+
+Norway is the one country here whose current composition is **not in a
+regulation**. § 2-11 of forskrift 1990-01-25-92 delegates the design and the
+allocation to Statens vegvesen and stops there. The shape is recoverable from the
+forskrift anyway — §§ 2-17 and 2-18 describe the superseded 1971-1982 and
+1982-2002 orders as "to bokstaver og 4 eller 5 tall" and add that such marks are
+issued "fra samme serier som benyttes ved førstegangsregistrering ellers" — and
+the agency's own Skiltserier page supplies what the forskrift omits: "Tallseriene
+for biler og lastebiler er fra 10000 til 99999, mens for andre kjøretøy er det fra
+1000 til 9999."
+
+That sentence is why a Norwegian plate carries category evidence: **five digits
+mean a car, van, lorry or bus, four digits mean everything else — motorcycles,
+mopeds, tractors and trailers.** The same page reserves the fuel and embassy
+letter pairs, which are withheld from both general series.
+
+Its county letter table is _not_ enforced. The page introduces it with
+"Bokstavkombinasjonen baserer seg **ofte** på hvilken trafikkstasjon som har
+utstedt registreringsnummeret", so the full A-Z is accepted even though no issued
+series uses `I`, `M`, `O` or `Q`. No colours are asserted on the general series
+either: § 2-11 (3) puts the same characters on white, on **green** for a varebil
+klasse 2, on black for off-road and Svalbard vehicles, on yellow for the
+Forsvaret and on black for a licensed rally car.
+
 ### Not yet modelled
 
 Spanish state/military bodies; Portuguese diplomatic/military series and the
@@ -655,7 +734,16 @@ ordinary characters with a red field, a yellow face, green or blue symbols),
 military plates (`L`/`LA` + digits, with no count given anywhere) and individual
 plates (2-8 symbols, a space that contains every other series), plus
 traktortehnika, trams and trolleybuses, which 2. punkts puts outside the
-registration rules altogether.
+registration rules altogether; Slovak chosen numbers (§ 124 ods. 2 — two letters
+and then any letters, digits or mix, a space that contains the ordinary series),
+the pre-2009 `X` osobitné series (discontinued by § 41 ods. 2 of the vyhláška) and
+the green EV colour variant, which repeats an `EL`/`EV` number; Norwegian
+prøvekjennemerker (årsprøve white on red, dagsprøve black on red — §§ 2-19 to 2-23
+give no composition at all), Forsvaret plates, personal marks (§ 2a-2: two to
+seven characters, a space that swallows every series), the 1971-2002 orders (the
+same "two letters + 4 or 5 digits" as the current series, so already covered) and
+the varebil klasse 2, off-road, Svalbard and rally plates, which are colour
+variants of an ordinary number.
 
 ## Install
 

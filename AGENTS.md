@@ -51,8 +51,13 @@ positions, export, diplomatic and powerful quadricycles), Greece (cars Ι.Χ. an
 Δ.Χ., motorcycles, and both category-O series — the `Ρ` public-use one and the
 `Τ` + letter one introduced in 2019), Latvia (the two general-use series —
 mechanical vehicles on two letters, trailers/semitrailers/mopeds on one — plus
-`C`/`CC`/`CD` diplomatic, trade and `IZM` test numbers). See `README.md` for
-the full matrix.
+`C`/`CC`/`CD` diplomatic, trade and `IZM` test numbers), Slovakia (the ordinary
+two-letter/three-digit/two-letter series + the `Y` towed-vehicle block + `EL`/`EV`
+electric + `CD`/`CC`/`ZZ`/`CH` diplomatic + `P` police and the all-digit armed
+forces number + the six zvláštne series `C`/`F`/`H`/`M`/`S`/`V`), Norway (the
+five-digit car/lorry series and the four-digit series for everything else + the
+`EL`-family, `GA` and `HY` fuel series + `CD` + the two pre-1971 arrangements).
+See `README.md` for the full matrix.
 
 ## The golden rule: metadata is the source of truth
 
@@ -630,5 +635,73 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
   other series), and the transit/taxi/off-road/electric variants above. Out of
   scope by 2. punkts, not by omission: traktortehnika and its trailers, trams,
   trolleybuses, specialised tourist vehicles and special military technology.
+
+- **SK lost its district table, and that is the point.** § 124 ods. 1 of zákon
+  č. 8/2009 Z. z. gives the composition (two letters, the state emblem, three
+  digits and two letters) and nothing else: **zákon č. 128/2021 Z. z. deleted the
+  sentence "Prvá dvojica písmen evidenčného čísla označuje okres" with effect
+  from 2023-01-01** (Čl. I bod 32; bod 31 pulled "skratky okresov" out of the
+  § 123 delegation too). Do not add an okres table — it would reject every plate
+  issued since, and both generations share the shape, which is also why
+  `SK_ORDINARY` carries no `validFrom`. No letter is excluded either: § 124
+  ods. 3 písm. e)-f) (the `CD`/`CC`/`CH`/`EE`/`SS`/`ZZ` openings, diacritics,
+  lower case) governs the CHOSEN numbers of ods. 2, which are deliberately not
+  modelled (two letters plus free letters/digits contains the ordinary series),
+  and the príloha č. 17 specimen uses `Q`, `O`, `S` and `X`. Two withholdings are
+  inferences, both on the HU `TX` grounds: `Y` is kept out of the first position
+  of the closing pair (§ 35 ods. 3 of vyhláška č. 9/2009 Z. z. gives it to
+  category O and R, so `SK_TRAILER` would otherwise be a subset — note ods. 4
+  lets a T or C tractor take it too, hence `CATEGORY_ONLY` and not
+  `DETERMINISTIC`, and ods. 3's own exception leaves L-towed O1 trailers inside
+  the ordinary series), and `EL`/`EV` are kept out of the opening pair (ods. 7).
+  The closing pair is two one-character segments only because `excluded` is not
+  positional. **Citation trap, do not "fix" it**: § 35 ods. 7 cites "§ 123
+  ods. 18 zákona", which was the electric-vehicle provision when the vyhláška was
+  last amended (2024-12-01) but is the delegation clause today — the rule now
+  lives in ods. 16 and covers hydrogen rather than plug-in hybrids. The six
+  zvláštne series and `SK_ARMED_FORCES` are `legacySeries`-flagged for the
+  CZ_ORDINARY reason, not because they are legacy: § 127 ods. 2 leaves the second
+  row free ("päť číslic, písmen alebo kombinácia číslic a písmen"), so each is one
+  letter over 36^5 combinations and shadows real German plates in country-less
+  `detect()`, and seven bare digits match nothing else in the library.
+  `SK_SPECIAL_C` and `SK_SPECIAL_M` assert no colours because § 123 ods. 3
+  písm. b) lets those two be synthetic polyester while § 35 ods. 10's rule is
+  written for the embossed metal plate; `SK_ELECTRIC` asserts only the background
+  because ods. 6 and 10 say the characters "MÔŽU byť zelenej". **Deliberately
+  absent**: the chosen numbers above, the pre-2009 `X` osobitné series (§ 41
+  ods. 2 of the vyhláška stopped it), and the validity fields marked on the C, F,
+  M and V plates, which are not part of the number.
+- **NO has no regulated composition, so two sources carry it together.** § 2-11
+  (1)-(2) of forskrift 1990-01-25-92 and § 39-1 nr. 1 of kjøretøyforskriften both
+  say only that Statens vegvesen fixes the design and picks the mark. The shape
+  comes from the forskrift indirectly — §§ 2-17 (1) and 2-18 (1) describe the
+  1971-1982 and 1982-2002 marks as "to bokstaver og 4 eller 5 tall" and § 2-17 (2)
+  says such marks are issued "fra samme serier som benyttes ved
+  førstegangsregistrering ellers" — and the digit ranges come from the agency's
+  Skiltserier page ("Tallseriene for biler og lastebiler er fra 10000 til 99999,
+  mens for andre kjøretøy er det fra 1000 til 9999"), which is FR/SE/NL-grade
+  agency evidence. That split is the whole basis of `NO_ORDINARY` vs
+  `NO_ORDINARY_OTHER` and of their `CATEGORY_ONLY` inferences, so it is
+  `CATEGORY_ONLY` and never `DETERMINISTIC`. The same page's **county letter
+  table is deliberately NOT a value table**: it is introduced with "ofte", so the
+  full A-Z is accepted even though no issued series uses `I`, `M`, `O` or `Q` —
+  the FR FNI precedent. The reserved pairs it DOES state (fifteen electric, `GA`,
+  `HY`, `CD`) are excluded from both general series. The three fuel schemes union
+  both digit widths and therefore report `NOT_INFERABLE`; splitting each in two
+  would recover the category at the cost of doubling the Norwegian scheme count,
+  and fuel is not a field the model has. Only `NO_DIPLOMATIC` asserts colours
+  (§ 2-11 (3) d), yellow on blue, and § 2a-2 (1) keeps personal marks off it);
+  the general series assert none, because § 2-11 (3) puts the same characters on
+  green for a varebil klasse 2, black for off-road/Svalbard, yellow for the
+  Forsvaret and black for a rally car. The two pre-1971 schemes are
+  `legacySeries` in the literal sense as well as the detection one, and their
+  `HISTORICAL` regime is real: § 2-15 only lets a vehicle first registered more
+  than 30 years ago carry them. Their county letters (A B C D E F G H I K L O R S
+  T U V W X Y Z, § 2-16 (4)) are NOT the modern alphabet — `I` and `O` are in.
+  **Deliberately absent**: prøvekjennemerker (§§ 2-19 to 2-23 prescribe colours
+  and use but no composition — the RO/LV precedent), Forsvaret plates, personal
+  marks (§ 2a-2 (2), two to seven characters), the 1971-2002 orders (identical in
+  shape to the current series, so modelling them separately would make every
+  Norwegian plate ambiguous) and the colour variants above.
 
 These need grammar or scope work, not a quick patch. Discuss before changing.

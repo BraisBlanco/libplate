@@ -1,0 +1,77 @@
+schemaVersion: 1
+id: NO_PRE_1971_LETTER
+country: NO
+name: Kjennemerke for registreringsordning før 1. april 1971 — fylkesbokstav og tall (A-1234)
+registrationType: HISTORICAL
+# Excluded from country-less detection: one letter over three to six free digits
+# is a wide, structureless space that would shadow real plates from half the
+# library. With a `country` hint the scheme behaves normally. Unlike CZ_ORDINARY
+# the flag is also literally true here — this IS a superseded registration
+# order.
+legacySeries: true
+# No validFrom: the order it reproduces ran until 1 April 1971 and § 2-15 is
+# what makes it issuable TODAY, so neither an opening nor a closing date
+# describes the scheme. § 2-16 has no date of its own.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # The registrationType carries the real information: § 2-15 (1)-(2) only lets
+  # a vehicle first registered more than 30 years ago, or of a model year more
+  # than 31 years old, be assigned a mark under a superseded order. Nothing in
+  # § 2-16 varies the composition by vehicle kind.
+  level: NOT_INFERABLE
+  evidence:
+    - type: PATTERN
+      value: "pre-1971 registration order, issuable only to a 30-year-old vehicle (§ 2-15)"
+segments:
+  # § 2-16 (1) a): "En bokstav og tre til seks tall. Mellom bokstav og
+  # tallkombinasjon skal det i halv høyde være en vannrett strek" — hence the
+  # hyphen in the national format.
+  #
+  # § 2-16 (4) enumerates the county letters exhaustively: A B C D E F G H I K L
+  # O R S T U V W X Y Z. J, M, N, P and Q are the five the list omits. Note this
+  # is NOT the modern series alphabet — I and O are county letters here and are
+  # absent from every current series.
+  - name: fylke
+    type: LETTERS
+    length: 1
+    excluded:
+      - J
+      - M
+      - "N"
+      - P
+      - Q
+  # Three to six digits, with nothing in the text bounding the value, so leading
+  # zeros are accepted. § 2-16 (5) lets the owner freely pick any letter/number
+  # combination not already in use.
+  - name: number
+    type: DIGITS
+    minLength: 3
+    maxLength: 6
+formats:
+  national: "{fylke}-{number}"
+  compact: "{fylke}{number}"
+# No visual asserted: § 2-16 (3) makes the OWNER produce the plates and § 2-15
+# (6) sends their design back to "den registreringsordning det tilhører", a
+# pre-1971 body of rules the forskrift does not reproduce. § 2-16 (2) states
+# only that the mark must be legible at 30 metres.
+sources:
+  - id: NO-BRUKSFORSKRIFT
+    section: "§ 2-15; § 2-16"
+  - id: NO-KJORETOYFORSKRIFTEN
+    section: "§ 39-1 nr. 2"
+examples:
+  valid:
+    - "A-1234"
+    - "Z-123"
+    - "L-123456"
+    - "C 007"
+  invalid:
+    - "J-1234"
+    - "M-1234"
+    - "A-12"
+    - "A-1234567"
+    - "AB-1234"

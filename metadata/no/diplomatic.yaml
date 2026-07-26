@@ -1,0 +1,55 @@
+schemaVersion: 1
+id: NO_DIPLOMATIC
+country: NO
+name: Kjennemerke for ambassadekjøretøy — CD-serien (CD 12345)
+registrationType: DIPLOMATIC
+# validFrom omitted — see NO_ELECTRIC.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 2-11 (3) d) defines the holder — a foreign state's diplomatic or consular
+  # mission, a diplomatic or consular officer, a mission's administrative or
+  # technical staff or a family member enjoying Vienna Convention privileges —
+  # and says nothing about the vehicle. The scheme also unions both number
+  # series (see NO_ELECTRIC).
+  level: NOT_INFERABLE
+segments:
+  # Statens vegvesen, Skiltserier, lists CD (Corps Diplomatique) among the
+  # reserved letter combinations. The digit width is inherited from the same
+  # page's two number series rather than stated for CD specifically, so both are
+  # accepted; an embassy car is the five-digit case.
+  - name: corps
+    type: LITERAL
+    value: CD
+  - name: number
+    type: DIGITS
+    minLength: 4
+    maxLength: 5
+    noLeadingZero: true
+formats:
+  national: "{corps} {number}"
+  compact: "{corps}{number}"
+# The one Norwegian series whose colours ARE fixed by the forskrift and are
+# exclusive to it: § 2-11 (3) d), yellow characters on a blue reflective ground.
+# § 2a-2 (1) also bars a personal mark from this plate, which is what keeps the
+# CD series clean.
+visual:
+  background: BLUE
+  foreground: YELLOW
+sources:
+  - id: NO-BRUKSFORSKRIFT
+    section: "§ 2-10 (1); § 2-11 (3) d); § 2a-2 (1)"
+  - id: NO-SVV-SKILTSERIER
+examples:
+  valid:
+    - "CD 12345"
+    - "CD-1234"
+    - "CD99999"
+  invalid:
+    - "CD 123"
+    - "CD 123456"
+    - "CD 01234"
+    - "CC 12345"

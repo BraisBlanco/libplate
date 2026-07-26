@@ -1,0 +1,41 @@
+schemaVersion: 1
+id: SK_CONSULAR
+country: SK
+name: Evidenčné číslo konzulárneho úradu — CC a päť číslic (CC 12345)
+registrationType: CONSULAR
+# validFrom omitted — see SK_DIPLOMATIC.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  level: NOT_INFERABLE
+segments:
+  # § 125 ods. 2: consular posts of foreign states and their consular officers
+  # enjoying privileges and immunities take "dvojica písmen CC a päť číslic".
+  - name: corps
+    type: LITERAL
+    value: CC
+  - name: number
+    type: DIGITS
+    length: 5
+formats:
+  national: "{corps} {number}"
+  compact: "{corps}{number}"
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: SK-ZCP
+    section: "§ 123 ods. 7; § 125 ods. 2, 5"
+  - id: SK-VYHL-9
+    section: "§ 35 ods. 8, 10; § 37; príloha č. 18"
+examples:
+  valid:
+    - "CC 12345"
+    - "CC-00000"
+  invalid:
+    - "CC 1234"
+    - "CC 123456"
+    - "CD 12345"

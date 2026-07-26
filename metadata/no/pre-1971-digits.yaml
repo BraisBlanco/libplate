@@ -1,0 +1,50 @@
+schemaVersion: 1
+id: NO_PRE_1971_DIGITS
+country: NO
+name: Kjennemerke for registreringsordning før 1. april 1971 — seks tall i par (12-34-56)
+registrationType: HISTORICAL
+# Excluded from country-less detection: six bare digits are structureless, so
+# without the flag every six-digit string would resolve here. Same reasoning as
+# NO_PRE_1971_LETTER, and the flag is literally true.
+legacySeries: true
+# No validFrom — see NO_PRE_1971_LETTER.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  level: NOT_INFERABLE
+  evidence:
+    - type: PATTERN
+      value: "pre-1971 registration order, issuable only to a 30-year-old vehicle (§ 2-15)"
+segments:
+  # § 2-16 (1) b): "Seks tall. Tallene skal stå i par med en vannrett strek i
+  # halv høyde mellom parene." The three pairs are separate segments because the
+  # official rendering puts a stroke between them, and separator placement is
+  # evidence in this library (the Slovenian reasoning).
+  - name: first
+    type: DIGITS
+    length: 2
+  - name: second
+    type: DIGITS
+    length: 2
+  - name: third
+    type: DIGITS
+    length: 2
+formats:
+  national: "{first}-{second}-{third}"
+  compact: "{first}{second}{third}"
+# No visual asserted — see NO_PRE_1971_LETTER.
+sources:
+  - id: NO-BRUKSFORSKRIFT
+    section: "§ 2-15; § 2-16"
+examples:
+  valid:
+    - "12-34-56"
+    - "00-00-01"
+    - "123456"
+  invalid:
+    - "12-34-5"
+    - "12-34-567"
+    - "1A-34-56"

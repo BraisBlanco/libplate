@@ -1,0 +1,81 @@
+schemaVersion: 1
+id: NO_ORDINARY_OTHER
+country: NO
+name: Kjennemerke for andre kjøretøy — to bokstaver og fire siffer (AB 1234)
+registrationType: ORDINARY
+# validFrom omitted — see NO_ORDINARY for the full reasoning; the same two
+# sources carry this series.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # The counterpart of NO_ORDINARY: Statens vegvesen puts every registered
+  # vehicle that is not a "bil" or "lastebil" on the 1000-9999 series. That is
+  # the motorcycle, the moped, the snowmobile (beltemotorsykkel), the tractor,
+  # the motorredskap and the trailer — the groups kjøretøyforskriften § 39-11
+  # nrs. 2-5 gives the small and trailer plates to.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - MOTORCYCLE
+    - MOPED_OR_MOTOR_CYCLE
+    - TRAILER_OR_SEMITRAILER
+    - AGRICULTURAL_VEHICLE
+    - SPECIAL_VEHICLE
+  evidence:
+    - type: PATTERN
+      value: "four-digit number series 1000-9999 (Statens vegvesen, Skiltserier)"
+segments:
+  # Same letter pair as NO_ORDINARY, same reserved combinations withheld.
+  - name: series
+    type: LETTERS
+    length: 2
+    excludedValues:
+      - CD
+      - EA
+      - EB
+      - EC
+      - ED
+      - EE
+      - EF
+      - EH
+      - EJ
+      - EK
+      - EL
+      - EN
+      - EP
+      - ER
+      - EU
+      - EV
+      - GA
+      - HY
+  # 1000-9999 is exactly a four-digit run with no leading zero.
+  - name: number
+    type: DIGITS
+    length: 4
+    noLeadingZero: true
+formats:
+  national: "{series} {number}"
+  compact: "{series}{number}"
+# No visual asserted — see NO_ORDINARY. The off-road plate of § 2-11 (3) a),
+# black with pale yellow characters, is common in exactly this group.
+sources:
+  - id: NO-BRUKSFORSKRIFT
+    section: "§ 2-9; § 2-11; § 2-17; § 2-18"
+  - id: NO-KJORETOYFORSKRIFTEN
+    section: "§ 39-11 nr. 2-5"
+  - id: NO-SVV-SKILTSERIER
+examples:
+  valid:
+    - "AB 1234"
+    - "SN-1000"
+    - "ZZ 9999"
+    - "TF1234"
+  invalid:
+    - "AB 123"
+    - "AB 12345"
+    - "AB 0123"
+    - "A 1234"
+    - "EL 1234"
+    - "HY 1234"

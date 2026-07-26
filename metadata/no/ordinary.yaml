@@ -1,0 +1,117 @@
+schemaVersion: 1
+id: NO_ORDINARY
+country: NO
+name: Kjennemerke for bil og lastebil — to bokstaver og fem siffer (AB 12345)
+registrationType: ORDINARY
+# validFrom is deliberately omitted, and Norway is the country where that needs
+# the most explaining. The composition is NOT in the forskrift: § 2-11 (1)-(2)
+# says only that a plate "skal være av utførelse fastsatt av Statens vegvesen"
+# and that the agency decides which mark a vehicle gets, and kjøretøyforskriften
+# § 39-1 nr. 1 repeats the delegation. What the forskrift does say is that the
+# marks of the 1971-1982 and 1982-2002 registration orders consist of "to
+# bokstaver og 4 eller 5 tall" (§§ 2-17 (1), 2-18 (1)) AND that such marks are
+# issued "fra samme serier som benyttes ved førstegangsregistrering ellers"
+# (§ 2-17 (2), applied to § 2-18 by its second paragraph) — i.e. the current
+# series has the same shape. Statens vegvesen's own Skiltserier page supplies
+# the split this scheme rests on: "Tallseriene for biler og lastebiler er fra
+# 10000 til 99999, mens for andre kjøretøy er det fra 1000 til 9999."
+#
+# So the shape is regulation-level, the digit range is agency-level, and no date
+# for either could be traced. 2002-01-01 would be wrong: it is the date the
+# CURRENT PLATE SIZES took effect (kjøretøyforskriften § 39-10 nr. 1), not the
+# date the series began.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # The five-digit series is Statens vegvesen's for "biler og lastebiler". In
+  # Norwegian usage "bil" is any four-wheeled motor vehicle, so that spans the
+  # passenger car, the van, the lorry and the bus — but it excludes the
+  # motorcycle, the moped, the tractor and, importantly for a haulage caller,
+  # the TRAILER, all of which take the four-digit series (NO_ORDINARY_OTHER).
+  #
+  # CATEGORY_ONLY, not DETERMINISTIC: the split comes from an agency page, not
+  # from the forskrift, and the page itself hedges the letter half of the rule
+  # ("ofte basert på hvilken trafikkstasjon").
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - VAN
+    - TRUCK
+    - BUS
+  evidence:
+    - type: PATTERN
+      value: "five-digit number series 10000-99999 (Statens vegvesen, Skiltserier)"
+segments:
+  # Two letters. The full A-Z is accepted on purpose. Statens vegvesen's series
+  # list happens to use only 21 first letters (no I, M, O, Q, W) and 21 second
+  # letters (no G, I, M, O, Q), but that is an observation about a list the page
+  # introduces with "ofte", not a published rule — the same evidence level that
+  # keeps the French FNI series at a full alphabet. Æ, Ø and Å do not arise: the
+  # `normalized` contract is Latin-basic, and no series uses them.
+  #
+  # The reserved combinations ARE excluded, because the same page allocates them
+  # to series modelled separately here: the fifteen electric ones (EL EK EV EB
+  # EC ED EE EF EH EJ EN EP ER EA EU), GA for gas, HY for hydrogen and CD for
+  # embassy vehicles. Leaving them in would make those schemes strict subsets.
+  - name: series
+    type: LETTERS
+    length: 2
+    excludedValues:
+      - CD
+      - EA
+      - EB
+      - EC
+      - ED
+      - EE
+      - EF
+      - EH
+      - EJ
+      - EK
+      - EL
+      - EN
+      - EP
+      - ER
+      - EU
+      - EV
+      - GA
+      - HY
+  # 10000-99999 is exactly a five-digit run with no leading zero.
+  - name: number
+    type: DIGITS
+    length: 5
+    noLeadingZero: true
+formats:
+  national: "{series} {number}"
+  compact: "{series}{number}"
+# No visual is asserted, and that is forced by § 2-11 (3): black on white
+# reflective is the rule, but the same characters go on a green ground for a
+# varebil klasse 2 (letter b — the light commercial van, so a large and
+# systematic exception), on black with pale yellow characters for a vehicle used
+# only off public roads or registered on Svalbard (a), on yellow for a Forsvaret
+# vehicle (c), on black with white characters for a licensed rally car (e), and
+# with red validity bands for a temporary import registration (g). None of that
+# is legible from the mark.
+sources:
+  - id: NO-BRUKSFORSKRIFT
+    section: "§ 2-9; § 2-11; § 2-17; § 2-18"
+  - id: NO-KJORETOYFORSKRIFTEN
+    section: "§ 39-1 nr. 1; § 39-10; § 39-11"
+  - id: NO-SVV-SKILTSERIER
+examples:
+  valid:
+    - "AB 12345"
+    - "DA-10000"
+    - "ZZ 99999"
+    - "SN12345"
+  invalid:
+    - "A 12345"
+    - "ABC 12345"
+    - "AB 1234"
+    - "AB 123456"
+    - "AB 01234"
+    - "EL 12345"
+    - "CD 12345"
+    - "GA 12345"

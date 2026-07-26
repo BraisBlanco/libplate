@@ -1,0 +1,58 @@
+schemaVersion: 1
+id: SK_SPECIAL_C
+country: SK
+name: Zvláštne evidenčné číslo obsahujúce písmeno C (C 12345)
+registrationType: TEMPORARY_PRIVATE
+# All six zvláštne series are legacySeries-flagged for the same reason, stated
+# once here: § 127 ods. 2 leaves the second row completely free — "päť číslic,
+# písmen alebo kombinácia číslic a písmen" — so each series is one fixed letter
+# over 36^5 combinations. In a country-less `detect()` that shadows real plates
+# from other countries (a German "M-AB 123" compacts to MAB123, which is also
+# M + AB123 here). With a `country` hint the schemes behave normally.
+legacySeries: true
+# validFrom omitted: § 127 predates the consolidated text and the C series was
+# not introduced by any amendment that could be traced.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 127 ods. 1 písm. a) and ods. 3 cover both a motor vehicle and its trailer
+  # awaiting individual approval, plus any vehicle driven to a technical,
+  # emission or originality inspection — so the category is genuinely open.
+  level: NOT_INFERABLE
+segments:
+  # § 127 ods. 2: the letter on the first row, five free characters on the
+  # second. The plate is two-rowed for this series (only H and S may be single
+  # row), and the state emblem sits after the C (§ 35 ods. 8 vyhlášky).
+  - name: kind
+    type: LITERAL
+    value: C
+  - name: number
+    type: CHARSET
+    length: 5
+    characters: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ
+formats:
+  national: "{kind} {number}"
+  compact: "{kind}{number}"
+# No visual asserted: a C plate may be made of synthetic polyester (§ 123 ods. 3
+# písm. b) of the zákon) rather than light alloy, and § 35 ods. 10's "raised
+# black characters on white" is written for the embossed metal plate. The
+# okresný úrad also marks a validity period on it (§ 127 ods. 3), which is not
+# part of the number.
+sources:
+  - id: SK-ZCP
+    section: "§ 123 ods. 3; § 127 ods. 1 písm. a), ods. 2-3; § 130 ods. 1"
+  - id: SK-VYHL-9
+    section: "§ 35 ods. 5, 8"
+examples:
+  valid:
+    - "C 12345"
+    - "C-0000A"
+    - "CABCDE"
+  invalid:
+    - "C 1234"
+    - "C 123456"
+    - "F 12345"
+    - "C 1234-"

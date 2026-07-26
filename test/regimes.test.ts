@@ -19,14 +19,16 @@ describe("France — WW provisional and SIV reserved pairs", () => {
     expect(parse("WW-123-AA", { country: "FR" }).scheme?.id).not.toBe("FR_SIV_CURRENT");
   });
 
-  it("detects a WW plate as ambiguous between FR and IT", () => {
-    // Italy's alphabet allows W, so WW-123-AA is also a valid Italian plate.
+  it("detects a WW plate as ambiguous between FR, IT and SK", () => {
+    // Italy's alphabet allows W, so WW-123-AA is also a valid Italian plate,
+    // and Slovakia's ordinary series has the same shape with no letter excluded
+    // from its opening pair (§ 124 ods. 1 zákona č. 8/2009 Z. z.).
     const result = detect("WW-123-AA");
     expect(result.status).toBe("AMBIGUOUS");
     const countries = result.candidates
       ?.map((c) => c.country)
       .sort((a, b) => a.localeCompare(b));
-    expect(countries).toEqual(["FR", "IT"]);
+    expect(countries).toEqual(["FR", "IT", "SK"]);
   });
 });
 
@@ -124,19 +126,20 @@ describe("Spain — diplomatic regime (CD/CC/OI/TA)", () => {
     expect(result.formatted).toBe("OI 12 34");
   });
 
-  it("detects CD + 4 digits as ambiguous between ES, DE, DK, EE, FI, HU and LV", () => {
+  it("detects CD + 4 digits as ambiguous between ES, DE, DK, EE, FI, HU, LV and NO", () => {
     // Compact CD1245 also reads as the German plate C-D 1245 (C = Chemnitz),
     // an Estonian A4 diplomatic mark, a Danish number (two letters + four
     // digits), a Finnish CD mark, a Hungarian temporary diplomatic mark
-    // (CD + four digits, annex 14/A point 3) and a Latvian diplomatic mark
-    // (7. pielikuma 4.4.2. apakšpunkts).
+    // (CD + four digits, annex 14/A point 3), a Latvian diplomatic mark
+    // (7. pielikuma 4.4.2. apakšpunkts) and a Norwegian embassy mark (the CD
+    // series over the 1000-9999 number series).
     const result = detect("CD1245");
     expect(result.status).toBe("AMBIGUOUS");
     expect(result.errors[0]?.reason).toBe("AMBIGUOUS_COUNTRY");
     const countries = result.candidates
       ?.map((c) => c.country)
       .sort((a, b) => a.localeCompare(b));
-    expect(countries).toEqual(["DE", "DK", "EE", "ES", "FI", "HU", "LV"]);
+    expect(countries).toEqual(["DE", "DK", "EE", "ES", "FI", "HU", "LV", "NO"]);
   });
 
   it("detects the 7-character and TA forms as uniquely Spanish", () => {

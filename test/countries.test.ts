@@ -123,22 +123,28 @@ describe("Italy — beyond the ordinary series", () => {
 });
 
 describe("cross-country ambiguity", () => {
-  it("reports FR and IT as candidates for a shared LL-NNN-LL shape", () => {
-    // "AB123CD" is a valid SIV plate and a valid Italian plate; without a
-    // country hint the library must not guess.
+  it("reports FR, IT and SK as candidates for a shared LL-NNN-LL shape", () => {
+    // "AB123CD" is a valid SIV plate, a valid Italian plate and a valid Slovak
+    // one; without a country hint the library must not guess.
     const result = detect("AB-123-CD");
     expect(result.status).toBe("AMBIGUOUS");
     expect(result.errors[0]?.reason).toBe("AMBIGUOUS_COUNTRY");
     const countries = result.candidates
       ?.map((c) => c.country)
       .sort((a, b) => a.localeCompare(b));
-    expect(countries).toEqual(["FR", "IT"]);
+    expect(countries).toEqual(["FR", "IT", "SK"]);
   });
 
-  it("resolves uniquely when the alphabets differ", () => {
-    // Q is allowed in the French alphabet but excluded in the Italian one.
+  it("drops a candidate when its alphabet excludes a letter", () => {
+    // Q is allowed in the French and Slovak alphabets but excluded in the
+    // Italian one, so Italy leaves the candidate list. FR and SK stay: neither
+    // restricts the letter, which is exactly why the library reports both
+    // instead of picking.
     const result = detect("AQ-123-AB");
-    expect(result.status).toBe("VALID");
-    expect(result.country).toBe("FR");
+    expect(result.status).toBe("AMBIGUOUS");
+    const countries = result.candidates
+      ?.map((c) => c.country)
+      .sort((a, b) => a.localeCompare(b));
+    expect(countries).toEqual(["FR", "SK"]);
   });
 });

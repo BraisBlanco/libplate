@@ -1,0 +1,48 @@
+schemaVersion: 1
+id: SK_SPECIAL_H
+country: SK
+name: Zvláštne evidenčné číslo obsahujúce písmeno H — historické vozidlo (H 12345)
+registrationType: HISTORICAL
+# legacySeries: see SK_SPECIAL_C for the shared reason.
+legacySeries: true
+# validFrom omitted — see SK_SPECIAL_C.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 127 ods. 5 restricts the plate to a historic vehicle and nothing else; the
+  # FIVA papers of ods. 9 písm. b) say what it is, the number does not.
+  level: NOT_INFERABLE
+segments:
+  # § 127 ods. 2. H is one of the two series (with S) that "môžu byť usporiadané
+  # v jednom riadku" — one row or two, same characters either way, which is also
+  # why § 35 ods. 5 lets it take the 52 x 11, 34 x 20 or 14,5 x 11 cm plate.
+  - name: kind
+    type: LITERAL
+    value: H
+  - name: number
+    type: CHARSET
+    length: 5
+    characters: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ
+formats:
+  national: "{kind} {number}"
+  compact: "{kind}{number}"
+# § 35 ods. 10 of the vyhláška.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: SK-ZCP
+    section: "§ 127 ods. 1 písm. c), ods. 2, ods. 5, ods. 9 písm. b); § 130 ods. 1"
+  - id: SK-VYHL-9
+    section: "§ 35 ods. 5, 8, 10"
+examples:
+  valid:
+    - "H 12345"
+    - "H-ABC12"
+  invalid:
+    - "H 1234"
+    - "H 123456"
+    - "S 12345"

@@ -1,0 +1,59 @@
+schemaVersion: 1
+id: SK_ARMED_FORCES
+country: SK
+name: Osobitné evidenčné číslo ozbrojených síl — dvojica číslic a päť číslic (12 34567)
+registrationType: STATE_OR_MILITARY
+# Flagged legacySeries not because it is legacy but because it is structureless:
+# seven bare digits match nothing else in the library, so without the flag every
+# seven-digit string in a country-less `detect()` would come back as a Slovak
+# armed-forces plate. With a `country` hint the scheme behaves normally. Same
+# trade-off as the Lithuanian diplomatic series and CZ_ORDINARY.
+legacySeries: true
+# validFrom omitted — see SK_POLICE.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 126 ods. 6 restricts the holder (armed forces, the defence ministry and
+  # budgetary/contributory organisations and state enterprises in its remit),
+  # never the vehicle kind.
+  level: NOT_INFERABLE
+segments:
+  # § 126 ods. 3 písm. b): "dvojica číslic a päť číslic, ktoré oddeľuje štátny
+  # znak". Ods. 4 adds that the same number written with a hyphen instead of the
+  # emblem is the same kind of number, which is why "-" is an accepted separator
+  # and why the two digit groups are separate segments: the boundary is where
+  # the official rendering puts it.
+  - name: branch
+    type: DIGITS
+    length: 2
+  - name: number
+    type: DIGITS
+    length: 5
+formats:
+  national: "{branch}-{number}"
+  compact: "{branch}{number}"
+# § 35 ods. 10 of the vyhláška; ods. 8 places the emblem after the first pair of
+# digits on this plate.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: SK-ZCP
+    section: "§ 126 ods. 1-3 písm. b), ods. 4, ods. 6"
+  - id: SK-VYHL-9
+    section: "§ 35 ods. 8, 10"
+examples:
+  valid:
+    - "12-34567"
+    - "00 00000"
+    - "9999999"
+  invalid:
+    # Note "1-234567" is NOT in this list: separators are evidence, never a
+    # rejection, so it compacts to the valid 1234567.
+    - "12-3456"
+    - "12-345678"
+    - "12-3456A"
+    - "AB-34567"

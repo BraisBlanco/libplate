@@ -1,0 +1,81 @@
+schemaVersion: 1
+id: SK_ELECTRIC
+country: SK
+name: Evidenčné číslo elektrického a vodíkového vozidla (EL/EV 586QX)
+registrationType: ORDINARY
+# validFrom omitted: § 35 ods. 7 of the vyhláška carries no date of its own and
+# the odsek of the zákon it hangs on has been renumbered and re-scoped at least
+# twice (see the citation note below), so no defensible first-issue date could
+# be read off the consolidated texts.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # The plate says something about the DRIVETRAIN, not about the vehicle
+  # category, and the model has no field for that: § 123 ods. 16 of the zákon
+  # covers any vehicle "ktorého jediným zdrojom energie je elektrina" or with
+  # hydrogen propulsion, which spans cars, vans and trucks alike. The useful
+  # signal is the scheme identity itself.
+  level: NOT_INFERABLE
+segments:
+  # § 35 ods. 7 vyhlášky: "Písmená na tabuľke s evidenčným číslom vozidla podľa
+  # § 123 ods. 18 zákona začínajú písmenami EL alebo EV." Modelled as the
+  # literal E plus a one-character choice, which is exactly the pair {EL, EV}.
+  #
+  # CITATION TRAP, do not "fix" the cross-reference: the vyhláška points at
+  # § 123 ods. 18 of the zákon, and in the version of the zákon in force when
+  # the vyhláška was last amended (1 December 2024) ods. 18 was indeed the
+  # electric-vehicle provision — for a battery vehicle OR a plug-in hybrid. In
+  # the text in force today it is ODS. 16, its scope has moved from plug-in
+  # hybrids to hydrogen vehicles, and ods. 18 is now the delegation clause that
+  # produced the vyhláška in the first place. The reference dangles; the rule
+  # does not.
+  - name: fuel
+    type: LITERAL
+    value: E
+  - name: fuelKind
+    type: CHARSET
+    length: 1
+    characters: LV
+  # The rest is the § 124 ods. 1 composition. Y stays out of the closing pair
+  # for the SK_ORDINARY reason (the towed-vehicle block of § 35 ods. 3).
+  - name: number
+    type: DIGITS
+    length: 3
+  - name: seriesTail
+    type: LETTERS
+    length: 1
+    excluded:
+      - Y
+  - name: seriesTailSecond
+    type: LETTERS
+    length: 1
+formats:
+  national: "{fuel}{fuelKind} {number}{seriesTail}{seriesTailSecond}"
+  compact: "{fuel}{fuelKind}{number}{seriesTail}{seriesTailSecond}"
+# Only the background is asserted. § 35 ods. 6 and ods. 10 say the characters
+# on such a plate "MÔŽU byť zelenej farby na bielom podklade" — green is
+# permitted, not required, so the foreground cannot be stated even though the
+# príloha č. 17 specimens (EL 586QX, EV 536MK) are drawn in green.
+visual:
+  background: WHITE
+sources:
+  - id: SK-ZCP
+    section: "§ 123 ods. 16, 18; § 124 ods. 1"
+  - id: SK-VYHL-9
+    section: "§ 35 ods. 6-7, 10; príloha č. 17"
+examples:
+  valid:
+    - "EL 586QX"
+    - "EV 536MK"
+    - "EL-000AA"
+    - "EV999ZZ"
+  invalid:
+    - "EK 586QX"
+    - "EL 58QX"
+    - "EL 5860QX"
+    - "EL 586Q"
+    - "EL 586YX"
+    - "AA 586QX"

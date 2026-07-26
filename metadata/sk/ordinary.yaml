@@ -1,0 +1,104 @@
+schemaVersion: 1
+id: SK_ORDINARY
+country: SK
+name: Evidenčné číslo — dvojica písmen, tri číslice a dvojica písmen (AA 203SO)
+registrationType: ORDINARY
+# validFrom is deliberately omitted, and the reason is worth stating because the
+# temptation to write 2023-01-01 is strong. The COMPOSITION did not change on
+# that date: § 124 ods. 1 has always read "za prvou dvojicou písmen sa za
+# štátnym znakom uvádzajú tri číslice a dvojica písmen". What zákon č. 128/2021
+# Z. z. (Čl. I bod 32, in force 2023-01-01) deleted was the SECOND sentence of
+# that odsek — "Prvá dvojica písmen evidenčného čísla označuje okres, v ktorom
+# je vozidlo evidované." Since then the opening pair is a plain sequence (the
+# new run started at AA 001AA) instead of a district code, but the shape is the
+# same and both generations are on the road, so one scheme covers both and no
+# cut-off date can be asserted.
+#
+# This is also why Slovakia ships NO district table: the okres abbreviations
+# were the vyhláška's business (bod 31 of the same novela replaced "skratky
+# okresov" with "údajov" in the § 123 delegation), and they no longer constrain
+# anything. A table would reject every plate issued since 2023.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 124 ods. 1 gives this composition to every registered vehicle regardless
+  # of category, and § 35 ods. 1 of the vyhláška hands the same characters to
+  # categories M, N, O, R, L and the quadricycles on four different plate sizes.
+  # The one thing the text does separate out is the towed-vehicle block — see
+  # SK_TRAILER — but it does not separate anything else, and even the trailer
+  # rule has a hole: a category O1 trailer towed by an L-category vehicle is
+  # expressly kept out of it (§ 35 ods. 3, second clause), so an ordinary-looking
+  # number can still sit on a small trailer.
+  level: NOT_INFERABLE
+segments:
+  # § 124 ods. 1: "Evidenčné číslo tvoria písmená a číslice. Za prvou dvojicou
+  # písmen sa za štátnym znakom Slovenskej republiky uvádzajú tri číslice a
+  # dvojica písmen."
+  #
+  # No letter is excluded by any provision: § 124 ods. 3 písm. f) bans diacritics
+  # and lower case, but that applies to the chosen numbers of ods. 2, and the
+  # príloha č. 17 specimen (AA 203SO, EL 586QX) uses Q, S, O and X freely. Nor
+  # are CD, CC, CH, EE, SS and ZZ excluded here: § 124 ods. 3 písm. e) withholds
+  # them from CHOSEN numbers only, and the diplomatic series of § 125 has a
+  # different shape (two letters + five digits), so nothing collides.
+  #
+  # EL and EV are the exception. § 35 ods. 7 of the vyhláška says the letters on
+  # the plate of a § 123 vehicle running solely on electricity or hydrogen
+  # "začínajú písmenami EL alebo EV", which reserves those two openings; leaving
+  # them in would make SK_ELECTRIC a strict subset of this scheme.
+  - name: series
+    type: LETTERS
+    length: 2
+    excludedValues:
+      - EL
+      - EV
+  - name: number
+    type: DIGITS
+    length: 3
+  # The closing pair is modelled as two one-character segments for one reason:
+  # § 35 ods. 3 reserves the FIRST letter of that pair, and `excluded` applies to
+  # every position of a segment. Y is withheld here so the towed-vehicle series
+  # stays disjoint from the ordinary one (the HU `TX` reasoning: the reservation
+  # is explicit, the exclusion from the general series is the inference).
+  - name: seriesTail
+    type: LETTERS
+    length: 1
+    excluded:
+      - Y
+  - name: seriesTailSecond
+    type: LETTERS
+    length: 1
+formats:
+  national: "{series} {number}{seriesTail}{seriesTailSecond}"
+  compact: "{series}{number}{seriesTail}{seriesTailSecond}"
+# § 35 ods. 10: raised black letters and digits on a white ground, matching the
+# príloha č. 17 specimen.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: SK-ZCP
+    section: "§ 123 ods. 1-2, 18; § 124 ods. 1"
+  - id: SK-VYHL-9
+    section: "§ 35 ods. 1-3, 8-10; príloha č. 17"
+  - id: SK-NOVELA-128
+    section: "Čl. I body 31-32"
+examples:
+  valid:
+    - "AA 203SO"
+    - "BA-123AB"
+    - "ZZ 999ZZ"
+    - "AA000AA"
+  invalid:
+    - "A 123AB"
+    - "AAA 123AB"
+    - "AA 12AB"
+    - "AA 1234AB"
+    - "AA 123A"
+    - "AA 123ABC"
+    - "AA 123YA"
+    - "EL 586QX"
+    - "EV 536MK"

@@ -114,6 +114,6 @@ describe("Estonia — country-less detection", () => {
     expect(result.status).toBe("AMBIGUOUS");
     expect(
       result.candidates?.map((c) => c.country).sort((a, b) => a.localeCompare(b)),
-    ).toEqual(["DE", "DK", "EE", "ES", "FI", "HU", "LV"]);
+    ).toEqual(["DE", "DK", "EE", "ES", "FI", "HU", "LV", "NO"]);
   });
 });

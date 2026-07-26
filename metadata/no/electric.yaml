@@ -1,0 +1,63 @@
+schemaVersion: 1
+id: NO_ELECTRIC
+country: NO
+name: Kjennemerke for elektriskdrevet kjøretøy — E-serien (EL 12345)
+registrationType: ORDINARY
+# validFrom omitted: Statens vegvesen's Skiltserier page lists the series as
+# current but dates none of them, and the forskrift knows nothing about fuel
+# series at all.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # NOT_INFERABLE, and the reason is a deliberate trade-off. The 10000-99999 /
+  # 1000-9999 split that lets NO_ORDINARY separate a car from a trailer is a
+  # property of the NUMBER series, so it applies to the E series too — an EL car
+  # has five digits and an electric moped four. Splitting each fuel series in
+  # two by width would express that, at the price of doubling the number of
+  # Norwegian schemes; the three fuel series union both widths instead, so what
+  # the plate proves here is the drivetrain, and the model has no field for it.
+  # A caller who wants the category back can read the digit count.
+  level: NOT_INFERABLE
+segments:
+  # Statens vegvesen, Skiltserier, "Felles bokstavkombinasjoner": an electric
+  # vehicle takes EL, EK, EV, EB, EC, ED, EE, EF, EH, EJ, EN, EP, ER, EA or EU.
+  # All fifteen open with E, so the pair is modelled as the literal E plus a
+  # one-character choice. The other E pairs — ES, ET, EX, EY, EZ — are ordinary
+  # district series and are NOT in this set.
+  - name: fuel
+    type: LITERAL
+    value: E
+  - name: fuelSeries
+    type: CHARSET
+    length: 1
+    characters: ABCDEFHJKLNPRUV
+  # Both number series of the same page: 1000-9999 and 10000-99999.
+  - name: number
+    type: DIGITS
+    minLength: 4
+    maxLength: 5
+    noLeadingZero: true
+formats:
+  national: "{fuel}{fuelSeries} {number}"
+  compact: "{fuel}{fuelSeries}{number}"
+# No visual asserted — see NO_ORDINARY. An electric varebil klasse 2 carries
+# these characters on the green ground of § 2-11 (3) b).
+sources:
+  - id: NO-BRUKSFORSKRIFT
+    section: "§ 2-9; § 2-11 (1)-(2)"
+  - id: NO-SVV-SKILTSERIER
+examples:
+  valid:
+    - "EL 12345"
+    - "EK-1234"
+    - "EV99999"
+    - "EA 10000"
+  invalid:
+    - "ES 12345"
+    - "EL 123"
+    - "EL 123456"
+    - "EL 01234"
+    - "E 12345"

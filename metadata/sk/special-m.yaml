@@ -1,0 +1,47 @@
+schemaVersion: 1
+id: SK_SPECIAL_M
+country: SK
+name: Zvláštne evidenčné číslo obsahujúce písmeno M — výrobca, zástupca a predajca (M 12345)
+registrationType: PROFESSIONAL_TEMPORARY
+# legacySeries: see SK_SPECIAL_C for the shared reason. This is the series the
+# reason was written about — a compacted German "M-AB 123" reads as M + AB123.
+legacySeries: true
+# validFrom omitted — see SK_SPECIAL_C.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 127 ods. 6 lists who may hold the plate — vehicle manufacturers, their
+  # representatives, new-vehicle dealers, schools and research bodies, and
+  # holders of a trial-operation permit — not what may carry it.
+  level: NOT_INFERABLE
+segments:
+  # § 127 ods. 2, as for the C series.
+  - name: kind
+    type: LITERAL
+    value: M
+  - name: number
+    type: CHARSET
+    length: 5
+    characters: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ
+formats:
+  national: "{kind} {number}"
+  compact: "{kind}{number}"
+# No visual asserted: like the C series, an M plate may be synthetic polyester
+# (§ 123 ods. 3 písm. b)), and the polyester variant carries a dealer-marked
+# validity period (§ 127 ods. 6 písm. c)).
+sources:
+  - id: SK-ZCP
+    section: "§ 123 ods. 3; § 127 ods. 1 písm. d), ods. 2, ods. 6, ods. 9 písm. c); § 130"
+  - id: SK-VYHL-9
+    section: "§ 35 ods. 5, 8"
+examples:
+  valid:
+    - "M 12345"
+    - "M-00001"
+  invalid:
+    - "M 1234"
+    - "M 123456"
+    - "V 12345"

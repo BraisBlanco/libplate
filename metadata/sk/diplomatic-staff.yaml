@@ -1,0 +1,42 @@
+schemaVersion: 1
+id: SK_DIPLOMATIC_STAFF
+country: SK
+name: Evidenčné číslo administratívneho a technického personálu — ZZ a päť číslic (ZZ 12345)
+registrationType: DIPLOMATIC_STAFF
+# validFrom omitted — see SK_DIPLOMATIC.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  level: NOT_INFERABLE
+segments:
+  # § 125 ods. 3: members of the administrative and technical staff of foreign
+  # missions (and their counterparts at international organisations) who are not
+  # Slovak citizens take "dvojica písmen ZZ a päť číslic".
+  - name: corps
+    type: LITERAL
+    value: ZZ
+  - name: number
+    type: DIGITS
+    length: 5
+formats:
+  national: "{corps} {number}"
+  compact: "{corps}{number}"
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: SK-ZCP
+    section: "§ 125 ods. 3, 5"
+  - id: SK-VYHL-9
+    section: "§ 35 ods. 8, 10"
+examples:
+  valid:
+    - "ZZ 12345"
+    - "ZZ-99999"
+  invalid:
+    - "ZZ 1234"
+    - "ZZ 123456"
+    - "ZZ 123AB"

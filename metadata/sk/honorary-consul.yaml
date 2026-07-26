@@ -1,0 +1,41 @@
+schemaVersion: 1
+id: SK_HONORARY_CONSUL
+country: SK
+name: Evidenčné číslo honorárneho konzulárneho úradníka — CH a päť číslic (CH 12345)
+registrationType: CONSULAR
+# validFrom omitted — see SK_DIPLOMATIC.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  level: NOT_INFERABLE
+segments:
+  # § 125 ods. 4: the vehicle of an honorary consular officer heading a consular
+  # post takes "dvojica písmen CH a päť číslic".
+  - name: corps
+    type: LITERAL
+    value: CH
+  - name: number
+    type: DIGITS
+    length: 5
+formats:
+  national: "{corps} {number}"
+  compact: "{corps}{number}"
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: SK-ZCP
+    section: "§ 125 ods. 4, 5"
+  - id: SK-VYHL-9
+    section: "§ 35 ods. 8, 10"
+examples:
+  valid:
+    - "CH 12345"
+    - "CH-00001"
+  invalid:
+    - "CH 1234"
+    - "CH 123456"
+    - "CD 12345"

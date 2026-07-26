@@ -1,0 +1,41 @@
+schemaVersion: 1
+id: NO_HYDROGEN
+country: NO
+name: Kjennemerke for hydrogendrevet kjøretøy — HY-serien (HY 12345)
+registrationType: ORDINARY
+# validFrom omitted — see NO_ELECTRIC.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # NOT_INFERABLE for the reason given in NO_ELECTRIC.
+  level: NOT_INFERABLE
+segments:
+  # Statens vegvesen, Skiltserier: "Hydrogendrevet kjøretøy — HY".
+  - name: fuel
+    type: LITERAL
+    value: HY
+  - name: number
+    type: DIGITS
+    minLength: 4
+    maxLength: 5
+    noLeadingZero: true
+formats:
+  national: "{fuel} {number}"
+  compact: "{fuel}{number}"
+# No visual asserted — see NO_ORDINARY.
+sources:
+  - id: NO-BRUKSFORSKRIFT
+    section: "§ 2-9; § 2-11 (1)-(2)"
+  - id: NO-SVV-SKILTSERIER
+examples:
+  valid:
+    - "HY 12345"
+    - "HY-1234"
+  invalid:
+    - "HY 123"
+    - "HY 123456"
+    - "HY 01234"
+    - "HZ 12345"

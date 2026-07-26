@@ -1,0 +1,51 @@
+schemaVersion: 1
+id: SK_DIPLOMATIC
+country: SK
+name: Evidenčné číslo diplomatickej misie — CD a päť číslic (CD 12345)
+registrationType: DIPLOMATIC
+# validFrom omitted: § 125 predates the consolidated text and no act introducing
+# the CD composition was traced.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 125 ods. 1 lists holders (missions, international organisations, diplomatic
+  # agents and heads of those organisations), never vehicle kinds.
+  level: NOT_INFERABLE
+segments:
+  # § 125 ods. 1: "Evidenčné číslo tvorí dvojica písmen CD a päť číslic".
+  # Nothing bounds the five digits, so 00000-99999 is accepted; the mission
+  # coding sometimes described unofficially is not in the zákon and is not
+  # modelled (the ES/LT diplomatic precedent).
+  - name: corps
+    type: LITERAL
+    value: CD
+  - name: number
+    type: DIGITS
+    length: 5
+formats:
+  national: "{corps} {number}"
+  compact: "{corps}{number}"
+# § 35 ods. 10 of the vyhláška: black on white. The CD marking of § 125 ods. 5
+# is a separate badge on the right-hand side of the plate (§ 37, príloha č. 18),
+# not part of the number.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: SK-ZCP
+    section: "§ 123 ods. 7; § 125 ods. 1, 5"
+  - id: SK-VYHL-9
+    section: "§ 35 ods. 8, 10; § 37; príloha č. 18"
+examples:
+  valid:
+    - "CD 12345"
+    - "CD-00000"
+    - "CD99999"
+  invalid:
+    - "CD 1234"
+    - "CD 123456"
+    - "CC 12345"
+    - "CD 123AB"

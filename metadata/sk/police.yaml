@@ -1,0 +1,52 @@
+schemaVersion: 1
+id: SK_POLICE
+country: SK
+name: Osobitné evidenčné číslo Policajného zboru — P a päť číslic (P 12345, PZ 12345)
+registrationType: STATE_OR_MILITARY
+# validFrom omitted: § 126 predates the consolidated text and no act introducing
+# the P composition was traced.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 126 ods. 5 restricts the holder (Policajný zbor and the interior ministry),
+  # never the vehicle kind.
+  level: NOT_INFERABLE
+segments:
+  # § 126 ods. 3 písm. a): "písmeno P a päť číslic, ktoré oddeľuje štátny znak",
+  # widened by ods. 7: "Za písmenom P podľa odseku 3 písm. a) môže byť uvedené
+  # aj ďalšie písmeno." Hence the two arrangements. Nothing bounds the digits,
+  # so leading zeros are accepted.
+  - name: force
+    type: LITERAL
+    value: P
+  - name: number
+    type: PATTERNS
+    patterns: [NNNNN, LNNNNN]
+    digitBlocks: FREE
+formats:
+  national: "{force} {number}"
+  compact: "{force}{number}"
+# § 35 ods. 10 of the vyhláška; ods. 8 places the state emblem after the letter
+# P on this plate rather than after a pair of letters.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: SK-ZCP
+    section: "§ 126 ods. 1-3 písm. a), ods. 5, ods. 7"
+  - id: SK-VYHL-9
+    section: "§ 35 ods. 8, 10"
+examples:
+  valid:
+    - "P 12345"
+    - "P-00000"
+    - "PZ 12345"
+    - "PA99999"
+  invalid:
+    - "P 1234"
+    - "P 123456"
+    - "PZZ 12345"
+    - "P 1234A"

@@ -1,0 +1,74 @@
+schemaVersion: 1
+id: SK_TRAILER
+country: SK
+name: Evidenčné číslo prípojného vozidla — Y na začiatku druhej dvojice písmen (AA 123YB)
+registrationType: ORDINARY
+# validFrom omitted for the same reason as SK_ORDINARY: the composition is the
+# ordinary one and the Y reservation predates the consolidated vyhláška; no act
+# introducing it was traced.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # § 35 ods. 3 of the vyhláška: "Tabuľka s evidenčným číslom prideleným vozidlu
+  # kategórie O a R má za štátnym znakom Slovenskej republiky v dvojici písmen
+  # evidenčného čísla prvé písmeno Y". Category O is trailers and semitrailers,
+  # category R agricultural trailers — so a Y here is real evidence that the
+  # plate is on a towed vehicle, which is the thing a haulage caller most wants
+  # and which almost no European ordinary series encodes.
+  #
+  # It stops short of DETERMINISTIC because ods. 4 lets a category T or C
+  # tractor take a 52 x 11 cm plate with the same Y "v odôvodnených prípadoch",
+  # so the honest reading is "towed vehicle, or exceptionally a tractor".
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - TRAILER_OR_SEMITRAILER
+    - AGRICULTURAL_VEHICLE
+  evidence:
+    - type: PATTERN
+      value: "Y as the first letter after the state emblem (§ 35 ods. 3 vyhlášky)"
+segments:
+  # Same § 124 ods. 1 composition as SK_ORDINARY; only the reserved letter
+  # differs. EL and EV are excluded here too — they belong to vehicles whose
+  # sole energy source is electricity or hydrogen (§ 123 ods. 16 zákona), which
+  # a towed vehicle has not got.
+  - name: series
+    type: LETTERS
+    length: 2
+    excludedValues:
+      - EL
+      - EV
+  - name: number
+    type: DIGITS
+    length: 3
+  - name: towed
+    type: LITERAL
+    value: Y
+  - name: seriesTail
+    type: LETTERS
+    length: 1
+formats:
+  national: "{series} {number}{towed}{seriesTail}"
+  compact: "{series}{number}{towed}{seriesTail}"
+# § 35 ods. 10.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: SK-ZCP
+    section: "§ 124 ods. 1"
+  - id: SK-VYHL-9
+    section: "§ 35 ods. 1 písm. a), ods. 2-4, ods. 10"
+examples:
+  valid:
+    - "AA 123YB"
+    - "BA-456YA"
+    - "ZZ 000YZ"
+  invalid:
+    - "AA 123AB"
+    - "AA 123Y"
+    - "AA 123YAB"
+    - "AA 12YB"
+    - "EL 123YB"

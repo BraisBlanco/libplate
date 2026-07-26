@@ -202,6 +202,6 @@ describe("Austria — detection without a country hint", () => {
     const countries = result.candidates
       ?.map((c) => c.country)
       .sort((a, b) => a.localeCompare(b));
-    expect(countries).toEqual(["FR", "IT"]);
+    expect(countries).toEqual(["FR", "IT", "SK"]);
   });
 });
