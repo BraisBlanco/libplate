@@ -680,70 +680,100 @@ Forsvaret and on black for a licensed rally car.
 
 ### Not yet modelled
 
-Spanish state/military bodies; Portuguese diplomatic/military series and the
-pre-2013 moped/motorcycle series; Italian diplomatic (`CD`/`CC`), Polizia Locale `Y`
-series, SMOM and pre-2002 test plates; German seasonal (`Saisonkennzeichen`),
-alternating (`Wechselkennzeichen`), green, Bundeswehr and diplomatic plates;
-Dutch special series (royal `AA`, `CD`, dealer/export plates); Belgian
-personalized plates (free text, up to 8 characters), the royal court and
-`A`/`E`/`P` short national series, and the pre-1973 series; Polish pre-2000
-black plates and military/service series; Austrian pre-1989 black plates;
-Estonian special-order marks (type A2, letters then digits — their space
-swallows most other series), racing (A10) and transit (D1/D2) marks, and the
-President's coat-of-arms plate (A12, no characters at all); Romanian diplomatic
-(`CD`/`CO`/`TC`) and temporary numbers (composition without widths — the state
-standard SR 13078 is not published), the yellow locality plates (specified since
-2024 by anexa nr. 6-7 of Ordinul MAI 181/2024, so modellable, just not modelled)
-and army/police numbers (each institution's own order); Bulgarian by-request six-character
-numbers (their character space contains the ordinary series), diplomatic,
-army and police series (all outside Наредба № I-45); Swedish saluvagnsskyltar
-(the regulation says "six characters" without saying which) and personal plates
-(2-7 free characters); Finnish transfer marks (siirtomerkki — 1-2 letters + up
-to four digits, a space that contains both the ordinary two-letter series and
-the export plate), customs plates (no published serial width) and Åland, which
-runs its own register; Danish grænsenummerplader (Motorstyrelsen draws them as
-five digits with no letters, which contradicts § 68, stk. 2 — the catalogue is
-"en grafisk fremstilling", so the composition is not asserted), prøvemærker (a
-sticker carrying a løbenummer of no published width), ønskenummerplader (2-7
-free characters), historic plates (the pre-1976 systems) and the special
-municipal plates of § 3, stk. 4 (no published composition); Czech special marks
-for handling operation and for the drive from the place of sale to the place of
-registration (§ 26 odst. 2-3 — a kraj code letter followed by 4-6 free
-characters, a space that contains the whole `EL` series), the pre-2025
-diplomatic arrangement with the letter pair at positions 4-5 (surrendered by
-2026-12-31), and the export mark (a standard number plus a red validity field);
-Slovenian diplomatic and consular plates (`CMD`/`CD`/`CC`/`M` + a country code
-set by the agency + a vehicle number, **with no widths in the text**), chosen
-parts of the mark (3-6 characters), export plates (the same characters in black
-on yellow) and military/police vehicles (prescribed by separate ministerial
-regulations); Hungarian individually produced plates (3-6 letters + 1-4 digits
-— their space contains the current series), the 2004-era `R`/`H`/`RR`/`C`/`X`
-special series and `Z`/`P`/`E`/`V`/`M`/`SP` temporary letters (no longer
-issuable since 2022-07-01), four-wheeled moped plates and the slow-vehicle,
-environment-friendly and bike-carrier plates (colour variants of a number formed
-the same way); Lithuanian chosen numbers (21.10 p. — 1-6 or 1-5 characters,
-digits or digits and letters, a space that contains the ordinary series) and the
-`P` trade marks and cardboard border marks of the 1994 temporary-plate order,
-which was repealed on 2008-10-15; Greek mopeds (three of the same fourteen
-letters + a number from 1 to 9999 — a space that contains both the car and the
-motorcycle series), trade `ΔΟΚ`, diplomatic and `ΜΕ` machinery plates (their
-specification sits in the surviving paragraphs of Υ.Α. 19800/1982, whose
-consolidated text is behind a paywall and whose ΦΕΚ is a scan) and agricultural
-`ΑΜ` numbers; Latvian transit, taxi, off-road and electric-vehicle numbers (the
-ordinary characters with a red field, a yellow face, green or blue symbols),
-military plates (`L`/`LA` + digits, with no count given anywhere) and individual
-plates (2-8 symbols, a space that contains every other series), plus
-traktortehnika, trams and trolleybuses, which 2. punkts puts outside the
-registration rules altogether; Slovak chosen numbers (§ 124 ods. 2 — two letters
-and then any letters, digits or mix, a space that contains the ordinary series),
-the pre-2009 `X` osobitné series (discontinued by § 41 ods. 2 of the vyhláška) and
-the green EV colour variant, which repeats an `EL`/`EV` number; Norwegian
-prøvekjennemerker (årsprøve white on red, dagsprøve black on red — §§ 2-19 to 2-23
-give no composition at all), Forsvaret plates, personal marks (§ 2a-2: two to
-seven characters, a space that swallows every series), the 1971-2002 orders (the
-same "two letters + 4 or 5 digits" as the current series, so already covered) and
-the varebil klasse 2, off-road, Svalbard and rally plates, which are colour
-variants of an ordinary number.
+Four reasons recur, and most entries below are one of them: the omitted space
+_contains_ a series that is modelled (so adding it would make ordinary plates
+`AMBIGUOUS`), no official text publishes the composition, the plate is a colour
+variant of a number formed the same way, or the vehicle sits outside the
+registration rules altogether. Countries are listed in the order of the coverage
+table above.
+
+- **Spain** — state and military bodies.
+- **Portugal** — diplomatic and military series, and the pre-2013 moped and
+  motorcycle series.
+- **France** — transit temporaire and importation en transit (the ordinary SIV
+  number on a white-on-red plate with a validity date) and the black plates
+  collection vehicles may use; military numbers, assigned under
+  defence-internal instructions with no published format; New Caledonia, French
+  Polynesia and Wallis-et-Futuna, which run local systems whose composition is
+  not published anywhere findable; the diplomatic `Z`/`X` fiscal suffixes and
+  the ESA `973` / Strasbourg `67` completions; and the FNI-era transit
+  (`TT`/`TAA`-`TZZ`/`IT`/`TTW`/`TTQ`), export (`W?L`/`W?E`) and FFECSA/DF
+  series.
+- **Italy** — diplomatic (`CD`/`CC`), the Polizia Locale `Y` series, SMOM and
+  pre-2002 test plates.
+- **Germany** — seasonal (`Saisonkennzeichen`), alternating
+  (`Wechselkennzeichen`), green, Bundeswehr and diplomatic plates.
+- **Belgium** — personalized plates (free text, up to 8 characters), the royal
+  court and `A`/`E`/`P` short national series, and the pre-1973 series.
+- **Netherlands** — the special series (royal `AA`, `CD`, dealer and export
+  plates).
+- **Poland** — pre-2000 black plates and the military and service series.
+- **Austria** — pre-1989 black plates.
+- **Estonia** — special-order marks (type A2, letters then digits — their space
+  swallows most other series), racing (A10) and transit (D1/D2) marks, and the
+  President's coat-of-arms plate (A12, no characters at all).
+- **Romania** — diplomatic (`CD`/`CO`/`TC`) and temporary numbers (a
+  composition without widths: the state standard SR 13078 is not published);
+  the yellow locality plates, specified since 2024 by anexa nr. 6-7 of Ordinul
+  MAI 181/2024, so modellable, just not modelled; and army and police numbers,
+  each under its institution's own order.
+- **Bulgaria** — by-request six-character numbers (their character space
+  contains the ordinary series), and the diplomatic, army and police series,
+  all outside Наредба № I-45.
+- **Sweden** — saluvagnsskyltar (the regulation says "six characters" without
+  saying which) and personal plates (2-7 free characters).
+- **Finland** — transfer marks (siirtomerkki — 1-2 letters + up to four digits,
+  a space that contains both the ordinary two-letter series and the export
+  plate), customs plates (no published serial width) and Åland, which runs its
+  own register.
+- **Denmark** — grænsenummerplader (Motorstyrelsen draws them as five digits
+  with no letters, which contradicts § 68, stk. 2 — the catalogue is "en
+  grafisk fremstilling", so the composition is not asserted), prøvemærker (a
+  sticker carrying a løbenummer of no published width), ønskenummerplader (2-7
+  free characters), historic plates (the pre-1976 systems) and the special
+  municipal plates of § 3, stk. 4 (no published composition).
+- **Czechia** — the special marks for handling operation and for the drive from
+  the place of sale to the place of registration (§ 26 odst. 2-3: a kraj code
+  letter followed by 4-6 free characters, a space that contains the whole `EL`
+  series), the pre-2025 diplomatic arrangement with the letter pair at
+  positions 4-5 (surrendered by 2026-12-31), and the export mark (a standard
+  number plus a red validity field).
+- **Slovenia** — diplomatic and consular plates (`CMD`/`CD`/`CC`/`M` + a
+  country code set by the agency + a vehicle number, **with no widths in the
+  text**), chosen parts of the mark (3-6 characters), export plates (the same
+  characters in black on yellow) and military and police vehicles, prescribed
+  by separate ministerial regulations.
+- **Hungary** — individually produced plates (3-6 letters + 1-4 digits, a space
+  that contains the current series), the 2004-era `R`/`H`/`RR`/`C`/`X` special
+  series and `Z`/`P`/`E`/`V`/`M`/`SP` temporary letters (no longer issuable
+  since 2022-07-01), four-wheeled moped plates, and the slow-vehicle,
+  environment-friendly and bike-carrier plates (colour variants of a number
+  formed the same way).
+- **Lithuania** — chosen numbers (21.10 p. — 1-6 or 1-5 characters, digits or
+  digits and letters, a space that contains the ordinary series) and the `P`
+  trade marks and cardboard border marks of the 1994 temporary-plate order,
+  which was repealed on 2008-10-15.
+- **Greece** — mopeds (three of the same fourteen letters + a number from 1 to
+  9999, a space that contains both the car and the motorcycle series), trade
+  `ΔΟΚ`, diplomatic and `ΜΕ` machinery plates (their specification sits in the
+  surviving paragraphs of Υ.Α. 19800/1982, whose consolidated text is behind a
+  paywall and whose ΦΕΚ is a scan), and agricultural `ΑΜ` numbers.
+- **Latvia** — transit, taxi, off-road and electric-vehicle numbers (the
+  ordinary characters with a red field, a yellow face, green or blue symbols),
+  military plates (`L`/`LA` + digits, with no count given anywhere) and
+  individual plates (2-8 symbols, a space that contains every other series),
+  plus traktortehnika, trams and trolleybuses, which 2. punkts puts outside the
+  registration rules altogether.
+- **Slovakia** — chosen numbers (§ 124 ods. 2: two letters and then any
+  letters, digits or mix, a space that contains the ordinary series), the
+  pre-2009 `X` osobitné series (discontinued by § 41 ods. 2 of the vyhláška)
+  and the green EV colour variant, which repeats an `EL`/`EV` number.
+- **Norway** — prøvekjennemerker (årsprøve white on red, dagsprøve black on red
+  — §§ 2-19 to 2-23 give no composition at all), Forsvaret plates, personal
+  marks (§ 2a-2: two to seven characters, a space that swallows every series),
+  the 1971-2002 orders (the same "two letters + 4 or 5 digits" as the current
+  series, so already covered) and the varebil klasse 2, off-road, Svalbard and
+  rally plates, which are colour variants of an ordinary number.
 
 ## Install
 
