@@ -86,7 +86,7 @@ describe("Finland — special series", () => {
 });
 
 describe("Finland — country-less detection", () => {
-  it("shares the ordinary shape with Sweden, Germany and Italy", () => {
+  it("shares the ordinary shape with Sweden, Germany, Italy and Lithuania", () => {
     const result = detect("ABC 123");
     expect(result.status).toBe("AMBIGUOUS");
     expect(result.errors[0]?.reason).toBe("AMBIGUOUS_COUNTRY");
@@ -94,7 +94,7 @@ describe("Finland — country-less detection", () => {
       [...new Set(result.candidates?.map((c) => c.country))].sort((a, b) =>
         a.localeCompare(b),
       ),
-    ).toEqual(["DE", "FI", "IT", "SE"]);
+    ).toEqual(["DE", "FI", "IT", "LT", "SE"]);
   });
 
   it("shares the number-first shape with the Estonian standard mark", () => {

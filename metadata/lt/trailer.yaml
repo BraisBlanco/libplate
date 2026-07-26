@@ -1,0 +1,65 @@
+schemaVersion: 1
+id: LT_TRAILER
+country: LT
+name: Bendrojo naudojimo numerio ženklas — O kategorija, priekabos ir puspriekabės (AB 123)
+registrationType: ORDINARY
+# validFrom omitted for the same reason as LT_ORDINARY: the composition predates
+# the traced redaction and no earlier act was found.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 21.3 p. gives this composition to category O and to nothing else, and
+  # category O *is* trailers and semitrailers. That makes the inference
+  # DETERMINISTIC — the number itself says "towed vehicle".
+  #
+  # Text cannot split O1/O2 (trailer) from O3/O4 (semitrailer), hence the
+  # combined category rather than TRAILER or SEMITRAILER.
+  level: DETERMINISTIC
+  category: TRAILER_OR_SEMITRAILER
+  evidence:
+    - type: PATTERN
+      value: "two letters + three digits (21.3 p., category O)"
+segments:
+  # 21 p.: the Latin letters of the Lithuanian alphabet, which excludes Q, W
+  # and X. See LT_ORDINARY for the full reasoning.
+  - name: series
+    type: LETTERS
+    length: 2
+    excluded:
+      - Q
+      - W
+      - X
+  - name: number
+    type: DIGITS
+    length: 3
+formats:
+  national: "{series} {number}"
+  compact: "{series}{number}"
+# 1 priedas 1 p.: white film, EU sign, black characters. 22 p. gives an
+# O-category vehicle a single plate, which is a count, not a colour.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: LT-TAISYKLES
+    section: "19.1, 21, 21.3, 22, 25.1-25.2 p.; 1 priedas 1 p."
+  - id: LT-SEAKI
+    section: "10 str. 5 d. 2 p."
+examples:
+  valid:
+    - "AB 123"
+    - "AA 000"
+    - "ZZ 999"
+    - "PR-456"
+  invalid:
+    - "ABC 123"
+    - "A 123"
+    - "AB 12"
+    - "AB 1234"
+    - "AQ 123"
+    - "AW 123"
+    - "AX 123"
+    - "12 ABC"

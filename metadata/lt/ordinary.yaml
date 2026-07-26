@@ -1,0 +1,84 @@
+schemaVersion: 1
+id: LT_ORDINARY
+country: LT
+name: Bendrojo naudojimo numerio ženklas — M ir N kategorijos (ABC 123)
+registrationType: ORDINARY
+# validFrom is deliberately omitted. The taisyklės in force are the redaction of
+# order Nr. 1V-664 (2024-11-08) of an order first issued on 2001-05-25, and the
+# three-letter + three-digit composition is older than both — it is carried over,
+# not introduced, and no act fixing it was traced. Either date as a cut-off would
+# wrongly reject plates that are still on the road.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 21.1 p. assigns this composition to categories M and N — cars, buses,
+  # trucks and vans, but NOT trailers (O, see LT_TRAILER) and not L-category
+  # vehicles. This is the one European ordinary series in the library whose own
+  # composition rules trailers out, so the inference is worth making.
+  #
+  # It stays CATEGORY_ONLY rather than DETERMINISTIC: M covers M1/M2/M3 and N
+  # covers N1/N2/N3, so the text separates "motor vehicle that is not a
+  # motorcycle or a trailer" from the rest and no further.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - VAN
+    - TRUCK
+    - BUS
+  evidence:
+    - type: PATTERN
+      value: "three letters + three digits (21.1 p., categories M and N)"
+segments:
+  # 21 p.: registration numbers are composed of the Latin alphabet and Arabic
+  # numerals, and numbers composed BY AUTOMATIC MEANS use "lietuvių kalbos
+  # abėcėlėje esančios lotyniškos raidės" — the Latin letters present in the
+  # Lithuanian alphabet. That alphabet has no Q, W or X, so those three are
+  # excluded here. (The wider "Latin alphabet" of the opening clause governs
+  # the chosen numbers of 21.10 p., which are not modelled — see below.)
+  #
+  # Y is NOT excluded: it is a letter of the Lithuanian alphabet.
+  - name: series
+    type: LETTERS
+    length: 3
+    excluded:
+      - Q
+      - W
+      - X
+  # 21.1 p. bounds the digits only by their count. Nothing in the taisyklės
+  # reserves a range or forbids a leading zero, so 000-999 is accepted; the
+  # allocation order is left to the AB "Regitra" procedure of 17 p., which
+  # governs reservation and assignment rather than form.
+  - name: number
+    type: DIGITS
+    length: 3
+formats:
+  national: "{series} {number}"
+  compact: "{series}{number}"
+# 1 priedas 1 p.: white retroreflective film, the EU distinguishing sign for
+# Lithuania, and a black letter/digit combination.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: LT-TAISYKLES
+    section: "16, 18, 19.1, 21, 21.1, 22, 25.1-25.2 p.; 1 priedas 1 p."
+  - id: LT-SEAKI
+    section: "10 str. 5 d. 2 p.; 27 str. 1 d."
+examples:
+  valid:
+    - "ABC 123"
+    - "AAA 000"
+    - "ZZZ 999"
+    - "KLM-456"
+  invalid:
+    - "AB 123"
+    - "ABCD 123"
+    - "ABC 12"
+    - "ABC 1234"
+    - "AQC 123"
+    - "AWC 123"
+    - "AXC 123"
+    - "123 ABC"

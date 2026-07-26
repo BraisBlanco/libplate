@@ -1,0 +1,56 @@
+schemaVersion: 1
+id: LT_HISTORIC_L
+country: LT
+name: Istorinės transporto priemonės numerio ženklas — L kategorijos (keturi skaitmenys + H)
+registrationType: HISTORICAL
+# validFrom omitted — see LT_ELECTRIC.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 21.6.2 p. says "L kategorijų" without narrowing, so every L subcategory is
+  # in scope — moped through heavy quadricycle.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - MOPED_OR_MOTOR_CYCLE
+    - MOTORCYCLE
+    - TRICYCLE
+    - QUADRICYCLE
+  evidence:
+    - type: PATTERN
+      value: "four digits + H (21.6.2 p., historic L categories)"
+segments:
+  # 21.6.2 p.: one letter and four digits, and this time the H goes LAST —
+  # "sudarant registracijos numerį paskutinė turi būti „H“ raidė". The mirrored
+  # position is what keeps this scheme apart from LT_HISTORIC.
+  - name: number
+    type: DIGITS
+    length: 4
+  - name: suffix
+    type: LITERAL
+    value: "H"
+formats:
+  national: "{number} {suffix}"
+  compact: "{number}{suffix}"
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: LT-TAISYKLES
+    section: "19.6, 21, 21.6.2 p.; 1 priedas 1 p."
+  - id: LT-SEAKI
+    section: "10 str. 5 d. 2 p."
+examples:
+  valid:
+    - "1234 H"
+    - "0000 H"
+    - "9999 H"
+    - "5678H"
+  invalid:
+    - "123 H"
+    - "12345 H"
+    - "1234 T"
+    - "H 1234"
+    - "1234 HH"

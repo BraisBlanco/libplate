@@ -1,0 +1,63 @@
+schemaVersion: 1
+id: LT_MOTORCYCLE
+country: LT
+name: Bendrojo naudojimo numerio ženklas — L3-L7e kategorijos, motociklai (123 AB)
+registrationType: ORDINARY
+# validFrom omitted — see LT_ORDINARY.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 21.5 p.: categories L3, L3e, L4, L4e (motorcycles, with or without a
+  # sidecar), L5, L5e (motor tricycles) and L7e (heavy quadricycles). The digits
+  # come first, which is what separates this from LT_MOPED's 21.4 p. shape.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - MOTORCYCLE
+    - TRICYCLE
+    - QUADRICYCLE
+  evidence:
+    - type: PATTERN
+      value: "three digits + two letters (21.5 p., categories L3-L5e and L7e)"
+segments:
+  - name: number
+    type: DIGITS
+    length: 3
+  # 21 p.: Latin letters of the Lithuanian alphabet — no Q, W or X.
+  - name: series
+    type: LETTERS
+    length: 2
+    excluded:
+      - Q
+      - W
+      - X
+formats:
+  national: "{number} {series}"
+  compact: "{number}{series}"
+# 1 priedas 1 p.: white film, EU sign, black characters. 25.3/25.5 p. put these
+# vehicles on the 3rd or 5th plate format — a size, not a different content.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: LT-TAISYKLES
+    section: "19.1, 21, 21.5, 22, 25.3, 25.5 p.; 1 priedas 1 p."
+  - id: LT-SEAKI
+    section: "10 str. 5 d. 2 p."
+examples:
+  valid:
+    - "123 AB"
+    - "000 AA"
+    - "999 ZZ"
+    - "456-KL"
+  invalid:
+    - "12 AB"
+    - "1234 AB"
+    - "123 A"
+    - "123 ABC"
+    - "123 AQ"
+    - "123 AW"
+    - "123 AX"
+    - "AB 123"

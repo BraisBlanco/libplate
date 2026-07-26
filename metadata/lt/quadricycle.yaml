@@ -1,0 +1,66 @@
+schemaVersion: 1
+id: LT_QUADRICYCLE
+country: LT
+name: Galingojo keturračio numerio ženklas (AB 12)
+registrationType: SPECIAL
+# validFrom omitted — see LT_ELECTRIC.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 19.5 p. and 21.11 p. reserve this composition for "galingieji keturračiai"
+  # — powerful quadricycles, which Lithuania registers outside the L-category
+  # scheme with their own registration certificate. Nothing else takes the
+  # shape, so the category follows from the text.
+  level: DETERMINISTIC
+  category: QUADRICYCLE
+  evidence:
+    - type: PATTERN
+      value: "two letters + two digits (21.11 p., galingasis keturratis)"
+segments:
+  # 21.11 p.: "dviejų raidžių ir dviejų skaitmenų derinys". Four characters is
+  # the shortest Lithuanian composition and no other scheme is that short.
+  #
+  # 21 p. alphabet rule — no Q, W or X. See LT_ORDINARY.
+  - name: series
+    type: LETTERS
+    length: 2
+    excluded:
+      - Q
+      - W
+      - X
+  - name: number
+    type: DIGITS
+    length: 2
+formats:
+  national: "{series} {number}"
+  compact: "{series}{number}"
+# 1 priedas 2 p. is the only entry that omits the EU distinguishing sign: white
+# retroreflective film and black characters, no EU field (these vehicles are not
+# meant for international traffic). `visual` has no field for the EU band, so
+# that difference is documented here rather than reported.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: LT-TAISYKLES
+    section: "19.5, 21, 21.11, 22, 25.3 p.; 1 priedas 2 p."
+  - id: LT-SEAKI
+    section: "10 str. 5 d. 2 p."
+examples:
+  valid:
+    - "AB 12"
+    - "AA 00"
+    - "ZZ 99"
+    - "KL-34"
+  invalid:
+    - "ABC 12"
+    - "A 12"
+    - "AB 1"
+    - "AB 123"
+    - "AQ 12"
+    - "AW 12"
+    - "AX 12"
+    - "12 AB"

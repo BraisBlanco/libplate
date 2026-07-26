@@ -1,0 +1,69 @@
+schemaVersion: 1
+id: LT_EXPORT
+country: LT
+name: Iš Lietuvos Respublikos išvežamos transporto priemonės numerio ženklas — M, N ir O kategorijos (1234 AB)
+registrationType: EXPORT
+# validFrom omitted — see LT_ELECTRIC.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 21.9.1 p. reads "M ir N ir O kategorijų", so a car, van, truck, bus AND a
+  # trailer or semitrailer all share this composition on export — unlike the
+  # ordinary series, where 21.1 and 21.3 p. keep O apart.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - VAN
+    - TRUCK
+    - BUS
+    - TRAILER_OR_SEMITRAILER
+  evidence:
+    - type: PATTERN
+      value: "four digits + two letters (21.9.1 p., M, N and O categories being taken out of Lithuania)"
+segments:
+  # 21.9.1 p.: "keturių skaitmenų ir dviejų raidžių derinys".
+  - name: number
+    type: DIGITS
+    length: 4
+  # 21 p. alphabet rule — no Q, W or X. See LT_ORDINARY.
+  - name: series
+    type: LETTERS
+    length: 2
+    excluded:
+      - Q
+      - W
+      - X
+formats:
+  national: "{number} {series}"
+  compact: "{number}{series}"
+# 1 priedas 3 p.: white retroreflective film and the EU sign like an ordinary
+# plate, but a RED letter/digit combination. 19.4 p. scopes the type to
+# temporarily registered vehicles being taken out of Lithuania that hold no
+# valid registration or traffic permit here or abroad, and 27 str. 2 d. 4 p. of
+# LT-SEAKI caps that registration at one month.
+visual:
+  background: WHITE
+  foreground: RED
+sources:
+  - id: LT-TAISYKLES
+    section: "19.4, 21, 21.9, 21.9.1 p.; 1 priedas 3 p."
+  - id: LT-SEAKI
+    section: "10 str. 5 d. 2 p.; 27 str. 2 d. 4 p."
+examples:
+  valid:
+    - "1234 AB"
+    - "0000 AA"
+    - "9999 ZZ"
+    - "5678-KL"
+  invalid:
+    - "123 AB"
+    - "12345 AB"
+    - "1234 A"
+    - "1234 ABC"
+    - "1234 AQ"
+    - "1234 AW"
+    - "1234 AX"
+    - "AB 1234"

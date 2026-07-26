@@ -1,0 +1,74 @@
+schemaVersion: 1
+id: LT_EXPORT_L
+country: LT
+name: Iš Lietuvos Respublikos išvežamos transporto priemonės numerio ženklas — L kategorijos (1234 A)
+registrationType: EXPORT
+# validFrom omitted — see LT_ELECTRIC.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 21.9.2 p. says "L kategorijų" without narrowing.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - MOPED_OR_MOTOR_CYCLE
+    - MOTORCYCLE
+    - TRICYCLE
+    - QUADRICYCLE
+  evidence:
+    - type: PATTERN
+      value: "four digits + one letter (21.9.2 p., L categories being taken out of Lithuania)"
+segments:
+  # 21.9.2 p.: "keturių skaitmenų ir vienos raidės derinys".
+  - name: number
+    type: DIGITS
+    length: 4
+  # Two exclusions with different standing, and the difference matters.
+  #
+  # Q, W and X come straight from the 21 p. alphabet rule, as everywhere else.
+  #
+  # H does NOT. 21.9.2 p. puts no restriction on the letter, but 21.6.2 p.
+  # reserves four digits + a final H for historic L-category vehicles, and 21 p.
+  # requires every registration number to be unique. Keeping H here would make
+  # the whole of LT_HISTORIC_L a strict subset of this scheme, so every historic
+  # motorcycle number would come back AMBIGUOUS against an export reading that
+  # cannot lawfully be issued. Withholding it is an inference from the
+  # reservation rather than an explicit prohibition — the same call, on the same
+  # grounds, as withholding TX from the Hungarian opening-pair table.
+  - name: series
+    type: LETTERS
+    length: 1
+    excluded:
+      - H
+      - Q
+      - W
+      - X
+formats:
+  national: "{number} {series}"
+  compact: "{number}{series}"
+# 1 priedas 3 p.: white film, EU sign, RED characters.
+visual:
+  background: WHITE
+  foreground: RED
+sources:
+  - id: LT-TAISYKLES
+    section: "19.4, 21, 21.6.2, 21.9, 21.9.2 p.; 1 priedas 3 p."
+  - id: LT-SEAKI
+    section: "10 str. 5 d. 2 p.; 27 str. 2 d. 4 p."
+examples:
+  valid:
+    - "1234 A"
+    - "0000 A"
+    - "9999 Z"
+    - "5678K"
+  invalid:
+    - "123 A"
+    - "12345 A"
+    - "1234 AB"
+    - "1234 H"
+    - "1234 Q"
+    - "1234 W"
+    - "1234 X"
+    - "A 1234"

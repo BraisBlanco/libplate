@@ -1,0 +1,62 @@
+schemaVersion: 1
+id: LT_DIPLOMATIC_L_O
+country: LT
+name: Diplomatinis numerio ženklas — L ir O kategorijos (penki skaitmenys)
+registrationType: DIPLOMATIC
+# Flagged legacySeries for the same reason as LT_DIPLOMATIC: five bare digits
+# are structureless, so the scheme is kept out of country-less detection and
+# reached with a `country: "LT"` hint.
+legacySeries: true
+# validFrom omitted — see LT_ELECTRIC. On why one DIPLOMATIC regime covers
+# missions, consulates and international organizations alike, see
+# LT_DIPLOMATIC.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 21.8.2 p. covers "L ir O kategorijos" together — a mission's motorcycle,
+  # moped or quadricycle and its trailer share one composition, so the text
+  # cannot tell a towed vehicle from a two-wheeler here. That is why the
+  # trailer inference LT_TRAILER makes deterministically is only one
+  # possibility among several on this scheme.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - MOPED_OR_MOTOR_CYCLE
+    - MOTORCYCLE
+    - TRICYCLE
+    - QUADRICYCLE
+    - TRAILER_OR_SEMITRAILER
+  evidence:
+    - type: PATTERN
+      value: "five digits (21.8.2 p., mission-held L and O categories)"
+segments:
+  # 21.8.2 p.: "penkių skaitmenų derinys". Width-checked only, for the reason
+  # given in LT_DIPLOMATIC.
+  - name: number
+    type: DIGITS
+    length: 5
+formats:
+  national: "{number}"
+  compact: "{number}"
+# 1 priedas 4 p.: green material, white digits.
+visual:
+  background: GREEN
+  foreground: WHITE
+sources:
+  - id: LT-TAISYKLES
+    section: "17, 19.3, 21, 21.8, 21.8.2 p.; 1 priedas 4 p., 6 p."
+  - id: LT-SEAKI
+    section: "10 str. 5 d. 2 p."
+examples:
+  valid:
+    - "12345"
+    - "00000"
+    - "99999"
+    - "01 234"
+  invalid:
+    - "1234"
+    - "123456"
+    - "1234A"
+    - "A1234"

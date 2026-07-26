@@ -1,0 +1,55 @@
+schemaVersion: 1
+id: LT_TAXI
+country: LT
+name: Lengvojo automobilio taksi numerio ženklas (T + penki skaitmenys)
+registrationType: SPECIAL
+# validFrom omitted — see LT_ELECTRIC on why no date in these rules can be
+# traced from the consolidated text.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 21.7 p. gives this composition to "lengvieji automobiliai taksi" and to
+  # nothing else. A lengvasis automobilis IS a passenger car, so unlike most
+  # taxi schemes in the library the category follows from the text alone.
+  level: DETERMINISTIC
+  category: PASSENGER_CAR
+  evidence:
+    - type: PREFIX
+      value: "T (21.7 p., lengvasis automobilis taksi)"
+segments:
+  # 21.7 p.: one letter and five digits, "pirmoji turi būti „T“ raidė".
+  - name: prefix
+    type: LITERAL
+    value: "T"
+  - name: number
+    type: DIGITS
+    length: 5
+formats:
+  national: "{prefix} {number}"
+  compact: "{prefix}{number}"
+# 1 priedas 1 p. groups taxi plates with the ordinary ones — white film, EU
+# sign, black characters. The yellow taxi plate is the pre-2015 design and is
+# not what the rules in force prescribe, so it is not asserted here.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: LT-TAISYKLES
+    section: "19.2, 21, 21.7 p.; 1 priedas 1 p."
+  - id: LT-SEAKI
+    section: "10 str. 5 d. 2 p."
+examples:
+  valid:
+    - "T 01244"
+    - "T 00000"
+    - "T 99999"
+    - "T12345"
+  invalid:
+    - "T 1234"
+    - "T 123456"
+    - "H 12345"
+    - "TT 1234"
+    - "12345 T"

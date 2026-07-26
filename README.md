@@ -14,28 +14,29 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 
 ### Supported countries
 
-**18 countries, 142 schemes.** Each row links to its plate-type table below.
+**19 countries, 155 schemes.** Each row links to its plate-type table below.
 
-| Country                         | Schemes | Coverage                                                                                                   |
-| ------------------------------- | ------: | ---------------------------------------------------------------------------------------------------------- |
-| [🇪🇸 Spain](#-spain)             |      15 | Ordinary; `R`/`E`/`C`/`H`/`T`/`P`/`S`/`V` prefixes; diplomatic `CD`/`CC`/`OI`/`TA`; two provincial systems |
-| [🇵🇹 Portugal](#-portugal)       |       8 | Current series + three historical generations; trailers, export, industrial machines                       |
-| [🇫🇷 France](#-france)           |      10 | SIV, `WW`, `W` garage, pre-2015 mopeds, FNI métropole and DOM, diplomatic `CMD`/`CD`/`C`/`K`               |
-| [🇮🇹 Italy](#-italy)             |       7 | Ordinary, motorcycles, mopeds, agricultural and operating machines, `EE`, targa prova                      |
-| [🇩🇪 Germany](#-germany)         |       3 | Standard, Oldtimer `H`, electric `E` — all against the official KBA district table                         |
-| [🇧🇪 Belgium](#-belgium)         |      15 | Standard; `O`/`Q`/`T`/`M`/`S`/`G` letter-index categories; `Z`/`Y`/`V`, `W`/`X`, `CD`; two pre-2010 series |
-| [🇳🇱 Netherlands](#-netherlands) |      12 | Sidecodes 1-12                                                                                             |
-| [🇵🇱 Poland](#-poland)           |      10 | Ordinary car/motorcycle/powiat, reduced, historic, temporary, diplomatic, individual, professional         |
-| [🇦🇹 Austria](#-austria)         |       7 | Standard, Wunschkennzeichen, diplomatic; federal `A`, Land, authority-area and fire-brigade series         |
-| [🇪🇪 Estonia](#-estonia)         |       9 | Standard and reduced, motorcycle, moped, tractor, veteran, `CD`/`CMD`, `PROOV` dealer marks                |
-| [🇷🇴 Romania](#-romania)         |       3 | The ordinary county and Bucharest series; provisional and `PROBE` numbers                                  |
-| [🇧🇬 Bulgaria](#-bulgaria)       |       6 | Ordinary, third plate, transit and trader temporary numbers, each with its category-L variant              |
-| [🇸🇪 Sweden](#-sweden)           |       3 | Ordinary series, the 2019 letter-suffix format, diplomatic plates                                          |
-| [🇫🇮 Finland](#-finland)         |       6 | Ordinary, L-class/tractor marks, `CD` and `C` mission plates, export, `KOE` test plates                    |
-| [🇩🇰 Denmark](#-denmark)         |       4 | The national series, diplomatic `76.000-77.999`, faste prøveskilte, `RF` airport plates                    |
-| [🇨🇿 Czechia](#-czechia)         |       9 | The standard 5-8 character mark, `CD`/`XX`/`XS`/`HC`, `EL` electric, historic `V`, sports `R`, test `F`    |
-| [🇸🇮 Slovenia](#-slovenia)       |       6 | The four ordinary arrangements behind an area code, `MV` historic, `PR` test plates                        |
-| [🇭🇺 Hungary](#-hungary)         |       9 | The 2022 four-letter series and the 1990 three-letter one; `CD`, `OT`, `TX`, state bodies, `I` temporary   |
+| Country                         | Schemes | Coverage                                                                                                                  |
+| ------------------------------- | ------: | ------------------------------------------------------------------------------------------------------------------------- |
+| [🇪🇸 Spain](#-spain)             |      15 | Ordinary; `R`/`E`/`C`/`H`/`T`/`P`/`S`/`V` prefixes; diplomatic `CD`/`CC`/`OI`/`TA`; two provincial systems                |
+| [🇵🇹 Portugal](#-portugal)       |       8 | Current series + three historical generations; trailers, export, industrial machines                                      |
+| [🇫🇷 France](#-france)           |      10 | SIV, `WW`, `W` garage, pre-2015 mopeds, FNI métropole and DOM, diplomatic `CMD`/`CD`/`C`/`K`                              |
+| [🇮🇹 Italy](#-italy)             |       7 | Ordinary, motorcycles, mopeds, agricultural and operating machines, `EE`, targa prova                                     |
+| [🇩🇪 Germany](#-germany)         |       3 | Standard, Oldtimer `H`, electric `E` — all against the official KBA district table                                        |
+| [🇧🇪 Belgium](#-belgium)         |      15 | Standard; `O`/`Q`/`T`/`M`/`S`/`G` letter-index categories; `Z`/`Y`/`V`, `W`/`X`, `CD`; two pre-2010 series                |
+| [🇳🇱 Netherlands](#-netherlands) |      12 | Sidecodes 1-12                                                                                                            |
+| [🇵🇱 Poland](#-poland)           |      10 | Ordinary car/motorcycle/powiat, reduced, historic, temporary, diplomatic, individual, professional                        |
+| [🇦🇹 Austria](#-austria)         |       7 | Standard, Wunschkennzeichen, diplomatic; federal `A`, Land, authority-area and fire-brigade series                        |
+| [🇪🇪 Estonia](#-estonia)         |       9 | Standard and reduced, motorcycle, moped, tractor, veteran, `CD`/`CMD`, `PROOV` dealer marks                               |
+| [🇷🇴 Romania](#-romania)         |       3 | The ordinary county and Bucharest series; provisional and `PROBE` numbers                                                 |
+| [🇧🇬 Bulgaria](#-bulgaria)       |       6 | Ordinary, third plate, transit and trader temporary numbers, each with its category-L variant                             |
+| [🇸🇪 Sweden](#-sweden)           |       3 | Ordinary series, the 2019 letter-suffix format, diplomatic plates                                                         |
+| [🇫🇮 Finland](#-finland)         |       6 | Ordinary, L-class/tractor marks, `CD` and `C` mission plates, export, `KOE` test plates                                   |
+| [🇩🇰 Denmark](#-denmark)         |       4 | The national series, diplomatic `76.000-77.999`, faste prøveskilte, `RF` airport plates                                   |
+| [🇨🇿 Czechia](#-czechia)         |       9 | The standard 5-8 character mark, `CD`/`XX`/`XS`/`HC`, `EL` electric, historic `V`, sports `R`, test `F`                   |
+| [🇸🇮 Slovenia](#-slovenia)       |       6 | The four ordinary arrangements behind an area code, `MV` historic, `PR` test plates                                       |
+| [🇭🇺 Hungary](#-hungary)         |       9 | The 2022 four-letter series and the 1990 three-letter one; `CD`, `OT`, `TX`, state bodies, `I` temporary                  |
+| [🇱🇹 Lithuania](#-lithuania)     |      13 | A composition per vehicle category — cars, trailers, motorcycles, mopeds; `E`, `T`, `H`, export, diplomatic, quadricycles |
 
 Countries not yet modelled, and the series still missing inside those above, are
 listed under [Not yet modelled](#not-yet-modelled).
@@ -470,6 +471,56 @@ The year field of the temporary plates and the coat of arms are separate fields,
 not characters. Individually produced plates (3-6 letters + 1-4 digits, seven
 characters together) are not modelled: their space contains the current series.
 
+#### 🇱🇹 Lithuania
+
+| Type                                | Example   | Notes                                          |
+| ----------------------------------- | --------- | ---------------------------------------------- |
+| Ordinary — M, N                     | `ABC 123` | Cars, vans, trucks, buses — **never trailers** |
+| Trailers, semitrailers — O          | `AB 123`  | Deterministic towed-vehicle category           |
+| Motorcycles — L3-L7e                | `123 AB`  | Digits first                                   |
+| Mopeds, light quadricycles — L1-L6e | `12 ABC`  | Two digits, then three letters                 |
+| Electromobiles (`E`)                | `EV 1234` | M1/N1 electric or plug-in hybrid, on request   |
+| Taxi (`T`)                          | `T 01244` | Deterministic passenger car                    |
+| Historic — M, N (`H` first)         | `H 12345` | Historical-vehicle regime                      |
+| Historic — L (`H` last)             | `1234 H`  | The same letter, mirrored                      |
+| Export — M, N, O                    | `1234 AB` | **Red** characters on white                    |
+| Export — L                          | `1234 A`  | `H` withheld; see below                        |
+| Diplomatic — M, N                   | `123456`  | White on green; opt-in in detection            |
+| Diplomatic — L, O                   | `12345`   | White on green; opt-in in detection            |
+| Powerful quadricycles               | `AB 12`   | White and black, no EU field                   |
+
+Lithuania is the cleanest source in this library: **point 21** of the
+registration rules approved by order Nr. 260 enumerates the letter/digit
+arrangement for every vehicle category exhaustively, so nothing has to lean on a
+drawing, a state standard or agency practice. That makes it the one country here
+whose _ordinary_ series rules trailers out — 21.1 p. gives `LLL NNN` to
+categories M and N, and category O gets its own `LL NNN` — so a Lithuanian
+trailer or semitrailer is identifiable from the plate text alone. Three other
+countries allow that, but each needs a marker the ordinary series does not carry
+— the Belgian letter index, the Spanish `R` and the Portuguese service code.
+Lithuania is the only one where the plain civilian number does it.
+
+The letter exclusions are regulation-level rather than practice-level for once:
+21 p. says automatically composed numbers use "the Latin letters present in the
+Lithuanian alphabet", and that alphabet has no `Q`, `W` or `X`. `Y` is in it and
+is accepted.
+
+Two judgement calls. `H` is withheld from the single-letter export number of
+21.9.2 p.: the text does not restrict that letter, but 21.6.2 p. reserves four
+digits + a final `H` for historic L-category vehicles and 21 p. requires numbers
+to be unique, so keeping it would make the whole historic series a subset of the
+export one. And both diplomatic schemes are `legacySeries`-flagged — not because
+they are legacy but because bare digits carry no anchor, and nothing else in the
+library matches five or six of them, so every such string would otherwise
+resolve as a Lithuanian diplomatic plate. Pass `{ country: "LT" }` and they
+behave normally.
+
+The chosen numbers of 21.10 p. (1-6 characters for M/N, 1-5 for L3-L7e and O,
+digits or digits and letters) are not modelled: that space contains the ordinary
+series. Neither are the temporary `P` marks of the 1994 order — it was **repealed
+in 2008**, and short-term movement now runs on a one-day permit that carries no
+plate.
+
 ### Not yet modelled
 
 Spanish state/military bodies; Portuguese diplomatic/military series and the
@@ -513,7 +564,10 @@ regulations); Hungarian individually produced plates (3-6 letters + 1-4 digits
 special series and `Z`/`P`/`E`/`V`/`M`/`SP` temporary letters (no longer
 issuable since 2022-07-01), four-wheeled moped plates and the slow-vehicle,
 environment-friendly and bike-carrier plates (colour variants of a number formed
-the same way).
+the same way); Lithuanian chosen numbers (21.10 p. — 1-6 or 1-5 characters,
+digits or digits and letters, a space that contains the ordinary series) and the
+`P` trade marks and cardboard border marks of the 1994 temporary-plate order,
+which was repealed on 2008-10-15.
 
 ## Install
 

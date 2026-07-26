@@ -1,0 +1,78 @@
+schemaVersion: 1
+id: LT_ELECTRIC
+country: LT
+name: Elektromobilio numerio ženklas (E + raidė + keturi skaitmenys, EV 1234)
+registrationType: ORDINARY
+# 19.7 p. says this type is issued INSTEAD of the ordinary type when the
+# applicant asks for it, so the regime is an ordinary permanent registration and
+# only the plate type differs — same reading as CZ_ELECTRIC.
+#
+# validFrom omitted. The series is widely reported to have opened on 2016-07-01
+# and amendment Nr. 1V-415 (2016-06-07) is the plausible act, but the taisyklės
+# were wholly re-issued by the redaction of Nr. 1V-664 (2024-11-08), so the
+# consolidated text carries no annotation on 21.2 p. and the introducing order
+# could not be retrieved to confirm it. Do not fill this in from press coverage.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 19.7 p. restricts the type to M1 or N1 battery-electric vehicles and M1 or
+  # N1 plug-in hybrids — so a passenger car or a light van, never a truck, bus,
+  # trailer or motorcycle.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - VAN
+  evidence:
+    - type: PREFIX
+      value: "E (21.2 p., M1/N1 electric or plug-in hybrid)"
+segments:
+  # 21.2 p.: two letters and four digits, "pirmoji turi būti „E“ raidė".
+  - name: prefix
+    type: LITERAL
+    value: "E"
+  # The second letter is unrestricted by the taisyklės beyond the 21 p. alphabet
+  # rule (no Q, W or X). Only the EV, EA…EF groups have been issued so far, but
+  # that is Regitra's allocation order under 17 p., not a rule — do not narrow
+  # this to a charset on the strength of observed plates.
+  - name: series
+    type: LETTERS
+    length: 1
+    excluded:
+      - Q
+      - W
+      - X
+  - name: number
+    type: DIGITS
+    length: 4
+formats:
+  national: "{prefix}{series} {number}"
+  compact: "{prefix}{series}{number}"
+# 1 priedas 1 p. lists electromobile plates with the ordinary ones: white
+# retroreflective film, the EU sign, black characters. The green plate some
+# other countries use for EVs is not Lithuania's choice.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: LT-TAISYKLES
+    section: "19.7, 21, 21.2 p.; 1 priedas 1 p."
+  - id: LT-SEAKI
+    section: "10 str. 5 d. 2 p."
+examples:
+  valid:
+    - "EV 1234"
+    - "EA 0000"
+    - "EZ 9999"
+    - "EB-5678"
+  invalid:
+    - "AV 1234"
+    - "EV 123"
+    - "EV 12345"
+    - "E 1234"
+    - "EQ 1234"
+    - "EW 1234"
+    - "EX 1234"
+    - "1234 EV"

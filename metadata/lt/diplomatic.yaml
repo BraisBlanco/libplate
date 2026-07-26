@@ -1,0 +1,75 @@
+schemaVersion: 1
+id: LT_DIPLOMATIC
+country: LT
+name: Diplomatinis numerio ženklas — M ir N kategorijos (šeši skaitmenys)
+registrationType: DIPLOMATIC
+# Flagged legacySeries, and NOT because it is legacy — this is the CZ_ORDINARY
+# use of the flag, which exists to keep structureless spaces out of country-less
+# detection. Six bare digits carry no anchor at all: without the flag every
+# six-digit string on earth would come back VALID as a Lithuanian diplomatic
+# plate, since nothing else in the library matches bare digits of that width.
+# With a `country: "LT"` hint the scheme behaves normally.
+legacySeries: true
+# validFrom omitted — see LT_ELECTRIC.
+#
+# The regime is one, not three. 17 p. and 19.3 p. put foreign diplomatic
+# missions, consular posts, representations of international organizations and
+# EU/NATO institutions, and the accredited staff holding an "A" or "B" category
+# certificate, all under a single "atstovybės" heading with a single plate type,
+# so there is no separate CONSULAR or INTERNATIONAL_ORGANIZATION scheme to
+# model — DIPLOMATIC covers the lot.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 21.8.1 p. is the M and N branch; L and O vehicles of the same holders take
+  # five digits (LT_DIPLOMATIC_L_O).
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - VAN
+    - TRUCK
+    - BUS
+  evidence:
+    - type: PATTERN
+      value: "six digits (21.8.1 p., mission-held M and N categories)"
+segments:
+  # 21.8.1 p.: "šešių skaitmenų derinys" — six digits and nothing else. The
+  # SEMANTICS of the groups (a mission code, a vehicle category digit) are
+  # assigned under a joint order of the foreign-affairs and interior ministers
+  # (17 p., 21.8 p.) and no public assignment table exists, so the number is
+  # width-checked only — the same trade-off as the ES diplomatic prefixes and
+  # the SE diplomatic country codes. Do not split it into groups on the strength
+  # of unofficial descriptions.
+  #
+  # Nothing bounds the range, so 000000-999999 is accepted.
+  - name: number
+    type: DIGITS
+    length: 6
+formats:
+  national: "{number}"
+  compact: "{number}"
+# 1 priedas 4 p. (as amended by Nr. 1V-252, 2018-03-30): green retroreflective
+# material with a white digit combination — a genuinely distinct plate, not a
+# colour variant of the ordinary one.
+visual:
+  background: GREEN
+  foreground: WHITE
+sources:
+  - id: LT-TAISYKLES
+    section: "17, 19.3, 21, 21.8, 21.8.1 p.; 1 priedas 4 p., 6 p."
+  - id: LT-SEAKI
+    section: "10 str. 5 d. 2 p."
+examples:
+  valid:
+    - "123456"
+    - "000000"
+    - "999999"
+    - "013 123"
+  invalid:
+    - "12345"
+    - "1234567"
+    - "12345A"
+    - "A12345"

@@ -3,7 +3,7 @@
 import type { MetadataBundle } from "../metadata/types.js";
 
 export const METADATA: MetadataBundle = {
-  "metadataVersion": "2026.07.12",
+  "metadataVersion": "2026.07.13",
   "tables": {
     "at-behoerden": [
       "AM",
@@ -9405,6 +9405,1021 @@ export const METADATA: MetadataBundle = {
           "A1 X 23B45",
           "A1 P 23B4",
           "AI P 23B45"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "LT_DIPLOMATIC",
+      "country": "LT",
+      "name": "Diplomatinis numerio ženklas — M ir N kategorijos (šeši skaitmenys)",
+      "registrationType": "DIPLOMATIC",
+      "legacySeries": true,
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "VAN",
+          "TRUCK",
+          "BUS"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "six digits (21.8.1 p., mission-held M and N categories)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 6
+        }
+      ],
+      "formats": {
+        "national": "{number}",
+        "compact": "{number}"
+      },
+      "visual": {
+        "background": "GREEN",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "LT-TAISYKLES",
+          "section": "17, 19.3, 21, 21.8, 21.8.1 p.; 1 priedas 4 p., 6 p."
+        },
+        {
+          "id": "LT-SEAKI",
+          "section": "10 str. 5 d. 2 p."
+        }
+      ],
+      "examples": {
+        "valid": [
+          "123456",
+          "000000",
+          "999999",
+          "013 123"
+        ],
+        "invalid": [
+          "12345",
+          "1234567",
+          "12345A",
+          "A12345"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "LT_DIPLOMATIC_L_O",
+      "country": "LT",
+      "name": "Diplomatinis numerio ženklas — L ir O kategorijos (penki skaitmenys)",
+      "registrationType": "DIPLOMATIC",
+      "legacySeries": true,
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "MOPED_OR_MOTOR_CYCLE",
+          "MOTORCYCLE",
+          "TRICYCLE",
+          "QUADRICYCLE",
+          "TRAILER_OR_SEMITRAILER"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "five digits (21.8.2 p., mission-held L and O categories)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 5
+        }
+      ],
+      "formats": {
+        "national": "{number}",
+        "compact": "{number}"
+      },
+      "visual": {
+        "background": "GREEN",
+        "foreground": "WHITE"
+      },
+      "sources": [
+        {
+          "id": "LT-TAISYKLES",
+          "section": "17, 19.3, 21, 21.8, 21.8.2 p.; 1 priedas 4 p., 6 p."
+        },
+        {
+          "id": "LT-SEAKI",
+          "section": "10 str. 5 d. 2 p."
+        }
+      ],
+      "examples": {
+        "valid": [
+          "12345",
+          "00000",
+          "99999",
+          "01 234"
+        ],
+        "invalid": [
+          "1234",
+          "123456",
+          "1234A",
+          "A1234"
+        ]
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "LT_ELECTRIC",
+      "country": "LT",
+      "name": "Elektromobilio numerio ženklas (E + raidė + keturi skaitmenys, EV 1234)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "VAN"
+        ],
+        "evidence": [
+          {
+            "type": "PREFIX",
+            "value": "E (21.2 p., M1/N1 electric or plug-in hybrid)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "E"
+        },
+        {
+          "name": "series",
+          "type": "LETTERS",
+          "length": 1,
+          "excluded": [
+            "Q",
+            "W",
+            "X"
+          ]
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 4
+        }
+      ],
+      "formats": {
+        "national": "{prefix}{series} {number}",
+        "compact": "{prefix}{series}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "LT-TAISYKLES",
+          "section": "19.7, 21, 21.2 p.; 1 priedas 1 p."
+        },
+        {
+          "id": "LT-SEAKI",
+          "section": "10 str. 5 d. 2 p."
+        }
+      ],
+      "examples": {
+        "valid": [
+          "EV 1234",
+          "EA 0000",
+          "EZ 9999",
+          "EB-5678"
+        ],
+        "invalid": [
+          "AV 1234",
+          "EV 123",
+          "EV 12345",
+          "E 1234",
+          "EQ 1234",
+          "EW 1234",
+          "EX 1234",
+          "1234 EV"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "LT_EXPORT",
+      "country": "LT",
+      "name": "Iš Lietuvos Respublikos išvežamos transporto priemonės numerio ženklas — M, N ir O kategorijos (1234 AB)",
+      "registrationType": "EXPORT",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "VAN",
+          "TRUCK",
+          "BUS",
+          "TRAILER_OR_SEMITRAILER"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "four digits + two letters (21.9.1 p., M, N and O categories being taken out of Lithuania)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 4
+        },
+        {
+          "name": "series",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "Q",
+            "W",
+            "X"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{number} {series}",
+        "compact": "{number}{series}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "RED"
+      },
+      "sources": [
+        {
+          "id": "LT-TAISYKLES",
+          "section": "19.4, 21, 21.9, 21.9.1 p.; 1 priedas 3 p."
+        },
+        {
+          "id": "LT-SEAKI",
+          "section": "10 str. 5 d. 2 p.; 27 str. 2 d. 4 p."
+        }
+      ],
+      "examples": {
+        "valid": [
+          "1234 AB",
+          "0000 AA",
+          "9999 ZZ",
+          "5678-KL"
+        ],
+        "invalid": [
+          "123 AB",
+          "12345 AB",
+          "1234 A",
+          "1234 ABC",
+          "1234 AQ",
+          "1234 AW",
+          "1234 AX",
+          "AB 1234"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "LT_EXPORT_L",
+      "country": "LT",
+      "name": "Iš Lietuvos Respublikos išvežamos transporto priemonės numerio ženklas — L kategorijos (1234 A)",
+      "registrationType": "EXPORT",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "MOPED_OR_MOTOR_CYCLE",
+          "MOTORCYCLE",
+          "TRICYCLE",
+          "QUADRICYCLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "four digits + one letter (21.9.2 p., L categories being taken out of Lithuania)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 4
+        },
+        {
+          "name": "series",
+          "type": "LETTERS",
+          "length": 1,
+          "excluded": [
+            "H",
+            "Q",
+            "W",
+            "X"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{number} {series}",
+        "compact": "{number}{series}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "RED"
+      },
+      "sources": [
+        {
+          "id": "LT-TAISYKLES",
+          "section": "19.4, 21, 21.6.2, 21.9, 21.9.2 p.; 1 priedas 3 p."
+        },
+        {
+          "id": "LT-SEAKI",
+          "section": "10 str. 5 d. 2 p.; 27 str. 2 d. 4 p."
+        }
+      ],
+      "examples": {
+        "valid": [
+          "1234 A",
+          "0000 A",
+          "9999 Z",
+          "5678K"
+        ],
+        "invalid": [
+          "123 A",
+          "12345 A",
+          "1234 AB",
+          "1234 H",
+          "1234 Q",
+          "1234 W",
+          "1234 X",
+          "A 1234"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "LT_HISTORIC",
+      "country": "LT",
+      "name": "Istorinės transporto priemonės numerio ženklas — M ir N kategorijos (H + penki skaitmenys)",
+      "registrationType": "HISTORICAL",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "VAN",
+          "TRUCK",
+          "BUS"
+        ],
+        "evidence": [
+          {
+            "type": "PREFIX",
+            "value": "H (21.6.1 p., historic M and N categories)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "H"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 5
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {number}",
+        "compact": "{prefix}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "LT-TAISYKLES",
+          "section": "19.6, 21, 21.6.1 p.; 1 priedas 1 p."
+        },
+        {
+          "id": "LT-SEAKI",
+          "section": "10 str. 5 d. 2 p."
+        }
+      ],
+      "examples": {
+        "valid": [
+          "H 12345",
+          "H 00000",
+          "H 99999",
+          "H54321"
+        ],
+        "invalid": [
+          "H 1234",
+          "H 123456",
+          "T 12345",
+          "HH 1234",
+          "12345 H"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "LT_HISTORIC_L",
+      "country": "LT",
+      "name": "Istorinės transporto priemonės numerio ženklas — L kategorijos (keturi skaitmenys + H)",
+      "registrationType": "HISTORICAL",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "MOPED_OR_MOTOR_CYCLE",
+          "MOTORCYCLE",
+          "TRICYCLE",
+          "QUADRICYCLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "four digits + H (21.6.2 p., historic L categories)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 4
+        },
+        {
+          "name": "suffix",
+          "type": "LITERAL",
+          "value": "H"
+        }
+      ],
+      "formats": {
+        "national": "{number} {suffix}",
+        "compact": "{number}{suffix}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "LT-TAISYKLES",
+          "section": "19.6, 21, 21.6.2 p.; 1 priedas 1 p."
+        },
+        {
+          "id": "LT-SEAKI",
+          "section": "10 str. 5 d. 2 p."
+        }
+      ],
+      "examples": {
+        "valid": [
+          "1234 H",
+          "0000 H",
+          "9999 H",
+          "5678H"
+        ],
+        "invalid": [
+          "123 H",
+          "12345 H",
+          "1234 T",
+          "H 1234",
+          "1234 HH"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "LT_MOPED",
+      "country": "LT",
+      "name": "Bendrojo naudojimo numerio ženklas — L1-L2e ir L6e kategorijos, mopedai (12 ABC)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "MOPED_OR_MOTOR_CYCLE",
+          "QUADRICYCLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "two digits + three letters (21.4 p., categories L1-L2e and L6e)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "series",
+          "type": "LETTERS",
+          "length": 3,
+          "excluded": [
+            "Q",
+            "W",
+            "X"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{number} {series}",
+        "compact": "{number}{series}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "LT-TAISYKLES",
+          "section": "19.1, 21, 21.4, 22, 25.4, 27 p.; 1 priedas 1 p."
+        },
+        {
+          "id": "LT-SEAKI",
+          "section": "10 str. 5 d. 2 p."
+        }
+      ],
+      "examples": {
+        "valid": [
+          "12 ABC",
+          "00 AAA",
+          "99 ZZZ",
+          "34-KLM"
+        ],
+        "invalid": [
+          "123 ABC",
+          "1 ABC",
+          "12 AB",
+          "12 ABCD",
+          "12 AQC",
+          "12 AWC",
+          "12 AXC",
+          "ABC 12"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "LT_MOTORCYCLE",
+      "country": "LT",
+      "name": "Bendrojo naudojimo numerio ženklas — L3-L7e kategorijos, motociklai (123 AB)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "MOTORCYCLE",
+          "TRICYCLE",
+          "QUADRICYCLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "three digits + two letters (21.5 p., categories L3-L5e and L7e)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        },
+        {
+          "name": "series",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "Q",
+            "W",
+            "X"
+          ]
+        }
+      ],
+      "formats": {
+        "national": "{number} {series}",
+        "compact": "{number}{series}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "LT-TAISYKLES",
+          "section": "19.1, 21, 21.5, 22, 25.3, 25.5 p.; 1 priedas 1 p."
+        },
+        {
+          "id": "LT-SEAKI",
+          "section": "10 str. 5 d. 2 p."
+        }
+      ],
+      "examples": {
+        "valid": [
+          "123 AB",
+          "000 AA",
+          "999 ZZ",
+          "456-KL"
+        ],
+        "invalid": [
+          "12 AB",
+          "1234 AB",
+          "123 A",
+          "123 ABC",
+          "123 AQ",
+          "123 AW",
+          "123 AX",
+          "AB 123"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "LT_ORDINARY",
+      "country": "LT",
+      "name": "Bendrojo naudojimo numerio ženklas — M ir N kategorijos (ABC 123)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "VAN",
+          "TRUCK",
+          "BUS"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "three letters + three digits (21.1 p., categories M and N)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "series",
+          "type": "LETTERS",
+          "length": 3,
+          "excluded": [
+            "Q",
+            "W",
+            "X"
+          ]
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{series} {number}",
+        "compact": "{series}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "LT-TAISYKLES",
+          "section": "16, 18, 19.1, 21, 21.1, 22, 25.1-25.2 p.; 1 priedas 1 p."
+        },
+        {
+          "id": "LT-SEAKI",
+          "section": "10 str. 5 d. 2 p.; 27 str. 1 d."
+        }
+      ],
+      "examples": {
+        "valid": [
+          "ABC 123",
+          "AAA 000",
+          "ZZZ 999",
+          "KLM-456"
+        ],
+        "invalid": [
+          "AB 123",
+          "ABCD 123",
+          "ABC 12",
+          "ABC 1234",
+          "AQC 123",
+          "AWC 123",
+          "AXC 123",
+          "123 ABC"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "LT_QUADRICYCLE",
+      "country": "LT",
+      "name": "Galingojo keturračio numerio ženklas (AB 12)",
+      "registrationType": "SPECIAL",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "DETERMINISTIC",
+        "category": "QUADRICYCLE",
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "two letters + two digits (21.11 p., galingasis keturratis)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "series",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "Q",
+            "W",
+            "X"
+          ]
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 2
+        }
+      ],
+      "formats": {
+        "national": "{series} {number}",
+        "compact": "{series}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "LT-TAISYKLES",
+          "section": "19.5, 21, 21.11, 22, 25.3 p.; 1 priedas 2 p."
+        },
+        {
+          "id": "LT-SEAKI",
+          "section": "10 str. 5 d. 2 p."
+        }
+      ],
+      "examples": {
+        "valid": [
+          "AB 12",
+          "AA 00",
+          "ZZ 99",
+          "KL-34"
+        ],
+        "invalid": [
+          "ABC 12",
+          "A 12",
+          "AB 1",
+          "AB 123",
+          "AQ 12",
+          "AW 12",
+          "AX 12",
+          "12 AB"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "LT_TAXI",
+      "country": "LT",
+      "name": "Lengvojo automobilio taksi numerio ženklas (T + penki skaitmenys)",
+      "registrationType": "SPECIAL",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "DETERMINISTIC",
+        "category": "PASSENGER_CAR",
+        "evidence": [
+          {
+            "type": "PREFIX",
+            "value": "T (21.7 p., lengvasis automobilis taksi)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "prefix",
+          "type": "LITERAL",
+          "value": "T"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 5
+        }
+      ],
+      "formats": {
+        "national": "{prefix} {number}",
+        "compact": "{prefix}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "LT-TAISYKLES",
+          "section": "19.2, 21, 21.7 p.; 1 priedas 1 p."
+        },
+        {
+          "id": "LT-SEAKI",
+          "section": "10 str. 5 d. 2 p."
+        }
+      ],
+      "examples": {
+        "valid": [
+          "T 01244",
+          "T 00000",
+          "T 99999",
+          "T12345"
+        ],
+        "invalid": [
+          "T 1234",
+          "T 123456",
+          "H 12345",
+          "TT 1234",
+          "12345 T"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "LT_TRAILER",
+      "country": "LT",
+      "name": "Bendrojo naudojimo numerio ženklas — O kategorija, priekabos ir puspriekabės (AB 123)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "DETERMINISTIC",
+        "category": "TRAILER_OR_SEMITRAILER",
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "two letters + three digits (21.3 p., category O)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "series",
+          "type": "LETTERS",
+          "length": 2,
+          "excluded": [
+            "Q",
+            "W",
+            "X"
+          ]
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 3
+        }
+      ],
+      "formats": {
+        "national": "{series} {number}",
+        "compact": "{series}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "LT-TAISYKLES",
+          "section": "19.1, 21, 21.3, 22, 25.1-25.2 p.; 1 priedas 1 p."
+        },
+        {
+          "id": "LT-SEAKI",
+          "section": "10 str. 5 d. 2 p."
+        }
+      ],
+      "examples": {
+        "valid": [
+          "AB 123",
+          "AA 000",
+          "ZZ 999",
+          "PR-456"
+        ],
+        "invalid": [
+          "ABC 123",
+          "A 123",
+          "AB 12",
+          "AB 1234",
+          "AQ 123",
+          "AW 123",
+          "AX 123",
+          "12 ABC"
         ]
       },
       "legacySeries": false

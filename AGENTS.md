@@ -44,7 +44,10 @@ airport plates), Czechia (the structureless 5-8 character standard mark +
 Slovenia (the four ordinary arrangements behind an area code + `MV` historic +
 `PR` test plates), Hungary (the 2022 four-letter series + the pre-2022
 three-letter one + `CD` permanent and temporary + `OT` museum + `TX` taxi +
-the `BA`/`HA`/`MA`/`NA`/`RA` state bodies + `I` temporary). See `README.md` for
+the `BA`/`HA`/`MA`/`NA`/`RA` state bodies + `I` temporary), Lithuania (a
+composition per vehicle category — M/N cars, O trailers, L3-L7e motorcycles,
+L1-L6e mopeds — plus `E` electromobiles, `T` taxi, `H` historic in both
+positions, export, diplomatic and powerful quadricycles). See `README.md` for
 the full matrix.
 
 ## The golden rule: metadata is the source of truth
@@ -530,5 +533,44 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
   temporary plates are valid only until expiry); four-wheeled moped plates; and
   the slow-vehicle (red), environment-friendly (light green), taxi-legacy (yellow)
   and bike-carrier (grey) plates, which repeat a number formed the same way.
+
+- **LT is the one country where the text does the work, so don't second-guess
+  it.** Point 21 of the taisyklės enumerates the composition for every vehicle
+  category exhaustively (21.1 M/N, 21.2 electromobile, 21.3 O, 21.4 L1-L6e,
+  21.5 L3-L7e, 21.6 historic, 21.7 taxi, 21.8 diplomatic, 21.9 export, 21.10
+  chosen, 21.11 quadricycle), and 1 priedas gives the colours. No drawing,
+  standard or agency statement is leaned on anywhere — which is also why
+  `LT_TRAILER` is the library's only `DETERMINISTIC` towed-vehicle inference
+  outside PT: 21.3 p. gives category O its own shape and 21.1 p. keeps it out of
+  the ordinary series. The `Q`/`W`/`X` exclusion is regulation-level (21 p.
+  restricts automatically composed numbers to the Latin letters of the
+  Lithuanian alphabet), unlike the FR/SE practice-level ones; `Y` IS a
+  Lithuanian letter, do not add it. Two deliberate deviations from the text:
+  `H` is withheld from `LT_EXPORT_L` (21.9.2 p. restricts nothing, but 21.6.2 p.
+  reserves four digits + final `H` for historic L vehicles and 21 p. demands
+  unique numbers, so `LT_HISTORIC_L` would otherwise be a strict subset — the
+  HU `TX` inference, same grounds), and both diplomatic schemes carry
+  `legacySeries` for the CZ_ORDINARY reason (five or six bare digits are
+  structureless and nothing else in the library matches them, so every such
+  string would resolve as a Lithuanian diplomatic plate in country-less
+  `detect`). **`validFrom` is omitted throughout and that is not laziness**: the
+  rules were WHOLLY re-issued by the redaction of Nr. 1V-664 (2024-11-08), so
+  the consolidated text carries no per-point amendment annotations and no
+  series' introduction date can be read off it — including the electromobile
+  series, which press coverage puts at 2016-07-01 and amendment Nr. 1V-415
+  (2016-06-07) plausibly introduced, but which could not be confirmed because
+  that order is not retrievable. **Deliberately absent**: the chosen numbers of
+  21.10 p. (1-6 characters for M/N, 1-5 for L3-L7e and O, digits or digits and
+  letters — a space that contains the ordinary series), and the `P` trade marks
+  and cardboard border marks of the 1994 order Nr. 184, which was **repealed on
+  2008-10-15** by Nr. 1V-353 — do not cite that order or model those plates; the
+  modern equivalents are the 19.4 p. export type and a one-day permit that
+  carries no plate. The diplomatic digit groups have no published assignment
+  table (17 p. and 21.8 p. send them to a joint order of the foreign-affairs and
+  interior ministers), so they are width-checked only — do not split them into a
+  mission code and a category digit on the strength of unofficial descriptions.
+  One live risk: the consolidated redaction used runs to 2026-09-30, so some
+  provision of Nr. 1V-518 (2026-07-13) enters force on 2026-10-01 — **re-check
+  point 21 after that date**.
 
 These need grammar or scope work, not a quick patch. Discuss before changing.

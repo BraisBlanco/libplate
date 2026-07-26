@@ -1,0 +1,62 @@
+schemaVersion: 1
+id: LT_MOPED
+country: LT
+name: Bendrojo naudojimo numerio ženklas — L1-L2e ir L6e kategorijos, mopedai (12 ABC)
+registrationType: ORDINARY
+# validFrom omitted — see LT_ORDINARY. Note 27 p. lets 4th-format plates issued
+# for L-category vehicles registered before 2014-07-01 stay in use until the
+# registration number changes; that is a plate-size transitional rule, not a
+# different composition, so it does not become a scheme of its own.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 21.4 p.: categories L1, L1e, L2, L2e (mopeds) and L6e (light quadricycles).
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - MOPED_OR_MOTOR_CYCLE
+    - QUADRICYCLE
+  evidence:
+    - type: PATTERN
+      value: "two digits + three letters (21.4 p., categories L1-L2e and L6e)"
+segments:
+  - name: number
+    type: DIGITS
+    length: 2
+  # 21 p.: Latin letters of the Lithuanian alphabet — no Q, W or X.
+  - name: series
+    type: LETTERS
+    length: 3
+    excluded:
+      - Q
+      - W
+      - X
+formats:
+  national: "{number} {series}"
+  compact: "{number}{series}"
+# 1 priedas 1 p.: white film, EU sign, black characters.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: LT-TAISYKLES
+    section: "19.1, 21, 21.4, 22, 25.4, 27 p.; 1 priedas 1 p."
+  - id: LT-SEAKI
+    section: "10 str. 5 d. 2 p."
+examples:
+  valid:
+    - "12 ABC"
+    - "00 AAA"
+    - "99 ZZZ"
+    - "34-KLM"
+  invalid:
+    - "123 ABC"
+    - "1 ABC"
+    - "12 AB"
+    - "12 ABCD"
+    - "12 AQC"
+    - "12 AWC"
+    - "12 AXC"
+    - "ABC 12"

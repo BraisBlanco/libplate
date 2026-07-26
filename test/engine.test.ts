@@ -122,6 +122,7 @@ describe("convenience helpers", () => {
       "FR",
       "HU",
       "IT",
+      "LT",
       "NL",
       "PL",
       "PT",
@@ -130,7 +131,7 @@ describe("convenience helpers", () => {
       "SI",
     ]);
     expect(getSupportedSchemes("ES")).toContain("ES_TRAILER_CURRENT");
-    expect(getSupportedSchemes()).toHaveLength(142);
+    expect(getSupportedSchemes()).toHaveLength(155);
     expect(getMetadataVersion()).toMatch(/^\d{4}\.\d{2}\.\d+$/);
   });
 });
