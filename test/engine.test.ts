@@ -72,10 +72,10 @@ describe("parse — rejections", () => {
   });
 
   it("reports unsupported countries", () => {
-    // Greece is not modelled yet. (This example used to be CZ, which is now
-    // supported — and whose standard mark is any 5-8 alphanumeric characters,
-    // so it matches "1234 BCD" too.)
-    const result = parse("1234 BCD", { country: "GR" });
+    // Ireland is not modelled yet. (This example used to be CZ, then GR, both
+    // now supported — CZ's standard mark is any 5-8 alphanumeric characters, so
+    // it matches "1234 BCD" too.)
+    const result = parse("1234 BCD", { country: "IE" });
     expect(result.status).toBe("UNSUPPORTED");
     expect(result.errors[0]?.reason).toBe("UNSUPPORTED_COUNTRY");
   });
@@ -120,9 +120,11 @@ describe("convenience helpers", () => {
       "ES",
       "FI",
       "FR",
+      "GR",
       "HU",
       "IT",
       "LT",
+      "LV",
       "NL",
       "PL",
       "PT",
@@ -131,7 +133,7 @@ describe("convenience helpers", () => {
       "SI",
     ]);
     expect(getSupportedSchemes("ES")).toContain("ES_TRAILER_CURRENT");
-    expect(getSupportedSchemes()).toHaveLength(155);
+    expect(getSupportedSchemes()).toHaveLength(164);
     expect(getMetadataVersion()).toMatch(/^\d{4}\.\d{2}\.\d+$/);
   });
 });

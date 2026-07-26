@@ -1,0 +1,62 @@
+schemaVersion: 1
+id: LV_TEST
+country: LV
+name: Izmēģinājuma numura zīme (IZM + numurs)
+registrationType: PROFESSIONAL_TEMPORARY
+# validFrom omitted — see LV_ORDINARY.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 13.3. punkts: issued against a contract and a card valid for at most one
+  # year, to whoever tests newly built or rebuilt vehicles before they enter
+  # service (13.3.1.), to a holder of a Ministry of Defence military-producer
+  # certificate testing special military vehicles and their trailers (13.3.2.),
+  # and to sports vehicles at the request of the Latvian Automobile Federation
+  # (13.3.3.). A car, a trailer and a tracked military vehicle can all carry it.
+  level: NOT_INFERABLE
+segments:
+  # 4.3.2. apakšpunkts: "izmēģinājuma numura zīmes pirmie trīs simboli ir burti,
+  # kas veido burtu kombināciju "IZM"" — from izmēģinājums, a trial.
+  - name: kind
+    type: LITERAL
+    value: IZM
+  # "Pārējie simboli ir cipari, kas veido skaitļus no 1 līdz 999"
+  # (4.3.2. apakšpunkts). A number, so no leading zeros; 4.3.1. apakšpunkts
+  # attaches no symbol count to either plate type, so the range is the only
+  # bound.
+  - name: number
+    type: DIGITS
+    minLength: 1
+    maxLength: 3
+    noLeadingZero: true
+formats:
+  national: "{kind} {number}"
+  compact: "{kind}{number}"
+# No visual: point 4.3. gives this series no colour of its own, unlike the trade,
+# diplomatic, taxi, off-road, electric and military ones, and the default
+# colouring lives in LVS 20:2009 (see LV_ORDINARY).
+sources:
+  - id: LV-REG-RULES
+    section: "13.3. punkts; 7. pielikuma 4.3. apakšpunkts"
+  - id: LV-CSL
+    section: "21. panta otrā daļa"
+examples:
+  valid:
+    - "IZM 123"
+    - "IZM-1"
+    - "IZM 999"
+    - "IZM 42"
+  invalid:
+    # 1-999, not zero-padded and not zero.
+    - "IZM 0"
+    - "IZM 012"
+    - "IZM 1234"
+    # The literal is exactly IZM.
+    - "IZN 123"
+    - "IZ 123"
+    - "IZMM 123"
+    - "123 IZM"
+    - "IZM"

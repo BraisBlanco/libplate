@@ -14,7 +14,7 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 
 ### Supported countries
 
-**19 countries, 155 schemes.** Each row links to its plate-type table below.
+**21 countries, 164 schemes.** Each row links to its plate-type table below.
 
 | Country                         | Schemes | Coverage                                                                                                                  |
 | ------------------------------- | ------: | ------------------------------------------------------------------------------------------------------------------------- |
@@ -37,6 +37,8 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 | [🇸🇮 Slovenia](#-slovenia)       |       6 | The four ordinary arrangements behind an area code, `MV` historic, `PR` test plates                                       |
 | [🇭🇺 Hungary](#-hungary)         |       9 | The 2022 four-letter series and the 1990 three-letter one; `CD`, `OT`, `TX`, state bodies, `I` temporary                  |
 | [🇱🇹 Lithuania](#-lithuania)     |      13 | A composition per vehicle category — cars, trailers, motorcycles, mopeds; `E`, `T`, `H`, export, diplomatic, quadricycles |
+| [🇬🇷 Greece](#-greece)           |       4 | Cars Ι.Χ./Δ.Χ., motorcycles, and both trailer series — the `Ρ` public-use one and the 2019 `Τ` one                        |
+| [🇱🇻 Latvia](#-latvia)           |       5 | The two general-use series (mechanical vehicles, trailers/mopeds), diplomatic `C`/`CC`/`CD`, trade, `IZM` test            |
 
 Countries not yet modelled, and the series still missing inside those above, are
 listed under [Not yet modelled](#not-yet-modelled).
@@ -521,6 +523,82 @@ series. Neither are the temporary `P` marks of the 1994 order — it was **repea
 in 2008**, and short-term movement now runs on a one-day permit that carries no
 plate.
 
+#### 🇬🇷 Greece
+
+| Type                     | Example    | Notes                                                       |
+| ------------------------ | ---------- | ----------------------------------------------------------- |
+| Cars — Ι.Χ. and Δ.Χ.     | `ABE 1234` | White (private) or yellow (public use) — no colour asserted |
+| Motorcycles              | `ABE 123`  | One to three digits, `001-999`                              |
+| Trailers — Δ.Χ. (`Ρ`)    | `P 12345`  | Deterministic towed-vehicle category                        |
+| Trailers — private (`Τ`) | `TA 12345` | Since 2019; deterministic towed-vehicle category            |
+
+Greek plates carry **Greek** capitals, and Υ.Α. 4700/330/2004 άρθρο 1 παρ. 2
+picks the fourteen that coincide graphically with Latin ones: Α, Β, Ε, Ζ, Η, Ι,
+Κ, Μ, Ν, Ο, Ρ, Τ, Υ, Χ. libplate matches their Latin look-alikes — `A B E Z H I
+K M N O P T Y X` — so Greek `Ρ` (rho) is entered as `P` and `Χ` (chi) as `X`.
+Latin `R` and `C` are _not_ Greek plate letters. Greek input is not
+transliterated, the same trade-off as the Bulgarian Cyrillic codes.
+
+The first letters identify the issuing prefecture and the use regime, but no
+official table exists: άρθρο 1 παρ. 5 carries the existing allocation forward
+without enumerating it ("παραμένει ως έχει"), so the letters are charset-checked
+only.
+
+Trailers changed hands in 2019. Υ.Α. Γ9/46447/2397/2019 άρθρο 3 παρ. 1 keeps the
+`Ρ` number for public-use (Δ.Χ.) category O vehicles and gives everything else a
+pair opening with `Τ` plus a five-digit number; the earliest that series could be
+issued is 2019-09-12 (three months after publication for special-purpose
+vehicles, nine for the rest — άρθρο 11), which is the `validFrom` on it.
+
+The **moped** series is deliberately absent. Υ.Α. 2513/2/218-ιδ άρθρο 12 παρ. 1
+composes a police-issued moped number from three of the _same_ fourteen letters
+plus a number from 1 to 9999 — a space that strictly contains both the car series
+(four digits) and the motorcycle series (one to three), so modelling it would
+make almost every Greek plate `AMBIGUOUS`. Instead both schemes carry
+`MOPED_OR_MOTOR_CYCLE` among their possible categories, which is the honest
+consequence.
+
+#### 🇱🇻 Latvia
+
+| Type                              | Example   | Notes                                                       |
+| --------------------------------- | --------- | ----------------------------------------------------------- |
+| General use — mechanical vehicles | `AB-1234` | Cars, vans, lorries, buses, motorcycles, tricycles, quads   |
+| General use — trailers and mopeds | `P-1234`  | One letter; letters may replace the last two digits         |
+| Diplomatic (`C`, `CC`, `CD`)      | `CD 1234` | **Red** background                                          |
+| Trade (dealer)                    | `A12345`  | Type letter + number + validity-year digit, **red** symbols |
+| Test (`IZM`)                      | `IZM 123` | Contract-based, at most one year                            |
+
+Latvia's composition lives in **7. pielikums** of MK noteikumi Nr. 1080, not in
+the body of the regulation, and the whole country runs on a small number space:
+two Latin letters plus a number from 1 to 9999 for anything mechanical, one
+letter plus the same number for trailers, semitrailers and mopeds. The hyphen is
+prescribed (2.3. apakšpunkts) and 9. punkts writes the number without it in the
+register — which is exactly `formatted` against `normalized`.
+
+Two consequences shape the coverage. First, **four series share the ordinary
+characters exactly** and differ only in colour or in a red field: transit (a red
+field), taxi (yellow), off-road (green symbols) and electric-vehicle (blue
+symbols) numbers. None is a scheme of its own, since each would make every
+ordinary plate ambiguous; and because transit numbers are issued to _any_ vehicle
+leaving Latvia — trailers included — `LV_ORDINARY` reports `NOT_INFERABLE` and no
+colours. Second, the **one-letter** series is category-bearing: only trailers,
+semitrailers and mopeds get it, so `LV_TRAILER_MOPED` narrows to those two
+categories, with a four-digit number necessarily a towed vehicle (mopeds stop at
+three).
+
+`CC` and `CD` are withheld from the general-use letter pairs. 4.4.2. apakšpunkts
+reserves `C`, `CC` and `CD` to diplomatic plates and 7. punkts forbids duplicate
+combinations, so keeping them would make every diplomatic plate of four digits or
+fewer ambiguous — the same narrowing as the Hungarian `TX` pair. The single letter
+`C` is _not_ withheld from the one-letter series, and neither are the trade
+letters `A`-`E`: those overlaps are reported as `AMBIGUOUS`, because the plates
+genuinely differ by colour rather than by characters.
+
+Military plates (`L` or `LA` + digits) are absent: 4.7.2. apakšpunkts gives them
+no digit count and no symbol total, and inventing one is not on. Individual
+plates (2-8 symbols, optionally with a space) are absent for the usual reason —
+that space contains every other series.
+
 ### Not yet modelled
 
 Spanish state/military bodies; Portuguese diplomatic/military series and the
@@ -567,7 +645,17 @@ environment-friendly and bike-carrier plates (colour variants of a number formed
 the same way); Lithuanian chosen numbers (21.10 p. — 1-6 or 1-5 characters,
 digits or digits and letters, a space that contains the ordinary series) and the
 `P` trade marks and cardboard border marks of the 1994 temporary-plate order,
-which was repealed on 2008-10-15.
+which was repealed on 2008-10-15; Greek mopeds (three of the same fourteen
+letters + a number from 1 to 9999 — a space that contains both the car and the
+motorcycle series), trade `ΔΟΚ`, diplomatic and `ΜΕ` machinery plates (their
+specification sits in the surviving paragraphs of Υ.Α. 19800/1982, whose
+consolidated text is behind a paywall and whose ΦΕΚ is a scan) and agricultural
+`ΑΜ` numbers; Latvian transit, taxi, off-road and electric-vehicle numbers (the
+ordinary characters with a red field, a yellow face, green or blue symbols),
+military plates (`L`/`LA` + digits, with no count given anywhere) and individual
+plates (2-8 symbols, a space that contains every other series), plus
+traktortehnika, trams and trolleybuses, which 2. punkts puts outside the
+registration rules altogether.
 
 ## Install
 

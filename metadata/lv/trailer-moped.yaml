@@ -1,0 +1,117 @@
+schemaVersion: 1
+id: LV_TRAILER_MOPED
+country: LV
+name: Vispārējās izmantošanas numura zīme — piekabes (puspiekabes) un mopēdi (A-1234)
+registrationType: ORDINARY
+# validFrom omitted — see LV_ORDINARY.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 7. pielikuma 2.2. apakšpunkts names exactly two kinds of vehicle for the
+  # one-letter number: "piekabēm (puspiekabēm)" with one to four digits, and
+  # "mopēdiem" with one to three. 2.6. apakšpunkts repeats the moped case for the
+  # G type plate. Everything else general-use takes two letters, so the number
+  # says "towed vehicle or moped" and nothing narrower.
+  #
+  # The two are merged into ONE scheme because the moped space is a strict subset
+  # of the trailer space (one to three digits against one to four), so separate
+  # schemes would make every moped number AMBIGUOUS — the same trade-off as the
+  # Finnish L-class/machinery mark. Documented but not modelled: a FOUR-digit
+  # number can only be a trailer or semitrailer, because a moped number stops at
+  # three; a scheme carries one inference, and splitting by width would leave the
+  # shorter widths shared anyway.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - TRAILER_OR_SEMITRAILER
+    - MOPED_OR_MOTOR_CYCLE
+  evidence:
+    - type: PATTERN
+      value: "one letter + one to four symbols (7. pielikuma 2.2., 2.6. apakšpunkts)"
+segments:
+  # "Viens latīņu alfabēta burts" (2.2., 2.6. apakšpunkts). Full A-Z, for the
+  # reason given in LV_ORDINARY.
+  #
+  # "C" is deliberately NOT excluded here, although 4.4.2. apakšpunkts reserves
+  # it to diplomatic plates alongside CC and CD. Withholding a whole letter from
+  # a one-letter series is a far larger claim than withholding two of the 676
+  # general-use pairs, and the diplomatic C form starts at three digits
+  # (4.4.1.1.: four to seven symbols), so the overlap is confined to C + three or
+  # four digits. Those inputs come back AMBIGUOUS, which is the honest answer:
+  # the plates differ by the red diplomatic background, not by their characters.
+  #
+  # A-E are not excluded either, for the same reason: the trade series of
+  # 4.2.2. apakšpunkts opens with one of those five letters over an all-digit
+  # tail, so "A 1234" reads as a trade number (1234 = number 123 + validity year
+  # 4) as much as a trailer number, and the plates differ by the trade series'
+  # red symbols. Both overlaps are reported, not resolved.
+  - name: series
+    type: LETTERS
+    length: 1
+  # The number, with the substitution 2.2. apakšpunkts allows: "no viena līdz
+  # četriem cipariem, kas veido skaitļus no 1 līdz 9999", and "piekabēm,
+  # puspiekabēm un mopēdiem paredzēto numura zīmju pēdējo divu ciparu simbolu
+  # vietā var lietot burtu simbolus" — in place of the last TWO digit symbols,
+  # letter symbols may be used.
+  #
+  # So: one to four positions, of which the last two may each be a letter, with
+  # NO_LEADING_ZERO applied to the digit run that remains ("skaitļus no 1 līdz
+  # 9999" is a number, so 0-prefixed forms are out).
+  #
+  # One reading is refused: a tail made ENTIRELY of letters (a two-position tail
+  # with both digits replaced, or a one-position tail replaced outright). The
+  # same sentence still requires digits "kas veido skaitļus no 1 līdz 9999", and
+  # a mark with no digits forms no such number, so at least one digit is kept.
+  - name: mark
+    type: PATTERNS
+    patterns:
+      - "NNNN"
+      - "NNNL"
+      - "NNLL"
+      - "NNN"
+      - "NNL"
+      - "NLL"
+      - "NN"
+      - "NL"
+      - "N"
+    digitBlocks: NO_LEADING_ZERO
+formats:
+  # 2.3. apakšpunkts: the hyphen between letters and digits on an A type plate.
+  # 9. punkts writes the number without it in the register.
+  national: "{series}-{mark}"
+  compact: "{series}{mark}"
+# No visual — see LV_ORDINARY. A trailer taken out of Latvia carries a transit
+# number instead (13.1. punkts), which is a two-letter number, so nothing in this
+# series departs from the LVS 20:2009 default.
+sources:
+  - id: LV-REG-RULES
+    section: "7.-9. punkts; 7. pielikuma 1.1.-1.2., 1.6., 2.1.-2.3., 2.6. apakšpunkts"
+  - id: LV-CSL
+    section: "10. panta 1.4 daļa; 21. panta otrā daļa"
+examples:
+  valid:
+    - "P-1234"
+    - "F 999"
+    - "Z-12AB"
+    - "R 1"
+    - "M-123A"
+  invalid:
+    # Zero-padded or zero numbers.
+    - "P-0123"
+    - "P 0"
+    # Too many symbols for the one-letter series.
+    - "P 12345"
+    - "P-123AB"
+    # Two letters is the mechanical-vehicle series (LV_ORDINARY).
+    - "AB 1234"
+    # A tail with no digit at all forms no number.
+    - "P-AB"
+    - "P A"
+    # Letters may replace the LAST digits, not the leading ones. (P-A123 is not
+    # this series either, but it is not rejected: compacted it is the general-use
+    # number PA-123, and separators never reject a unique reading.)
+    - "P-AB12"
+    - "P-A123"
+    - "1234 P"

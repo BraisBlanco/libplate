@@ -1,0 +1,89 @@
+schemaVersion: 1
+id: LV_DIPLOMATIC
+country: LV
+name: Diplomātiskā numura zīme (C, CC vai CD + cipari)
+registrationType: DIPLOMATIC
+# validFrom omitted — see LV_ORDINARY. The three openings are older than the
+# 2024 redaction of 7. pielikums that this scheme is modelled on, and no earlier
+# act was traced.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 13.4. punkts issues these plates at the request of the Ministry of Foreign
+  # Affairs, and 4.4.1. apakšpunkts provides both an A type (for vehicles that
+  # take a front plate) and a C type (for the rest, motorcycles included). The
+  # number says whose vehicle it is, not what kind.
+  level: NOT_INFERABLE
+segments:
+  # 4.4.2. apakšpunkts: "diplomātisko numura zīmju pirmie simboli ir burti "C",
+  # "CC" vai "CD"", placed in the upper row of a C type plate or on the left of
+  # an A type one. The regulation assigns the three openings NO meaning: it does
+  # not say which is the diplomatic corps, which the consular corps and which
+  # the administrative or technical staff. Latvian wiki and press accounts do,
+  # and also split the digits into an embassy code plus a car number, but that is
+  # exactly the class of source docs/DESIGN.md bars — so all three openings live
+  # in one scheme typed DIPLOMATIC, and the digits are width-checked only, as
+  # with the Lithuanian diplomatic groups.
+  - name: kind
+    type: PATTERNS
+    patterns:
+      - "C"
+      - "CC"
+      - "CD"
+  # "Pārējie šo numura zīmju simboli ir cipari" (4.4.2. apakšpunkts) — digits,
+  # with no range attached, so leading zeros are accepted here (unlike the
+  # general-use series, whose text says "skaitļus no 1 līdz 9999").
+  #
+  # The width comes from the plate types: four to seven symbols on an A type
+  # (4.4.1.1.), four to six on a C type (4.4.1.2.), and the opening letters count
+  # as symbols. Behind "C" that is three to six digits; behind "CC" or "CD", two
+  # to five.
+  - name: number
+    type: DIGITS
+    minLength: 2
+    maxLength: 6
+lengthRules:
+  # The seven-symbol ceiling, which prunes CC/CD + six digits.
+  #
+  # Known limitation: the FOUR-symbol floor of the same subpoints cannot be
+  # expressed — `lengthRules` states maxima only — so "C" + two digits (three
+  # symbols) is accepted although no plate type admits it. Every other
+  # combination the ceiling leaves is a real one.
+  anyOf:
+    - segments: [kind, number]
+      max: 7
+formats:
+  national: "{kind} {number}"
+  compact: "{kind}{number}"
+# 4.4.3. apakšpunkts: "diplomātisko numura zīmju fons ir sarkanā krāsā". The
+# symbol colour is not stated anywhere in the regulation, so only the background
+# is asserted.
+visual:
+  background: RED
+sources:
+  - id: LV-REG-RULES
+    section: "13.4. punkts; 7. pielikuma 4.4. apakšpunkts"
+  - id: LV-CSL
+    section: "21. panta otrā daļa"
+examples:
+  valid:
+    - "CD 1234"
+    - "CD-12"
+    - "CC 12345"
+    - "C 123456"
+    - "CD 00123"
+  invalid:
+    # Behind CC/CD the ceiling is five digits (seven symbols).
+    - "CD 123456"
+    # A single digit is below every plate type's floor.
+    - "CD 1"
+    - "C 1"
+    # Only C, CC and CD open a diplomatic number.
+    - "CE 1234"
+    - "DC 1234"
+    - "CDD 1234"
+    - "CD"
+    - "1234 CD"

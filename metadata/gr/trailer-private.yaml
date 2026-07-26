@@ -1,0 +1,89 @@
+schemaVersion: 1
+id: GR_TRAILER_PRIVATE
+country: GR
+name: Πινακίδα αριθμού κυκλοφορίας ρυμουλκουμένου — πλην Δ.Χ. (ΤΑ 12345)
+registrationType: ORDINARY
+# άρθρο 11 of Υ.Α. Γ9/46447/2397/2019 (published in ΦΕΚ Β' 2303 on 12 June 2019)
+# starts the decision nine months after publication — 2020-03-12 — except for
+# the provisions on special-purpose category O vehicles not carrying goods,
+# which start three months after publication. Since άρθρο 4 is one of the
+# provisions those vehicles need, the earliest date this series could be issued
+# is 2019-09-12, which is what validFrom records.
+validFrom: "2019-09-12"
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # άρθρο 3 παρ. 1: category O vehicles get their own registration number,
+  # different from that of the towing vehicle, and circulate as independent
+  # vehicles; that number is prefixed by "συνδυασμός δύο χαρακτήρων με αρχικό το
+  # διακριτικό γράμμα «Τ»" for everything other than public use. Category O IS
+  # trailers and semitrailers, so the inference is deterministic.
+  #
+  # Text cannot split O1/O2 from O3/O4, hence the combined category. In practice
+  # άρθρο 8 παρ. 3 lets private cars tow only O1 and some O2 vehicles, but the
+  # series itself is not confined to them.
+  level: DETERMINISTIC
+  category: TRAILER_OR_SEMITRAILER
+  evidence:
+    - type: PREFIX
+      value: "Τ (T) — άρθρο 3 παρ. 1 β)· άρθρο 4 παρ. 2"
+segments:
+  # άρθρο 4 παρ. 2: "συνδυασμό ανά δύο (2) του γράμματος Τ και των δεκατεσσάρων
+  # (14) γραμμάτων: Α, Β, Ε, Ζ, Η, Ι, Κ, Μ, Ν, Ο, Ρ, Τ, Υ και Χ" — a pair whose
+  # first character is the fixed Τ (άρθρο 3 παρ. 1 β) calls it "αρχικό") and
+  # whose second is any of the fourteen. Τ is itself one of the fourteen, so ΤΤ
+  # is a legitimate pair.
+  #
+  # The plate carries Greek capitals; libplate matches the Latin look-alikes
+  # (see GR_ORDINARY).
+  - name: kind
+    type: LITERAL
+    value: T
+  - name: series
+    type: CHARSET
+    length: 1
+    characters: ABEZHIKMNOPTYX
+  # άρθρο 4 παρ. 2: "ενός αριθμού από το 10000 έως τον αριθμό 99999" — exactly
+  # five digits with no leading zero.
+  - name: number
+    type: DIGITS
+    length: 5
+    noLeadingZero: true
+formats:
+  national: "{kind}{series} {number}"
+  compact: "{kind}{series}{number}"
+# άρθρο 4 παρ. 3: the metal, the retroreflective material, "ο χρωματισμός", the
+# embossed text and the remaining construction details "είναι ίδιες με τις
+# προδιαγραφές των κοινών πινακίδων" — i.e. those of Υ.Α. 4700/330/2004, where
+# άρθρο 2 παρ. 5 puts trailers and everything other than a public-use car on the
+# white surface. This series is by definition "πλην ΔΧ" (the annex heading says
+# so), so white/black is unambiguous here.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: GR-TRAILERS-2019
+    section: "άρθρο 3 παρ. 1· άρθρο 4· άρθρο 8 παρ. 1· άρθρο 9 παρ. 1· άρθρο 11· Παράρτημα"
+  - id: GR-PLATES-2004
+    section: "άρθρο 2 παρ. 5"
+examples:
+  valid:
+    - "TA 12345"
+    - "TT 10000"
+    - "TX 99999"
+    - "TZ-54321"
+  invalid:
+    # Below the 10000 floor / wrong width.
+    - "TA 1234"
+    - "TA 09999"
+    - "TA 123456"
+    # Second character outside the fourteen letters.
+    - "TC 12345"
+    - "TR 12345"
+    # First character is fixed.
+    - "AT 12345"
+    - "P 12345"
+    - "TAB 12345"

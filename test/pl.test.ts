@@ -142,14 +142,14 @@ describe("Poland — detection and cross-country collisions", () => {
   });
 
   it("reports the PL/DE collision on historic-format plates", () => {
-    // "WA 123" reads as PL zabytkowe (WA 123), DE (W-A 123), a Danish number
-    // and a Finnish two-letter mark; the Austrian Wunschkennzeichen reading
-    // W-A123 is contradicted by the separator.
+    // "WA 123" reads as PL zabytkowe (WA 123), DE (W-A 123), a Danish number, a
+    // Finnish two-letter mark and a Latvian general-use number; the Austrian
+    // Wunschkennzeichen reading W-A123 is contradicted by the separator.
     const result = detect("WA 123");
     expect(result.status).toBe("AMBIGUOUS");
     const countries = result.candidates
       ?.map((c) => c.country)
       .sort((a, b) => a.localeCompare(b));
-    expect(countries).toEqual(["DE", "DK", "FI", "PL"]);
+    expect(countries).toEqual(["DE", "DK", "FI", "LV", "PL"]);
   });
 });

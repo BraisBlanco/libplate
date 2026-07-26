@@ -1,0 +1,110 @@
+schemaVersion: 1
+id: GR_ORDINARY
+country: GR
+name: Πινακίδα αριθμού κυκλοφορίας αυτοκινήτου Ι.Χ. και Δ.Χ. (ΑΒΕ 1234)
+registrationType: ORDINARY
+# validFrom is deliberately omitted. Υ.Α. οικ. 4700/330/2004 entered into force
+# on 1 May 2004 (άρθρο 9) and it is the text this scheme is modelled on, but it
+# did not introduce the composition: άρθρο 9 repeals only παρ. Α, Β, ΙΑ, ΙΓ, ΙΕ
+# and ΙΣΤ of κεφάλαιο Ι of Υ.Α. 19800/1982 "σε ότι αφορούν τις κρατικές
+# πινακίδες", i.e. it replaces the plate specification of an existing series.
+# Three letters over four digits was adopted in 1986; the act that did so was
+# not traced (the 1982 decision's consolidated text is behind a paywall and the
+# ΦΕΚ of 1982 is a scan), so a 2004 start date would wrongly reject every plate
+# issued between 1986 and 2004.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # άρθρο 1 παρ. 2 gives this composition to "τα αυτοκίνητα Ι.Χ. και Δ.Χ." —
+  # motor cars of every body type and both use regimes, private and public. The
+  # two other compositions of άρθρο 1 keep motorcycles (παρ. 3, one to three
+  # digits) and trailers (παρ. 4, the letter Ρ) out of it.
+  #
+  # MOPED_OR_MOTOR_CYCLE is on the list all the same, and not because of άρθρο
+  # 1: μοτοποδήλατα (≤50 cm³) are registered by the police under Υ.Α.
+  # 2513/2/218-ιδ, whose άρθρο 12 παρ. 1 composes their number from three of the
+  # SAME fourteen letters and "ενός αριθμού από το 1 μέχρι το 9999". That space
+  # strictly contains this one, so a four-digit number cannot be told from a
+  # moped number by text (see the note in AGENTS.md on why the moped series is
+  # not a scheme of its own).
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - VAN
+    - TRUCK
+    - BUS
+    - MOPED_OR_MOTOR_CYCLE
+  evidence:
+    - type: PATTERN
+      value: "three letters + four digits (άρθρο 1 παρ. 2, αυτοκίνητα Ι.Χ./Δ.Χ.)"
+segments:
+  # άρθρο 1 παρ. 2: "συνδυασμό ανά τρία (3) των δεκατεσσάρων (14) γραμμάτων: Α,
+  # Β, Ε, Ζ, Η, Ι, Κ, Μ, Ν, Ο, Ρ, Τ, Υ και Χ, που είναι κοινά στην ελληνική και
+  # λατινική αλφάβητο, με δυνατότητα επανάληψης και διαφορετικής διάταξης του
+  # αυτού γράμματος σε κάθε τριάδα" — any of the fourteen in any position, and
+  # repetition is explicitly allowed.
+  #
+  # The plate face carries GREEK capitals. libplate matches their Latin
+  # look-alikes, which is what the fourteen were chosen for: Α→A, Β→B, Ε→E,
+  # Ζ→Z, Η→H, Ι→I, Κ→K, Μ→M, Ν→N, Ο→O, Ρ→P, Τ→T, Υ→Y, Χ→X. Note Ρ (rho) is
+  # Latin P and Χ (chi) is Latin X — Latin R and Latin C are NOT Greek plate
+  # letters. Greek input is not transliterated (the `normalized` contract is
+  # Latin), the same trade-off as the Bulgarian Cyrillic codes.
+  #
+  # Known limitation: the first letters identify the issuing prefecture and the
+  # vehicle's use, but no official table is published — άρθρο 1 παρ. 5 says only
+  # "η κατανομή των γραμμάτων για τις διάφορες κατηγορίες των αυτοκινήτων,
+  # μοτοσικλετών και ρυμουλκούμενων, παραμένει ως έχει", i.e. it carries the
+  # existing allocation forward without enumerating it. So the letters are
+  # charset-checked only, as with the Spanish diplomatic prefixes and the
+  # Bulgarian regional codes.
+  - name: letters
+    type: CHARSET
+    length: 3
+    characters: ABEZHIKMNOPTYX
+  # άρθρο 1 παρ. 2: "ενός τετραψήφιου αριθμού (1000-9999)". Four digits, and
+  # the range is exactly what four digits without a leading zero expresses.
+  # άρθρο 3 παρ. 2 ε) and άρθρο 4 παρ. 2 β) both draw the group as four digits.
+  - name: number
+    type: DIGITS
+    length: 4
+    noLeadingZero: true
+formats:
+  # άρθρο 3 παρ. 2 (one row) and άρθρο 4 παρ. 2 (two rows) put a παύλα between
+  # the letter group and the digit group. It carries the embossed state seal, so
+  # it is plate furniture rather than punctuation, and the number is written
+  # ΑΒΕ 1234 in Greek usage.
+  national: "{letters} {number}"
+  compact: "{letters}{number}"
+# No visual. άρθρο 2 παρ. 5 splits the two use regimes that share this
+# composition: black characters on a WHITE retroreflective surface for
+# αυτοκίνητα Ι.Χ., on a YELLOW one for αυτοκίνητα Δ.Χ. (taxis, buses and
+# lorries in public-use service). Nothing in the number says which, so no
+# colour is asserted — the same reason DK_ORDINARY carries none.
+sources:
+  - id: GR-PLATES-2004
+    section: "άρθρο 1 παρ. 1-2, 5· άρθρο 2 παρ. 5· άρθρο 3· άρθρο 4· άρθρο 9"
+examples:
+  valid:
+    - "ABE 1234"
+    - "ZZZ 1000"
+    - "XYX 9999"
+    - "IKM-5678"
+    - "HTP 4321"
+  invalid:
+    # C, D, F, G, J, L, Q, R, S, U, V and W are not Greek plate letters — R in
+    # particular is a common mistake, since Greek Ρ transliterates to P.
+    - "ABC 1234"
+    - "ABR 1234"
+    - "ABD 1234"
+    # άρθρο 1 παρ. 2 bounds the number at 1000-9999.
+    - "ABE 0999"
+    - "ABE 999"
+    - "ABE 12345"
+    # Not three letters.
+    - "AB 1234"
+    - "ABEZ 1234"
+    - "1234 ABE"

@@ -1,0 +1,83 @@
+schemaVersion: 1
+id: LV_TRADE
+country: LV
+name: Tirdzniecības numura zīme (veida burts + numurs + derīguma gads)
+registrationType: PROFESSIONAL_TEMPORARY
+# validFrom omitted — see LV_ORDINARY. The 13.02.2024 redaction of 7. pielikums
+# raised the A type number range from 1-999 to 1-9999 (the 30.05.2017 redaction
+# had the lower cap); the wider range is what is modelled, and plates issued
+# under the narrower one are inside it.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 13.2. punkts issues trade plates to dealers registered with CSDD, for
+  # vehicles they hold for sale rather than for a vehicle of their own.
+  #
+  # 4.2.2. apakšpunkts says the first symbol "norāda transportlīdzekļa veidu" —
+  # it DOES encode the vehicle kind — but the regulation never says which of A,
+  # B, C, D and E means what, and CSDD publishes no key. So the letter is
+  # charset-checked and no category is claimed: the information is there on the
+  # plate and simply cannot be decoded from an official source.
+  level: NOT_INFERABLE
+segments:
+  # "Tirdzniecības numura zīmju pirmais simbols ir burts (A, B, C, D vai E), kas
+  # norāda transportlīdzekļa veidu" (4.2.2. apakšpunkts).
+  - name: kind
+    type: CHARSET
+    length: 1
+    characters: ABCDE
+  # "Pārējie cipari veido skaitļus no 1 līdz 9999 A tipa numura zīmēs vai no 1
+  # līdz 99 C tipa numura zīmēs" (4.2.2. apakšpunkts) — a number again, so no
+  # leading zeros. One to four digits covers the A type range; the C type range
+  # is inside it, and which plate type a given number was made for is not
+  # readable from the characters.
+  - name: number
+    type: DIGITS
+    minLength: 1
+    maxLength: 4
+    noLeadingZero: true
+  # "Pēdējais cipars norāda gadu, līdz kuram tirdzniecības numura zīme ir
+  # derīga" (4.2.2. apakšpunkts) — one digit, the last year of validity. The
+  # decade is not on the plate, so the digit is kept as a component and not
+  # turned into a date.
+  - name: year
+    type: DIGITS
+    length: 1
+formats:
+  # No separator is prescribed: the hyphen of 2.3. apakšpunkts belongs to point 2
+  # (vispārējās izmantošanas numura zīmes) and point 4 adds none for the
+  # special-purpose series, so the mark is written as one group.
+  national: "{kind}{number}{year}"
+  compact: "{kind}{number}{year}"
+# 4.2.3. apakšpunkts: "tirdzniecības numura zīmju simboli ir sarkanā krāsā". The
+# background is not stated, so only the symbol colour is asserted.
+visual:
+  foreground: RED
+sources:
+  - id: LV-REG-RULES
+    section: "13.2. punkts; 7. pielikuma 4.2. apakšpunkts"
+  - id: LV-CSL
+    section: "21. panta otrā daļa"
+examples:
+  valid:
+    - "A12345"
+    - "E99999"
+    - "B10007"
+    # D, not C: a C-opened trade number of five digits is also readable as a
+    # diplomatic "C" + five digits, and comes back AMBIGUOUS.
+    - "D 98766"
+  invalid:
+    # The type letter is one of A-E only.
+    - "F1234"
+    - "Z12345"
+    # 4.2.1.1.: three to six symbols.
+    - "A1"
+    - "A123456"
+    # The number is 1-9999, not zero-padded and not zero.
+    - "A01234"
+    - "A00"
+    # Digits first is no trade number.
+    - "1234A"

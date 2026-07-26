@@ -1,0 +1,85 @@
+schemaVersion: 1
+id: GR_TRAILER
+country: GR
+name: Πινακίδα αριθμού κυκλοφορίας ρυμουλκουμένου — Δ.Χ. (Ρ 12345)
+registrationType: ORDINARY
+# validFrom omitted: as with GR_ORDINARY, Υ.Α. οικ. 4700/330/2004 re-specifies
+# an existing series. Note the scheme's SCOPE changed later without the
+# composition changing: since Υ.Α. Γ9/46447/2397/2019 άρθρο 4 παρ. 1 this is the
+# plate of public-use (Δ.Χ.) category O vehicles only, while privately used ones
+# take the Τ+letter number of GR_TRAILER_PRIVATE. Plates issued to private
+# trailers before that stay valid and stay in circulation, so no validTo either.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # άρθρο 1 παρ. 4 gives the letter Ρ to ρυμουλκούμενα and to nothing else, and
+  # άρθρο 3 παρ. 1 of the 2019 decision confirms it from the other side: "στον
+  # αριθμό κυκλοφορίας των οχημάτων αυτών προτάσσεται α) το διακριτικό γράμμα
+  # «Ρ» για τα οχήματα Δημόσιας Χρήσης". The number itself says "towed vehicle".
+  #
+  # Text cannot split O1/O2 (trailer) from O3/O4 (semitrailer), hence the
+  # combined category.
+  level: DETERMINISTIC
+  category: TRAILER_OR_SEMITRAILER
+  evidence:
+    - type: PREFIX
+      value: "Ρ (P) — άρθρο 1 παρ. 4· άρθρο 3 παρ. 1 α) της Υ.Α. Γ9/46447/2397/2019"
+segments:
+  # "Το γράμμα Ρ" (άρθρο 1 παρ. 4, drawn as such in άρθρο 6 παρ. 2 γ)). Greek Ρ
+  # is rho: on the plate it is a Greek capital, and its Latin look-alike is P.
+  - name: kind
+    type: LITERAL
+    value: P
+  # άρθρο 1 παρ. 4: "από τον αριθμό 1000 έως τον αριθμό 99999" — a range, not a
+  # width, so four or five digits with no leading zero expresses it exactly.
+  #
+  # άρθρο 6 παρ. 2 ε) draws the group as "ο συνδυασμός των πέντε (5) αριθμών",
+  # five digit positions. Left-padding a four-digit number into that field
+  # (P 01234) is not accepted: παρ. 4 states a range and 01234 is not how a
+  # number in it is written.
+  - name: number
+    type: DIGITS
+    minLength: 4
+    maxLength: 5
+    noLeadingZero: true
+formats:
+  # άρθρο 6 παρ. 2 δ): a παύλα carrying the embossed state seal separates the
+  # letter from the digits.
+  national: "{kind} {number}"
+  compact: "{kind}{number}"
+# άρθρο 2 παρ. 5 lists ρυμουλκούμενα in the white group — "χρώματος μαύρου σε
+# λευκή αντανακλαστική επιφάνεια για αυτοκίνητα Ι.Χ., μοτοσικλέτες,
+# ρυμουλκούμενα" — and confines the yellow surface to "τα αυτοκίνητα Δ.Χ.",
+# which are motor CARS. Read literally that puts a Δ.Χ. trailer on a white
+# plate, and since 2020 this series is the Δ.Χ. one; the text draws no other
+# conclusion, so the white/black of παρ. 5 is what is asserted here.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: GR-PLATES-2004
+    section: "άρθρο 1 παρ. 1, 4-5· άρθρο 2 παρ. 5· άρθρο 6"
+  - id: GR-TRAILERS-2019
+    section: "άρθρο 3 παρ. 1 α)· άρθρο 4 παρ. 1"
+examples:
+  valid:
+    - "P 12345"
+    - "P 1000"
+    - "P 99999"
+    - "P-45678"
+  invalid:
+    # Below the 1000 floor, or zero-padded into the five-position field.
+    - "P 999"
+    - "P 01234"
+    - "P 0"
+    # Wrong width.
+    - "P 123456"
+    - "P 12"
+    # Not the trailer letter (R is Latin R, not Greek Ρ).
+    - "R 12345"
+    - "T 12345"
+    - "PA 12345"
+    - "12345 P"

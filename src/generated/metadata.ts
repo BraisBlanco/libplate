@@ -3,7 +3,7 @@
 import type { MetadataBundle } from "../metadata/types.js";
 
 export const METADATA: MetadataBundle = {
-  "metadataVersion": "2026.07.13",
+  "metadataVersion": "2026.07.14",
   "tables": {
     "at-behoerden": [
       "AM",
@@ -8287,6 +8287,319 @@ export const METADATA: MetadataBundle = {
     },
     {
       "schemaVersion": 1,
+      "id": "GR_MOTORCYCLE",
+      "country": "GR",
+      "name": "Πινακίδα αριθμού κυκλοφορίας μοτοσικλέτας (ΑΒΕ 123)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "MOTORCYCLE",
+          "TRICYCLE",
+          "MOPED_OR_MOTOR_CYCLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "three letters + one to three digits (άρθρο 1 παρ. 3, μοτοσικλέτες)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "letters",
+          "type": "CHARSET",
+          "length": 3,
+          "characters": "ABEZHIKMNOPTYX"
+        },
+        {
+          "name": "number",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNN",
+            "NN",
+            "N"
+          ],
+          "digitBlocks": "NO_ZERO_BLOCK"
+        }
+      ],
+      "formats": {
+        "national": "{letters} {number}",
+        "compact": "{letters}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "GR-PLATES-2004",
+          "section": "άρθρο 1 παρ. 1, 3, 5· άρθρο 2 παρ. 5· άρθρο 5"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "ABE 123",
+          "ZZZ 001",
+          "XYX 999",
+          "IKM-45",
+          "HTP 7"
+        ],
+        "invalid": [
+          "ABE 000",
+          "ABE 00",
+          "ABE 0",
+          "ABE 1234",
+          "ABC 123",
+          "ABR 123",
+          "AB 123",
+          "ABEZ 123",
+          "123 ABE"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "GR_ORDINARY",
+      "country": "GR",
+      "name": "Πινακίδα αριθμού κυκλοφορίας αυτοκινήτου Ι.Χ. και Δ.Χ. (ΑΒΕ 1234)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "VAN",
+          "TRUCK",
+          "BUS",
+          "MOPED_OR_MOTOR_CYCLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "three letters + four digits (άρθρο 1 παρ. 2, αυτοκίνητα Ι.Χ./Δ.Χ.)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "letters",
+          "type": "CHARSET",
+          "length": 3,
+          "characters": "ABEZHIKMNOPTYX"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 4,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{letters} {number}",
+        "compact": "{letters}{number}"
+      },
+      "sources": [
+        {
+          "id": "GR-PLATES-2004",
+          "section": "άρθρο 1 παρ. 1-2, 5· άρθρο 2 παρ. 5· άρθρο 3· άρθρο 4· άρθρο 9"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "ABE 1234",
+          "ZZZ 1000",
+          "XYX 9999",
+          "IKM-5678",
+          "HTP 4321"
+        ],
+        "invalid": [
+          "ABC 1234",
+          "ABR 1234",
+          "ABD 1234",
+          "ABE 0999",
+          "ABE 999",
+          "ABE 12345",
+          "AB 1234",
+          "ABEZ 1234",
+          "1234 ABE"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "GR_TRAILER",
+      "country": "GR",
+      "name": "Πινακίδα αριθμού κυκλοφορίας ρυμουλκουμένου — Δ.Χ. (Ρ 12345)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "DETERMINISTIC",
+        "category": "TRAILER_OR_SEMITRAILER",
+        "evidence": [
+          {
+            "type": "PREFIX",
+            "value": "Ρ (P) — άρθρο 1 παρ. 4· άρθρο 3 παρ. 1 α) της Υ.Α. Γ9/46447/2397/2019"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "kind",
+          "type": "LITERAL",
+          "value": "P"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 4,
+          "maxLength": 5,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{kind} {number}",
+        "compact": "{kind}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "GR-PLATES-2004",
+          "section": "άρθρο 1 παρ. 1, 4-5· άρθρο 2 παρ. 5· άρθρο 6"
+        },
+        {
+          "id": "GR-TRAILERS-2019",
+          "section": "άρθρο 3 παρ. 1 α)· άρθρο 4 παρ. 1"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "P 12345",
+          "P 1000",
+          "P 99999",
+          "P-45678"
+        ],
+        "invalid": [
+          "P 999",
+          "P 01234",
+          "P 0",
+          "P 123456",
+          "P 12",
+          "R 12345",
+          "T 12345",
+          "PA 12345",
+          "12345 P"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "GR_TRAILER_PRIVATE",
+      "country": "GR",
+      "name": "Πινακίδα αριθμού κυκλοφορίας ρυμουλκουμένου — πλην Δ.Χ. (ΤΑ 12345)",
+      "registrationType": "ORDINARY",
+      "validFrom": "2019-09-12",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "DETERMINISTIC",
+        "category": "TRAILER_OR_SEMITRAILER",
+        "evidence": [
+          {
+            "type": "PREFIX",
+            "value": "Τ (T) — άρθρο 3 παρ. 1 β)· άρθρο 4 παρ. 2"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "kind",
+          "type": "LITERAL",
+          "value": "T"
+        },
+        {
+          "name": "series",
+          "type": "CHARSET",
+          "length": 1,
+          "characters": "ABEZHIKMNOPTYX"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 5,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{kind}{series} {number}",
+        "compact": "{kind}{series}{number}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "GR-TRAILERS-2019",
+          "section": "άρθρο 3 παρ. 1· άρθρο 4· άρθρο 8 παρ. 1· άρθρο 9 παρ. 1· άρθρο 11· Παράρτημα"
+        },
+        {
+          "id": "GR-PLATES-2004",
+          "section": "άρθρο 2 παρ. 5"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "TA 12345",
+          "TT 10000",
+          "TX 99999",
+          "TZ-54321"
+        ],
+        "invalid": [
+          "TA 1234",
+          "TA 09999",
+          "TA 123456",
+          "TC 12345",
+          "TR 12345",
+          "AT 12345",
+          "P 12345",
+          "TAB 12345"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
       "id": "HU_DIPLOMATIC",
       "country": "HU",
       "name": "CD betűjelű különleges rendszámtábla (CD + hat számjegy)",
@@ -10420,6 +10733,381 @@ export const METADATA: MetadataBundle = {
           "AW 123",
           "AX 123",
           "12 ABC"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "LV_DIPLOMATIC",
+      "country": "LV",
+      "name": "Diplomātiskā numura zīme (C, CC vai CD + cipari)",
+      "registrationType": "DIPLOMATIC",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "kind",
+          "type": "PATTERNS",
+          "patterns": [
+            "C",
+            "CC",
+            "CD"
+          ]
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 2,
+          "maxLength": 6
+        }
+      ],
+      "lengthRules": {
+        "anyOf": [
+          {
+            "segments": [
+              "kind",
+              "number"
+            ],
+            "max": 7
+          }
+        ]
+      },
+      "formats": {
+        "national": "{kind} {number}",
+        "compact": "{kind}{number}"
+      },
+      "visual": {
+        "background": "RED"
+      },
+      "sources": [
+        {
+          "id": "LV-REG-RULES",
+          "section": "13.4. punkts; 7. pielikuma 4.4. apakšpunkts"
+        },
+        {
+          "id": "LV-CSL",
+          "section": "21. panta otrā daļa"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "CD 1234",
+          "CD-12",
+          "CC 12345",
+          "C 123456",
+          "CD 00123"
+        ],
+        "invalid": [
+          "CD 123456",
+          "CD 1",
+          "C 1",
+          "CE 1234",
+          "DC 1234",
+          "CDD 1234",
+          "CD",
+          "1234 CD"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "LV_ORDINARY",
+      "country": "LV",
+      "name": "Vispārējās izmantošanas numura zīme — mehāniskie transportlīdzekļi (AB-1234)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "series",
+          "type": "LETTERS",
+          "length": 2,
+          "excludedValues": [
+            "CC",
+            "CD"
+          ]
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 4,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{series}-{number}",
+        "compact": "{series}{number}"
+      },
+      "sources": [
+        {
+          "id": "LV-REG-RULES",
+          "section": "7.-10.3 punkts; 7. pielikuma 1.1.-1.3., 1.5., 2.1.-2.3., 2.5. apakšpunkts"
+        },
+        {
+          "id": "LV-CSL",
+          "section": "10. panta 1.4 daļa; 10.2 panta ceturtā daļa; 21. panta otrā daļa"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "AB-1234",
+          "FF 9999",
+          "KR 1",
+          "JP-12",
+          "AA 123"
+        ],
+        "invalid": [
+          "AB-0",
+          "AB-0123",
+          "AB 00",
+          "AB 12345",
+          "A 1234",
+          "ABC 1234",
+          "CD 1234",
+          "CC 12",
+          "1234 AB",
+          "AB"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "LV_TEST",
+      "country": "LV",
+      "name": "Izmēģinājuma numura zīme (IZM + numurs)",
+      "registrationType": "PROFESSIONAL_TEMPORARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "kind",
+          "type": "LITERAL",
+          "value": "IZM"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 3,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{kind} {number}",
+        "compact": "{kind}{number}"
+      },
+      "sources": [
+        {
+          "id": "LV-REG-RULES",
+          "section": "13.3. punkts; 7. pielikuma 4.3. apakšpunkts"
+        },
+        {
+          "id": "LV-CSL",
+          "section": "21. panta otrā daļa"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "IZM 123",
+          "IZM-1",
+          "IZM 999",
+          "IZM 42"
+        ],
+        "invalid": [
+          "IZM 0",
+          "IZM 012",
+          "IZM 1234",
+          "IZN 123",
+          "IZ 123",
+          "IZMM 123",
+          "123 IZM",
+          "IZM"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "LV_TRADE",
+      "country": "LV",
+      "name": "Tirdzniecības numura zīme (veida burts + numurs + derīguma gads)",
+      "registrationType": "PROFESSIONAL_TEMPORARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "kind",
+          "type": "CHARSET",
+          "length": 1,
+          "characters": "ABCDE"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 4,
+          "noLeadingZero": true
+        },
+        {
+          "name": "year",
+          "type": "DIGITS",
+          "length": 1
+        }
+      ],
+      "formats": {
+        "national": "{kind}{number}{year}",
+        "compact": "{kind}{number}{year}"
+      },
+      "visual": {
+        "foreground": "RED"
+      },
+      "sources": [
+        {
+          "id": "LV-REG-RULES",
+          "section": "13.2. punkts; 7. pielikuma 4.2. apakšpunkts"
+        },
+        {
+          "id": "LV-CSL",
+          "section": "21. panta otrā daļa"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "A12345",
+          "E99999",
+          "B10007",
+          "D 98766"
+        ],
+        "invalid": [
+          "F1234",
+          "Z12345",
+          "A1",
+          "A123456",
+          "A01234",
+          "A00",
+          "1234A"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "LV_TRAILER_MOPED",
+      "country": "LV",
+      "name": "Vispārējās izmantošanas numura zīme — piekabes (puspiekabes) un mopēdi (A-1234)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "TRAILER_OR_SEMITRAILER",
+          "MOPED_OR_MOTOR_CYCLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "one letter + one to four symbols (7. pielikuma 2.2., 2.6. apakšpunkts)"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "series",
+          "type": "LETTERS",
+          "length": 1
+        },
+        {
+          "name": "mark",
+          "type": "PATTERNS",
+          "patterns": [
+            "NNNN",
+            "NNNL",
+            "NNLL",
+            "NNN",
+            "NNL",
+            "NLL",
+            "NN",
+            "NL",
+            "N"
+          ],
+          "digitBlocks": "NO_LEADING_ZERO"
+        }
+      ],
+      "formats": {
+        "national": "{series}-{mark}",
+        "compact": "{series}{mark}"
+      },
+      "sources": [
+        {
+          "id": "LV-REG-RULES",
+          "section": "7.-9. punkts; 7. pielikuma 1.1.-1.2., 1.6., 2.1.-2.3., 2.6. apakšpunkts"
+        },
+        {
+          "id": "LV-CSL",
+          "section": "10. panta 1.4 daļa; 21. panta otrā daļa"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "P-1234",
+          "F 999",
+          "Z-12AB",
+          "R 1",
+          "M-123A"
+        ],
+        "invalid": [
+          "P-0123",
+          "P 0",
+          "P 12345",
+          "P-123AB",
+          "AB 1234",
+          "P-AB",
+          "P A",
+          "P-AB12",
+          "P-A123",
+          "1234 P"
         ]
       },
       "legacySeries": false

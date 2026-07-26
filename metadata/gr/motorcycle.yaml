@@ -1,0 +1,92 @@
+schemaVersion: 1
+id: GR_MOTORCYCLE
+country: GR
+name: Πινακίδα αριθμού κυκλοφορίας μοτοσικλέτας (ΑΒΕ 123)
+registrationType: ORDINARY
+# validFrom omitted for the same reason as GR_ORDINARY: Υ.Α. οικ. 4700/330/2004
+# re-specifies the plate of an existing series rather than opening one.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # άρθρο 1 παρ. 3 gives this composition to μοτοσικλέτες and to nothing else,
+  # and a μοτοσικλέτα under the Greek ΚΟΚ is a two- OR three-wheeled motor
+  # vehicle above 50 cm³ — hence MOTORCYCLE and TRICYCLE.
+  #
+  # MOPED_OR_MOTOR_CYCLE is on the list because the police-issued moped number
+  # of Υ.Α. 2513/2/218-ιδ άρθρο 12 παρ. 1 (three of the same fourteen letters +
+  # "ενός αριθμού από το 1 μέχρι το 9999") covers this shape too. The plates are
+  # physically different — 280×210 mm with the EU field here (άρθρο 5 παρ. 1),
+  # 200×120 mm without it for a moped — but the characters do not say so.
+  #
+  # What the number DOES rule out is a car (four digits, άρθρο 1 παρ. 2) and a
+  # trailer (the letter Ρ or the pair Τ+letter).
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - MOTORCYCLE
+    - TRICYCLE
+    - MOPED_OR_MOTOR_CYCLE
+  evidence:
+    - type: PATTERN
+      value: "three letters + one to three digits (άρθρο 1 παρ. 3, μοτοσικλέτες)"
+segments:
+  # The same fourteen letters as the car series — "συνδυασμό τριών από τα
+  # δεκατέσσερα (14) προαναφερόμενα γράμματα, με δυνατότητα επανάληψης και
+  # διαφορετικής διάταξης του αυτού γράμματος σε κάθε τριάδα" (άρθρο 1 παρ. 3).
+  # See GR_ORDINARY for the Greek→Latin mapping and for why the prefecture
+  # allocation is not modelled.
+  - name: letters
+    type: CHARSET
+    length: 3
+    characters: ABEZHIKMNOPTYX
+  # άρθρο 1 παρ. 3: "ενός μονοψήφιου έως τριψήφιου αριθμού (001 -999)". The two
+  # halves of that phrase pull in different directions: "one- to three-digit
+  # number" admits 1, 45 and 678, while the parenthetical writes the range in
+  # the zero-padded form the plate carries — άρθρο 5 παρ. 2 β) draws the second
+  # row as "ο συνδυασμός των τριών (3) αριθμών", three digit positions.
+  #
+  # Both readings are honoured: one, two or three digits, with leading zeros
+  # allowed, and only the all-zero block excluded (NO_ZERO_BLOCK), which is
+  # exactly the stated 001-999.
+  - name: number
+    type: PATTERNS
+    patterns:
+      - "NNN"
+      - "NN"
+      - "N"
+    digitBlocks: NO_ZERO_BLOCK
+formats:
+  national: "{letters} {number}"
+  compact: "{letters}{number}"
+# άρθρο 2 παρ. 5: black characters on a white retroreflective surface. The
+# yellow surface of the same paragraph is reserved for "τα αυτοκίνητα Δ.Χ." —
+# motor CARS in public-use service — so it does not reach this scheme.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: GR-PLATES-2004
+    section: "άρθρο 1 παρ. 1, 3, 5· άρθρο 2 παρ. 5· άρθρο 5"
+examples:
+  valid:
+    - "ABE 123"
+    - "ZZZ 001"
+    - "XYX 999"
+    - "IKM-45"
+    - "HTP 7"
+  invalid:
+    # 000 is outside 001-999.
+    - "ABE 000"
+    - "ABE 00"
+    - "ABE 0"
+    # Four digits is the car series (GR_ORDINARY).
+    - "ABE 1234"
+    # Letters outside the fourteen.
+    - "ABC 123"
+    - "ABR 123"
+    # Not three letters.
+    - "AB 123"
+    - "ABEZ 123"
+    - "123 ABE"

@@ -109,11 +109,11 @@ describe("Estonia — country-less detection", () => {
     expect(result.country).toBe("EE");
   });
 
-  it("reports the CD overlap with Germany, Spain, Denmark, Finland and Hungary", () => {
+  it("reports the CD overlap with Germany, Spain, Denmark, Finland, Hungary and Latvia", () => {
     const result = detect("CD1245");
     expect(result.status).toBe("AMBIGUOUS");
     expect(
       result.candidates?.map((c) => c.country).sort((a, b) => a.localeCompare(b)),
-    ).toEqual(["DE", "DK", "EE", "ES", "FI", "HU"]);
+    ).toEqual(["DE", "DK", "EE", "ES", "FI", "HU", "LV"]);
   });
 });

@@ -1,0 +1,112 @@
+schemaVersion: 1
+id: LV_ORDINARY
+country: LV
+name: Vispārējās izmantošanas numura zīme — mehāniskie transportlīdzekļi (AB-1234)
+registrationType: ORDINARY
+# validFrom is deliberately omitted. MK noteikumi Nr. 1080 date from 2010 and
+# the current 7. pielikums is the MK 13.02.2024. noteikumu Nr. 97 redaction, but
+# two letters over a number is the shape Latvia has used since it resumed its
+# own registration in the early 1990s; the act that introduced it was not
+# traced, so any date taken from this regulation would wrongly reject older
+# plates, which stay valid (the number follows the vehicle).
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # 7. pielikuma 2.2. apakšpunkts gives this composition to "mehāniskajiem
+  # transportlīdzekļiem" and gives trailers, semitrailers and mopeds a
+  # ONE-letter number instead, so on the face of the general-use rules a
+  # two-letter number means a motor vehicle: car, van, lorry, bus, motorcycle,
+  # tricycle or quadricycle (2.5. apakšpunkts puts motorcycles, tricycles and
+  # quadricycles on the same two letters, F type, when a C type does not fit).
+  #
+  # It is still NOT_INFERABLE, and the reason is the special-purpose series that
+  # share these characters exactly and are therefore not modelled separately
+  # (see AGENTS.md):
+  #   4.1. tranzīta      — 2 letters + 1-4 digits, issued to ANY vehicle being
+  #                        taken out of Latvia, trailers and mopeds included
+  #                        (13.1. punkts, 4.1.1.2. apakšpunkts)
+  #   4.5. taksometru    — 2 letters + 1-4 digits, yellow background
+  #   4.6. bezceļu       — 2 letters + 1-3 digits, green symbols, issued to
+  #                        mopeds, motorcycles, tricycles and quadricycles
+  #   4.8. elektro-      — the same types, blue symbols
+  # Once transit is in scope, a two-letter number can sit on a trailer, and the
+  # off-road series brings mopeds in. That is every category in the register, so
+  # nothing is asserted.
+  level: NOT_INFERABLE
+segments:
+  # "Divi latīņu alfabēta burti" (2.2. apakšpunkts). The regulation names the
+  # Latin alphabet and no subset: unlike the electric-scooter sticker of
+  # 11. pielikums, where it excludes I and O explicitly, it withholds nothing
+  # here, so the full A-Z is accepted. Q, W, X and Y are absent from the Latvian
+  # alphabet and are rare in issued series, but CSDD publishes no list of the
+  # pairs in use or withheld — the same evidence gap as the Danish letter pairs.
+  #
+  # CC and CD are the exception. 4.4.2. apakšpunkts reserves "C", "CC" and "CD"
+  # to diplomatic plates, and 7. punkts forbids assigning the same symbol
+  # combination to more than one vehicle, so a general-use pair CC or CD would
+  # duplicate a diplomatic number. Withholding the two pairs keeps LV_DIPLOMATIC
+  # usable: without it every Latvian diplomatic plate of four digits or fewer
+  # would come back AMBIGUOUS. This is an inference from the reservation, not an
+  # express prohibition — the same narrowing as the Hungarian TX pair — and it is
+  # the only one applied here. The single letter "C" is NOT withheld from the
+  # one-letter series (see LV_TRAILER_MOPED).
+  - name: series
+    type: LETTERS
+    length: 2
+    excludedValues:
+      - CC
+      - CD
+  # "No viena līdz četriem cipariem, kas veido skaitļus no 1 līdz 9999"
+  # (2.2. apakšpunkts) — a NUMBER, so no leading zeros, and one to four digits
+  # then expresses 1-9999 exactly. 10.3 punkts confirms the low end is real: it
+  # rations the ordering of numbers "ar vienu vai diviem cipariem".
+  - name: number
+    type: DIGITS
+    minLength: 1
+    maxLength: 4
+    noLeadingZero: true
+formats:
+  # 2.3. apakšpunkts: on an A type plate "burti no cipariem atdalīti ar
+  # horizontālu svītru" — the hyphen is prescribed, not decorative. 9. punkts
+  # says the register and the registration certificate write the number "bez
+  # svītras vai atstarpes starp simboliem", which is exactly `compact`.
+  national: "{series}-{number}"
+  compact: "{series}{number}"
+# No visual. 7. pielikums assigns colours only where a series departs from the
+# norm (red background for diplomatic plates, yellow for taxis, red symbols for
+# trade plates, green for off-road, blue for electric vehicles, black/white for
+# military ones); the ordinary plate's black-on-white is left to standard
+# LVS 20:2009, which 9. punkts of the regulation names and which is not
+# published free of charge. Since the taxi (4.5.3.) and electric-vehicle (4.8.)
+# series carry these very characters, asserting a colour here would be wrong
+# even if the standard were to hand.
+sources:
+  - id: LV-REG-RULES
+    section: "7.-10.3 punkts; 7. pielikuma 1.1.-1.3., 1.5., 2.1.-2.3., 2.5. apakšpunkts"
+  - id: LV-CSL
+    section: "10. panta 1.4 daļa; 10.2 panta ceturtā daļa; 21. panta otrā daļa"
+examples:
+  valid:
+    - "AB-1234"
+    - "FF 9999"
+    - "KR 1"
+    - "JP-12"
+    - "AA 123"
+  invalid:
+    # Zero is not a number in 1-9999, and 1-9999 is not written zero-padded.
+    - "AB-0"
+    - "AB-0123"
+    - "AB 00"
+    # Wrong width.
+    - "AB 12345"
+    - "A 1234"
+    - "ABC 1234"
+    # CC and CD are reserved to the diplomatic series.
+    - "CD 1234"
+    - "CC 12"
+    # Digits first is no Latvian general-use number.
+    - "1234 AB"
+    - "AB"

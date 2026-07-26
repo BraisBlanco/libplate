@@ -47,7 +47,11 @@ three-letter one + `CD` permanent and temporary + `OT` museum + `TX` taxi +
 the `BA`/`HA`/`MA`/`NA`/`RA` state bodies + `I` temporary), Lithuania (a
 composition per vehicle category — M/N cars, O trailers, L3-L7e motorcycles,
 L1-L6e mopeds — plus `E` electromobiles, `T` taxi, `H` historic in both
-positions, export, diplomatic and powerful quadricycles). See `README.md` for
+positions, export, diplomatic and powerful quadricycles), Greece (cars Ι.Χ. and
+Δ.Χ., motorcycles, and both category-O series — the `Ρ` public-use one and the
+`Τ` + letter one introduced in 2019), Latvia (the two general-use series —
+mechanical vehicles on two letters, trailers/semitrailers/mopeds on one — plus
+`C`/`CC`/`CD` diplomatic, trade and `IZM` test numbers). See `README.md` for
 the full matrix.
 
 ## The golden rule: metadata is the source of truth
@@ -572,5 +576,59 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
   One live risk: the consolidated redaction used runs to 2026-09-30, so some
   provision of Nr. 1V-518 (2026-07-13) enters force on 2026-10-01 — **re-check
   point 21 after that date**.
+
+- **GR is three letters over a number, and the moped series swallows it.** Υ.Α.
+  οικ. 4700/330/2004 άρθρο 1 gives cars Ι.Χ. and Δ.Χ. three of the fourteen
+  letters common to the Greek and Latin alphabets plus four digits (παρ. 2),
+  motorcycles the same letters plus 001-999 (παρ. 3) and trailers the letter Ρ
+  plus 1000-99999 (παρ. 4). The plate face carries GREEK capitals and libplate
+  matches their Latin look-alikes (`A B E Z H I K M N O P T Y X`) — Ρ is rho, so
+  it is entered as `P`, and Χ is chi, entered as `X`; Latin `R` and `C` are not
+  Greek plate letters and Greek input is NOT transliterated (the BG trade-off).
+  The prefecture/use allocation of the opening letters is real but unpublished:
+  παρ. 5 says only that it "παραμένει ως έχει", so letters are charset-checked,
+  and `GR_ORDINARY` asserts no colours because παρ. 5 of άρθρο 2 splits white
+  (Ι.Χ.) from yellow (Δ.Χ.) on the same composition. **Deliberately absent, and
+  do not "add" it**: the police-issued moped number of Υ.Α. 2513/2/218-ιδ άρθρο
+  12 παρ. 1 is three of the SAME letters plus a number from 1 to 9999, a space
+  that strictly contains both the car and the motorcycle series — hence
+  `MOPED_OR_MOTOR_CYCLE` sits in both schemes' `possibleCategories` instead. Also
+  absent: `ΔΟΚ` trade, diplomatic and `ΜΕ` machinery plates. Their specification
+  survives in the paragraphs of Υ.Α. 19800/1982 that the 2004 decision did NOT
+  repeal (άρθρο 9 repeals παρ. Α, Β, ΙΑ, ΙΓ, ΙΕ, ΙΣΤ of κεφάλαιο Ι only, and only
+  as to car/trailer/motorcycle state plates); Υ.Α. 143021/2020 points at "την
+  παρ. Γ του Κεφαλαίου Ι" for `ΔΟΚ`, but that text is paywalled on e-nomothesia
+  and the 1982 ΦΕΚ is a scan — do not reconstruct it from secondary
+  descriptions. The 2019 trailer decision is the one place with a real date:
+  published 12.6.2019, in force nine months later, three for special-purpose
+  category O vehicles, so `GR_TRAILER_PRIVATE` carries 2019-09-12; `GR_TRAILER`
+  keeps no `validTo` because its plates stay in circulation.
+- **LV's composition is in an annex, in a redaction that keeps changing.** The
+  body of MK noteikumi Nr. 1080 delegates everything to **7. pielikums** (a URL
+  trap: `likumi.lv/doc.php?id=222145` returns the annexes, the article-view URL
+  does not), and the annex modelled here is the **MK 13.02.2024. noteikumu Nr. 97
+  redaction** — the 30.05.2017 one has a narrower trade range and no military or
+  electric-vehicle plates, so check the redaction of any quotation. Two letters +
+  1-9999 is any mechanical vehicle; ONE letter + the same number is a trailer,
+  semitrailer or moped, and letters may replace the last two digit symbols there
+  (`Z-12AB`) — a whole-letter tail is refused, since the digits must still form
+  "skaitļus no 1 līdz 9999". `LV_ORDINARY` is `NOT_INFERABLE` and carries no
+  colours, and that is forced: four special-purpose series share its characters
+  exactly and differ only visually (transit's red field, taxi yellow, off-road
+  green symbols, electric-vehicle blue symbols), transit numbers go on trailers
+  too (13.1. punkts), and the ordinary black-on-white lives in the paid standard
+  LVS 20:2009. `CC` and `CD` are withheld from the general-use pairs on the HU
+  `TX` reasoning (4.4.2. reserves `C`/`CC`/`CD`, 7. punkts forbids duplicates),
+  but the single letter `C` is NOT withheld from the one-letter series and
+  neither are the trade letters `A`-`E`: `C 1234` and `A 1234` come back
+  AMBIGUOUS, which is right, because those plates differ by colour. One
+  documented over-acceptance: the diplomatic four-symbol FLOOR of 4.4.1 cannot be
+  expressed (`lengthRules` states maxima only), so `C` + two digits validates.
+  **Deliberately absent**: military plates (`L`/`LA` + digits, with no digit count
+  or symbol total anywhere — the RO precedent, do not invent one), individual
+  plates (2-8 symbols, optionally containing a space, a space that contains every
+  other series), and the transit/taxi/off-road/electric variants above. Out of
+  scope by 2. punkts, not by omission: traktortehnika and its trailers, trams,
+  trolleybuses, specialised tourist vehicles and special military technology.
 
 These need grammar or scope work, not a quick patch. Discuss before changing.
