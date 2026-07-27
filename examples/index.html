@@ -303,22 +303,35 @@ format("garbage",  { country: "ES" });    <span class="comment">// null when inv
         <code>"AMBIGUOUS"</code> and <code>candidates</code> lists them — the library
         never guesses a single country.
       </p>
-      <pre><code>import { detect } from "libplate";
+      <pre><code>import { detect, parse } from "libplate";
 
 detect("C 1234 BCD");
 <span class="comment">// status:  "VALID"</span>
 <span class="comment">// country: "ES", scheme.id: "ES_MOPED_CURRENT"</span>
 <span class="comment">// vehicle: { category: "MOPED_OR_MOTOR_CYCLE", inferenceLevel: "DETERMINISTIC" }</span>
 
-detect("BAB123");
+<span class="comment">// Two kinds of ambiguity. Within one country, the same text can split in</span>
+<span class="comment">// several ways — that is AMBIGUOUS_SEGMENTATION:</span>
+parse("BAB123", { country: "DE" });
 <span class="comment">// status: "AMBIGUOUS", errors[0].reason: "AMBIGUOUS_SEGMENTATION"</span>
 <span class="comment">// candidates: [</span>
 <span class="comment">//   { country: "DE", scheme: "DE_STANDARD", formatted: "B-AB 123" },  // Berlin</span>
 <span class="comment">//   { country: "DE", scheme: "DE_STANDARD", formatted: "BA-B 123" },  // Bamberg</span>
 <span class="comment">// ]</span>
 
+<span class="comment">// Without a country hint the same text also collides across borders, so the</span>
+<span class="comment">// reason becomes AMBIGUOUS_COUNTRY and the candidate list is much wider:</span>
+detect("BAB123");
+<span class="comment">// status: "AMBIGUOUS", errors[0].reason: "AMBIGUOUS_COUNTRY"</span>
+<span class="comment">// 9 candidates across AT, DE, FI, GR, IT, LT and SE — none of them picked.</span>
+
 detect("B-AB 123");
 <span class="comment">// status: "VALID" — the separators you wrote are used as evidence</span></code></pre>
+      <p class="note">
+        Candidate lists grow as countries are added, so treat the counts above as
+        illustrative and the <em>shape</em> of the answer as the contract.
+        <code>test/ambiguity.test.ts</code> pins the current sets in the repo.
+      </p>
 
       <h2>4. Options: <code>referenceDate</code> and <code>includeHistorical</code></h2>
       <pre><code>import { parse, detect } from "libplate";
@@ -331,11 +344,20 @@ parse("M-1234-AB", { country: "ES" });
 parse("M-1234-AB", { country: "ES", referenceDate: "1985-06-01" });
 <span class="comment">// status: "VALID" — the series was being issued in 1985</span>
 
-<span class="comment">// Historical schemes are opt-in for country-less detection, because their</span>
-<span class="comment">// shapes collide across countries and would flood results with ambiguity.</span>
-detect("00-00-AA");                             <span class="comment">// status: "INVALID"</span>
+<span class="comment">// The Portuguese 1992-2005 series, asked about after it ended:</span>
+parse("00-00-AA", { country: "PT" });
+<span class="comment">// status: "VALID", scheme.id: "PT_GENERAL_1992_2005"</span>
+parse("00-00-AA", { country: "PT", referenceDate: "2019-06-01" });
+<span class="comment">// status: "INVALID" — no PT scheme was issuing this shape in 2019</span>
+
+<span class="comment">// Legacy/superseded series are opt-in for country-less detection, because</span>
+<span class="comment">// their shapes collide across countries and would flood results.</span>
+detect("00-00-AA");
+<span class="comment">// status: "AMBIGUOUS" — the current-series readings: EE_TRACTOR, LT_EXPORT</span>
 detect("00-00-AA", { includeHistorical: true });
-<span class="comment">// status: "VALID", country: "PT", scheme.id: "PT_GENERAL_1992_2005"</span></code></pre>
+<span class="comment">// status: "AMBIGUOUS" — NL_SIDECODE_2 and PT_GENERAL_1992_2005.</span>
+<span class="comment">// The EE/LT readings drop out here: their national formats group the digits</span>
+<span class="comment">// as "0000 AA", which the separator you wrote after "00" contradicts.</span></code></pre>
 
       <h2>5. Driving UI logic from reason codes</h2>
       <p>
@@ -355,9 +377,9 @@ function plateFieldFeedback(input, country) {
       return { ok: false, choices: result.candidates };
     default:
       switch (result.errors[0]?.reason) {
-        case "TOO_SHORT":
+        case "EMPTY_INPUT":
+          return { ok: false, hint: "Type a plate" };
         case "TOO_LONG":
-        case "INVALID_LENGTH":
           return { ok: false, hint: "Check the plate length" };
         case "INVALID_CHARACTERS":
           return { ok: false, hint: "Contains characters no scheme allows" };
@@ -368,6 +390,14 @@ function plateFieldFeedback(input, country) {
       }
   }
 }</code></pre>
+      <p class="note">
+        Those are the codes actually emitted today, plus
+        <code>INVALID_STRUCTURE</code> and the three <code>AMBIGUOUS_*</code> ones. The
+        type declares more (<code>TOO_SHORT</code>, <code>INVALID_LENGTH</code>,
+        <code>OUTSIDE_VALIDITY_PERIOD</code>…) reserved for finer diagnostics: a
+        <code>switch</code> over them is safe, but those arms are unreachable for now. The
+        README lists the full set.
+      </p>
 
       <h2>6. Introspection</h2>
       <pre><code>import {
@@ -377,9 +407,11 @@ function plateFieldFeedback(input, country) {
   getLibraryVersion,
 } from "libplate";
 
-getSupportedCountries();     <span class="comment">// ["AT", "BE", "DE", "ES", "FR", "IT", "NL", "PL", "PT"]</span>
-getSupportedSchemes("ES");   <span class="comment">// ["ES_ORDINARY_CURRENT", "ES_TRAILER_CURRENT", ...]</span>
-getMetadataVersion();        <span class="comment">// e.g. "2026.07.3" — the compiled scheme tables</span>
+getSupportedCountries();
+<span class="comment">// ["AT", "BE", "BG", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GR", "HU", "IT", "LT", "LV", "NL", "NO", "PL", "PT", "RO", "SE", "SI", "SK"]</span>
+
+getSupportedSchemes("ES");   <span class="comment">// ["ES_CONSULAR_CC", "ES_DIPLOMATIC_CD", "ES_HISTORICAL", ...]</span>
+getMetadataVersion();        <span class="comment">// e.g. "2026.07.15" — the compiled scheme tables</span>
 getLibraryVersion();         <span class="comment">// e.g. "0.1.0"</span></code></pre>
 
       <h2>CommonJS</h2>

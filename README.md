@@ -781,6 +781,10 @@ table above.
 npm install libplate
 ```
 
+[`examples/index.html`](examples/index.html) is a runnable version of everything
+below, with a live playground: `npm run build`, serve the repo root over HTTP and
+open `/examples/`. Its claims are checked by `test/docs.test.ts`.
+
 ## Usage
 
 ```ts
@@ -829,7 +833,7 @@ full result for `parse("R-1234-BCD", { country: "ES" })`:
   "visual": { "background": "RED", "foreground": "BLACK" },
   "warnings": [],
   "errors": [],
-  "versions": { "library": "0.1.0", "metadata": "2026.07.8" }
+  "versions": { "library": "0.1.0", "metadata": "2026.07.15" }
 }
 ```
 
@@ -931,7 +935,9 @@ two legal splits of the same text:
 Writing the separators resolves it: `B-AB 123` is Berlin, `BA-B 123` is
 Bamberg. Without a country hint the same mechanism reports
 `AMBIGUOUS_COUNTRY` instead — `detect("AA-123-AA")` returns the French
-`FR_SIV_CURRENT` and the Italian `IT_CURRENT` as candidates.
+`FR_SIV_CURRENT`, the Italian `IT_CURRENT` and the Slovak `SK_ORDINARY` as
+candidates. Candidate sets widen as countries are added; `test/ambiguity.test.ts`
+pins them so the change is visible in a diff.
 
 An unmodelled country is reported as such, not as a rejection:
 
@@ -1037,6 +1043,16 @@ npm run coverage      # Vitest coverage with thresholds
 npm run check         # all of the above in sequence
 ```
 
+Four suites are not about any single country and will fail on work that only
+looks local:
+
+| Suite                              | Guards                                                                                                                                                                         |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `test/conformance.test.ts`         | Every scheme's own `examples` resolve to it (or to a declared wide series).                                                                                                    |
+| `test/metadata-invariants.test.ts` | Whole-set invariants the JSON Schema cannot express: lossless formats, coherent validity windows, live exclusions, and a generated string for every expansion of every scheme. |
+| `test/ambiguity.test.ts`           | A snapshot of the cross-country `detect` candidate sets.                                                                                                                       |
+| `test/docs.test.ts`                | The claims in this README and in `examples/index.html` — counts, result shapes and reason codes.                                                                               |
+
 ### Adding a scheme
 
 1. Add a YAML file under `metadata/<COUNTRY>/`.
@@ -1044,6 +1060,14 @@ npm run check         # all of the above in sequence
    `source`.
 3. Run `npm test` — the conformance suite verifies the examples behave as
    declared.
+4. Expect `test/ambiguity.test.ts` to fail: a new scheme normally widens the
+   candidate sets of plates that were already modelled. **Read the diff** — it
+   is the blast radius of your change — then accept it with
+   `npx vitest run test/ambiguity.test.ts -u`. If a documented example moved,
+   fix the prose in this README and in `examples/index.html`; `test/docs.test.ts`
+   will tell you if you missed one.
+5. Update the coverage table and the per-country row counts above. `npm test`
+   checks them, so a stale figure fails the build rather than shipping.
 
 ## License
 

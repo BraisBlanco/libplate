@@ -1,14 +1,15 @@
 {
   "name": "libplate",
   "version": "0.1.0",
-  "description": "Format validation, parsing and structured analysis of European vehicle registration plates. Starts with Spain.",
+  "description": "Format validation, parsing and structured analysis of European vehicle registration plates.",
   "keywords": [
     "license-plate",
     "number-plate",
     "matricula",
+    "kennzeichen",
     "vehicle-registration",
     "validation",
-    "spain"
+    "europe"
   ],
   "license": "MIT",
   "type": "module",

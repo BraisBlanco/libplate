@@ -9,11 +9,13 @@ export default defineConfig({
       include: ["src/**/*.ts"],
       // Type-only and generated modules have no runtime to cover.
       exclude: ["src/index.ts", "src/model/**", "src/generated/**", "src/version.ts"],
+      // Set just under the current numbers: the gap to 100% is a handful of
+      // defensive fallbacks, so any real drop is a regression, not noise.
       thresholds: {
-        lines: 90,
-        functions: 90,
-        branches: 85,
-        statements: 90,
+        lines: 99,
+        functions: 100,
+        branches: 96,
+        statements: 99,
       },
     },
   },
