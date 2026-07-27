@@ -25,7 +25,9 @@ const ALLOWED_COMPACT = /^[A-Z0-9ÄÖÜ]*$/;
  */
 export function normalize(raw: string): InputRepresentations {
   // toUpperCase() (not toLocaleUpperCase) is locale-independent by design.
-  const compact = raw.trim().toUpperCase().replace(SEPARATORS_ALL, "");
+  // No trim() is needed: `\s` is part of SEPARATORS, so the global replace
+  // already removes leading and trailing whitespace along with the rest.
+  const compact = raw.toUpperCase().replace(SEPARATORS_ALL, "");
   return { raw, compact };
 }
 
@@ -45,7 +47,9 @@ export function separatorBoundaries(raw: string): Set<number> {
   const boundaries = new Set<number>();
   let compactIndex = 0;
   let pendingSeparator = false;
-  for (const char of raw.trim()) {
+  // Leading separators are ignored by the `compactIndex > 0` guard below and
+  // trailing ones by there being no following character, so no trim() either.
+  for (const char of raw) {
     if (SEPARATORS.test(char)) {
       pendingSeparator = true;
       continue;

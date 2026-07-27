@@ -51,12 +51,15 @@ describe("Spain — regime prefixes", () => {
     expect(p.registration?.type).toBe("TEMPORARY_PRIVATE");
     expect(p.registration?.temporary).toBe(true);
     expect(p.visual).toEqual({ background: "GREEN", foreground: "WHITE" });
-    expect(parse("S 1234 BCD", { country: "ES" }).registration?.type).toBe(
-      "TEMPORARY_COMPANY",
-    );
-    expect(parse("V 1234 BCD", { country: "ES" }).registration?.type).toBe(
-      "TEMPORARY_COMPANY",
-    );
+    // The `temporary` flag is derived from the type, so assert both: checking
+    // only the type let a mutation that drops TEMPORARY_COMPANY from the
+    // derivation survive.
+    for (const prefix of ["S", "V"]) {
+      const company = parse(`${prefix} 1234 BCD`, { country: "ES" });
+      expect(company.registration?.type).toBe("TEMPORARY_COMPANY");
+      expect(company.registration?.temporary).toBe(true);
+    }
+    expect(parse("T 1234 BCD", { country: "ES" }).registration?.temporary).toBe(false);
   });
 });
 

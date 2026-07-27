@@ -14,6 +14,10 @@ export default tseslint.config(
       "coverage/**",
       "src/generated/**",
       "node_modules/**",
+      // Stryker's sandbox is a full copy of the project, plus generated
+      // harness files; linting it reports the same code twice.
+      ".stryker-tmp/**",
+      "reports/**",
       "*.config.ts",
       "eslint.config.js",
     ],

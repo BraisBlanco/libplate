@@ -850,7 +850,7 @@ full result for `parse("R-1234-BCD", { country: "ES" })`:
 | `registration`  | `VALID`                                  | The **regime** (`type`, `temporary`, `diplomatic`, `historical`) — not the vehicle category. |
 | `vehicle`       | `VALID`                                  | `category` / `possibleCategories`, plus `inferenceLevel` and the `evidence` behind it.       |
 | `visual`        | `VALID`, when the scheme prescribes them | Background and foreground colours **as prescribed by the regulation** — never checked.       |
-| `warnings`      | always                                   | Reserved. No code path populates it yet, so it is always `[]`.                               |
+| `warnings`      | always                                   | Non-fatal notes about the call, not the plate. Today: an ignored `referenceDate`.            |
 | `errors`        | always                                   | Empty on `VALID`; otherwise one entry per reason, each with a stable code and a message.     |
 | `versions`      | always                                   | `library` and `metadata` versions — the metadata version moves independently.                |
 
@@ -1052,6 +1052,36 @@ looks local:
 | `test/metadata-invariants.test.ts` | Whole-set invariants the JSON Schema cannot express: lossless formats, coherent validity windows, live exclusions, and a generated string for every expansion of every scheme. |
 | `test/ambiguity.test.ts`           | A snapshot of the cross-country `detect` candidate sets.                                                                                                                       |
 | `test/docs.test.ts`                | The claims in this README and in `examples/index.html` — counts, result shapes and reason codes.                                                                               |
+
+### Mutation testing
+
+```bash
+npm run mutation      # Stryker over src/engine, src/tokens and src/metadata
+```
+
+Line coverage says a line ran; it does not say an assertion would have noticed
+had that line been wrong. That gap matters here because the suite is largely
+data-driven — it reached 99% line coverage while 94 mutants survived. It is much
+slower than the unit suite, so it does not gate pull requests: a weekly
+[workflow](.github/workflows/mutation.yml) runs it and uploads the report.
+
+Current score: **89.58%** (601 killed, 18 timed out, 72 survived of 691 mutants,
+none uncovered). The build fails below 87%.
+
+Two categories of surviving mutant are expected and should not be "fixed":
+
+- **Error messages.** Only `errors[].reason` is contract; the messages are
+  explicitly not. Asserting their wording would contradict that.
+- **Equivalent mutants.** Several guards are pure fast paths that cannot change
+  an outcome — the length bounds in `matchAll` (the per-expansion length filter
+  already decides), the compiled-pattern cache, and the shape check in
+  `isValidIsoDate` (the `Date` round-trip subsumes it). They are kept for speed
+  and clarity, and no test can kill them.
+
+What a survivor outside those two groups usually means is a missing boundary
+case. Removing the redundant `trim()` calls in `normalize.ts` and the tests for
+inclusive validity bounds, the expansion cap and mixed digit runs all came from
+reading this report.
 
 ### Adding a scheme
 

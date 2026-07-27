@@ -45,6 +45,39 @@ function error(reason: ValidationReason, message: string): ValidationError {
   return { reason, message };
 }
 
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+/**
+ * Whether a string is an ISO `YYYY-MM-DD` calendar date that exists. The
+ * round-trip through `Date` is what rejects `2026-02-31`, which the shape
+ * check alone accepts (it would silently roll over to March 3rd).
+ */
+function isValidIsoDate(value: string): boolean {
+  if (!ISO_DATE.test(value)) return false;
+  const parsed = new Date(`${value}T00:00:00Z`);
+  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().startsWith(`${value}T`);
+}
+
+/**
+ * Drop a malformed `referenceDate` instead of filtering by it.
+ *
+ * Validity filtering compares ISO strings lexically, so a value like
+ * `"not-a-date"` silently behaves as a far-future date: it passes every
+ * `validFrom` test and fails every `validTo` one, quietly hiding every
+ * superseded series. Ignoring the option and warning keeps `parse` total —
+ * it never throws — while making the caller's bug visible.
+ */
+function withCheckedOptions(base: ResultBase, opts: ParseOptions): ParseOptions {
+  const { referenceDate } = opts;
+  if (referenceDate === undefined || isValidIsoDate(referenceDate)) return opts;
+  base.warnings.push(
+    `Ignoring referenceDate "${referenceDate}": expected an ISO YYYY-MM-DD calendar date.`,
+  );
+  const rest: ParseOptions = { ...opts };
+  delete rest.referenceDate;
+  return rest;
+}
+
 /** Schemes to consider, given the caller's options. */
 function selectSchemes(opts: ParseOptions): PlateScheme[] {
   let schemes = METADATA.schemes;
@@ -190,8 +223,9 @@ function filterBySeparators(matches: MatchEntry[], raw: string): MatchEntry[] {
  * Parse and validate a plate. This is the primary entry point; everything else
  * is a thin convenience over it.
  */
-export function parse(input: string, opts: ParseOptions = {}): PlateValidationResult {
+export function parse(input: string, rawOpts: ParseOptions = {}): PlateValidationResult {
   const base: ResultBase = { input: normalize(input), warnings: [], versions: VERSIONS };
+  const opts = withCheckedOptions(base, rawOpts);
 
   const rejection = rejectInput(base, opts);
   if (rejection) return rejection;

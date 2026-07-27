@@ -184,6 +184,11 @@ export interface ParseOptions {
   /**
    * Reference date (ISO YYYY-MM-DD) used to filter schemes by their validity
    * period. When omitted, schemes are matched regardless of period.
+   *
+   * A value that is not an ISO calendar date is ignored — filtering is skipped
+   * entirely — and reported in {@link PlateValidationResult.warnings}. It is
+   * never treated as a date, because comparison is lexical and a malformed
+   * value would silently act as a far-future one.
    */
   referenceDate?: string;
   /**

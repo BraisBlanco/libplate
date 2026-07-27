@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "packageManager": "npm",
+  "testRunner": "vitest",
+  "reporters": ["clear-text", "progress", "html"],
+  "htmlReporter": { "fileName": "reports/mutation/index.html" },
+  "coverageAnalysis": "perTest",
+  "_comment": [
+    "Only hand-written runtime code is mutated. src/generated/metadata.ts is a",
+    "15k-line data table (mutating it measures the metadata, not the engine),",
+    "src/index.ts only re-exports, and src/version.ts is a single constant."
+  ],
+  "mutate": ["src/engine/**/*.ts", "src/tokens/**/*.ts", "src/metadata/types.ts"],
+  "_thresholds_comment": [
+    "Score at the time of writing: 89.58 (601 killed, 18 timeout, 72 survived",
+    "of 691). `break` sits a little below it: some of the 18 timeouts turn into",
+    "other verdicts on a faster or busier machine, so a tight bound would be",
+    "flaky rather than informative."
+  ],
+  "thresholds": { "high": 95, "low": 85, "break": 87 },
+  "timeoutMS": 15000,
+  "tempDirName": ".stryker-tmp"
+}

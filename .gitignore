@@ -4,5 +4,9 @@ dist/
 .DS_Store
 coverage/
 
+# Stryker sandbox and mutation report
+.stryker-tmp/
+reports/
+
 # Personal, machine-local Claude Code settings
 .claude/settings.local.json

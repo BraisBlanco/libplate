@@ -1,0 +1,28 @@
+name: Mutation
+
+# Mutation testing is far slower than the unit suite, so it does not gate pull
+# requests — `npm run check` does that. This runs weekly and on demand, and its
+# job is to catch assertions that went weak, not to block a merge.
+
+on:
+  schedule:
+    - cron: "0 3 * * 1" # Mondays, 03:00 UTC
+  workflow_dispatch:
+
+jobs:
+  stryker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run mutation
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mutation-report
+          path: reports/mutation
+          retention-days: 30

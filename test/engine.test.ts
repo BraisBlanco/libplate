@@ -84,6 +84,57 @@ describe("parse — rejections", () => {
     // The current ordinary series did not exist in 1990.
     const result = parse("1234 BCD", { country: "ES", referenceDate: "1990-01-01" });
     expect(result.status).toBe("INVALID");
+    expect(result.warnings).toEqual([]);
+  });
+});
+
+describe("parse — malformed referenceDate", () => {
+  // Validity comparison is lexical, so a malformed value used to sail through
+  // as a far-future date: it beat every validFrom and failed every validTo,
+  // silently hiding superseded series while still answering VALID.
+  const malformed = [
+    "not-a-date",
+    "2026-13-99",
+    "2026-02-31",
+    "26-01-01",
+    "2026-1-1",
+    "",
+  ];
+
+  it.each(malformed)("ignores %o and says so in warnings", (referenceDate) => {
+    const result = parse("M-1234-AB", { country: "ES", referenceDate });
+    // ES_PROVINCIAL_1971_2000 carries a validTo, so a date-shaped comparison
+    // would have filtered it out.
+    expect(result.status).toBe("VALID");
+    expect(result.scheme?.id).toBe("ES_PROVINCIAL_1971_2000");
+    expect(result.warnings).toHaveLength(1);
+    expect(result.warnings[0]).toContain("referenceDate");
+  });
+
+  it("still filters on a well-formed date, without warning", () => {
+    const inside = parse("M-1234-AB", { country: "ES", referenceDate: "1985-06-01" });
+    expect(inside.status).toBe("VALID");
+    expect(inside.warnings).toEqual([]);
+
+    const outside = parse("M-1234-AB", { country: "ES", referenceDate: "2020-06-01" });
+    expect(outside.status).toBe("INVALID");
+    expect(outside.warnings).toEqual([]);
+  });
+
+  it("accepts a leap day that exists and rejects one that does not", () => {
+    expect(
+      parse("M-1234-AB", { country: "ES", referenceDate: "1996-02-29" }).warnings,
+    ).toEqual([]);
+    expect(
+      parse("M-1234-AB", { country: "ES", referenceDate: "1997-02-29" }).warnings,
+    ).toHaveLength(1);
+  });
+
+  it("carries the warning on rejections too", () => {
+    const result = parse("nope!", { country: "ES", referenceDate: "whenever" });
+    expect(result.status).toBe("INVALID");
+    expect(result.errors[0]?.reason).toBe("INVALID_CHARACTERS");
+    expect(result.warnings).toHaveLength(1);
   });
 });
 
