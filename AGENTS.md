@@ -56,7 +56,10 @@ two-letter/three-digit/two-letter series + the `Y` towed-vehicle block + `EL`/`E
 electric + `CD`/`CC`/`ZZ`/`CH` diplomatic + `P` police and the all-digit armed
 forces number + the six zvláštne series `C`/`F`/`H`/`M`/`S`/`V`), Norway (the
 five-digit car/lorry series and the four-digit series for everything else + the
-`EL`-family, `GA` and `HY` fuel series + `CD` + the two pre-1971 arrangements).
+`EL`-family, `GA` and `HY` fuel series + `CD` + the two pre-1971 arrangements),
+Ireland (the year/half-year/index-mark/sequence number in each of its three live
+generations — first used from 2014, in 2013, and up to 2012 — plus the `ZV`
+vintage series and the `ZZ` export registration).
 See `README.md` for the full matrix.
 
 ## The golden rule: metadata is the source of truth
@@ -707,5 +710,43 @@ sonarjs + unused-imports + complexity budgets), `format:check` (Prettier),
   marks (§ 2a-2 (2), two to seven characters), the 1971-2002 orders (identical in
   shape to the current series, so modelling them separately would make every
   Norwegian plate ambiguous) and the colour variants above.
+
+- **IE is dated by the year of FIRST USE, and that is not a validity window.**
+  Regulation 9 of S.I. No. 318 of 1992, as substituted by Regulation 4(a) of
+  S.I. No. 452 of 2013, splits the mark by the year the vehicle was first brought
+  into use **anywhere**: paragraph (1) two-digit year for ≤ 2012, (1A) year plus
+  half-year numeral for 2013, (1B) the same shape for 2014 onwards. All three are
+  in force and all three are issued today — a 2011 import registered this morning
+  takes `11-D-…`. That is why `IE_ORDINARY_PRE_2013` carries **no `validFrom`**
+  (Reg. 3 commenced Regulation 9 on 1993-01-01, but the numerals are not a date
+  of issue, and `05-D-1` is a 1905 or 2005 vehicle), why `IE_ORDINARY_2013`
+  carries **no `validTo`**, and why none of them is `legacySeries`. The split into
+  three schemes is not cosmetic: paragraphs (1)/(1A) point at the paragraph 4
+  index-mark table and (1B) at paragraph 4A, so `LK`/`TN`/`TS`/`WD` are
+  unreachable behind a 14+ year and `T` unreachable behind an earlier one —
+  **do not merge the tables**, and do not mark the four amalgamated codes
+  historical (Revenue's Registration Districts note says they are still issued to
+  pre-2014 imports). The 14+ bound on `IE_ORDINARY`'s year is enumerated in
+  `PATTERNS` because paragraph (1B)'s own scope implies it statically; no upper
+  bound is imposed, since whether a year has arrived is a question about the
+  world. **The sequence width is libplate's own**: Reg. 9 states none, and the
+  plate geometry cannot supply one — First Schedule paras. 14 and 16 cap a
+  one-line plate at four digits on the strict reading of "total width of the space
+  taken by each letter or figure", which real `191-D-12345` plates contradict, and
+  at six on the permissive one. Six is what ships. `noLeadingZero` IS sourced
+  (para. 3(b), the nought that was never assigned), but it is deliberately absent
+  from `IE_ZZ_TEMPORARY`, whose width is fixed at five. The category union is a
+  negative inference worth keeping: s. 130 of the Finance Act 1992 registers
+  mechanically propelled vehicles only, so trailers are excluded — reg. 9(8) gives
+  a trailer a **duplicate** of the towing vehicle's mark. **Deliberately absent**:
+  the pre-1987 system (art. 25(3) of the 1982 Regulations — number and a 1-3 letter
+  index mark in EITHER order, no digit count, over the ~200 marks of the 1958
+  Index Marks Regulations, a space that shadows half of Europe); trade plates
+  (art. 23(f) of the 1958 Regulations leaves them to unpublished ministerial
+  direction, so the number-county-year arrangement on them has no text — the RO/LV
+  precedent); and diplomatic, Defence Forces and any other special series, which
+  the Regulations simply do not create. Ireland has no personalised plates: a
+  reserved number must be in the normal format for the owner's own area and
+  half-year, so for once nothing swallows the ordinary series.
 
 These need grammar or scope work, not a quick patch. Discuss before changing.

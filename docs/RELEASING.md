@@ -5,7 +5,7 @@
 Every result carries both:
 
 ```ts
-result.versions; // { library: "0.1.0", metadata: "2026.07.15" }
+result.versions; // { library: "0.1.0", metadata: "2026.07.27" }
 ```
 
 - **`library`** — the code. Semver. Lives in `package.json` and, mirrored, in

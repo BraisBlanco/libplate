@@ -1,0 +1,95 @@
+schemaVersion: 1
+id: IE_VINTAGE_ZV
+country: IE
+name: ZV vintage series (ZV 4723)
+registrationType: HISTORICAL
+# Regulation 9(1C) of S.I. No. 318 of 1992, as substituted by Regulation 4(a) of
+# S.I. No. 452 of 2013: "Notwithstanding the provisions of paragraphs (1), (1A)
+# and (1B), the identification mark assigned ... to a vehicle which the
+# Commissioners are satisfied was constructed or first brought into use more than
+# 30 years prior to the time of registration, and the person applying for
+# registration so requests, shall consist of an index mark ZV and a unique
+# number." Reg. 9(4) adds the other route in: an owner may ask for an existing
+# mark to be replaced by a ZV one once the vehicle reaches 30 years of age
+# (Revenue's Form VRT 35).
+#
+# The 30-year test is in the rule itself, so unlike almost every other series in
+# this library the HISTORICAL regime here is genuinely readable from the text.
+# The mark is optional, though — a vintage vehicle whose owner does not ask for
+# ZV takes an ordinary mark carrying its own year of first use, which is why
+# IE_ORDINARY_PRE_2013 accepts years like 05 and 27.
+#
+# validFrom is omitted. Regulation 3 of the 1992 Regulations commenced
+# Regulation 9 on 1 January 1993, but paragraph 23 of the First Schedule accepts
+# a ZV mark laid out under Part I of the Third Schedule to the Road Vehicles
+# (Registration and Licensing) Regulations 1982, which treats the series as
+# continuing an arrangement older than these Regulations. No date for its start
+# was traced.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Reg. 9(1C) says "a vehicle", so the category union is the ordinary one even
+  # though Revenue's guidance describes the series as being for vintage "cars".
+  # Age is not a category.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - MOTORCYCLE
+    - MOPED_OR_MOTOR_CYCLE
+    - TRICYCLE
+    - QUADRICYCLE
+    - VAN
+    - TRUCK
+    - BUS
+    - AGRICULTURAL_VEHICLE
+    - SPECIAL_VEHICLE
+  evidence:
+    - type: PREFIX
+      value: "ZV — vehicles more than 30 years old at registration (reg. 9(1C))"
+segments:
+  - name: index
+    type: LITERAL
+    value: "ZV"
+  # "A unique number", with no width and no sequence rule of its own —
+  # reg. 9(3) numbers only the paragraph (1), (1A) and (1B) marks, so even the
+  # sequential-assignment rule does not formally reach ZV. Revenue's own example
+  # is the four-digit ZV 4723. The 1-6 bound and the leading-zero ban are carried
+  # over from IE_ORDINARY, where they are argued; neither is stated for ZV.
+  - name: number
+    type: DIGITS
+    minLength: 1
+    maxLength: 6
+    noLeadingZero: true
+formats:
+  national: "{index} {number}"
+  compact: "{index}{number}"
+# No colours are asserted. Paragraph 9 of the First Schedule would put black on
+# white, but paragraph 23 lets a ZV mark comply instead with Part I of the Third
+# Schedule to the 1982 Regulations, whose paragraphs 2 and 4 allow white, silver
+# or light grey characters on black as well as black on white — and black on RED
+# reflective at the rear. Text alone cannot say which of the two regimes a given
+# ZV plate was made under.
+sources:
+  - id: IE-VRT-REGS
+    section: "Regulation 9(1C), 9(4); First Schedule, paragraph 23"
+  - id: IE-VRT-IDMARKS-2013
+    section: "Regulation 4(a)"
+  - id: IE-RVRL-1982
+    section: "Third Schedule, paragraphs 1-4"
+  - id: IE-REVENUE-ZZ-ZV
+examples:
+  valid:
+    - "ZV 4723"
+    - "ZV 1"
+    - "ZV-123456"
+    - "ZV99999"
+  invalid:
+    - "ZV 0123"
+    - "ZV 1234567"
+    - "ZV"
+    - "ZZ 4723"
+    - "ZVA 123"
+    - "4723 ZV"

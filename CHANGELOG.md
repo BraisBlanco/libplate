@@ -7,6 +7,23 @@ including how the separate **metadata version** moves — are spelled out in
 
 ## [Unreleased]
 
+Metadata version `2026.07.27`.
+
+### Added
+
+- **Ireland**, 5 schemes — the year/half-year series in each of its three live
+  generations (first used from 2014, in 2013, and up to 2012), the `ZV` vintage
+  series and the `ZZ` temporary export registration. The generations are
+  separate schemes because Regulation 9 of S.I. No. 318 of 1992, as substituted
+  by S.I. No. 452 of 2013, keys the index-mark table to the year the vehicle was
+  first brought into use: `LK`, `TN`, `TS` and `WD` cannot follow a 2014-or-later
+  year and `T` cannot precede one. The year and the half-year numeral are
+  separate components, so the registration period is readable without slicing.
+- Irish plates carry a category inference of the negative kind: section 130 of
+  the Finance Act 1992 registers mechanically propelled vehicles only, so an
+  Irish number is never a trailer's — a trailer displays a duplicate of the
+  towing vehicle's mark.
+
 ## [0.1.0] - 2026-07-27
 
 First published release. Metadata version `2026.07.15`.

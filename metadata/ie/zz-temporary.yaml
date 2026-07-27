@@ -1,0 +1,56 @@
+schemaVersion: 1
+id: IE_ZZ_TEMPORARY
+country: IE
+name: ZZ temporary registration for export (ZZ 12345)
+registrationType: EXPORT
+# The one Irish series with no statutory instrument behind it. S.I. No. 318 of
+# 1992 prescribes no temporary mark at all; the ZZ system is run by the
+# Automobile Association of Ireland on behalf of the Revenue Commissioners, and
+# the composition comes from Revenue's own page: "A ZZ registration consists of
+# the letters ZZ followed by a unique five-digit number." That is the assigning
+# authority describing what it assigns — the evidence tier of the Norwegian
+# Skiltserier page or the Swedish Transportstyrelsen announcement, not of a
+# regulation.
+#
+# It is an EXPORT regime rather than a temporary-private one: Revenue grants it
+# to a vehicle that is not permanently registered, for up to one month before
+# exportation, and only where the applicant is established outside Ireland.
+#
+# validFrom is omitted — the page gives no start date for the scheme.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Revenue's page says "a vehicle" and splits nothing by category.
+  level: NOT_INFERABLE
+segments:
+  - name: index
+    type: LITERAL
+    value: "ZZ"
+  # "A unique five-digit number" — the only Irish number with a stated width.
+  # Leading zeros are not excluded here: five digits is fixed, so 00001 is a
+  # five-digit number and paragraph 3(b) of the First Schedule, which is what
+  # bars padding elsewhere, does not govern this series.
+  - name: number
+    type: DIGITS
+    length: 5
+formats:
+  national: "{index} {number}"
+  compact: "{index}{number}"
+# No colours asserted: Revenue's page describes the scheme's conditions and the
+# number, and says nothing about the plate's appearance.
+sources:
+  - id: IE-REVENUE-ZZ-ZV
+examples:
+  valid:
+    - "ZZ 12345"
+    - "ZZ-00001"
+    - "ZZ99999"
+  invalid:
+    - "ZZ 1234"
+    - "ZZ 123456"
+    - "ZV 12345"
+    - "12345 ZZ"
+    - "ZZA 12345"

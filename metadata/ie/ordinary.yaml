@@ -1,0 +1,154 @@
+schemaVersion: 1
+id: IE_ORDINARY
+country: IE
+name: Identification mark — year, half-year, index mark and sequence (241-D-12345)
+registrationType: ORDINARY
+validFrom: "2014-01-01"
+# Regulation 9(1B) of S.I. No. 318 of 1992, as substituted by Regulation 4(a) of
+# S.I. No. 452 of 2013, which came into operation on 1 January 2014 (its
+# Regulation 2). It governs vehicles "first brought into use on or after
+# 1 January 2014" and is the only paragraph that points at the NEW index-mark
+# table (paragraph 4A of the First Schedule). Vehicles first used in 2013 keep
+# the old table under paragraph (1A) — see IE_ORDINARY_2013 — and vehicles first
+# used up to 2012 take the two-digit year of paragraph (1) — see
+# IE_ORDINARY_PRE_2013. All three are current: the year numerals record when the
+# vehicle was first brought into use ANYWHERE, so a 2011 import registered in
+# Ireland today is assigned a 2011 mark, not a 2026 one.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # Section 131 of the Finance Act 1992 registers "vehicles", and section 130
+  # defines a vehicle as a mechanically propelled vehicle — expressly including
+  # an engined bicycle, tricycle or quadricycle, a moped, a scooter and an
+  # autocycle, and expressly excluding trams, rail vehicles and vehicles the
+  # Commissioners are satisfied are designed or constructed for off-road use.
+  # One mark shape serves all of them, so the category cannot be narrowed.
+  #
+  # What CAN be said is the negative, and for a haulage caller it is the useful
+  # half: an Irish registration number is never a trailer's. Trailers and
+  # semitrailers are not mechanically propelled, so they are not registered at
+  # all; Regulation 9(8) instead requires "a duplicate of the identification mark
+  # of the vehicle" on the back of the rearmost trailer. Reading a plate off an
+  # Irish semitrailer therefore identifies the tractor unit pulling it.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - MOTORCYCLE
+    - MOPED_OR_MOTOR_CYCLE
+    - TRICYCLE
+    - QUADRICYCLE
+    - VAN
+    - TRUCK
+    - BUS
+    - AGRICULTURAL_VEHICLE
+    - SPECIAL_VEHICLE
+  evidence:
+    - type: PATTERN
+      value: "mechanically propelled vehicles only (Finance Act 1992, s. 130); trailers carry a duplicate mark (reg. 9(8))"
+segments:
+  # Reg. 9(1B)(a): "the third and fourth numerals of the year in which the
+  # vehicle is first brought into use". Because paragraph (1B) only reaches
+  # vehicles first used on or after 1 January 2014, those numerals are 14 or
+  # later — a static consequence of the paragraph's own scope, not a date
+  # calculation, so it is enforced. 14-19 are spelled out and 20-99 collapse to
+  # a tens digit plus a free unit digit. No upper bound is imposed: whether a
+  # year has arrived yet is a question about the world, not about the format.
+  - name: year
+    type: PATTERNS
+    patterns:
+      - "14"
+      - "15"
+      - "16"
+      - "17"
+      - "18"
+      - "19"
+      - "2N"
+      - "3N"
+      - "4N"
+      - "5N"
+      - "6N"
+      - "7N"
+      - "8N"
+      - "9N"
+  # Reg. 9(1B)(b): the numeral 1 for the first half of the year, 2 for the
+  # second. It is a separate segment rather than a third year digit so that a
+  # caller can read the registration period straight out of the components.
+  - name: half
+    type: CHARSET
+    characters: "12"
+    length: 1
+  # Reg. 9(1B)(c): "an index mark, as provided for in the Table to paragraph 4A
+  # of the First Schedule, corresponding to the functional area of the licensing
+  # authority in which the owner at the time of registration ordinarily resides".
+  - name: index
+    type: TABLE
+    table: ie-index-marks-2014
+  # Reg. 9(1B)(d): "a number which when combined with those numerals and that
+  # mark produces a unique combination", assigned sequentially to each index mark
+  # (reg. 9(3)). NO WIDTH IS PRESCRIBED ANYWHERE, and unlike Romania no plate
+  # capacity supplies one either: paragraph 14 of the First Schedule gives each
+  # character 36 mm and each gap at least 8 mm, and paragraph 16 leaves 470 mm
+  # between the EU band and the border, which on the strict reading caps the
+  # sequence at FOUR digits — contradicted by every 191-D-12345 on the road. On
+  # the reading where the 36 mm "total width of the space taken by each letter or
+  # figure" already absorbs the gap, the same plate holds six digits. Six is
+  # therefore libplate's bound, taken from the permissive reading; it is not a
+  # figure the Regulations state.
+  #
+  # noLeadingZero rests on paragraph 3(b) of the First Schedule: "The
+  # identification mark shall not incorporate the figure nought unless such
+  # figure forms part of the identification mark assigned to the vehicle by the
+  # Commissioners." The assigned numbers run sequentially from 1, so a padding
+  # zero would be a nought that was never assigned. Zeros inside the number
+  # (241-D-1024) are untouched by this.
+  - name: sequence
+    type: DIGITS
+    minLength: 1
+    maxLength: 6
+    noLeadingZero: true
+formats:
+  national: "{year}{half}-{index}-{sequence}"
+  compact: "{year}{half}{index}{sequence}"
+# Paragraph 9 of the First Schedule, unconditionally: "The identification mark
+# and placename shall be formed of black characters and shall be exhibited on
+# white reflex reflective material". Ireland runs no colour variants — no green
+# electric plate, no yellow rear, no taxi plate — so both colours are asserted.
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: IE-VRT-REGS
+    section: "Regulation 9; First Schedule, paragraphs 3, 4A, 9, 14, 16"
+  - id: IE-VRT-IDMARKS-2013
+    section: "Regulations 2, 4, 5"
+  - id: IE-FINANCE-ACT-1992
+    section: "sections 130, 131"
+  - id: IE-REVENUE-DISTRICTS
+examples:
+  valid:
+    - "241-D-12345"
+    - "262-D-111"
+    - "141-T-1"
+    - "191-KE-9999"
+    - "202-WW-123456"
+    - "251D1"
+  invalid:
+    # The 2013 marks keep the pre-amalgamation table (IE_ORDINARY_2013).
+    - "131-D-1234"
+    # Amalgamated away on 1 January 2014, so unreachable behind a 14+ year.
+    - "241-LK-1234"
+    - "241-TN-1"
+    - "241-WD-1"
+    # A year before the paragraph's own scope.
+    - "121-D-1234"
+    # The half-year numeral is 1 or 2, nothing else.
+    - "243-D-1234"
+    - "240-D-1234"
+    # Not an index mark in either table.
+    - "241-XX-1234"
+    # A padded nought, and one digit too many.
+    - "241-D-0123"
+    - "241-D-1234567"

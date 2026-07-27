@@ -3,7 +3,7 @@
 import type { MetadataBundle } from "../metadata/types.js";
 
 export const METADATA: MetadataBundle = {
-  "metadataVersion": "2026.07.15",
+  "metadataVersion": "2026.07.27",
   "tables": {
     "at-behoerden": [
       "AM",
@@ -1557,6 +1557,65 @@ export const METADATA: MetadataBundle = {
       "ZX",
       "ZY",
       "ZZ"
+    ],
+    "ie-index-marks-2014": [
+      "C",
+      "CE",
+      "CN",
+      "CW",
+      "D",
+      "DL",
+      "G",
+      "KE",
+      "KK",
+      "KY",
+      "L",
+      "LD",
+      "LH",
+      "LM",
+      "LS",
+      "MH",
+      "MN",
+      "MO",
+      "OY",
+      "RN",
+      "SO",
+      "T",
+      "W",
+      "WH",
+      "WW",
+      "WX"
+    ],
+    "ie-index-marks": [
+      "C",
+      "CE",
+      "CN",
+      "CW",
+      "D",
+      "DL",
+      "G",
+      "KE",
+      "KK",
+      "KY",
+      "L",
+      "LD",
+      "LH",
+      "LK",
+      "LM",
+      "LS",
+      "MH",
+      "MN",
+      "MO",
+      "OY",
+      "RN",
+      "SO",
+      "TN",
+      "TS",
+      "W",
+      "WD",
+      "WH",
+      "WW",
+      "WX"
     ],
     "pl-wojewodztwa-profesjonalne": [
       "B",
@@ -9185,6 +9244,470 @@ export const METADATA: MetadataBundle = {
           "I 1234-AB",
           "I 12-ABC",
           "I 12-A"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "IE_ORDINARY",
+      "country": "IE",
+      "name": "Identification mark — year, half-year, index mark and sequence (241-D-12345)",
+      "registrationType": "ORDINARY",
+      "validFrom": "2014-01-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "MOTORCYCLE",
+          "MOPED_OR_MOTOR_CYCLE",
+          "TRICYCLE",
+          "QUADRICYCLE",
+          "VAN",
+          "TRUCK",
+          "BUS",
+          "AGRICULTURAL_VEHICLE",
+          "SPECIAL_VEHICLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "mechanically propelled vehicles only (Finance Act 1992, s. 130); trailers carry a duplicate mark (reg. 9(8))"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "year",
+          "type": "PATTERNS",
+          "patterns": [
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "2N",
+            "3N",
+            "4N",
+            "5N",
+            "6N",
+            "7N",
+            "8N",
+            "9N"
+          ]
+        },
+        {
+          "name": "half",
+          "type": "CHARSET",
+          "characters": "12",
+          "length": 1
+        },
+        {
+          "name": "index",
+          "type": "TABLE",
+          "table": "ie-index-marks-2014"
+        },
+        {
+          "name": "sequence",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 6,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{year}{half}-{index}-{sequence}",
+        "compact": "{year}{half}{index}{sequence}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "IE-VRT-REGS",
+          "section": "Regulation 9; First Schedule, paragraphs 3, 4A, 9, 14, 16"
+        },
+        {
+          "id": "IE-VRT-IDMARKS-2013",
+          "section": "Regulations 2, 4, 5"
+        },
+        {
+          "id": "IE-FINANCE-ACT-1992",
+          "section": "sections 130, 131"
+        },
+        {
+          "id": "IE-REVENUE-DISTRICTS"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "241-D-12345",
+          "262-D-111",
+          "141-T-1",
+          "191-KE-9999",
+          "202-WW-123456",
+          "251D1"
+        ],
+        "invalid": [
+          "131-D-1234",
+          "241-LK-1234",
+          "241-TN-1",
+          "241-WD-1",
+          "121-D-1234",
+          "243-D-1234",
+          "240-D-1234",
+          "241-XX-1234",
+          "241-D-0123",
+          "241-D-1234567"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "IE_ORDINARY_2013",
+      "country": "IE",
+      "name": "Identification mark for vehicles first used in 2013 (131-D-12345)",
+      "registrationType": "ORDINARY",
+      "validFrom": "2013-01-01",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "MOTORCYCLE",
+          "MOPED_OR_MOTOR_CYCLE",
+          "TRICYCLE",
+          "QUADRICYCLE",
+          "VAN",
+          "TRUCK",
+          "BUS",
+          "AGRICULTURAL_VEHICLE",
+          "SPECIAL_VEHICLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "mechanically propelled vehicles only (Finance Act 1992, s. 130); trailers carry a duplicate mark (reg. 9(8))"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "year",
+          "type": "LITERAL",
+          "value": "13"
+        },
+        {
+          "name": "half",
+          "type": "CHARSET",
+          "characters": "12",
+          "length": 1
+        },
+        {
+          "name": "index",
+          "type": "TABLE",
+          "table": "ie-index-marks"
+        },
+        {
+          "name": "sequence",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 6,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{year}{half}-{index}-{sequence}",
+        "compact": "{year}{half}{index}{sequence}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "IE-VRT-REGS",
+          "section": "Regulation 9; First Schedule, paragraphs 3, 4, 9"
+        },
+        {
+          "id": "IE-VRT-IDMARKS-2013",
+          "section": "Regulations 4(a), 5(b), 6"
+        },
+        {
+          "id": "IE-VRT-AMENDMENT-2012",
+          "section": "Regulations 2, 4"
+        },
+        {
+          "id": "IE-REVENUE-DISTRICTS"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "131-D-12345",
+          "132-LK-1",
+          "131-TN-234",
+          "132-WD-9999",
+          "131C1"
+        ],
+        "invalid": [
+          "131-T-1",
+          "141-D-1234",
+          "13-D-1234",
+          "133-D-1234",
+          "131-XX-1234",
+          "131-D-0123",
+          "131-D-1234567"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "IE_ORDINARY_PRE_2013",
+      "country": "IE",
+      "name": "Identification mark with a two-digit year (12-D-12345)",
+      "registrationType": "ORDINARY",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "MOTORCYCLE",
+          "MOPED_OR_MOTOR_CYCLE",
+          "TRICYCLE",
+          "QUADRICYCLE",
+          "VAN",
+          "TRUCK",
+          "BUS",
+          "AGRICULTURAL_VEHICLE",
+          "SPECIAL_VEHICLE"
+        ],
+        "evidence": [
+          {
+            "type": "PATTERN",
+            "value": "mechanically propelled vehicles only (Finance Act 1992, s. 130); trailers carry a duplicate mark (reg. 9(8))"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "year",
+          "type": "DIGITS",
+          "length": 2
+        },
+        {
+          "name": "index",
+          "type": "TABLE",
+          "table": "ie-index-marks"
+        },
+        {
+          "name": "sequence",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 6,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{year}-{index}-{sequence}",
+        "compact": "{year}{index}{sequence}"
+      },
+      "visual": {
+        "background": "WHITE",
+        "foreground": "BLACK"
+      },
+      "sources": [
+        {
+          "id": "IE-VRT-REGS",
+          "section": "Regulations 3, 9; First Schedule, paragraphs 3, 4, 9"
+        },
+        {
+          "id": "IE-VRT-IDMARKS-2013",
+          "section": "Regulation 4(a)"
+        },
+        {
+          "id": "IE-REVENUE-DISTRICTS"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "12-D-12345",
+          "87-LK-1",
+          "99-TS-4321",
+          "05-C-1",
+          "00-WD-123456",
+          "08G12345"
+        ],
+        "invalid": [
+          "12-T-1234",
+          "12-XX-1234",
+          "121-D-1234",
+          "1-D-1234",
+          "123-D-1234",
+          "12-D-0123",
+          "12-D-1234567"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "IE_VINTAGE_ZV",
+      "country": "IE",
+      "name": "ZV vintage series (ZV 4723)",
+      "registrationType": "HISTORICAL",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "CATEGORY_ONLY",
+        "possibleCategories": [
+          "PASSENGER_CAR",
+          "MOTORCYCLE",
+          "MOPED_OR_MOTOR_CYCLE",
+          "TRICYCLE",
+          "QUADRICYCLE",
+          "VAN",
+          "TRUCK",
+          "BUS",
+          "AGRICULTURAL_VEHICLE",
+          "SPECIAL_VEHICLE"
+        ],
+        "evidence": [
+          {
+            "type": "PREFIX",
+            "value": "ZV — vehicles more than 30 years old at registration (reg. 9(1C))"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "name": "index",
+          "type": "LITERAL",
+          "value": "ZV"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "minLength": 1,
+          "maxLength": 6,
+          "noLeadingZero": true
+        }
+      ],
+      "formats": {
+        "national": "{index} {number}",
+        "compact": "{index}{number}"
+      },
+      "sources": [
+        {
+          "id": "IE-VRT-REGS",
+          "section": "Regulation 9(1C), 9(4); First Schedule, paragraph 23"
+        },
+        {
+          "id": "IE-VRT-IDMARKS-2013",
+          "section": "Regulation 4(a)"
+        },
+        {
+          "id": "IE-RVRL-1982",
+          "section": "Third Schedule, paragraphs 1-4"
+        },
+        {
+          "id": "IE-REVENUE-ZZ-ZV"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "ZV 4723",
+          "ZV 1",
+          "ZV-123456",
+          "ZV99999"
+        ],
+        "invalid": [
+          "ZV 0123",
+          "ZV 1234567",
+          "ZV",
+          "ZZ 4723",
+          "ZVA 123",
+          "4723 ZV"
+        ]
+      },
+      "legacySeries": false
+    },
+    {
+      "schemaVersion": 1,
+      "id": "IE_ZZ_TEMPORARY",
+      "country": "IE",
+      "name": "ZZ temporary registration for export (ZZ 12345)",
+      "registrationType": "EXPORT",
+      "normalization": {
+        "uppercase": true,
+        "acceptedSeparators": [
+          " ",
+          "-"
+        ]
+      },
+      "vehicleInference": {
+        "level": "NOT_INFERABLE"
+      },
+      "segments": [
+        {
+          "name": "index",
+          "type": "LITERAL",
+          "value": "ZZ"
+        },
+        {
+          "name": "number",
+          "type": "DIGITS",
+          "length": 5
+        }
+      ],
+      "formats": {
+        "national": "{index} {number}",
+        "compact": "{index}{number}"
+      },
+      "sources": [
+        {
+          "id": "IE-REVENUE-ZZ-ZV"
+        }
+      ],
+      "examples": {
+        "valid": [
+          "ZZ 12345",
+          "ZZ-00001",
+          "ZZ99999"
+        ],
+        "invalid": [
+          "ZZ 1234",
+          "ZZ 123456",
+          "ZV 12345",
+          "12345 ZZ",
+          "ZZA 12345"
         ]
       },
       "legacySeries": false

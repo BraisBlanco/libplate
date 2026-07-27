@@ -1,0 +1,49 @@
+{
+  "id": "ie-index-marks",
+  "description": "Irish index marks for vehicles first brought into use on or before 31 December 2013 — the Table to paragraph 4 of the First Schedule to S.I. No. 318 of 1992, as retitled by Regulation 5(b) of S.I. No. 452 of 2013. Twenty-nine marks, one per licensing authority functional area, each printed on the plate above its Irish placename. Six of them belong to areas that were amalgamated on 1 January 2014 and are absent from the successor table (ie-index-marks-2014): L and LK (Luimneach/Limerick city and county), TN and TS (Tiobraid Árann, the North and South Ridings) and W and WD (Port Láirge/Waterford city and county) — L and W survive into the new table as the single mark of the merged area. These six are NOT historical: Regulation 9(1) and 9(1A) of the 1992 Regulations key the table to the year the vehicle was first brought into use, so an import first used abroad before 2014 is still assigned a mark from this table today. Revenue states exactly that in its Registration Districts note.",
+  "sources": [
+    {
+      "id": "IE-VRT-REGS",
+      "section": "First Schedule, paragraph 4 and its Table"
+    },
+    {
+      "id": "IE-VRT-IDMARKS-2013",
+      "section": "Regulation 5(b)"
+    },
+    {
+      "id": "IE-REVENUE-DISTRICTS"
+    }
+  ],
+  "sourceCheckedAt": "2026-07-27",
+  "values": [
+    "C",
+    "CE",
+    "CN",
+    "CW",
+    "D",
+    "DL",
+    "G",
+    "KE",
+    "KK",
+    "KY",
+    "L",
+    "LD",
+    "LH",
+    "LK",
+    "LM",
+    "LS",
+    "MH",
+    "MN",
+    "MO",
+    "OY",
+    "RN",
+    "SO",
+    "TN",
+    "TS",
+    "W",
+    "WD",
+    "WH",
+    "WW",
+    "WX"
+  ]
+}

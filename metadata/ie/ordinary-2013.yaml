@@ -1,0 +1,96 @@
+schemaVersion: 1
+id: IE_ORDINARY_2013
+country: IE
+name: Identification mark for vehicles first used in 2013 (131-D-12345)
+registrationType: ORDINARY
+validFrom: "2013-01-01"
+# Regulation 9(1A) of S.I. No. 318 of 1992. The half-year numeral arrived with
+# Regulation 4(b) of S.I. No. 542 of 2012 (in operation 1 January 2013); a year
+# later Regulation 4(a) of S.I. No. 452 of 2013 rewrote the paragraph to cover
+# only vehicles "first brought into use during the period commencing on
+# 1 January 2013 and ending on 31 December 2013", leaving 2014 onwards to the
+# new paragraph (1B). Regulation 6 of the 2013 instrument then revoked
+# Regulation 4 of the 2012 one, so cite the 2013 text for the wording and the
+# 2012 one only for the introduction of the half-year.
+#
+# This is a one-year window in the YEAR OF FIRST USE, not in the issuing date,
+# and it therefore carries NO validTo: a 2013 vehicle imported and registered in
+# Ireland in 2026 is assigned a 131 or 132 mark then, and the plates already on
+# the road stay valid indefinitely.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # As IE_ORDINARY: one shape for every mechanically propelled vehicle, and
+  # never a trailer's number.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - MOTORCYCLE
+    - MOPED_OR_MOTOR_CYCLE
+    - TRICYCLE
+    - QUADRICYCLE
+    - VAN
+    - TRUCK
+    - BUS
+    - AGRICULTURAL_VEHICLE
+    - SPECIAL_VEHICLE
+  evidence:
+    - type: PATTERN
+      value: "mechanically propelled vehicles only (Finance Act 1992, s. 130); trailers carry a duplicate mark (reg. 9(8))"
+segments:
+  # Reg. 9(1A)(a) with the paragraph's own scope: the third and fourth numerals
+  # of a year that can only be 2013.
+  - name: year
+    type: LITERAL
+    value: "13"
+  # Reg. 9(1A)(b): 1 for 1 January to 30 June 2013, 2 for 1 July to 31 December.
+  - name: half
+    type: CHARSET
+    characters: "12"
+    length: 1
+  # Reg. 9(1A)(c) points at the Table to paragraph 4 — the PRE-amalgamation
+  # table. This is the whole reason 2013 is modelled apart from 2014 onwards:
+  # 131-LK-, 131-TN-, 131-TS- and 131-WD- marks are real, and 131-T- is not.
+  - name: index
+    type: TABLE
+    table: ie-index-marks
+  # Reg. 9(1A)(d), and the width discussion in IE_ORDINARY.
+  - name: sequence
+    type: DIGITS
+    minLength: 1
+    maxLength: 6
+    noLeadingZero: true
+formats:
+  national: "{year}{half}-{index}-{sequence}"
+  compact: "{year}{half}{index}{sequence}"
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: IE-VRT-REGS
+    section: "Regulation 9; First Schedule, paragraphs 3, 4, 9"
+  - id: IE-VRT-IDMARKS-2013
+    section: "Regulations 4(a), 5(b), 6"
+  - id: IE-VRT-AMENDMENT-2012
+    section: "Regulations 2, 4"
+  - id: IE-REVENUE-DISTRICTS
+examples:
+  valid:
+    - "131-D-12345"
+    - "132-LK-1"
+    - "131-TN-234"
+    - "132-WD-9999"
+    - "131C1"
+  invalid:
+    # T only exists from 2014.
+    - "131-T-1"
+    # 2014 onwards is IE_ORDINARY, 2012 and earlier the two-digit form.
+    - "141-D-1234"
+    - "13-D-1234"
+    - "133-D-1234"
+    - "131-XX-1234"
+    - "131-D-0123"
+    - "131-D-1234567"

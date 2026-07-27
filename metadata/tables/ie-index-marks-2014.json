@@ -1,0 +1,46 @@
+{
+  "id": "ie-index-marks-2014",
+  "description": "Irish index marks for vehicles first brought into use on or after 1 January 2014 — the Table to paragraph 4A of the First Schedule to S.I. No. 318 of 1992, inserted by Regulation 5(d) of S.I. No. 452 of 2013. Twenty-six marks. It differs from the earlier table (ie-index-marks) only around the three local-government amalgamations that took effect on 1 January 2014: Limerick city and county now share L (LK is gone), Waterford city and county share W (WD is gone), and the North and South Ridings of Tipperary become the single mark T (TN and TS are gone). T exists in this table only; LK, TN, TS and WD exist in the earlier one only.",
+  "sources": [
+    {
+      "id": "IE-VRT-REGS",
+      "section": "First Schedule, paragraph 4A and its Table"
+    },
+    {
+      "id": "IE-VRT-IDMARKS-2013",
+      "section": "Regulation 5(c)-(d)"
+    },
+    {
+      "id": "IE-REVENUE-DISTRICTS"
+    }
+  ],
+  "sourceCheckedAt": "2026-07-27",
+  "values": [
+    "C",
+    "CE",
+    "CN",
+    "CW",
+    "D",
+    "DL",
+    "G",
+    "KE",
+    "KK",
+    "KY",
+    "L",
+    "LD",
+    "LH",
+    "LM",
+    "LS",
+    "MH",
+    "MN",
+    "MO",
+    "OY",
+    "RN",
+    "SO",
+    "T",
+    "W",
+    "WH",
+    "WW",
+    "WX"
+  ]
+}

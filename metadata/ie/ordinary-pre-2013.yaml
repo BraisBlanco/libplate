@@ -1,0 +1,96 @@
+schemaVersion: 1
+id: IE_ORDINARY_PRE_2013
+country: IE
+name: Identification mark with a two-digit year (12-D-12345)
+registrationType: ORDINARY
+# Regulation 9(1) of S.I. No. 318 of 1992, as substituted by Regulation 4(a) of
+# S.I. No. 452 of 2013: the mark of a vehicle "first brought into use on or
+# before 31 December 2012". Two numerals, no half-year, and the paragraph 4
+# index-mark table.
+#
+# NOT legacy and NOT historical, despite the name. The paragraph is in force and
+# is applied to new registrations every week: it is keyed to the year the vehicle
+# was FIRST BROUGHT INTO USE, anywhere, so every pre-2013 import registered in
+# Ireland today is assigned a mark under it.
+#
+# validFrom is deliberately omitted, and not for want of a date — Regulation 3 of
+# the 1992 Regulations brought Regulation 9 into operation on 1 January 1993.
+# Stating that as validFrom would misread the field: the numerals are the year of
+# first use, not the year of issue, so a 1965 car registered here in 2026 wears
+# 65-D-12345 and a caller passing a 1990 reference date is not looking at
+# something out of period. The arrangement also predates the Revenue
+# Commissioners' takeover of the register, under the licensing regime of the Road
+# Vehicles (Registration and Licensing) Regulations 1982 as amended, and the
+# amending instrument that introduced it was not traced.
+normalization:
+  uppercase: true
+  acceptedSeparators:
+    - " "
+    - "-"
+vehicleInference:
+  # As IE_ORDINARY: one shape for every mechanically propelled vehicle, and
+  # never a trailer's number.
+  level: CATEGORY_ONLY
+  possibleCategories:
+    - PASSENGER_CAR
+    - MOTORCYCLE
+    - MOPED_OR_MOTOR_CYCLE
+    - TRICYCLE
+    - QUADRICYCLE
+    - VAN
+    - TRUCK
+    - BUS
+    - AGRICULTURAL_VEHICLE
+    - SPECIAL_VEHICLE
+  evidence:
+    - type: PATTERN
+      value: "mechanically propelled vehicles only (Finance Act 1992, s. 130); trailers carry a duplicate mark (reg. 9(8))"
+segments:
+  # Reg. 9(1)(a): "the third and fourth numerals of the year in which the vehicle
+  # is first brought into use". The full 00-99 range is accepted, leading zero
+  # included: 05-D-1 is a vehicle first used in 1905 or in 2005, and both are
+  # ordinary registrations here. Nothing in the text distinguishes them, and the
+  # library does not date-arbitrate.
+  - name: year
+    type: DIGITS
+    length: 2
+  # Reg. 9(1)(b): the Table to paragraph 4 of the First Schedule, i.e. the
+  # pre-amalgamation marks — L and LK, TN and TS, W and WD all live here.
+  - name: index
+    type: TABLE
+    table: ie-index-marks
+  # Reg. 9(1)(c), and the width discussion in IE_ORDINARY.
+  - name: sequence
+    type: DIGITS
+    minLength: 1
+    maxLength: 6
+    noLeadingZero: true
+formats:
+  national: "{year}-{index}-{sequence}"
+  compact: "{year}{index}{sequence}"
+visual:
+  background: WHITE
+  foreground: BLACK
+sources:
+  - id: IE-VRT-REGS
+    section: "Regulations 3, 9; First Schedule, paragraphs 3, 4, 9"
+  - id: IE-VRT-IDMARKS-2013
+    section: "Regulation 4(a)"
+  - id: IE-REVENUE-DISTRICTS
+examples:
+  valid:
+    - "12-D-12345"
+    - "87-LK-1"
+    - "99-TS-4321"
+    - "05-C-1"
+    - "00-WD-123456"
+    - "08G12345"
+  invalid:
+    # T is a 2014 mark and can never sit behind a two-digit year.
+    - "12-T-1234"
+    - "12-XX-1234"
+    - "121-D-1234"
+    - "1-D-1234"
+    - "123-D-1234"
+    - "12-D-0123"
+    - "12-D-1234567"

@@ -14,7 +14,7 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 
 ### Supported countries
 
-**23 countries, 187 schemes.** Each row links to its plate-type table below.
+**24 countries, 192 schemes.** Each row links to its plate-type table below.
 
 | Country                         | Schemes | Coverage                                                                                                                  |
 | ------------------------------- | ------: | ------------------------------------------------------------------------------------------------------------------------- |
@@ -41,6 +41,7 @@ registration plates** — conceptually a "libphonenumber for licence plates".
 | [🇱🇻 Latvia](#-latvia)           |       5 | The two general-use series (mechanical vehicles, trailers/mopeds), diplomatic `C`/`CC`/`CD`, trade, `IZM` test            |
 | [🇸🇰 Slovakia](#-slovakia)       |      15 | Ordinary, the `Y` trailer block, `EL`/`EV` electric, `CD`/`CC`/`ZZ`/`CH`, police and army, six zvláštne series            |
 | [🇳🇴 Norway](#-norway)           |       8 | The five-digit car/lorry and four-digit series, `EL`/`GA`/`HY` fuel series, `CD`, the pre-1971 order                      |
+| [🇮🇪 Ireland](#-ireland)         |       5 | The year/half-year series in its three generations, each with its own index-mark table; `ZV` vintage, `ZZ` export         |
 
 Countries not yet modelled, and the series still missing inside those above, are
 listed under [Not yet modelled](#not-yet-modelled).
@@ -678,6 +679,44 @@ either: § 2-11 (3) puts the same characters on white, on **green** for a varebi
 klasse 2, on black for off-road and Svalbard vehicles, on yellow for the
 Forsvaret and on black for a licensed rally car.
 
+#### 🇮🇪 Ireland
+
+| Type                     | Example       | Notes                                                  |
+| ------------------------ | ------------- | ------------------------------------------------------ |
+| First used 2014 or later | `241-D-12345` | Year, half-year, index mark, sequence                  |
+| First used in 2013       | `131-LK-1234` | Same shape, **pre-amalgamation** index marks           |
+| First used up to 2012    | `12-D-12345`  | Two-digit year, no half-year numeral                   |
+| Vintage (`ZV`)           | `ZV 4723`     | 30 years old at registration — **historical, by rule** |
+| Temporary export (`ZZ`)  | `ZZ 12345`    | Five digits; issued by the AA for Revenue              |
+
+Ireland reads left to right as a date. The first two digits are the third and
+fourth numerals of the year the vehicle was **first brought into use anywhere**,
+the third digit is `1` for January-June or `2` for July-December, and both are
+exposed as separate components — so a caller gets the registration period without
+slicing the string. That the year is the year of _first use_ and not of issue is
+the whole reason three generations are live at once: a 2011 import registered in
+Dublin this morning is assigned `11-D-…`, not `261-D-…`, and a 1965 car takes
+`65-D-…` unless its owner asks for a `ZV` mark.
+
+**Which index-mark table applies is decided by that same year**, which is why the
+generations are separate schemes rather than one loose pattern. The 2014 local
+government amalgamations merged Limerick, Tipperary and Waterford, so `LK`, `TN`,
+`TS` and `WD` cannot appear behind a `14`-or-later year and `T` cannot appear
+behind an earlier one. None of the four is historical: Revenue still issues them
+to vehicles first used abroad before 2014.
+
+For a haulage caller the useful inference is a negative one. Section 130 of the
+Finance Act 1992 registers **mechanically propelled vehicles only**, so an Irish
+registration number is never a trailer's — Regulation 9(8) puts a _duplicate_ of
+the towing vehicle's mark on the rearmost trailer instead. A plate read off an
+Irish semitrailer identifies the tractor unit pulling it.
+
+One thing the Regulations never state is how many digits the sequence has. The
+plate geometry does not settle it either: on the strict reading of paragraph 14
+a one-line plate holds four, which every `191-D-12345` on the road contradicts,
+and on the permissive reading it holds six. Six is what libplate accepts, and
+that bound is libplate's own — see [`docs/SOURCES.md`](docs/SOURCES.md).
+
 ### Not yet modelled
 
 Four reasons recur, and most entries below are one of them: the omitted space
@@ -774,6 +813,18 @@ table above.
   the 1971-2002 orders (the same "two letters + 4 or 5 digits" as the current
   series, so already covered) and the varebil klasse 2, off-road, Svalbard and
   rally plates, which are colour variants of an ordinary number.
+- **Ireland** — the pre-1987 system (article 25(3) of the 1982 Regulations gives
+  a registration number and a 1-3 letter index mark, **in either order** and with
+  no digit count, over the ~200 marks of the 1958 Index Marks Regulations — a
+  space that collides with half of Europe, `Z 1234` included); trade plates
+  (article 23(f) of the 1958 Regulations leaves the plates to "such
+  specifications as the Minister may from time to time direct", and no such
+  direction is published, so the number-county-year arrangement seen on them has
+  no official text); and diplomatic, Defence Forces and any other special series
+  — the Vehicle Registration and Taxation Regulations create none, and no other
+  instrument prescribing one was found. Ireland has no personalised plates
+  at all: a reserved number must be "in the normal format" for the owner's own
+  area and half-year, so nothing here swallows the ordinary series.
 
 ## Install
 
@@ -840,7 +891,7 @@ full result for `parse("R-1234-BCD", { country: "ES" })`:
   "visual": { "background": "RED", "foreground": "BLACK" },
   "warnings": [],
   "errors": [],
-  "versions": { "library": "0.1.0", "metadata": "2026.07.15" }
+  "versions": { "library": "0.1.0", "metadata": "2026.07.27" }
 }
 ```
 
