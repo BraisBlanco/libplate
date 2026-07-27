@@ -43,8 +43,25 @@ jobs:
             exit 1
           fi
 
+      # The very first release is published by hand (npm requires a package to
+      # exist before a trusted publisher can be attached to it), so the v0.1.0
+      # tag would otherwise land here and fail with a 403 for republishing an
+      # existing version. Treat an already-published version as a no-op.
+      - name: Check whether this version is already on the registry
+        id: published
+        run: |
+          version="$(node -p 'require("./package.json").version')"
+          if npm view "libplate@$version" version >/dev/null 2>&1; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::libplate@$version is already published; nothing to do."
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
       # Same gate as CI, re-run against the exact commit being published.
-      - run: npm run check
+      - if: steps.published.outputs.skip == 'false'
+        run: npm run check
 
       # `prepack` builds, so this publishes a freshly compiled dist/.
-      - run: npm publish --provenance
+      - if: steps.published.outputs.skip == 'false'
+        run: npm publish --provenance

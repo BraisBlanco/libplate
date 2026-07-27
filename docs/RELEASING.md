@@ -76,10 +76,15 @@ before a trusted publisher can be attached to it:
 ```bash
 npm login
 npm publish        # prepack builds; publishConfig sets public access
+git tag v0.1.0 && git push --tags
 ```
 
 That first tarball has no provenance attestation. Every tag-driven release after
 it does.
+
+Pushing the `v0.1.0` tag after a manual publish is safe: the workflow checks the
+registry first and no-ops on a version that already exists, so the tag lands (the
+changelog links depend on it) without a 403 for republishing.
 
 ## What ships in the tarball
 
