@@ -781,6 +781,13 @@ table above.
 npm install libplate
 ```
 
+Ships ESM and CommonJS builds with TypeScript declarations for both. Requires
+**Node 22 or newer** (CI covers 22, 24 and 26); the bundle is ES2022 and
+dependency-free, so it also runs unbundled in a browser. Released versions are
+listed in [`CHANGELOG.md`](CHANGELOG.md), and what a version bump means — the
+library version and the separate metadata version — in
+[`docs/RELEASING.md`](docs/RELEASING.md).
+
 [`examples/index.html`](examples/index.html) is a runnable version of everything
 below, with a live playground: `npm run build`, serve the repo root over HTTP and
 open `/examples/`. Its claims are checked by `test/docs.test.ts`.

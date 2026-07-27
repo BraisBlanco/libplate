@@ -1,0 +1,50 @@
+name: Release
+
+# Publishes to npm when a version tag is pushed. The tag is the trigger and the
+# single source of truth for the version: it must match package.json, which
+# test/docs.test.ts already keeps in sync with src/version.ts.
+#
+#   npm version minor && git push --follow-tags
+#
+# Requires npm trusted publishing for this repo+workflow (npmjs.com > package >
+# Settings > Trusted publisher). No NPM_TOKEN secret is needed; `id-token:
+# write` below lets npm mint provenance attestations tying the tarball to this
+# commit and workflow run.
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      - run: npm ci
+
+      # npm >= 11.5.1 is required for trusted publishing.
+      - run: npm install -g npm@latest
+
+      - name: Verify the tag matches package.json
+        run: |
+          tag_version="${GITHUB_REF_NAME#v}"
+          pkg_version="$(node -p 'require("./package.json").version')"
+          if [ "$tag_version" != "$pkg_version" ]; then
+            echo "::error::tag $GITHUB_REF_NAME implies version $tag_version but package.json says $pkg_version"
+            exit 1
+          fi
+
+      # Same gate as CI, re-run against the exact commit being published.
+      - run: npm run check
+
+      # `prepack` builds, so this publishes a freshly compiled dist/.
+      - run: npm publish --provenance

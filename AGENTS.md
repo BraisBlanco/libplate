@@ -147,7 +147,11 @@ npm run metadata     # validate YAML and regenerate src/generated/metadata.ts
 npm test             # regenerates metadata, then runs Vitest
 npm run build        # emits dist/ (ESM + CJS + .d.ts)
 npm run check        # typecheck + lint + format:check + knip + coverage
+npm pack --dry-run   # inspect the publishable tarball (prepack builds first)
 ```
+
+Releases are tag-driven and publish from CI; the versioning rules (including how
+the separate metadata version moves) are in [`docs/RELEASING.md`](docs/RELEASING.md).
 
 **Before committing, `npm run check` must pass (exit 0).** It is the same gate
 CI runs. Individual gates: `typecheck`, `lint` (ESLint + typescript-eslint +
